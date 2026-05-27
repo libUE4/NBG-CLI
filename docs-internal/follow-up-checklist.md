@@ -7,13 +7,14 @@
 - 已通过 `cd sdk/apps/cli && bun run typecheck`。
 - 已通过 `cd sdk/apps/cli && bun run test:unit`。
 - 已通过 `cd sdk/apps/cli && bun script/build.ts --single`，生成 `@nbg/cli-linux-arm64@3.0.13`。
+- 已分段中文化仓库首页、Marketplace 页面、VS Code 引导、CLI README、贡献指南和商业化计划。
 
 ## 产品外壳
 
 - 决定首个版本是否继续在 `@nbg/cli` 中保留 `cline` 兼容 bin，或拆到独立兼容包。
-- 继续将面向用户的 CLI 文案从 Cline 迁移为 NBG 中文文案，但不要机械替换 provider ID、存储路径和兼容 API。
+- 继续审计剩余运行时、连接器和 webview 文案，但不要机械替换 provider ID、存储路径和兼容 API。
 - 完善发布检查，确保识别 `@nbg/cli-*` 平台包。
-- 分段更新 `README.marketplace.md`、`CONTRIBUTING.md` 和公共文档入口，避免一次性操作大文件。
+- 分段更新其余公共文档入口，避免一次性操作大文件。
 
 ## 平台迁移
 

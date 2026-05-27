@@ -1,87 +1,86 @@
-# Contributing to NBG
+# NBG 贡献指南
 
-感谢你参与 NBG。无论是修复 bug、改进文档，还是补齐中文开发者 AI 代理体验，都请先阅读本指南和 [Code of Conduct](CODE_OF_CONDUCT.md)。NBG 当前基于 Cline 运行时兼容层演进，贡献时不要机械替换 provider ID、存储路径或兼容 API。
+感谢你参与 NBG。无论是修复 bug、改进文档，还是补齐中文开发者 AI 代理体验，都请先阅读本指南和 [行为准则](CODE_OF_CONDUCT.md)。NBG 当前基于 Cline 运行时兼容层演进，贡献时不要机械替换 provider ID、存储路径或兼容 API。
 
-## Reporting Bugs or Issues
+## 报告 Bug 或问题
 
-Bug reports help make NBG better for everyone. Before creating a new issue, please [search existing ones](https://github.com/libUE4/NBG-CLI/issues) to avoid duplicates. When you're ready to report a bug, open an issue at https://github.com/libUE4/NBG-CLI/issues/new/choose.
+Bug 报告能帮助 NBG 持续改进。创建新 issue 前，请先[搜索现有 issue](https://github.com/libUE4/NBG-CLI/issues)，避免重复。准备好后可在 https://github.com/libUE4/NBG-CLI/issues/new/choose 提交。
 
 <blockquote class='warning-note'>
-     🔐 <b>Important:</b> If you discover a security vulnerability, please use GitHub private vulnerability reporting for this repository when available. Do not publish exploit details in a public issue.
+     🔐 <b>重要：</b>如果你发现安全漏洞，请优先使用本仓库的 GitHub 私密漏洞报告能力。不要在公开 issue 中发布漏洞利用细节。
 </blockquote>
 
 
-## Before Contributing
+## 贡献前准备
 
-All contributions must begin with a GitHub Issue, unless the change is for small bug fixes, typo corrections, minor wording improvements, or simple type fixes that don't change functionality.
-**For features and contributions**:
-- First check existing [NBG issues](https://github.com/libUE4/NBG-CLI/issues) for similar ideas
-- If your idea is new, create a new feature request  
-- Wait for approval from core maintainers before starting implementation
-- Once approved, feel free to begin working on a PR with the help of our community!
+除小型 bug 修复、错别字、轻微文案改进或不改变行为的简单类型修复外，所有贡献都应先从 GitHub issue 开始。
+**功能和较大贡献请遵循：**
+- 先检查现有 [NBG issues](https://github.com/libUE4/NBG-CLI/issues)，确认是否已有类似想法。
+- 如果是新想法，请创建功能请求。
+- 等核心维护者批准后再开始实现。
+- 获批后即可创建 PR 并推进实现。
 
-**PRs without approved issues may be closed.**
-
-
-## Deciding What to Work On
-
-Looking for a good first contribution? Check out issues labeled ["good first issue"](https://github.com/libUE4/NBG-CLI/labels/good%20first%20issue) or ["help wanted"](https://github.com/libUE4/NBG-CLI/labels/help%20wanted). These are specifically curated for new contributors and areas where we'd love some help.
-
-We also welcome documentation contributions in `/docs`, `README.md`, `sdk/apps/cli/README.md`, and `docs-internal/`. Public-facing docs should prioritize Chinese wording and NBG branding while clearly identifying Cline-derived compatibility internals where relevant.
-
-## Development Setup
+**没有关联已批准 issue 的 PR 可能会被关闭。**
 
 
-### Local Development Instructions
+## 选择贡献方向
 
-1. Clone the repository _(Requires [git-lfs](https://git-lfs.com/))_:
+想找适合上手的任务，可以查看 ["good first issue"](https://github.com/libUE4/NBG-CLI/labels/good%20first%20issue) 或 ["help wanted"](https://github.com/libUE4/NBG-CLI/labels/help%20wanted) 标签。这些任务更适合新贡献者，也代表当前需要帮助的方向。
+
+也欢迎改进 `/docs`、`README.md`、`sdk/apps/cli/README.md` 和 `docs-internal/`。面向公众的文档应优先使用中文和 NBG 品牌，同时在必要处明确说明 Cline 派生兼容层。
+
+## 开发环境
+
+
+### 本地开发步骤
+
+1. 克隆仓库（需要 [git-lfs](https://git-lfs.com/)）：
     ```bash
     git clone git@github.com:libUE4/NBG-CLI.git
     ```
-2. Open the project in VSCode:
+2. 用 VS Code 打开项目：
     ```bash
     code NBG-CLI
     ```
-3. Install [bun](https://bun.com)
-4. Install the necessary dependencies for the extension and webview-gui:
+3. 安装 [bun](https://bun.com)。
+4. 安装扩展和 webview UI 需要的依赖：
     ```bash
     npm run install:all
     cd sdk && bun run build && cd ..
     ```
-5. Generate Protocol Buffer files (required before first build):
-6. Launch by pressing `F5` (or `Run`->`Start Debugging`) to open a new VSCode window with the extension loaded. (You may need to install the [esbuild problem matchers extension](https://marketplace.visualstudio.com/items?itemName=connor4312.esbuild-problem-matchers) if you run into issues building the project.)
+5. 首次构建前需要生成 Protocol Buffer 文件。
+6. 按 `F5`，或通过 `Run` -> `Start Debugging` 启动一个加载扩展的新 VS Code 窗口。如果构建时遇到问题，可能需要安装 [esbuild problem matchers extension](https://marketplace.visualstudio.com/items?itemName=connor4312.esbuild-problem-matchers)。
 
 
 
 
-### Creating a Pull Request
+### 创建 Pull Request
 
-1. Commit your changes.
+1. 提交你的改动。
 
-2. Push your branch and create a PR on GitHub. Our CI will:
-   - Run tests and checks
-3. Testing
-    - Run `npm run test` to run tests locally. 
-    - Before submitting PR, run `npm run format:fix` to format your code
+2. 推送分支并在 GitHub 创建 PR。CI 会运行测试和检查。
+3. 测试
+    - 本地运行 `npm run test`。
+    - 提交 PR 前运行 `npm run format:fix` 格式化代码。
 
-### Extension
+### 扩展开发
 
-1. **VS Code Extensions**
+1. **VS Code 扩展**
 
-    - When opening the project, VS Code will prompt you to install recommended extensions
-    - These extensions are required for development - please accept all installation prompts
-    - If you dismissed the prompts, you can install them manually from the Extensions panel
+    - 打开项目时，VS Code 会提示安装推荐扩展。
+    - 这些扩展是开发所需，请接受安装提示。
+    - 如果你之前关闭了提示，可以从扩展面板手动安装。
 
-2. **Local Development**
-    - Run `npm run install:all` to install dependencies
-    - Run `npm run protos` to generate Protocol Buffer files (required before first build)
-    - Run `npm run test` to run tests locally
-    - Run → Start Debugging or `>Debug: Select and Start Debugging` and wait for a new VS Code instance to open
-    - **Terminal Workflow**: Use `npm run dev` (generates protos + runs watch mode) or `npm run watch` (if protos already generated)
-    - Before submitting PR, run `npm run format:fix` to format your code
+2. **本地开发**
+    - 运行 `npm run install:all` 安装依赖。
+    - 运行 `npm run protos` 生成 Protocol Buffer 文件（首次构建前必需）。
+    - 运行 `npm run test` 执行本地测试。
+    - 使用 Run -> Start Debugging，或执行 `>Debug: Select and Start Debugging`，等待新的 VS Code 实例打开。
+    - **终端工作流**：使用 `npm run dev`（生成 protos 并进入 watch 模式），或在 protos 已生成时使用 `npm run watch`。
+    - 提交 PR 前运行 `npm run format:fix` 格式化代码。
 
-3. **Linux-specific Setup**
-    VS Code extension tests on Linux require the following system libraries:
+3. **Linux 专用设置**
+    Linux 上的 VS Code 扩展测试需要以下系统库：
 
     - `dbus`
     - `libasound2`
@@ -99,9 +98,9 @@ We also welcome documentation contributions in `/docs`, `README.md`, `sdk/apps/c
     - `libxrandr2`
     - `xvfb`
 
-    These libraries provide necessary GUI components and system services for the test environment.
+    这些库为测试环境提供必要的 GUI 组件和系统服务。
 
-    For example, on Debian-based distributions (e.g., Ubuntu), you can install these libraries using apt:
+    例如在 Debian 系发行版（如 Ubuntu）上，可以用 apt 安装：
     ```bash
     sudo apt update
     sudo apt install -y \
@@ -122,87 +121,87 @@ We also welcome documentation contributions in `/docs`, `README.md`, `sdk/apps/c
       xvfb
     ```
 
-## Writing and Submitting Code
+## 编写和提交代码
 
-Anyone can contribute code to NBG, but we ask that you follow these guidelines to ensure your contributions can be smoothly integrated:
+任何人都可以为 NBG 贡献代码。为保证改动能顺利合入，请遵循以下要求：
 
-1. **Keep Pull Requests Focused**
+1. **保持 PR 聚焦**
 
-    - Limit PRs to a single feature or bug fix
-    - Split larger changes into smaller, related PRs
-    - Break changes into logical commits that can be reviewed independently
+    - 每个 PR 限定在单一功能或 bug 修复。
+    - 将较大的改动拆成多个相关的小 PR。
+    - 按逻辑拆分提交，便于独立审查。
 
-2. **Code Quality**
+2. **代码质量**
 
-    - Run `npm run lint` to check code style
-    - Run `npm run format` to automatically format code
-    - All PRs must pass CI checks which include both linting and formatting
-    - Address any warnings or errors from linter before submitting
-    - Follow TypeScript best practices and maintain type safety
+    - 运行 `npm run lint` 检查代码风格。
+    - 运行 `npm run format` 自动格式化代码。
+    - 所有 PR 必须通过包含 lint 和格式检查的 CI。
+    - 提交前处理 linter 的警告和错误。
+    - 遵循 TypeScript 最佳实践并保持类型安全。
 
-3. **Testing**
+3. **测试**
 
-    - Add tests for new features
-    - Run `npm test` to ensure all tests pass
-    - Update existing tests if your changes affect them
-    - Include both unit tests and integration tests where appropriate
+    - 新功能需要补充测试。
+    - 运行 `npm test` 确认测试通过。
+    - 如果改动影响现有行为，需要同步更新测试。
+    - 适合时同时补充单元测试和集成测试。
 
-    **End-to-End (E2E) Testing**
+    **端到端（E2E）测试**
     
-    NBG inherits comprehensive E2E tests using Playwright that simulate real user interactions with the extension in VS Code:
+    NBG 继承了基于 Playwright 的 E2E 测试，用于模拟用户在 VS Code 扩展中的真实交互：
     
-    - **Running E2E tests:**
+    - **运行 E2E 测试：**
       ```bash
-      npm run test:e2e        # Build and run all E2E tests
-      npm run e2e             # Run tests without rebuilding
-      npm run test:e2e -- --debug  # Run with interactive debugger
+      npm run test:e2e        # 构建并运行所有 E2E 测试
+      npm run e2e             # 不重新构建，直接运行测试
+      npm run test:e2e -- --debug  # 使用交互式调试器运行
       ```
     
-    - **Writing E2E tests:**
-      - Tests are located in `src/test/e2e/`
-      - Use the `e2e` fixture for single-root workspace tests
-      - Use `e2eMultiRoot` fixture for multi-root workspace tests
-      - Follow existing patterns in `auth.test.ts`, `chat.test.ts`, `diff.test.ts`, and `editor.test.ts`
-      - See `src/test/e2e/README.md` for detailed documentation
+    - **编写 E2E 测试：**
+      - 测试位于 `src/test/e2e/`。
+      - 单根工作区测试使用 `e2e` fixture。
+      - 多根工作区测试使用 `e2eMultiRoot` fixture。
+      - 参考 `auth.test.ts`、`chat.test.ts`、`diff.test.ts` 和 `editor.test.ts` 的现有模式。
+      - 详细文档见 `src/test/e2e/README.md`。
     
-    - **Debug mode features:**
-      - Interactive Playwright Inspector for step-by-step debugging
-      - Record new interactions and generate test code automatically
-      - Visual VS Code instance for manual testing
-      - Element inspection and selector validation
+    - **调试模式能力：**
+      - 交互式 Playwright Inspector，用于逐步调试。
+      - 录制新交互并自动生成测试代码。
+      - 可视化 VS Code 实例，便于手动测试。
+      - 元素检查和 selector 验证。
     
-    - **Test environment:**
-      - Automated VS Code setup with the NBG extension loaded
-      - Mock API server for backend testing
-      - Temporary workspaces with test fixtures
-      - Video recording for failed tests
+    - **测试环境：**
+      - 自动化 VS Code 设置，并加载 NBG 扩展。
+      - 用于后端测试的 mock API server。
+      - 带测试 fixture 的临时工作区。
+      - 失败测试的视频录制。
 
-4. **Versioning & Changelog Notes**
+4. **版本与变更记录**
 
-    - Contributors do not need to create changelog-entry files as part of PRs.
-    - Maintainers handle release versioning and changelog curation during the release process.
+    - 贡献者不需要在 PR 中创建 changelog-entry 文件。
+    - 维护者会在发布流程中处理版本号和变更记录整理。
 
-5. **Commit Guidelines**
+5. **提交信息**
 
-    - Write clear, descriptive commit messages
-    - Use conventional commit format (e.g., "feat:", "fix:", "docs:")
-    - Reference relevant issues in commits using #issue-number
+    - 提交信息要清晰、具体。
+    - 使用 Conventional Commits 格式，例如 `feat:`、`fix:`、`docs:`。
+    - 需要时用 `#issue-number` 引用相关 issue。
 
-6. **Before Submitting**
+6. **提交前检查**
 
-    - Rebase your branch on the latest main
-    - Ensure your branch builds successfully
-    - Double-check all tests are passing
-    - Review your changes for any debugging code or console logs
+    - 将分支 rebase 到最新 `main`。
+    - 确认分支可以成功构建。
+    - 再次确认所有测试通过。
+    - 检查是否残留调试代码或 console 日志。
 
-7. **Pull Request Description**
-    - Clearly describe what your changes do
-    - Include steps to test the changes
-    - List any breaking changes
-    - Add screenshots for UI changes
+7. **Pull Request 描述**
+    - 清楚说明改动内容。
+    - 包含验证步骤。
+    - 列出任何破坏性变更。
+    - UI 改动需要附截图。
 
-## Contribution Agreement
+## 贡献协议
 
-By submitting a pull request, you agree that your contributions will be licensed under the same license as the project ([Apache 2.0](LICENSE)).
+提交 pull request 即表示你同意贡献内容使用本项目相同许可证（[Apache 2.0](LICENSE)）。
 
-Remember: contributing to NBG means improving a commercial-grade, Chinese-first developer AI agent while preserving a deliberate compatibility path with the Cline-derived runtime.
+请记住：为 NBG 贡献意味着在保留 Cline 派生运行时兼容路径的同时，推进一个商业化、中文优先的开发者 AI 代理。

@@ -8,7 +8,7 @@
 <table>
 <tbody>
 <td align="center">
-<a href="https://www.npmjs.com/package/nbg" target="_blank">NPM</a>
+<a href="https://www.npmjs.com/package/@nbg/cli" target="_blank">NPM</a>
 </td>
 <td align="center">
 <a href="https://github.com/libUE4/NBG-CLI" target="_blank">GitHub</a>
@@ -34,16 +34,16 @@
 ## 安装
 
 ```sh
-npm install -g nbg
+npm install -g @nbg/cli
 ```
 
 夜间版本：
 
 ```sh
-npm install -g nbg@nightly
+npm install -g @nbg/cli@nightly
 ```
 
-平台二进制覆盖 macOS、Linux、Windows 的 `arm64` 和 `x64`。`nbg` 包会通过 optional dependencies 选择当前平台二进制，安装后运行 CLI 不需要额外 Node、Bun 或 Zig 运行时。
+平台二进制覆盖 macOS、Linux、Windows 的 `arm64` 和 `x64`。`@nbg/cli` 包会通过 optional dependencies 选择当前平台二进制，安装后运行 CLI 不需要额外 Node、Bun 或 Zig 运行时。
 
 ## 快速开始
 
@@ -56,276 +56,278 @@ nbg
 运行单次提示词：
 
 ```sh
-nbg "Audit this package and propose fixes"
+nbg "审计这个包并提出修复建议"
 ```
 
 管道输入：
 
 ```sh
-cat file.txt | nbg "Summarize this"
+cat file.txt | nbg "总结这份文件"
 ```
 
 完整参数参考见 `nbg --help`。
 
-## Use any provider
+## 使用任意提供方
 
-NBG supports the same provider compatibility layer inherited from Cline. You can sign in through the supported hosted provider flows, use your ChatGPT Subscription through `openai-codex`, or bring an API key from Anthropic, OpenAI, Google Gemini, OpenRouter, AWS Bedrock, GCP Vertex, Cerebras, Groq, and any OpenAI-compatible endpoint.
+NBG 保留从 Cline 派生运行时继承的 provider 兼容层。你可以通过受支持的托管 provider 登录，使用 `openai-codex` 接入 ChatGPT 订阅，或接入 Anthropic、OpenAI、Google Gemini、OpenRouter、AWS Bedrock、GCP Vertex、Cerebras、Groq 以及任意 OpenAI 兼容端点的 API Key。
 
 ```sh
-nbg auth                                # interactive sign-in
-nbg auth cline                          # OAuth sign-in through the compatibility provider
+nbg auth                                # 交互式登录
+nbg auth cline                          # 通过兼容 provider 进行 OAuth 登录
 nbg auth --provider anthropic --apikey sk-... --modelid claude-sonnet-4-6
 ```
 
-`nbg auth` without a provider opens the interactive auth setup TUI with the same options as the inherited CLI flow.
+不带 provider 的 `nbg auth` 会打开交互式认证设置 TUI，选项与继承的 CLI 流程保持兼容。
 
-OAuth-supported providers (`cline`, `openai-codex`, `oca`) do not auto-launch a browser on normal startup. Authenticate explicitly first with `nbg auth <provider>`. For non-interactive runs, if an OAuth provider is selected and no saved credentials are available, `nbg` fails fast with an authentication message instead of launching a hidden browser flow.
+支持 OAuth 的 provider（`cline`、`openai-codex`、`oca`）在普通启动时不会自动打开浏览器。请先用 `nbg auth <provider>` 显式认证。无交互运行时，如果选择了 OAuth provider 但没有已保存凭据，`nbg` 会直接给出认证错误，而不是隐藏式启动浏览器流程。
 
-## Modes
+## 运行模式
 
-NBG CLI runs in a few different shapes depending on what you need:
+NBG CLI 根据使用场景提供几种形态：
 
-- Interactive TUI: `nbg` or `nbg -i` opens a full terminal UI with plan/act toggle, slash commands, file mentions, and live tool approvals
-- One-shot: `nbg "your prompt"` runs a single turn and exits
-- JSON: `nbg --json "..."` streams NDJSON events for piping into other tools
-- Yolo: `nbg --yolo "..."` skips approval prompts and exits when the turn finishes
-- Zen: `nbg --zen "..."` fires the task to the background hub daemon and exits immediately (see below)
+- 交互式 TUI：`nbg` 或 `nbg -i` 打开完整终端界面，支持规划/执行切换、斜杠命令、文件引用和实时工具审批。
+- 单次任务：`nbg "你的提示词"` 执行一轮后退出。
+- JSON：`nbg --json "..."` 输出 NDJSON 事件，便于管道传给其他工具。
+- Yolo：`nbg --yolo "..."` 跳过审批提示，任务结束后退出。
+- Zen：`nbg --zen "..."` 将任务提交到后台 hub daemon 后立即退出，详见下文。
 
-## Headless mode for CI/CD
+## 面向 CI/CD 的无头模式
 
-Run NBG with zero interaction for scripting and automation. Pipe input, get JSON output, chain commands, integrate into CI/CD pipelines.
+在脚本和自动化中以无交互方式运行 NBG。你可以管道输入、输出 JSON、串联命令并集成到 CI/CD 流水线。
 
 ```sh
-# One-shot prompt, auto-approve all tools
-nbg --yolo "Run tests and fix any failures"
+# 单次提示词，自动批准所有工具
+nbg --yolo "运行测试并修复失败项"
 
-# Pipe a diff in for review
-git diff origin/main | nbg "Review these changes for issues"
+# 将 diff 通过管道传入用于审查
+git diff origin/main | nbg "检查这些改动是否存在问题"
 
-# NDJSON output for downstream tooling
-nbg --json "List all TODO comments" | jq -r 'select(.type == "agent_event" and .event.text) | .event.text'
+# 输出 NDJSON 供下游工具处理
+nbg --json "列出所有 TODO 注释" | jq -r 'select(.type == "agent_event" and .event.text) | .event.text'
 ```
 
-## Features
+## 功能
 
-- Streaming TUI built on [OpenTUI](https://github.com/sst/opentui) with markdown rendering, syntax-highlighted diffs, scrollable chat, and mouse support
-- Plan/Act mode toggle for switching between planning and execution
-- Native MCP support for connecting custom tools
-- Checkpoints with `/undo` to rewind workspace state
-- Sub-agent spawning and agent teams for parallel work
-- OAuth login for Cline, ChatGPT Subscription (`openai-codex`), and OCA
-- Configurable thinking budgets per run
-- Cron and event-driven schedules for recurring agent work
-- Chat connectors for Telegram, Google Chat, and WhatsApp
+- 基于 [OpenTUI](https://github.com/sst/opentui) 的流式 TUI，支持 Markdown 渲染、语法高亮 diff、可滚动聊天和鼠标操作。
+- 规划/执行模式切换，用于在分析和落地之间控制节奏。
+- 原生 MCP 支持，用于连接自定义工具。
+- 检查点和 `/undo`，用于回退工作区状态。
+- 子智能体和团队模式，用于并行处理复杂任务。
+- 支持 Cline 兼容 provider、ChatGPT 订阅（`openai-codex`）和 OCA 的 OAuth 登录。
+- 每次运行可配置 thinking budget。
+- cron 和事件驱动计划任务，用于周期性智能体工作。
+- Telegram、Google Chat、WhatsApp 等聊天连接器。
 
-## Usage
+## 用法
 
 ```sh
-# Start Cline CLI without a prompt to enter interactive mode
-cline
+# 不带提示词启动，进入交互式模式
+nbg
 
-# Single prompt (one-shot) - includes tools, spawn, and teams
-cline "Audit this package and propose fixes"
+# 单次提示词，包含工具、子任务和团队能力
+nbg "审计这个包并提出修复建议"
 
-# Interactive mode with a starting prompt
-cline -i "Let's work on this together. First, analyze the current state."
+# 带初始提示词进入交互式模式
+nbg -i "我们一起处理这个任务。先分析当前状态。"
 
-# With a custom system prompt
-cline -i -s "You are a pirate" "Tell me about the sea"
+# 使用自定义系统提示词
+nbg -i -s "你是严格的代码审查员" "检查这个模块的风险"
 
-# Require approval before each tool call
-cline --auto-approve false "Inspect and modify this repository"
+# 每次工具调用前都要求审批
+nbg --auto-approve false "检查并修改这个仓库"
 
-# Explicit yolo: enables submit_and_exit and disables spawn/team tools by default
-cline --yolo --retries 5 "Refactor this package"
+# 显式 yolo：启用提交后退出，并默认禁用 spawn/team 工具
+nbg --yolo --retries 5 "重构这个包"
 
-# Override consecutive internal mistake (retry) limit (default: 3)
-cline --retries 5 "Fix failing tests"
+# 覆盖连续内部错误重试上限（默认 3）
+nbg --retries 5 "修复失败测试"
 
-# Team workflow with persistent name
-cline --team-name my-team "Plan, implement, and verify release checklist"
-cline --team-name my-team "Continue yesterday's team workflow"
+# 使用持久化名称运行团队工作流
+nbg --team-name my-team "规划、实现并验证发布清单"
+nbg --team-name my-team "继续昨天的团队工作流"
 
-# Show verbose run stats (elapsed time, tokens, estimated cost when available)
-cline -v "Explain quantum computing"
+# 显示详细运行统计（耗时、token、可用时显示估算费用）
+nbg -v "解释量子计算"
 
-# Use a specific provider, model, and access token for a single prompt
-cline -P openrouter -m google/gemini-3-pro -k sk-... "Set up a storybook"
+# 为单次提示词指定 provider、模型和访问 token
+nbg -P openrouter -m google/gemini-3-pro -k sk-... "搭建 Storybook"
 
-# Use a different model with the last used provider
-cline -m anthropic/claude-opus-4-6 "Explain string theory"
+# 在上次使用的 provider 下切换模型
+nbg -m anthropic/claude-opus-4-6 "解释弦理论"
 
-# Stream structured NDJSON output
-cline --json "Summarize this repository"
+# 输出结构化 NDJSON
+nbg --json "总结这个仓库"
 
-# Quick provider setup
-cline auth --provider anthropic --apikey sk-... --modelid claude-sonnet-4-6
-cline auth --provider openai-native --apikey sk-... --modelid gpt-5 --baseurl https://api.example.com/v1
+# 快速设置 provider
+nbg auth --provider anthropic --apikey sk-... --modelid claude-sonnet-4-6
+nbg auth --provider openai-native --apikey sk-... --modelid gpt-5 --baseurl https://api.example.com/v1
 ```
 
-### Connectors
+### 连接器
 
-Bridge a chat surface into RPC-backed Cline sessions. Each conversation thread maps to a session with full context. Supported platforms: Telegram, Slack, Google Chat, WhatsApp, and Linear.
+把聊天平台桥接到 RPC 支撑的 NBG 会话。每个对话线程都会映射到一个带完整上下文的会话。支持平台包括 Telegram、Slack、Google Chat、WhatsApp 和 Linear。
 
 ```sh
-# Telegram (polling mode)
-cline connect telegram -k 123456:ABCDEF...
+# Telegram（轮询模式）
+nbg connect telegram -k 123456:ABCDEF...
 
-# Slack (webhook mode)
-cline connect slack --bot-token $SLACK_BOT_TOKEN --signing-secret $SLACK_SIGNING_SECRET --base-url https://your-domain.com
+# Slack（webhook 模式）
+nbg connect slack --bot-token $SLACK_BOT_TOKEN --signing-secret $SLACK_SIGNING_SECRET --base-url https://your-domain.com
 
-# Google Chat (webhook mode)
-cline connect gchat --base-url https://your-domain.com
+# Google Chat（webhook 模式）
+nbg connect gchat --base-url https://your-domain.com
 
-# WhatsApp (webhook mode)
-cline connect whatsapp --base-url https://your-domain.com
+# WhatsApp（webhook 模式）
+nbg connect whatsapp --base-url https://your-domain.com
 
-# Linear (webhook mode)
-cline connect linear --api-key $LINEAR_API_KEY --base-url https://your-domain.com
+# Linear（webhook 模式）
+nbg connect linear --api-key $LINEAR_API_KEY --base-url https://your-domain.com
 
-# Stop connector bridges and delete their sessions
-cline connect --stop
-cline connect --stop telegram
+# 停止连接器桥接并删除对应会话
+nbg connect --stop
+nbg connect --stop telegram
 ```
 
-In chat surfaces, connector slash commands include `/help`, `/start`, `/new`, `/clear`, `/whereami`, `/tools`, `/yolo`, `/cwd <path>`, `/schedule`, `/abort`, and `/exit`. Run `cline connect <adapter> --help` to see the full flag list for any adapter.
+在聊天平台中，连接器斜杠命令包括 `/help`、`/start`、`/new`、`/clear`、`/whereami`、`/tools`、`/yolo`、`/cwd <path>`、`/schedule`、`/abort` 和 `/exit`。运行 `nbg connect <adapter> --help` 可查看指定 adapter 的完整参数列表。
 
-### Schedules
+### 计划任务
 
-Schedule agents on cron-like intervals or external events.
+按 cron 周期或外部事件调度智能体。
 
 ```sh
-cline schedule create "Daily code review" \
+nbg schedule create "每日代码审查" \
   --cron "0 9 * * MON-FRI" \
-  --prompt "Review PRs opened yesterday and summarize issues." \
+  --prompt "审查昨天打开的 PR 并总结问题。" \
   --workspace /path/to/repo \
-  --provider cline \
-  --model openai/gpt-5.3-codex \
+  --provider openai-compatible \
+  --model gpt-5 \
   --timeout 3600 \
   --tags automation,review
 
-cline schedule list
-cline schedule get <schedule-id>
-cline schedule trigger <schedule-id>
-cline schedule history <schedule-id> --limit 20
-cline schedule export <schedule-id> > daily-review.yaml
-cline schedule import ./daily-review.yaml
+nbg schedule list
+nbg schedule get <schedule-id>
+nbg schedule trigger <schedule-id>
+nbg schedule history <schedule-id> --limit 20
+nbg schedule export <schedule-id> > daily-review.yaml
+nbg schedule import ./daily-review.yaml
 ```
 
-Schedules can route results back to chat surfaces with `--delivery-adapter`, `--delivery-bot`, and `--delivery-thread`.
+计划任务可以通过 `--delivery-adapter`、`--delivery-bot` 和 `--delivery-thread` 把结果回传到聊天平台。
 
-## Options
+## 参数
 
-| Flag | Description |
-|------|-------------|
-| `-s, --system <prompt>` | Override the system prompt |
-| `-P, --provider <id>` | Provider id (default: `cline`) |
-| `-m, --model <id>` | Model id (default: `anthropic/claude-sonnet-4.6`) |
-| `-k, --key <api-key>` | API key override for this run |
-| `-p, --plan` | Run in plan mode (default is act mode) |
-| `-i, --tui` | Interactive TUI multi-turn mode |
-| `-t, --timeout <seconds>` | Optional run timeout in seconds |
-| `-c, --cwd <path>` | Working directory for tools |
-| `--config <path>` | Configuration directory (used for CLI home resolution) |
-| `--hooks-dir <path>` | Additional hooks directory hint for runtime hook injection |
-| `--acp` | ACP (Agent Client Protocol) mode |
-| `--thinking [none\|low\|medium\|high\|xhigh]` | Model thinking level when supported. Defaults to `medium` when the flag is provided without a level; thinking is off when the flag is omitted. |
-| `--compaction <agentic\|basic\|off>` | Context compaction mode. Defaults to `basic`; use `agentic` for LLM compaction or `off` to disable. |
-| `--retries <count>` | Maximum consecutive mistakes (retries) before halting (default: `3`) |
-| `--json` | Output NDJSON instead of styled text |
-| `--data-dir <path>` | Use isolated local state at `<path>` instead of `~/.cline` (enables sandbox mode automatically) |
-| `--auto-approve [true\|false]` | Set tool auto-approval for all tools |
-| `--kanban` | Run the external `kanban` app |
-| `-y, --yolo` | Skip tool approval prompts, enable `submit_and_exit`, and disable spawn/team tools by default |
-| `-z, --zen` | Dispatch the task to the background hub and exit the CLI immediately |
-| `--team-name <name>` | Override the runtime team state name |
-| `-h, --help` | Show help and exit |
-| `-v, --verbose` | Show verbose runtime diagnostics |
-| `-V, --version` | Show version and exit |
+| 参数 | 说明 |
+|------|------|
+| `-s, --system <prompt>` | 覆盖系统提示词 |
+| `-P, --provider <id>` | provider id（默认随配置而定，NBG 首选 OpenAI 兼容入口） |
+| `-m, --model <id>` | 模型 id |
+| `-k, --key <api-key>` | 本次运行使用的 API Key 覆盖值 |
+| `-p, --plan` | 以规划模式运行（默认是执行模式） |
+| `-i, --tui` | 进入交互式 TUI 多轮模式 |
+| `-t, --timeout <seconds>` | 可选运行超时时间，单位秒 |
+| `-c, --cwd <path>` | 工具执行的工作目录 |
+| `--config <path>` | 配置目录，用于解析 CLI home |
+| `--hooks-dir <path>` | 运行时 hook 注入使用的附加目录 |
+| `--acp` | ACP（Agent Client Protocol）模式 |
+| `--thinking [none\|low\|medium\|high\|xhigh]` | 模型支持时的 thinking 级别；只传 flag 时默认 `medium`，不传则关闭 |
+| `--compaction <agentic\|basic\|off>` | 上下文压缩模式，默认 `basic`；`agentic` 使用 LLM 压缩，`off` 关闭 |
+| `--retries <count>` | 停止前允许的最大连续错误/重试次数（默认 `3`） |
+| `--json` | 输出 NDJSON，而不是带样式文本 |
+| `--data-dir <path>` | 使用隔离本地状态目录；兼容层默认状态目录仍可能是 `~/.cline` |
+| `--auto-approve [true\|false]` | 设置所有工具的自动审批 |
+| `--kanban` | 运行外部 `kanban` 应用 |
+| `-y, --yolo` | 跳过工具审批，启用 `submit_and_exit`，并默认禁用 spawn/team 工具 |
+| `-z, --zen` | 将任务派发到后台 hub 后立即退出 CLI |
+| `--team-name <name>` | 覆盖运行时团队状态名称 |
+| `-h, --help` | 显示帮助并退出 |
+| `-v, --verbose` | 显示详细运行诊断 |
+| `-V, --version` | 显示版本并退出 |
 
-`--json` is non-interactive and requires either a prompt argument or piped stdin. `--key` takes precedence over environment variables.
+`--json` 是无交互模式，需要提示词参数或管道 stdin。`--key` 优先级高于环境变量。
 
-## Top-level commands
+## 顶层命令
 
-- `cline config` - Open the interactive config view
-- `cline history|h [options]` - List session history or manage saved sessions
-- `cline version` - Show CLI version
-- `cline update [options]` - Check for CLI and kanban updates
-- `cline auth <provider>` - Authenticate or seed provider credentials
-- `cline connect <adapter>` - Run a chat connector bridge (`telegram`, `gchat`, `whatsapp`)
-- `cline connect --stop [adapter]` - Stop connector bridge processes and their sessions
-- `cline schedule <command>` - Create and manage scheduled runs
-- `cline doctor` - Inspect local CLI health and stale processes
-- `cline doctor fix` - Kill stale local RPC listeners and old CLI processes
-- `cline doctor log` - Open the CLI runtime log file
-- `cline hook` - Handle a hook payload from stdin
-- `cline hub` - Manage the local hub daemon
-- `cline kanban` - Run the external `kanban` app, installing it first when needed
+- `nbg config` - 打开交互式配置视图
+- `nbg history|h [options]` - 列出历史会话或管理已保存会话
+- `nbg version` - 显示 CLI 版本
+- `nbg update [options]` - 检查 CLI 和 kanban 更新
+- `nbg auth <provider>` - 认证或写入 provider 凭据
+- `nbg connect <adapter>` - 运行聊天连接器桥接（`telegram`、`gchat`、`whatsapp`）
+- `nbg connect --stop [adapter]` - 停止连接器桥接进程和相关会话
+- `nbg schedule <command>` - 创建和管理计划任务
+- `nbg doctor` - 检查本地 CLI 健康状态和残留进程
+- `nbg doctor fix` - 清理残留本地 RPC listener 和旧 CLI 进程
+- `nbg doctor log` - 打开 CLI 运行时日志文件
+- `nbg hook` - 从 stdin 处理 hook payload
+- `nbg hub` - 管理本地 hub daemon
+- `nbg kanban` - 运行外部 `kanban` 应用，必要时先安装
 
-## Zen mode
+## Zen 模式
 
-`--zen` (alias `-z`) runs a task in the background hub daemon and exits the CLI immediately. It is intended for long-running tasks you want to fire off and walk away from.
+`--zen`（别名 `-z`）会把任务提交到后台 hub daemon，然后立即退出 CLI。它适合不需要保持终端连接的长任务。
 
 ```sh
-cline --zen "Refactor the authentication module and add unit tests"
+nbg --zen "重构认证模块并补充单元测试"
 ```
 
-Behavior:
+行为：
 
-- The CLI starts (or reuses) the local hub daemon, submits the task, then exits. It does not stream output or stay attached to the session.
-- Because there is no human in the loop once the CLI exits, zen sessions run with full tool auto-approval (same semantics as `--yolo`). `spawn`/`team` tools are disabled by default for safety, consistent with yolo-mode defaults.
-- If the Cline menubar app is running, it subscribes to hub `ui.notify` events and will surface a system notification when the task completes.
-- If the menubar app is not running, there is no live UI for the task. Use `cline history` later to find the session and inspect the result.
-- `--zen` is incompatible with `--data-dir` (the implicit sandbox requires a local backend that exits with the CLI) and with `--tui` (there is no terminal UI to render into).
+- CLI 会启动或复用本地 hub daemon，提交任务后退出；它不会流式输出，也不会继续附着在会话上。
+- 因为 CLI 退出后没有人工审批，zen 会话会完全自动批准工具调用，语义与 `--yolo` 一致。出于安全考虑，`spawn`/`team` 工具默认禁用。
+- 如果 NBG 菜单栏应用正在运行，它可以订阅 hub `ui.notify` 事件，并在任务完成时显示系统通知。
+- 如果没有运行菜单栏应用，则不会有实时 UI。稍后可用 `nbg history` 查找会话并查看结果。
+- `--zen` 与 `--data-dir` 不兼容，也不能和 `--tui` 同时使用。
 
-## Tool approval
+## 工具审批
 
-Tool calls are auto-approved by default. Use `--auto-approve false` to require review before tool execution.
+工具调用默认自动批准。使用 `--auto-approve false` 可在工具执行前要求人工审查。
 
 ```sh
-cline --auto-approve false "Inspect and modify this repository"
+nbg --auto-approve false "检查并修改这个仓库"
 ```
 
-When approval is required, the CLI prompts in TTY mode:
+需要审批时，CLI 会在 TTY 模式中提示：
 
 ```text
-Approve tool "<tool_name>" with input <preview>? [y/N]
+批准 "<tool_name>" <preview> [y/N]
 ```
 
-- Enter `y` or `yes` to approve.
-- Enter anything else (or press Enter) to reject.
-- If stdin/stdout is not a TTY, required-approval calls are denied in terminal mode.
+- 输入 `y` 或 `yes` 批准。
+- 输入其他内容或直接回车会拒绝。
+- 如果 stdin/stdout 不是 TTY，终端模式会拒绝需要审批的工具调用。
 
-Desktop-integrated approval mode is also supported via env wiring (`CLINE_TOOL_APPROVAL_MODE=desktop` and `CLINE_TOOL_APPROVAL_DIR=<path>`). In desktop mode, CLI writes a request JSON file and waits for a matching decision JSON file.
+也支持通过环境变量启用桌面集成审批模式（`CLINE_TOOL_APPROVAL_MODE=desktop` 和 `CLINE_TOOL_APPROVAL_DIR=<path>`）。在桌面模式中，CLI 会写入请求 JSON 文件，并等待匹配的决策 JSON 文件。
 
-## Environment variables
+## 环境变量
 
-- `ANTHROPIC_API_KEY` - API key for Anthropic
-- `CLINE_API_KEY` - API key for Cline (when using `-P cline`)
-- `OPENAI_API_KEY` - API key for OpenAI (when using `-P openai`)
-- `OPENROUTER_API_KEY` - API key for OpenRouter (when using `-P openrouter`)
-- `AI_GATEWAY_API_KEY` - API key for Vercel AI Gateway (when using `-P vercel-ai-gateway`)
-- `V0_API_KEY` - API key for v0 (when using `-P v0`)
-- `CLINE_DATA_DIR` - Base data directory for sessions/settings/teams/hooks
-- `CLINE_SANDBOX` - Set to `1` to force sandbox mode
-- `CLINE_SANDBOX_DATA_DIR` - Override sandbox state directory
-- `CLINE_TEAM_DATA_DIR` - Override team persistence directory
-- `CLINE_BUILD_ENV` - Runtime build mode for SDK-owned subprocess launches
-- `CLINE_DEBUG_HOST` - Host for development inspector listeners (default `127.0.0.1`)
-- `CLINE_DEBUG_PORT_BASE` - Base inspector port for development child processes
-- `CLINE_TOOL_APPROVAL_MODE` - Approval mode (`desktop` uses file IPC; unset uses terminal prompt)
-- `CLINE_TOOL_APPROVAL_DIR` - Directory for desktop approval request/decision files
-- `CLINE_LOG_ENABLED` - Set to `0`/`false` to disable runtime file logging
-- `CLINE_LOG_LEVEL` - Runtime log level (`trace|debug|info|warn|error|fatal|silent`, default `info`)
-- `CLINE_LOG_PATH` - Runtime log file path (default `<CLINE_DATA_DIR>/logs/cline.log`)
-- `CLINE_LOG_NAME` - Logger name embedded in runtime log records
+以下变量名仍来自兼容运行时，迁移到 `NBG_*` 命名需要按兼容计划单独推进。
 
-`--key` takes precedence over environment variables.
+- `ANTHROPIC_API_KEY` - Anthropic API Key
+- `CLINE_API_KEY` - Cline 兼容 provider 的 API Key（使用 `-P cline` 时）
+- `OPENAI_API_KEY` - OpenAI API Key（使用 `-P openai` 时）
+- `OPENROUTER_API_KEY` - OpenRouter API Key（使用 `-P openrouter` 时）
+- `AI_GATEWAY_API_KEY` - Vercel AI Gateway API Key（使用 `-P vercel-ai-gateway` 时）
+- `V0_API_KEY` - v0 API Key（使用 `-P v0` 时）
+- `CLINE_DATA_DIR` - 会话、设置、团队和 hooks 的基础数据目录
+- `CLINE_SANDBOX` - 设为 `1` 时强制启用沙箱模式
+- `CLINE_SANDBOX_DATA_DIR` - 覆盖沙箱状态目录
+- `CLINE_TEAM_DATA_DIR` - 覆盖团队持久化目录
+- `CLINE_BUILD_ENV` - SDK 子进程启动时使用的运行时构建模式
+- `CLINE_DEBUG_HOST` - 开发 inspector listener 主机（默认 `127.0.0.1`）
+- `CLINE_DEBUG_PORT_BASE` - 开发子进程 inspector 起始端口
+- `CLINE_TOOL_APPROVAL_MODE` - 审批模式（`desktop` 使用文件 IPC；未设置时使用终端提示）
+- `CLINE_TOOL_APPROVAL_DIR` - 桌面审批请求/决策文件目录
+- `CLINE_LOG_ENABLED` - 设为 `0`/`false` 可关闭运行时文件日志
+- `CLINE_LOG_LEVEL` - 运行时日志级别（`trace|debug|info|warn|error|fatal|silent`，默认 `info`）
+- `CLINE_LOG_PATH` - 运行时日志文件路径（默认 `<CLINE_DATA_DIR>/logs/cline.log`）
+- `CLINE_LOG_NAME` - 写入运行时日志记录的 logger 名称
 
-## Contributing
+`--key` 的优先级高于环境变量。
 
-See [DEVELOPMENT.md](./DEVELOPMENT.md) for local development setup, monorepo structure, and TUI architecture. See [DISTRIBUTION.md](./DISTRIBUTION.md) for how the CLI is packaged and distributed.
+## 贡献
 
-## License
+本地开发、monorepo 结构和 TUI 架构见 [DEVELOPMENT.md](./DEVELOPMENT.md)。CLI 打包和分发流程见 [DISTRIBUTION.md](./DISTRIBUTION.md)。
 
-[Apache 2.0 © Cline Bot Inc.](https://github.com/cline/cline/blob/main/LICENSE)
+## 许可证
+
+[Apache 2.0](../../../LICENSE)

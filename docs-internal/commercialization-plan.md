@@ -1,31 +1,31 @@
-# NBG Commercialization Plan
+# NBG 商业化计划
 
-## Direction
+## 方向
 
-NBG is an independent commercial developer CLI and SDK product built on the current Cline codebase as the runtime foundation. This repository is not a from-scratch rewrite. The first milestone is to make the fork independently buildable, branded, testable, and releasable while preserving the existing Cline runtime behavior underneath.
+NBG 是基于当前 Cline 代码库底座演进的独立商业化开发者 CLI 与 SDK 产品。本仓库不是从零重写，首要目标是在保留 Cline 派生运行时行为的同时，让 fork 具备独立构建、独立品牌、可测试和可发布能力。
 
-## Version Strategy
+## 版本策略
 
-- Keep the current Cline-derived runtime and package graph as the compatibility layer.
-- Introduce NBG as the public product shell first: repository metadata, CLI package, binary name, docs, release checks, and support runbooks.
-- Move deeper package names from `@cline/*` to `@nbg/*` only after the NBG shell builds and tests cleanly.
-- Maintain a beta/vNext track for platform API changes instead of breaking existing SDK behavior in one pass.
+- 继续把当前 Cline 派生运行时和包图作为兼容层。
+- 先建立 NBG 公共产品外壳：仓库元数据、CLI 包、二进制名称、文档、发布检查和支持 runbook。
+- 只有在 NBG 外壳可稳定构建和测试后，才逐步把深层包名从 `@cline/*` 迁移到 `@nbg/*`。
+- 平台 API 变化走 beta/vNext 轨道，避免一次性破坏现有 SDK 行为。
 
-## Implementation Phases
+## 实施阶段
 
-1. Repository extraction: copy the current Cline worktree into `/root/nbg`, exclude generated outputs, dependency folders, caches, and logs, then initialize a new git repository.
-2. Planning anchors: add this plan and agent execution prompts under `docs-internal/` so later agents continue from the same product direction.
-3. Product shell: rename public metadata to NBG, add the `nbg` CLI binary, and update top-level contributor guidance.
-4. Runtime hardening: standardize CLI startup, exit codes, structured errors, telemetry redaction, tool policies, and doctor output around the NBG product surface.
-5. Release quality: require typecheck, unit tests, build, package smoke tests, bundle/package integrity checks, and privacy checks before release.
+1. 仓库抽离：把当前 Cline worktree 复制到 `/root/nbg`，排除生成物、依赖目录、缓存和日志，并初始化新 git 仓库。
+2. 规划锚点：在 `docs-internal/` 中补充计划和 agent 执行提示词，让后续执行延续同一产品方向。
+3. 产品外壳：把公开元数据改为 NBG，增加 `nbg` CLI 二进制，并更新仓库首页、Marketplace 文档和贡献指南。
+4. 运行时加固：围绕 NBG 产品面统一 CLI 启动、退出码、结构化错误、遥测脱敏、工具策略和 doctor 输出。
+5. 发布质量：发布前要求 typecheck、单元测试、构建、包安装 smoke、bundle/package 完整性检查和隐私检查。
 
-## Current Scope
+## 当前范围
 
-The current execution scope is phase 1 through the first part of phase 3. Do not attempt a full repository-wide `cline` to `nbg` text replacement. Many identifiers are provider IDs, protocol names, test fixtures, or compatibility paths and must be migrated deliberately.
+当前已完成仓库抽离、NBG CLI 基础构建、主要入口文档中文化和多轮推送。下一步继续推进阶段 3 的公开文案清理，并开始为阶段 4 梳理运行时加固点。不要做全仓 `cline` 到 `nbg` 的机械替换；很多标识是 provider ID、协议名、测试 fixture 或兼容路径，必须按计划迁移。
 
-## Quality Gates
+## 质量门禁
 
 - `cd sdk/apps/cli && bun run typecheck`
 - `cd sdk && bun run test:unit`
 - `cd sdk/apps/cli && bun script/build.ts --single`
-- Follow-up: package install smoke and `nbg --version` / `nbg --help` smoke once the binary build is available.
+- 后续补齐：包安装 smoke，以及二进制可用后的 `nbg --version` / `nbg --help` smoke。
