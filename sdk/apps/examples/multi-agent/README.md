@@ -1,51 +1,51 @@
-# Multi-Agent War Room
+# 多智能体 War Room
 
-A web app that spawns four specialist agents in parallel, streams their responses to the browser in real time via SSE, then feeds their findings into a synthesizer agent that produces a unified decision brief.
+一个 Web 应用示例：并行启动四个专家智能体，通过 SSE 把响应实时流式输出到浏览器，然后把结果交给综合智能体生成统一决策简报。
 
-![Agent War Room interface](assets/agent-war-room.png)
+![多智能体 War Room 界面](assets/agent-war-room.png)
 
-## Getting started
+## 快速开始
 
-Install dependencies:
+安装依赖：
 
 ```bash
 bun install
 bun run build:sdk
 ```
 
-Set an API key:
+设置 API Key：
 
 ```bash
-export CLINE_API_KEY="cline_..."
+export CLINE_API_KEY="cline_..." # 兼容 provider 示例；也可改用其它 provider 凭据
 ```
 
-Run:
+运行：
 
 ```bash
 bun dev
 ```
 
-Open http://localhost:3456 in your browser, enter a mission, and watch the agents work.
+在浏览器打开 http://localhost:3456，输入任务目标，观察智能体协作。
 
-## What it does
+## 能做什么
 
-1. You enter a mission in the browser
-2. The server spawns four `Agent` instances in parallel via `Promise.all`:
-   - Architect (system design)
-   - Security Analyst (audit)
-   - Pragmatist (product)
-   - Skeptic (red team)
-3. Each agent streams `assistant-text-delta` events to the browser via SSE, rendered in its own card
-4. Once all specialists finish, a synthesizer agent combines their findings into a unified decision brief, also streamed live
+1. 在浏览器输入任务目标。
+2. 服务端通过 `Promise.all` 并行启动四个 `Agent` 实例：
+   - Architect（系统设计）
+   - Security Analyst（审计）
+   - Pragmatist（产品）
+   - Skeptic（红队）
+3. 每个智能体通过 SSE 将 `assistant-text-delta` 事件流式发送到浏览器，并渲染到独立卡片。
+4. 所有专家完成后，综合智能体会合并结果，生成统一决策简报并实时流式输出。
 
-## Concepts demonstrated
+## 演示概念
 
-- Running multiple `Agent` instances concurrently with `Promise.all`
-- Per-agent `subscribe()` for independent event streams
-- Server-Sent Events (SSE) to stream agent output to a browser
-- Agent composition: feeding one agent's output as input to another
-- Inline HTML frontend served from the same Node.js server (single file, no build step)
+- 使用 `Promise.all` 并发运行多个 `Agent` 实例。
+- 每个智能体使用独立 `subscribe()` 事件流。
+- 使用 Server-Sent Events（SSE）把智能体输出流式发送到浏览器。
+- 智能体组合：把一个智能体的输出作为另一个智能体的输入。
+- 由同一个 Node.js server 提供内联 HTML 前端（单文件，无构建步骤）。
 
-## Notes
+## 备注
 
-For a simpler starting point, see [quickstart](../quickstart). For custom tools and structured workflows, see [code-review-bot](../code-review-bot).
+更简单的起点见 [quickstart](../quickstart)。自定义工具和结构化工作流见 [code-review-bot](../code-review-bot)。

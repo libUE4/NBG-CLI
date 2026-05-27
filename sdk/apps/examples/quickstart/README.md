@@ -1,37 +1,37 @@
-# Quickstart
+# 快速开始
 
-The simplest possible Cline SDK example. Creates one agent, sends a single prompt, and streams the response to stdout.
+最小化的兼容 SDK 示例：创建一个智能体，发送单条提示词，并把响应流式输出到 stdout。
 
-## Getting started
+## 快速开始
 
-Use Node.js 22 or newer.
+使用 Node.js 22 或更新版本。
 
-Install dependencies:
+安装依赖：
 
 ```bash
 bun install
 bun run build:sdk
 ```
 
-Set an API key:
+设置 API Key：
 
 ```bash
-export CLINE_API_KEY="cline_..."
+export CLINE_API_KEY="cline_..." # 兼容 provider 示例；也可改用其它 provider 凭据
 ```
 
-Run:
+运行：
 
 ```bash
 bun dev
 ```
 
-## What it does
+## 能做什么
 
-1. Creates an `Agent` with a provider and model
-2. Subscribes to `assistant-text-delta` events to stream output
-3. Calls `agent.run()` with a prompt
-4. Prints token usage when done
+1. 使用 provider 和模型创建 `Agent`。
+2. 订阅 `assistant-text-delta` 事件实现流式输出。
+3. 使用提示词调用 `agent.run()`。
+4. 完成后打印 token 使用量。
 
-## Notes
+## 备注
 
-For an interactive terminal chat, see [cli-agent](../cli-agent). For custom tools and structured workflows, see [code-review-bot](../code-review-bot).
+交互式终端聊天见 [cli-agent](../cli-agent)。自定义工具和结构化工作流见 [code-review-bot](../code-review-bot)。
