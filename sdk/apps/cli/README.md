@@ -8,7 +8,7 @@
 <table>
 <tbody>
 <td align="center">
-<a href="https://www.npmjs.com/package/@nbg/cli" target="_blank">NPM</a>
+<a href="https://www.npmjs.com/package/nbg" target="_blank">NPM</a>
 </td>
 <td align="center">
 <a href="https://github.com/libUE4/NBG-CLI" target="_blank">GitHub</a>
@@ -34,16 +34,16 @@
 ## 安装
 
 ```sh
-npm install -g @nbg/cli
+npm install -g nbg
 ```
 
-夜间版本：
+预发布标签（如存在）：
 
 ```sh
-npm install -g @nbg/cli@nightly
+npm install -g nbg@next
 ```
 
-平台二进制覆盖 macOS、Linux、Windows 的 `arm64` 和 `x64`。`@nbg/cli` 包会通过 optional dependencies 选择当前平台二进制，安装后运行 CLI 不需要额外 Node、Bun 或 Zig 运行时。
+平台二进制覆盖 macOS、Linux、Windows 的 `arm64` 和 `x64`。`nbg` wrapper 包会通过 `@nbg/cli-*` optional dependencies 选择当前平台二进制，安装后运行 CLI 不需要额外 Node、Bun 或 Zig 运行时。
 
 ## 快速开始
 

@@ -48,7 +48,7 @@
 也支持 CI/CD 和脚本中的无头模式。
 
 ```
-npm i -g @nbg/cli
+npm i -g nbg
 ```
 
 <a href="./sdk/apps/cli/README.md">查看 CLI 文档</a>

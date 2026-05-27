@@ -199,7 +199,23 @@ for (const item of targets) {
 					`Expected --version to print ${version}, got ${actualVersion}`,
 				);
 			}
-			console.log(`  Passed: ${actualVersion}`);
+			const helpOutput = await $`${outfile} --help`.text();
+			const requiredHelpParts = [
+				"用法： nbg",
+				"终端里的 AI 编码助手",
+				"openai-compatible",
+				"plugin",
+				"schedule",
+			];
+			const missingHelpParts = requiredHelpParts.filter(
+				(part) => !helpOutput.includes(part),
+			);
+			if (missingHelpParts.length > 0) {
+				throw new Error(
+					`Expected --help to include: ${missingHelpParts.join(", ")}`,
+				);
+			}
+			console.log(`  Passed: ${actualVersion}, --help`);
 		} catch (e) {
 			console.error(`  Smoke test FAILED for ${name}:`, e);
 			process.exit(1);
