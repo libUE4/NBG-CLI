@@ -69,6 +69,7 @@
 		"test:smoke": "bun script/smoke.ts",
 		"test:dist": "bun script/verify-dist.ts",
 		"test:install": "bun script/install-smoke.ts",
+		"test:privacy": "bun script/privacy-check.ts",
 		"link": "bun unlink && bun link"
 	},
 	"dependencies": {

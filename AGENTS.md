@@ -14,6 +14,7 @@
 - `cd sdk/apps/cli && bun run test:smoke`: 验证当前平台二进制的 `nbg --version` 和 `nbg --help`。
 - `cd sdk/apps/cli && bun run test:dist`: 验证当前平台 dist 包 manifest、bin 映射和可执行权限。
 - `cd sdk/apps/cli && bun run test:install`: 验证本地安装布局中 `nbg` wrapper 能解析当前平台二进制。
+- `cd sdk/apps/cli && bun run test:privacy`: 扫描小文本文件中的疑似密钥、私钥和凭据 URL。
 - `cd sdk/apps/cli && bun run test:unit`: 运行 NBG CLI 单元测试。
 - `cd sdk/apps/cli && bun run typecheck`: 运行 CLI TypeScript 检查。
 - `cd sdk && bun run check`: 运行格式、构建、类型检查和发布检查。
