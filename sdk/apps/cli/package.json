@@ -68,6 +68,7 @@
 		"test:e2e:cli:tui": "cd src/tests && tui-test",
 		"test:smoke": "bun script/smoke.ts",
 		"test:dist": "bun script/verify-dist.ts",
+		"test:install": "bun script/install-smoke.ts",
 		"link": "bun unlink && bun link"
 	},
 	"dependencies": {
