@@ -1,13 +1,13 @@
-# Contributing to Cline
+# Contributing to NBG
 
-We're thrilled you're interested in contributing to Cline. Whether you're fixing a bug, adding a feature, or improving our docs, every contribution makes Cline smarter! To keep our community vibrant and welcoming, all members must adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
+感谢你参与 NBG。无论是修复 bug、改进文档，还是补齐中文开发者 AI 代理体验，都请先阅读本指南和 [Code of Conduct](CODE_OF_CONDUCT.md)。NBG 当前基于 Cline 运行时兼容层演进，贡献时不要机械替换 provider ID、存储路径或兼容 API。
 
 ## Reporting Bugs or Issues
 
-Bug reports help make Cline better for everyone! Before creating a new issue, please [search existing ones](https://github.com/cline/cline/issues) to avoid duplicates. When you're ready to report a bug, head over to our [issues page](https://github.com/cline/cline/issues/new/choose) where you'll find a template to help you with filling out the relevant information.
+Bug reports help make NBG better for everyone. Before creating a new issue, please [search existing ones](https://github.com/libUE4/NBG-CLI/issues) to avoid duplicates. When you're ready to report a bug, open an issue at https://github.com/libUE4/NBG-CLI/issues/new/choose.
 
 <blockquote class='warning-note'>
-     🔐 <b>Important:</b> If you discover a security vulnerability, please use the <a href="https://github.com/cline/cline/security/advisories/new">Github security tool to report it privately</a>.
+     🔐 <b>Important:</b> If you discover a security vulnerability, please use GitHub private vulnerability reporting for this repository when available. Do not publish exploit details in a public issue.
 </blockquote>
 
 
@@ -15,7 +15,7 @@ Bug reports help make Cline better for everyone! Before creating a new issue, pl
 
 All contributions must begin with a GitHub Issue, unless the change is for small bug fixes, typo corrections, minor wording improvements, or simple type fixes that don't change functionality.
 **For features and contributions**:
-- First check the [Feature Requests discussions board](https://github.com/cline/cline/discussions/categories/feature-requests) for similar ideas
+- First check existing [NBG issues](https://github.com/libUE4/NBG-CLI/issues) for similar ideas
 - If your idea is new, create a new feature request  
 - Wait for approval from core maintainers before starting implementation
 - Once approved, feel free to begin working on a PR with the help of our community!
@@ -25,9 +25,9 @@ All contributions must begin with a GitHub Issue, unless the change is for small
 
 ## Deciding What to Work On
 
-Looking for a good first contribution? Check out issues labeled ["good first issue"](https://github.com/cline/cline/labels/good%20first%20issue) or ["help wanted"](https://github.com/cline/cline/labels/help%20wanted). These are specifically curated for new contributors and areas where we'd love some help!
+Looking for a good first contribution? Check out issues labeled ["good first issue"](https://github.com/libUE4/NBG-CLI/labels/good%20first%20issue) or ["help wanted"](https://github.com/libUE4/NBG-CLI/labels/help%20wanted). These are specifically curated for new contributors and areas where we'd love some help.
 
-We also welcome contributions to our [documentation](https://github.com/cline/cline/tree/main/docs)! Whether it's fixing typos, improving existing guides, or creating new educational content - we'd love to build a community-driven repository of resources that helps everyone get the most out of Cline. You can start by diving into `/docs` and looking for areas that need improvement.
+We also welcome documentation contributions in `/docs`, `README.md`, `sdk/apps/cli/README.md`, and `docs-internal/`. Public-facing docs should prioritize Chinese wording and NBG branding while clearly identifying Cline-derived compatibility internals where relevant.
 
 ## Development Setup
 
@@ -36,11 +36,11 @@ We also welcome contributions to our [documentation](https://github.com/cline/cl
 
 1. Clone the repository _(Requires [git-lfs](https://git-lfs.com/))_:
     ```bash
-    git clone https://github.com/cline/cline.git
+    git clone git@github.com:libUE4/NBG-CLI.git
     ```
 2. Open the project in VSCode:
     ```bash
-    code cline
+    code NBG-CLI
     ```
 3. Install [bun](https://bun.com)
 4. Install the necessary dependencies for the extension and webview-gui:
@@ -124,7 +124,7 @@ We also welcome contributions to our [documentation](https://github.com/cline/cl
 
 ## Writing and Submitting Code
 
-Anyone can contribute code to Cline, but we ask that you follow these guidelines to ensure your contributions can be smoothly integrated:
+Anyone can contribute code to NBG, but we ask that you follow these guidelines to ensure your contributions can be smoothly integrated:
 
 1. **Keep Pull Requests Focused**
 
@@ -149,7 +149,7 @@ Anyone can contribute code to Cline, but we ask that you follow these guidelines
 
     **End-to-End (E2E) Testing**
     
-    Cline includes comprehensive E2E tests using Playwright that simulate real user interactions with the extension in VS Code:
+    NBG inherits comprehensive E2E tests using Playwright that simulate real user interactions with the extension in VS Code:
     
     - **Running E2E tests:**
       ```bash
@@ -172,7 +172,7 @@ Anyone can contribute code to Cline, but we ask that you follow these guidelines
       - Element inspection and selector validation
     
     - **Test environment:**
-      - Automated VS Code setup with Cline extension loaded
+      - Automated VS Code setup with the NBG extension loaded
       - Mock API server for backend testing
       - Temporary workspaces with test fixtures
       - Video recording for failed tests
@@ -205,4 +205,4 @@ Anyone can contribute code to Cline, but we ask that you follow these guidelines
 
 By submitting a pull request, you agree that your contributions will be licensed under the same license as the project ([Apache 2.0](LICENSE)).
 
-Remember: Contributing to Cline isn't just about writing code - it's about being part of a community that's shaping the future of AI-assisted development. Let's build something amazing together! 🚀
+Remember: contributing to NBG means improving a commercial-grade, Chinese-first developer AI agent while preserving a deliberate compatibility path with the Cline-derived runtime.
