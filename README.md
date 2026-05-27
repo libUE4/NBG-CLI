@@ -48,7 +48,7 @@
 也支持 CI/CD 和脚本中的无头模式。
 
 ```
-npm i -g nbg
+npm i -g @nbg/cli
 ```
 
 <a href="./sdk/apps/cli/README.md">查看 CLI 文档</a>
@@ -59,15 +59,11 @@ npm i -g nbg
 
 ### Kanban
 
-Run many agents in parallel from a
-web-based task board. Each card gets its own
-worktree, auto-commit, and dependency chains.
+商业化多智能体看板规划中。
+目标是让每张任务卡拥有独立 worktree、
+自动提交和依赖链编排。
 
-```
-npm i -g kanban
-```
-
-<a href="https://github.com/cline/kanban">Learn more</a>
+<a href="./docs-internal/commercialization-plan.md">查看商业化计划</a>
 <br><br>
 
 </td>
@@ -75,25 +71,24 @@ npm i -g kanban
 <tr>
 <td align="center" width="50%">
 
-### VS Code Extension
+### VS Code 扩展
 
-AI coding assistant in your editor.
-Create files, run commands, browse the web,
-and use tools with human-in-the-loop approval.
+在编辑器中使用 NBG。
+支持创建文件、执行命令、浏览网页，
+并通过人工确认控制关键操作。
 
-<a href="https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev">Install from VS Marketplace</a>
+<a href="./README.marketplace.md">查看扩展说明</a>
 <br><br>
 
 </td>
 <td align="center" width="50%">
 
-### JetBrains Plugin
+### IDE 适配
 
-The same Cline experience in IntelliJ IDEA,
-PyCharm, WebStorm, GoLand, and the rest of
-the JetBrains family.
+JetBrains 等 IDE 适配会基于共享核心逐步推进。
+当前仓库优先保证 CLI、SDK 和 VS Code 扩展入口。
 
-<a href="https://plugins.jetbrains.com/plugin/28247-cline">Install from JetBrains Marketplace</a>
+<a href="./docs-internal/commercialization-plan.md">查看路线图</a>
 <br><br>
 
 </td>
@@ -108,13 +103,13 @@ the JetBrains family.
 
 ### SDK
 
-Build your own AI agents and integrations powered by the same Cline-derived engine that runs the NBG CLI. Custom tools, multi-agent teams, connectors, scheduled automations, and more.
+基于驱动 NBG CLI 的同一套派生运行时构建自定义智能体和集成。当前 SDK 包名保留 `@cline/*` 兼容入口，迁移到 NBG 命名会按模块逐步完成。
 
 ```
 npm install @cline/sdk
 ```
 
-<a href="https://docs.cline.bot/cline-sdk/overview">Documentation</a>
+<a href="./sdk/README.md">查看 SDK 文档</a>
 <br><br>
 
 </td>
@@ -124,112 +119,112 @@ npm install @cline/sdk
 
 ---
 
-## Index
+## 目录
 
-| Product | Description | Location | CHANGELOG |
-|---------|------------|--------------|--------------|
-| **SDK** | Node.js programmatic agent API and extension exports. | [`sdk/`](https://github.com/cline/cline/tree/main/sdk) | [CHANGELOG.md](https://github.com/cline/cline/blob/main/sdk/CHANGELOG.md) |
-| **CLI** | Terminal UI, headless mode, shell commands, and CLI-specific flows. | [`sdk/apps/cli/`](https://github.com/cline/cline/tree/main/sdk/apps/cli) | [CHANGELOG.md](https://github.com/cline/cline/blob/main/sdk/apps/cli/CHANGELOG.md) |
-| **VS Code Extension** | The Marketplace extension and extension host integration. | [`/`](https://github.com/cline/cline/tree/main) (WIP migrating) | [CHANGELOG.md](https://github.com/cline/cline/blob/main/CHANGELOG.md) |
-| **JetBrains Plugin** | JetBrains-hosted client that talks to the shared agent core. | Currently we are not open-sourcing JetBrains plugins | - |
-| **Kanban** | Web-based multi-agent task board. | [`cline/kanban`](https://github.com/cline/kanban) | [CHANGELOG.md](https://github.com/cline/kanban/blob/main/CHANGELOG.md) |
-| **Docs site** | Public documentation pages. | [`docs/`](https://docs.cline.bot/) | - |
+| 模块 | 说明 | 位置 | 变更记录 |
+|------|------|------|----------|
+| **SDK** | Node.js 智能体 API、运行时和扩展导出。 | [`sdk/`](./sdk/) | - |
+| **CLI** | 终端 TUI、无头模式、命令执行和自动化工作流。 | [`sdk/apps/cli/`](./sdk/apps/cli/) | [`sdk/apps/cli/CHANGELOG.md`](./sdk/apps/cli/CHANGELOG.md) |
+| **VS Code 扩展** | 编辑器侧入口、扩展宿主集成和 Marketplace 说明。 | [`./`](./) | [`CHANGELOG.md`](./CHANGELOG.md) |
+| **IDE 适配** | JetBrains 等客户端适配规划。 | [`docs-internal/commercialization-plan.md`](./docs-internal/commercialization-plan.md) | - |
+| **多智能体看板** | Web 化任务板和商业化协作入口规划。 | [`docs-internal/commercialization-plan.md`](./docs-internal/commercialization-plan.md) | - |
+| **文档** | 公开文档和内部商业化推进资料。 | [`docs/`](./docs/) / [`docs-internal/`](./docs-internal/) | - |
 
-## Edits Code Across Your Project
+## 跨项目编辑代码
 
-Cline reads your project structure, understands the relationships between files, and makes coordinated changes across your codebase. It monitors linter and compiler errors as it works, fixing issues like missing imports, type mismatches, and syntax errors before you even see them. In VS Code and JetBrains, every edit shows up as a diff you can review, modify, or revert. All changes are tracked with checkpoints, so you can easily undo the agent's work.
+NBG 会读取项目结构，理解文件关系，并在代码库内协调修改。它可以在执行中关注 lint、类型和构建反馈，修复缺失导入、类型不匹配和语法错误等问题。编辑器入口中的改动会以 diff 展示，便于审阅、修改或回滚。
 
-## Runs Bash Commands
+## 执行终端命令
 
-Cline executes commands directly in your terminal and watches the output in real time. Install packages, run build scripts, execute tests, deploy applications, manage databases. For long-running processes like dev servers, Cline continues working in the background and reacts to new output as it appears, catching compile errors, test failures, and server crashes as they happen.
+NBG 可以在终端中执行命令并实时读取输出，用于安装依赖、运行构建、执行测试、部署应用或管理数据库。对开发服务器等长时间运行进程，它会持续观察输出并根据新的错误继续处理。
 
-## Plan and Act
+## 规划与执行
 
-Toggle between Plan mode and Act mode. In Plan mode, Cline explores your codebase, asks clarifying questions, and lays out a strategy. Once you're aligned, switch to Act mode and Cline executes the plan. Every file edit and terminal command requires your approval, so you stay in control of what actually changes. Or toggle auto-approve and let Cline run autonomously.
+在规划模式中，NBG 会探索代码库、提出必要问题并给出策略；进入执行模式后再落地修改。文件编辑和终端命令可以保留人工审批，也可以在可信范围内开启自动批准。
 
-## Rules and Skills
+## 规则与技能
 
-Define project-specific rules in `.clinerules` files that guide how Cline works in your codebase: coding standards, architecture conventions, deployment procedures, testing requirements. Rules are picked up automatically by the CLI, VS Code extension, and JetBrains plugin. Use skills to let the model load specific rules when needed. 
+通过 `.clinerules` 定义项目级规则，例如编码规范、架构约束、部署流程和测试要求。CLI 与编辑器入口会读取这些规则；技能机制用于在需要时加载特定领域的操作说明。
 
-## Works With Every Model
+## 接入多种模型
 
-Cline is not locked to a single AI provider. Use whichever model fits your workflow:
+NBG 不绑定单一 AI 提供方。按任务选择适合的模型或网关：
 
-| Provider | Models |
-|----------|--------|
+| 提供方 | 模型 |
+|--------|------|
 | Anthropic | Claude Opus, Sonnet, Haiku |
-| OpenAI | GPT series model |
-| Google | Gemini series model |
-| OpenRouter | 200+ models from any provider |
-| Vercel AI Gateway | Models through Vercel AI Gateway |
-| AWS Bedrock | Claude, Llama, and more |
-| Azure / GCP Vertex | All hosted models |
-| Cerebras / Groq | Fast inference models |
-| Ollama / LM Studio | Run local models on your machine |
-| Any OpenAI-compatible API | Self-hosted or third-party endpoints |
+| OpenAI | GPT 系列模型 |
+| Google | Gemini 系列模型 |
+| OpenRouter | 聚合多提供方模型 |
+| Vercel AI Gateway | Vercel AI Gateway 托管模型 |
+| AWS Bedrock | Claude、Llama 等模型 |
+| Azure / GCP Vertex | 云厂商托管模型 |
+| Cerebras / Groq | 高速推理模型 |
+| Ollama / LM Studio | 本机运行的本地模型 |
+| 任意 OpenAI 兼容 API | 自托管或第三方端点 |
 
-## Extend With Plugins or MCP Servers
+## 使用插件或 MCP 扩展
 
-Extend Cline's capabilities with plugins. Using the SDK, register tools and lifecycle hooks programmatically through the plugin system for logging, auditing, policy enforcement, or adding domain-specific capabilities. Simple plugin example below.
+通过 SDK 注册工具和生命周期钩子，为 NBG 增加日志、审计、策略控制或业务专用能力。当前示例仍使用兼容入口 `@cline/sdk`。
 
 ```typescript
 import { Agent, createTool } from "@cline/sdk"
 
 const deployTool = createTool({
   name: "deploy",
-  description: "Deploy the current branch to staging.",
+  description: "将当前分支部署到预发环境。",
   inputSchema: { type: "object", properties: { env: { type: "string" } }, required: ["env"] },
   execute: async (input) => {
-    // your deployment logic
+    // 在这里接入你的部署逻辑
   },
 })
 
 const agent = new Agent({ tools: [deployTool], /* ... */ })
 ```
-...or use [MCP servers](https://github.com/modelcontextprotocol) to connect to databases, query APIs, manage cloud infrastructure, and interact with external systems. Use [community-built servers](https://github.com/modelcontextprotocol/servers) or ask Cline to create custom tools on the fly. In the CLI, manage servers with `cline mcp`.
+也可以使用 [MCP servers](https://github.com/modelcontextprotocol) 连接数据库、查询 API、管理云资源或访问内部系统。在 CLI 中使用 `nbg mcp` 管理服务器。
 
-## Multi-Agent Teams
+## 多智能体团队
 
-Coordinate multiple agents working together on complex tasks. A coordinator agent breaks the work into subtasks and delegates to specialist agents, each with their own tools and context. Team state persists across sessions so you can pick up where you left off.
+让多个智能体协同处理复杂任务。协调智能体会拆分子任务，并把工作交给拥有独立工具和上下文的专家智能体；团队状态会跨会话保留。
 
 ```bash
-cline --team-name auth-sprint "Plan and implement user authentication with tests"
+nbg --team-name auth-sprint "规划并实现用户认证，补齐测试"
 ```
 
-## Scheduled Agents
+## 定时智能体
 
-Run agents on cron schedules for recurring automations. Daily PR summaries, weekly dependency checks, codebase health reports. Schedules persist across restarts and run independently of any terminal session.
+用 cron 表达式运行周期性自动化，例如每日 PR 摘要、每周依赖检查和代码库健康报告。计划任务会持久化，并独立于当前终端会话运行。
 
 ```bash
-cline schedule create "PR summary" \
+nbg schedule create "PR 摘要" \
   --cron "0 9 * * MON-FRI" \
-  --prompt "List all open PRs and their review status" \
+  --prompt "列出所有打开的 PR 及其评审状态" \
   --workspace /path/to/repo
 ```
 
-## Connect to Slack, Telegram, Discord, and More
+## 连接 Slack、Telegram、Discord 等渠道
 
-Chat with your agent from any messaging platform: Telegram, Slack, Discord, Google Chat, WhatsApp, and Linear. Each conversation thread maps to an agent session with full context. Set up access control to restrict who can interact with your agent.
-
-```bash
-cline connect telegram -k $BOT_TOKEN
-cline connect slack --token $SLACK_TOKEN --signing-secret $SECRET --base-url $URL
-```
-
-## Headless CLI for CI/CD
-
-Run Cline with zero interaction for scripting and automation. Pipe input, get JSON output, chain commands, integrate into CI/CD pipelines.
+从 Telegram、Slack、Discord、Google Chat、WhatsApp、Linear 等消息平台与智能体对话。每个会话线程都会映射到带上下文的智能体会话，并可通过访问控制限制使用者。
 
 ```bash
-cline "Run tests and fix any failures"
-git diff origin/main | cline  "Review these changes for issues"
-cline --json "List all TODO comments" | jq -r 'select(.type == "agent_event" and .event.text) | .event.text'
+nbg connect telegram -k $BOT_TOKEN
+nbg connect slack --token $SLACK_TOKEN --signing-secret $SECRET --base-url $URL
 ```
 
-## Contributing
+## 面向 CI/CD 的无头 CLI
 
-Start with the [Contributing Guide](CONTRIBUTING.md). Join our [Discord](https://discord.gg/cline) and head to the `#contributors` channel to connect with other contributors. Check our [careers page](https://cline.bot/join-us) for full-time roles.
+在脚本和流水线中以无交互模式运行 NBG：管道输入、JSON 输出、命令串联和 CI/CD 集成都可以自动化。
 
-## License
+```bash
+nbg "运行测试并修复失败项"
+git diff origin/main | nbg "检查这些改动是否存在问题"
+nbg --json "列出所有 TODO 注释" | jq -r 'select(.type == "agent_event" and .event.text) | .event.text'
+```
 
-[Apache 2.0 © 2026 Cline Bot Inc.](./LICENSE)
+## 贡献
+
+先阅读 [贡献指南](CONTRIBUTING.md) 和 [仓库协作说明](AGENTS.md)。公开文案、测试断言和提交信息优先使用中文；底层兼容 API 按计划逐步迁移。
+
+## 许可证
+
+[Apache 2.0](./LICENSE)
