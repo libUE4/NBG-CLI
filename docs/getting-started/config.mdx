@@ -1,38 +1,38 @@
 ---
 title: "Config"
 sidebarTitle: "Config"
-description: "Understand where Cline stores configuration and how global and project config work together."
+description: "了解 NBG 的全局配置、项目配置和当前兼容目录。"
 ---
 
-Cline configuration lives in two scopes:
+NBG 当前沿用 Cline 运行时的配置目录作为兼容层，配置分为两个作用域：
 
-- **Global configuration** in `~/.cline/` (applies globally across all Cline applications, including IDE, CLI, and SDK)
-- **Project configuration** in `.cline/` (applies only to the current workspace)
+- **全局配置** 位于 `~/.cline/`（当前全局兼容目录，适用于 NBG CLI、IDE 和 SDK）
+- **项目配置** 位于 `.cline/`（只作用于当前 workspace）
 
 ## Configuration Directory Layout
 
-Cline stores shared configuration across a few well-known locations. The primary root is `~/.cline/`, with structured app state under `~/.cline/data/`:
+NBG 目前把共享配置存储在几个固定位置。主目录仍是 `~/.cline/`，结构化状态位于 `~/.cline/data/`：
 
 ```text
 ~/.cline/
   data/
     settings/
       providers.json           # API keys and provider configuration
-      global-settings.json     # Global settings
+      global-settings.json     # 全局设置
       cline_mcp_settings.json  # MCP settings
-    teams/                     # Team state
-    sessions/                  # Session data
+    teams/                     # 团队状态
+    sessions/                  # 会话数据
     db/                        # SQLite databases (for example cron.db)
-    workflows/                 # Global workflows
-  rules/                       # Global rules
-  hooks/                       # Global hooks
-  skills/                      # Global skills
-  agents/                      # Global agent definitions
-  plugins/                     # Global plugins (.js, .ts)
-  cron/                        # Global cron specs
+    workflows/                 # 全局 workflows
+  rules/                       # 全局规则
+  hooks/                       # 全局 hooks
+  skills/                      # 全局技能
+  agents/                      # 全局 agent 定义
+  plugins/                     # 全局插件 (.js, .ts)
+  cron/                        # 全局 cron specs
 ```
 
-Additional global search paths supported by the code:
+代码还支持这些额外全局搜索路径，用于兼容旧安装：
 
 ```text
 ~/Documents/Cline/
@@ -42,38 +42,38 @@ Additional global search paths supported by the code:
   Workflows/                   # Additional global workflows
 ```
 
-Project-level configuration lives in `.cline/` at your repository root:
+项目级配置位于仓库根目录的 `.cline/`：
 
 ```text
 .cline/
-  rules/                       # Project rules
-  skills/                      # Project skills
-  hooks/                       # Lifecycle hooks
-  agents/                      # Project agent definitions
-  plugins/                     # Project plugins
-  cron/                        # Workspace cron specs
+  rules/                       # 项目规则
+  skills/                      # 项目技能
+  hooks/                       # 生命周期 hooks
+  agents/                      # 项目 agent 定义
+  plugins/                     # 项目插件
+  cron/                        # workspace cron specs
 ```
 
 Notes:
 
-- Global provider settings, global settings, and MCP settings are stored under `~/.cline/data/settings/`.
-- Global workflows resolve from `~/.cline/data/workflows/`.
-- Global rules, hooks, skills, agents, plugins, and cron specs resolve directly under `~/.cline/`.
-- Rules, hooks, plugins, and workflows may also be discovered from `~/Documents/Cline/` for compatibility.
+- 全局 provider 设置、全局设置和 MCP 设置存储在 `~/.cline/data/settings/`。
+- 全局 workflows 从 `~/.cline/data/workflows/` 解析。
+- 全局规则、hooks、技能、agents、插件和 cron specs 直接从 `~/.cline/` 解析。
+- 为兼容旧安装，规则、hooks、插件和 workflows 也可能从 `~/Documents/Cline/` 发现。
 
 ## What Goes Where?
 
-- Use **global (`~/.cline/`)** for defaults shared across all Cline applications (IDE, CLI, SDK) on your machine.
-- Use **project (`.cline/`)** for team-shared behavior that should travel with the repo.
+- 使用 **global (`~/.cline/`)** 存放本机 NBG CLI、IDE 和 SDK 共享的默认配置。
+- 使用 **project (`.cline/`)** 存放应该随仓库共享的团队行为。
 
-Commit `.cline/` files you want to share with your team. Keep secrets out of the repo.
+可以提交要与团队共享的 `.cline/` 文件，但不要把密钥提交到仓库。
 
 ## Configure Through the CLI
 
-Use the interactive config UI:
+使用交互式配置 UI：
 
 ```bash
-cline config
+nbg config
 ```
 
 From there, you can view/edit:
@@ -88,50 +88,50 @@ From there, you can view/edit:
 Use a custom configuration directory:
 
 ```bash
-cline --config /path/to/custom/config "your task"
+nbg --config /path/to/custom/config "你的任务"
 ```
 
 Or via environment variable:
 
 ```bash
 export CLINE_DATA_DIR=/custom/path/to/cline
-cline "your task"
+nbg "你的任务"
 ```
 
-View CLI logs when troubleshooting:
+排障时查看 CLI 日志：
 
 ```bash
-cline dev log
+nbg doctor log
 ```
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `CLINE_DATA_DIR` | Custom data directory (replaces `~/.cline/data/`) |
-| `CLINE_HUB_ADDRESS` | Override hub address (default: `127.0.0.1:25463`) |
-| `CLINE_SESSION_BACKEND_MODE` | Force backend mode (`local`, `hub`, `remote`, `auto`) |
-| `CLINE_SANDBOX` | Enable sandbox mode |
-| `CLINE_SANDBOX_DATA_DIR` | Sandbox session storage directory |
-| `CLINE_HOOKS_DIR` | Additional hooks directory |
-| `CLINE_COMMAND_PERMISSIONS` | JSON policy restricting shell commands |
+| 变量 | 说明 |
+|------|------|
+| `CLINE_DATA_DIR` | 自定义数据目录（替代 `~/.cline/data/`） |
+| `CLINE_HUB_ADDRESS` | 覆盖 hub 地址（默认：`127.0.0.1:25463`） |
+| `CLINE_SESSION_BACKEND_MODE` | 强制 backend 模式（`local`、`hub`、`remote`、`auto`） |
+| `CLINE_SANDBOX` | 启用沙箱模式 |
+| `CLINE_SANDBOX_DATA_DIR` | 沙箱会话存储目录 |
+| `CLINE_HOOKS_DIR` | 额外 hooks 目录 |
+| `CLINE_COMMAND_PERMISSIONS` | 限制 shell 命令的 JSON 策略 |
 
 ### CLINE_DATA_DIR
 
 ```bash
 export CLINE_DATA_DIR=/custom/path/to/cline
-cline "your task"
+nbg "你的任务"
 ```
 
 ### CLINE_COMMAND_PERMISSIONS
 
-Restrict which shell commands Cline can execute:
+限制 NBG 可以执行的 shell 命令：
 
 ```bash
 export CLINE_COMMAND_PERMISSIONS='{"allow": ["npm *", "git *"], "deny": ["rm -rf *"]}'
 ```
 
-Format:
+格式：
 
 ```json
 {
@@ -141,11 +141,11 @@ Format:
 }
 ```
 
-Rules:
+规则：
 
-- `deny` overrides `allow`
-- If `allow` is set, commands not matching `allow` are denied
-- `allowRedirects` controls shell redirects (`>`, `>>`, `<`), default `false`
+- `deny` 覆盖 `allow`
+- 设置 `allow` 后，不匹配 `allow` 的命令会被拒绝
+- `allowRedirects` 控制 shell 重定向（`>`、`>>`、`<`），默认 `false`
 
 ## Related Docs
 
@@ -159,7 +159,7 @@ Rules:
 ## Security Notes
 
 <Warning>
-Only use rules, hooks, skills, and plugins from sources you trust.
+只使用来自可信来源的 rules、hooks、skills 和 plugins。
 </Warning>
 
-Hooks and plugins can execute code. Review them like any other executable artifact before adding them globally or to a project.
+Hooks 和 plugins 可以执行代码。加入全局或项目配置前，应像审查可执行文件一样审查它们。

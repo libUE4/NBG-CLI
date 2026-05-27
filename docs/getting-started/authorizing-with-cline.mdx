@@ -1,49 +1,68 @@
 ---
 title: "Authorization"
-description: "Authenticate with Cline and choose your first AI model"
+description: "为 NBG 配置 provider 并选择第一个 AI 模型"
 ---
 
-Cline connects to AI models through a **provider**. You have two paths:
+NBG 通过 **provider** 连接 AI 模型。当前保留 Cline 兼容 provider，同时默认支持 OpenAI-compatible、Anthropic、OpenAI、Google Gemini、OpenRouter 等 BYOK 路径。
 
-- **Cline Provider** (recommended): sign in with Google/GitHub/email, no API key setup.
-- **Bring Your Own Key (BYOK)**: use your own provider credentials (cloud or local runtimes).
+- **OpenAI-compatible / BYOK**：使用自己的 provider 凭据，适合商业化部署和自有模型网关。
+- **Cline 兼容 provider**：使用继承运行时中的 OAuth provider id `cline`。
 
 ## Menu
 
-- [IDE Setup](#ide-setup)
 - [CLI Setup](#cli-setup)
+- [IDE Setup](#ide-setup)
+
+## CLI Setup
+
+```bash
+# 打开交互式认证设置
+nbg auth
+
+# 使用 Cline 兼容 provider OAuth
+nbg auth cline
+
+# 使用 OpenAI-compatible 或其他 BYOK provider
+nbg auth --provider openai-compatible --apikey <key> --baseurl <url> --modelid <model>
+```
+
+无交互运行时，如果选择了 OAuth provider 但没有已保存凭据，`nbg` 会直接给出认证错误，不会隐藏式打开浏览器。
 
 ## IDE Setup
 
 <Steps>
-  <Step title="Open Cline Settings">
-    Click the settings icon (⚙️) in the Cline panel.
+  <Step title="打开 NBG 设置">
+    点击 NBG 面板中的设置图标。
   </Step>
 
-  <Step title="Select Provider">
-    Choose your desired provider from the **API Provider** dropdown.
+  <Step title="选择 provider">
+    从 **API Provider** 下拉框选择目标 provider。
   </Step>
 
-  <Step title="Authenticate">
-    - **Cline Provider:** Click **Sign In** and complete OAuth.
-    - **BYOK cloud provider:** Paste your API key into the **API Key** field.
-    - **Local runtime (Ollama/LM Studio):** no key needed; ensure runtime is running.
+  <Step title="配置认证">
+    - **BYOK provider:** 在 **API Key** 字段粘贴你的 key。
+    - **Cline 兼容 provider:** 点击 **Sign In** 并完成 OAuth。
+    - **本地运行时（Ollama/LM Studio）:** 不需要 key，确认本地服务已运行。
   </Step>
 
-  <Step title="Select Model">
-    Choose your desired Claude model from the **Model** dropdown.
+  <Step title="选择模型">
+    从 **Model** 下拉框选择模型。
   </Step>
 </Steps>
 
 ## Provider Options
 
-### Cline Provider
+### BYOK 和 OpenAI-compatible
 
-- One sign-in, no key management
-- Built-in billing and free model options
-- Access to multiple providers from one account
+适合把 NBG 接入自有模型网关、云厂商或本地推理服务。生产环境优先把 key 放在本地配置或环境变量中，不要提交到仓库。
 
-Add credits in Cline settings or at [app.cline.bot/dashboard](https://app.cline.bot/dashboard).
+### Cline 兼容 Provider
+
+- 继承运行时中的 provider id 是 `cline`
+- 支持 OAuth 登录
+- 用于兼容已有账号、配置和测试路径
+
+NBG 不把旧 Dashboard 作为默认商业化入口。需要使用该兼容 provider 时，通过 `nbg auth cline` 或 IDE 登录入口完成认证。
 
 ### BYOK (cloud + local)
 
@@ -70,23 +89,11 @@ Run models on your own hardware for complete privacy and zero per-request costs.
 
 Local models require sufficient hardware (especially GPU memory). See [Running Models Locally](/running-models-locally/overview) for requirements.
 
-## CLI Setup
-
-```bash
-# Authenticate from the terminal
-cline auth
-
-# Shorthand
-cline a
-```
-
-Runs the same auth flow as IDE setup.
-
 ## Troubleshooting
 
 | Issue | Fix |
 |-------|-----|
 | "Unauthorized: Please sign in" | Session expired. Click **Sign In** to re-authenticate. |
-| Browser doesn't open | Check default browser settings. Copy the URL from the Cline output panel manually. |
+| Browser doesn't open | Check default browser settings. Copy the URL from the NBG output panel manually. |
 | Frequent re-authentication | Check org security policies. Ensure you're not clearing IDE secrets. Try a full sign-out/sign-in. |
-| Can't access organization | Verify membership at [app.cline.bot](https://app.cline.bot). Ask your admin about permissions. Sign out and back in. |
+| Can't access organization | Verify membership with the compatible provider account. Ask your admin about permissions. Sign out and back in. |

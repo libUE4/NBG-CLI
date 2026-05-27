@@ -1,51 +1,52 @@
 ---
-title: "Cline provider"
-description: "Use the Cline provider for the fastest setup with built-in authentication and unified billing."
+title: "Cline 兼容 provider"
+description: "在 NBG 中使用继承运行时保留的 Cline OAuth provider。"
 ---
 
-The **Cline provider** is the simplest way to get started with Cline.
+NBG 当前保留 provider id `cline` 作为兼容层。它适合复用已有 OAuth 配置、测试继承路径，或在迁移期间继续使用旧账号体系。
 
-Instead of managing separate API keys across multiple vendors, you sign in once and select from available models directly in Cline.
+商业化部署优先使用 OpenAI-compatible 或 BYOK provider；只有明确需要兼容旧账号时才选择该 provider。
 
-## Why use Cline provider
+## 何时使用
 
-- **Fastest setup**: no manual API key copy/paste
-- **One account**: sign in once with Google, GitHub, or email
-- **Unified billing**: one balance across supported models
-- **Free options**: look for models tagged **FREE** in the selector
+- 需要复用已有 OAuth 登录
+- 需要验证从 Cline 底座继承的 provider 行为
+- 正在从旧配置迁移到 NBG
 
 ## Setup
 
 <Steps>
-  <Step title="Open Cline Settings">
-    Click the settings icon in the Cline panel.
+  <Step title="打开 NBG 设置">
+    点击 NBG 面板中的设置图标。
   </Step>
 
-  <Step title="Choose Provider">
+  <Step title="选择 provider">
     Set **API Provider** to **Cline**.
   </Step>
 
-  <Step title="Sign In">
-    Click **Sign In** and complete authentication in your browser.
+  <Step title="登录">
+    点击 **Sign In** 并在浏览器中完成认证。
   </Step>
 
-  <Step title="Select a Model">
-    Choose a model from the **Model** dropdown.
+  <Step title="选择模型">
+    从 **Model** 下拉框选择模型。
   </Step>
 
-  <Step title="Verify">
-    Send a test message. If Cline responds, setup is complete.
+  <Step title="验证">
+    发送一条测试消息。如果 NBG 正常响应，配置完成。
   </Step>
 </Steps>
 
-## Credits and usage
+## CLI
 
-- Add credits from your [Cline dashboard](https://app.cline.bot/dashboard)
-- View usage in Cline Settings → **View Usage**
-- Switch organizations in Cline Settings → **Switch Organization**
+```bash
+nbg auth cline
+```
+
+兼容 provider 的计费、组织和用量信息由对应旧账号体系管理。NBG 仓库不把旧 Dashboard 作为默认商业化入口。
 
 ## Related
 
-- [Authorization](/getting-started/authorizing-with-cline)
-- [Local models](/running-models-locally/overview)
-- [Provider setup guides](/provider-config/openrouter)
+- [认证配置](/getting-started/authorizing-with-cline)
+- [本地模型](/running-models-locally/overview)
+- [Provider 设置指南](/provider-config/openrouter)
