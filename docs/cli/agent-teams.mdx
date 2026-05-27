@@ -1,57 +1,57 @@
 ---
 title: "Agent Teams"
 sidebarTitle: "Agent Teams"
-description: "Coordinate multiple agents working together on complex tasks from the CLI."
+description: "在 CLI 中协调多个 agent 处理复杂任务。"
 ---
 <Warning>
-  This feature currently only applies to Cline SDK, CLI, and Kanban. This feature is not applicable on VSCode and JetBrains Extension for now.
+  该能力当前适用于 NBG CLI、Kanban 和继承的 Cline SDK 兼容层，暂不适用于 VS Code 和 JetBrains 扩展。
 </Warning>
 
 
-Agent teams let you break complex work across multiple agents that coordinate through a shared task board. One agent acts as the coordinator, delegating subtasks to specialist agents.
+Agent teams 可以把复杂任务拆给多个 agent，通过共享任务板协作。一个 agent 作为 coordinator，负责把子任务分配给专门的 agent。
 
-## Starting a Team
-
-```bash
-cline --team-name auth-sprint "Plan and implement user authentication with tests"
-```
-
-The `--team-name` flag enables team mode. The coordinator agent gets additional tools for spawning teammates and delegating tasks.
-
-## Resuming Team Work
-
-Team state persists across sessions. Resume where you left off:
+## 启动团队
 
 ```bash
-cline --team-name auth-sprint "Continue with incomplete tasks"
+nbg --team-name auth-sprint "规划并实现用户认证，包含测试"
 ```
 
-## Interactive Mode
+`--team-name` 会启用 team mode。Coordinator agent 会获得创建队友和分派任务的额外工具。
 
-In interactive mode, use the `/team` slash command:
+## 继续团队任务
 
-```
-/team Plan and implement a REST API with tests
-```
-
-## Team State
-
-Team state is stored at `~/.cline/data/teams/[team-name]/` and includes:
-
-- Task board with current tasks and status
-- Inter-agent mailbox
-- Mission log with activity history
-
-## Disabling Teams
-
-Teams are enabled by default. Disable them with:
+团队状态会跨 session 保留。继续未完成任务：
 
 ```bash
-cline --no-teams "your prompt"
+nbg --team-name auth-sprint "继续处理未完成任务"
+```
+
+## 交互模式
+
+在交互模式中使用 `/team` slash command：
+
+```
+/team 规划并实现 REST API，包含测试
+```
+
+## 团队状态
+
+团队状态当前仍存储在 Cline 兼容目录 `~/.cline/data/teams/[team-name]/`，包括：
+
+- 当前任务和状态组成的任务板
+- Agent 之间的 mailbox
+- 包含活动历史的 mission log
+
+## 禁用团队
+
+Teams 默认启用。需要禁用时：
+
+```bash
+nbg --no-teams "你的任务"
 ```
 
 ## Sub-Agents
 
-For simpler delegation within a single session (no persistent state), use [sub-agents](/features/subagents). Sub-agents run in parallel for read-only research and return focused reports to the main agent.
+如果只需要单个 session 内的轻量分派（不持久化状态），使用 [sub-agents](/features/subagents)。Sub-agents 会并行执行只读研究，并把聚焦报告返回给主 agent。
 
-See the [SDK Multi-Agent Teams guide](/sdk/guides/multi-agent-teams) for the programmatic API.
+程序化 API 见 [SDK Multi-Agent Teams 指南](/sdk/guides/multi-agent-teams)。
