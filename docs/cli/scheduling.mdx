@@ -1,110 +1,112 @@
 ---
-title: "Scheduling"
-sidebarTitle: "Scheduling"
-description: "Run agents on cron schedules for recurring automations like daily summaries and code reviews."
+title: "定时任务"
+sidebarTitle: "定时任务"
+description: "通过 cron 定时运行 agent，用于日报、代码审查等重复自动化任务。"
 ---
 <Warning>
-  This feature currently only applies to Cline SDK, CLI, and Kanban. This feature is not applicable on VSCode and JetBrains Extension for now.
+  定时任务当前适用于 NBG CLI、SDK 和 Kanban，暂不适用于 VSCode 与 JetBrains 扩展。
 </Warning>
 
-The CLI supports running agents on cron schedules through the hub. Scheduled agents persist across process restarts and run independently of any terminal session.
+CLI 支持通过 hub 按 cron 计划运行 agent。定时 agent 会跨进程重启持久化，并独立于任何终端会话运行。
 
-## Schedule Wizard
+## 定时任务向导
 
-Run `cline schedule` to open an interactive menu for creating and managing schedules, browsing execution history, and viewing performance statistics.
+运行 `nbg schedule` 打开交互菜单，用于创建和管理定时任务、浏览执行历史并查看性能统计。
 
 ```bash
-cline schedule
+nbg schedule
 ```
 
-The wizard provides:
+向导提供：
 
-| Action | Description |
-|--------|-------------|
-| Create new schedule | Set up a recurring task with cron timing and prompt |
-| List schedules | View all schedules with status and next run time |
-| Upcoming runs | Preview the next 10 scheduled executions |
-| Active executions | Show currently running tasks |
-| Trigger now | Immediately run a selected schedule |
-| Pause / Resume | Suspend or restart a schedule |
-| Execution history | View past runs with status, duration, tokens, and cost |
-| Statistics | Success rate, average duration, last failure |
-| Delete | Remove a schedule |
+| 操作 | 说明 |
+|------|------|
+| Create new schedule | 使用 cron 和 prompt 创建重复任务 |
+| List schedules | 查看所有任务的状态和下次运行时间 |
+| Upcoming runs | 预览接下来 10 次计划执行 |
+| Active executions | 查看当前正在运行的任务 |
+| Trigger now | 立即运行选中的定时任务 |
+| Pause / Resume | 暂停或恢复定时任务 |
+| Execution history | 查看历史运行的状态、耗时、token 和成本 |
+| Statistics | 查看成功率、平均耗时和最近失败 |
+| Delete | 删除定时任务 |
 
-## Creating Schedules with Flags
+## 使用参数创建定时任务
 
 ```bash
-cline schedule create "PR summary" \
+nbg schedule create "PR 摘要" \
   --cron "0 9 * * MON-FRI" \
-  --prompt "List all open PRs and their review status" \
+  --prompt "列出所有打开的 PR 及其审查状态" \
   --workspace /path/to/repo \
   --model anthropic/claude-sonnet-4-6
 ```
 
-## Managing Schedules
+## 管理定时任务
 
 ```bash
-cline schedule list
-cline schedule trigger <schedule-id>
-cline schedule pause <schedule-id>
-cline schedule resume <schedule-id>
-cline schedule delete <schedule-id>
-cline schedule executions <schedule-id>
+nbg schedule list
+nbg schedule trigger <schedule-id>
+nbg schedule pause <schedule-id>
+nbg schedule resume <schedule-id>
+nbg schedule delete <schedule-id>
+nbg schedule history <schedule-id>
+nbg schedule stats <schedule-id>
+nbg schedule upcoming
 ```
 
-## Cron Expression Reference
+## Cron 表达式参考
 
-| Expression | Schedule |
-|-----------|----------|
-| `*/5 * * * *` | Every 5 minutes |
-| `*/15 * * * *` | Every 15 minutes |
-| `0 * * * *` | Every hour |
-| `0 */6 * * *` | Every 6 hours |
-| `0 0 * * *` | Daily at midnight |
-| `0 9 * * *` | Daily at 9am |
-| `0 9 * * 1-5` | Every weekday at 9am |
-| `0 9 * * 1` | Every Monday at 9am |
-| `0 0 1 * *` | First of every month |
+| 表达式 | 计划 |
+|--------|------|
+| `*/5 * * * *` | 每 5 分钟 |
+| `*/15 * * * *` | 每 15 分钟 |
+| `0 * * * *` | 每小时 |
+| `0 */6 * * *` | 每 6 小时 |
+| `0 0 * * *` | 每天午夜 |
+| `0 9 * * *` | 每天上午 9 点 |
+| `0 9 * * 1-5` | 每个工作日上午 9 点 |
+| `0 9 * * 1` | 每周一上午 9 点 |
+| `0 0 1 * *` | 每月第一天 |
 
-## Examples
+## 示例
 
-### Daily Standup Summary
+### 每日站会摘要
 
 ```bash
-cline schedule create "Standup prep" \
+nbg schedule create "站会准备" \
   --cron "0 8 * * MON-FRI" \
-  --prompt "Summarize: (1) PRs merged yesterday, (2) PRs currently in review, (3) open issues assigned to team members." \
+  --prompt "总结：(1) 昨天合并的 PR，(2) 当前审查中的 PR，(3) 分配给团队成员的 open issues。" \
   --workspace /path/to/repo
 ```
 
-### Weekly Dependency Check
+### 每周依赖检查
 
 ```bash
-cline schedule create "Dependency check" \
+nbg schedule create "依赖检查" \
   --cron "0 10 * * MON" \
-  --prompt "Check for outdated npm dependencies. For any with security vulnerabilities, create a branch with the update and open a PR." \
+  --prompt "检查过期 npm 依赖。若存在安全漏洞，创建更新分支并打开 PR。" \
   --workspace /path/to/project
 ```
 
-### Codebase Health Report
+### 代码库健康报告
 
 ```bash
-cline schedule create "Code health" \
+nbg schedule create "代码健康检查" \
   --cron "0 6 * * MON" \
-  --prompt "Analyze the codebase for: (1) files with no test coverage, (2) TODO/FIXME comments older than 30 days, (3) functions longer than 100 lines." \
+  --prompt "分析代码库：(1) 没有测试覆盖的文件，(2) 超过 30 天的 TODO/FIXME 注释，(3) 超过 100 行的函数。" \
   --workspace /path/to/project
 ```
 
-## Routing Results
+## 路由执行结果
 
-Combine schedules with [connectors](/cli/connectors) to send results to messaging platforms:
+结合 [connectors](/cli/connectors) 可以把结果发送到消息平台：
 
 ```bash
-cline connect telegram -k $BOT_TOKEN
+nbg connect telegram -k $BOT_TOKEN
 
-cline schedule create "Morning briefing" \
+nbg schedule create "晨报" \
   --cron "0 8 * * *" \
-  --prompt "Summarize overnight activity in the repo"
+  --prompt "总结仓库夜间活动"
 ```
 
-Scheduling requires the hub. It starts automatically when you create a schedule.
+定时任务依赖 hub。创建定时任务时 hub 会自动启动。

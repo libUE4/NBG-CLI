@@ -1,158 +1,149 @@
 ---
-title: "Connectors"
-sidebarTitle: "Connectors"
-description: "Connect the CLI to Telegram, Slack, Discord, Google Chat, WhatsApp, etc."
+title: "连接器"
+sidebarTitle: "连接器"
+description: "把 NBG CLI 连接到 Telegram、Slack、Google Chat、WhatsApp、Linear 等平台。"
 ---
 <Warning>
-  This feature currently only applies to Cline CLI.
+  连接器当前仅适用于 NBG CLI。
 </Warning>
 
-Connectors let you chat with your agent from messaging platforms. Each incoming message creates or continues an agent session, and the agent's response is sent back to the conversation.
+连接器让你从消息平台与 agent 对话。每条传入消息都会创建或继续一个 agent 会话，agent 响应会发送回同一会话。
 
-## Setup Wizard
+## 设置向导
 
-Run `cline connect` to open an interactive wizard that guides you through platform selection, credential entry, security configuration, and advanced options (provider, model, system prompt, agent mode).
+运行 `nbg connect` 打开交互向导，完成平台选择、凭据录入、安全配置和高级选项（provider、模型、系统提示词、agent 模式）。
 
 ```bash
-cline connect
+nbg connect
 ```
 
-## Supported Platforms
+## 支持平台
 
-| Platform | Direct Command | Required Credentials |
-|----------|---------------|---------------------|
-| Telegram | `cline connect telegram` | Bot token |
-| Slack | `cline connect slack` | Bot token, signing secret, base URL |
-| Discord | `cline connect discord` | Application ID, bot token, public key, base URL |
-| Google Chat | `cline connect gchat` | Service account credentials JSON, base URL |
-| WhatsApp | `cline connect whatsapp` | Phone number ID, access token, app secret, verify token, base URL |
-| Linear | `cline connect linear` | API key, webhook signing secret, base URL |
+| 平台 | 直接命令 | 必需凭据 |
+|------|----------|----------|
+| Telegram | `nbg connect telegram` | Bot token |
+| Slack | `nbg connect slack` | Bot token、signing secret、base URL |
+| Google Chat | `nbg connect gchat` | Service account credentials JSON 或 ADC、base URL |
+| WhatsApp | `nbg connect whatsapp` | Phone number ID、access token、app secret、verify token、base URL |
+| Linear | `nbg connect linear` | API key 或 OAuth 凭据、webhook secret、base URL |
 
 ## Telegram
 
 <Steps>
-  <Step title="Create a Telegram bot">
-    Open Telegram and start a chat with [@BotFather](https://t.me/BotFather). Send `/newbot` and follow the prompts:
+  <Step title="创建 Telegram bot">
+    打开 Telegram 并与 [@BotFather](https://t.me/BotFather) 对话。发送 `/newbot`，然后按提示操作：
 
-    1. Enter a display name (e.g., "Cline")
-    2. Enter a username ending in `bot` (e.g., `cline_myname_bot`). Must be unique across Telegram.
-    3. BotFather responds with your bot token (looks like `7123456789:AAH...`)
+    1. 输入显示名称，例如 `NBG`
+    2. 输入以 `bot` 结尾的用户名，例如 `nbg_myname_bot`，必须在 Telegram 中唯一。
+    3. BotFather 会返回 bot token，格式类似 `7123456789:AAH...`
   </Step>
 
-  <Step title="Start the connector">
+  <Step title="启动连接器">
     ```bash
-    cline connect telegram -k <BOT-TOKEN>
+    nbg connect telegram -k <BOT-TOKEN>
     ```
 
-    The connector discovers the bot username from the token. Use `--bot-username` only if you need to override it.
+    连接器会从 token 自动发现 bot 用户名。只有需要覆盖时才使用 `--bot-username`。
   </Step>
 
-  <Step title="Chat with your bot">
-    Open Telegram, search for your bot's username, and send a message. The agent processes it and replies in the chat.
+  <Step title="与 bot 对话">
+    打开 Telegram，搜索你的 bot 用户名并发送消息。agent 会处理消息并在聊天中回复。
   </Step>
 </Steps>
 
-### Security
+### 安全
 
-By default, anyone who finds your bot can message it and it will execute tasks on your machine. Lock it down with the `--hook-command` flag.
+默认情况下，任何找到 bot 的人都可以发送消息，并触发它在你的机器上执行任务。使用 `--hook-command` 限制访问。
 
 <Steps>
-  <Step title="Get your Telegram user ID">
-    Message [@userinfobot](https://t.me/userinfobot) on Telegram. It replies with your user ID immediately.
+  <Step title="获取 Telegram 用户 ID">
+    在 Telegram 中给 [@userinfobot](https://t.me/userinfobot) 发消息，它会立即返回你的 user ID。
   </Step>
 
-  <Step title="Start with access control">
-    Replace `12345` with your actual Telegram user ID:
+  <Step title="带访问控制启动">
+    把 `12345` 替换成你的真实 Telegram user ID：
 
     ```bash
-    cline connect telegram -k <BOT-TOKEN> \
+    nbg connect telegram -k <BOT-TOKEN> \
       --hook-command 'jq -r ".payload.actor.participantKey" | grep -q "telegram:id:12345" && echo "{\"action\":\"allow\"}" || echo "{\"action\":\"deny\",\"message\":\"unauthorized\"}"'
     ```
   </Step>
 </Steps>
 
-The `--hook-command` receives each incoming message with sender info via stdin. Your script returns `{"action": "allow"}` or `{"action": "deny", "message": "reason"}`. Without `--hook-command`, everything is auto-approved.
+`--hook-command` 会通过 stdin 接收包含发送者信息的每条传入消息。脚本返回 `{"action": "allow"}` 或 `{"action": "deny", "message": "reason"}`。未设置 `--hook-command` 时，所有消息都会自动批准。
 
 ## Slack
 
-Requires a bot token, signing secret, and public base URL.
+需要 bot token、signing secret 和公网 base URL。
 
 ```bash
-cline connect slack --token <BOT-TOKEN> --signing-secret <SECRET> --base-url <URL>
+nbg connect slack --bot-token <BOT-TOKEN> --signing-secret <SECRET> --base-url <URL>
 ```
 
-Each Slack thread maps to an agent session, so the agent maintains conversation context within a thread.
-
-## Discord
-
-Requires an application ID, bot token, public key, and public base URL.
-
-```bash
-cline connect discord --app-id <ID> --token <TOKEN> --public-key <KEY> --base-url <URL>
-```
+每个 Slack thread 会映射到一个 agent 会话，因此 agent 会在 thread 内保持上下文。
 
 ## Google Chat
 
-Requires a service account credentials JSON file and public base URL.
+需要 service account credentials JSON 文件和公网 base URL。
 
 ```bash
-cline connect gchat --credentials <JSON> --base-url <URL>
+nbg connect gchat --credentials-json <JSON> --base-url <URL>
 ```
 
 ## WhatsApp
 
-Requires a phone number ID, access token, app secret, webhook verify token, and public base URL.
+需要 phone number ID、access token、app secret、webhook verify token 和公网 base URL。
 
 ```bash
-cline connect whatsapp --phone-id <ID> --token <TOKEN> --app-secret <SECRET> --base-url <URL>
+nbg connect whatsapp --phone-number-id <ID> --access-token <TOKEN> --app-secret <SECRET> --verify-token <VERIFY> --base-url <URL>
 ```
 
 ## Linear
 
-Requires an API key, webhook signing secret, and public base URL.
+需要 API key、webhook signing secret 和公网 base URL。
 
 ```bash
-cline connect linear --api-key <KEY> --signing-secret <SECRET> --base-url <URL>
+nbg connect linear --api-key <KEY> --webhook-secret <SECRET> --base-url <URL>
 ```
 
-## Managing Connectors
+## 管理连接器
 
 ```bash
-# Stop all connectors
-cline connect --stop
+# 停止所有连接器
+nbg connect --stop
 
-# Stop a specific connector
-cline connect telegram --stop
+# 停止指定连接器
+nbg connect telegram --stop
 ```
 
-## Hook Command Protocol
+## Hook Command 协议
 
-The `--hook-command` pattern works across all connectors. The script receives a JSON payload via stdin:
+`--hook-command` 适用于所有连接器。脚本会通过 stdin 接收 JSON payload：
 
 ```json
 {
   "payload": {
     "actor": {
       "participantKey": "telegram:id:12345",
-      "displayName": "User Name"
+      "displayName": "用户名"
     },
-    "message": "The incoming message text"
+    "message": "传入消息文本"
   }
 }
 ```
 
-Return `{"action": "allow"}` or `{"action": "deny", "message": "reason"}`.
+返回 `{"action": "allow"}` 或 `{"action": "deny", "message": "reason"}`。
 
-## Running Multiple Connectors
+## 同时运行多个连接器
 
-Multiple connectors can run simultaneously. They all share the same hub:
+多个连接器可以同时运行，并共享同一个 hub：
 
 ```bash
-# Terminal 1
-cline connect telegram -k $TELEGRAM_TOKEN
+# 终端 1
+nbg connect telegram -k $TELEGRAM_TOKEN
 
-# Terminal 2
-cline connect slack --token $SLACK_TOKEN --signing-secret $SECRET --base-url $URL
+# 终端 2
+nbg connect slack --bot-token $SLACK_TOKEN --signing-secret $SECRET --base-url $URL
 ```
 
-Connectors require the hub. Start it with `cline hub start` if it doesn't auto-start.
+连接器依赖 hub。如果没有自动启动，可以运行 `nbg hub start`。

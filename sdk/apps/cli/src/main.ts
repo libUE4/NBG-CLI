@@ -493,6 +493,10 @@ export async function runCli(): Promise<void> {
 		.allowUnknownOption()
 		.allowExcessArguments()
 		.passThroughOptions()
+		.addHelpText(
+			"after",
+			"\n可用子命令：\n  create    创建新的计划任务\n  list      列出计划任务\n  active    显示当前正在执行的计划任务\n  upcoming  显示即将运行的计划任务\n  trigger   立即触发计划任务\n  pause     暂停计划任务\n  resume    恢复计划任务\n  history   显示计划任务执行历史\n  stats     显示计划任务统计\n  get       按 ID 获取计划任务\n  update    更新计划任务\n  delete    删除计划任务\n  import    导入计划任务\n  export    导出计划任务\n",
+		)
 		.action(async (_opts: unknown, cmd: Command) => {
 			if (
 				cmd.args.length === 0 &&

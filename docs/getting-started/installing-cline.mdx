@@ -1,139 +1,139 @@
 ---
-title: "Installing Cline"
-description: "Choose your installation path: IDE Extension, CLI, SDK, or Kanban"
+title: "安装 NBG"
+description: "选择 NBG 的安装路径：CLI、IDE 扩展、SDK 或 Kanban"
 ---
 
-## Choose Your Install Path
+## 选择安装路径
 
-- [IDE Extension](#ide-extension) — VS Code, Cursor, JetBrains, Windsurf, VSCodium, Antigravity
-- [CLI](#cli) — terminal workflows
-- [Kanban](#kanban) (preview) — easily manage through multiple agents through a kanban board
-- [SDK](#sdk) — build with `@cline/sdk`
+- [CLI](#cli) — 终端交互和自动化工作流
+- [IDE Extension](#ide-extension) — VS Code、Cursor、JetBrains、Windsurf、VSCodium、Antigravity
+- [Kanban](#kanban) (preview) — 用看板管理多个 agent 任务
+- [SDK](#sdk) — 基于当前 `@cline/sdk` 兼容层构建
 
 ## IDE Extension
 
-Use this if you want Cline inside your editor UI.
+需要编辑器 UI 时使用这一方式。NBG IDE 扩展仍在从 Cline 兼容层迁移，正式发布前优先使用 CLI；需要 IDE 集成时可基于本仓库构建，或使用兼容扩展并完成 provider 配置。
 
 <Tabs>
   <Tab title="VS Code / Cursor / Windsurf / VSCodium / Antigravity">
     <Steps>
-      <Step title="Open Extensions">
-        Press `Ctrl/Cmd + Shift + X`.
+      <Step title="打开扩展面板">
+        按 `Ctrl/Cmd + Shift + X`。
       </Step>
-      <Step title="Search for Cline">
-        Type `Cline`.
+      <Step title="搜索扩展">
+        搜索 `NBG`；如果尚未发布，使用本仓库构建的 VSIX。
       </Step>
-      <Step title="Install">
-        Click **Install** on the Cline extension.
+      <Step title="安装">
+        点击 **Install**，或通过编辑器的 VSIX 安装入口安装本地构建包。
       </Step>
-      <Step title="Open Cline">
-        Use the Cline activity bar icon, or run `Cline: Open In New Tab` from Command Palette.
+      <Step title="打开 NBG">
+        使用 NBG activity bar 图标，或从 Command Palette 打开 NBG 面板。
       </Step>
-      <Step title="Authorize with Cline">
-        After installing the extension, complete provider setup in Cline settings.
+      <Step title="配置 provider">
+        安装后在 NBG 设置中完成 provider 配置。
 
-        [Authorize with Cline](/getting-started/authorizing-with-cline)
+        [配置认证](/getting-started/authorizing-with-cline)
       </Step>
     </Steps>
 
     <Note>
-    Windsurf and VSCodium use Open VSX. The install flow is the same.
+    Windsurf 和 VSCodium 使用 Open VSX，安装流程相同。
     </Note>
   </Tab>
 
   <Tab title="JetBrains">
     <Steps>
-      <Step title="Open Plugins Marketplace">
-        **Settings** → **Plugins** → **Marketplace**.
+      <Step title="打开 Plugins Marketplace">
+        进入 **Settings** → **Plugins** → **Marketplace**。
       </Step>
-      <Step title="Install Cline">
-        Search `Cline`, click **Install**, then restart the IDE.
+      <Step title="安装插件">
+        搜索 `NBG`；如果尚未发布，使用本仓库构建的插件包。
       </Step>
-      <Step title="Open Cline">
-        **View** → **Tool Windows** → **Cline**.
+      <Step title="打开 NBG">
+        通过 **View** → **Tool Windows** 打开 NBG。
       </Step>
-      <Step title="Authorize with Cline">
-        After installing the extension, complete provider setup in Cline settings.
+      <Step title="配置 provider">
+        安装后在 NBG 设置中完成 provider 配置。
 
-        [Authorize with Cline](/getting-started/authorizing-with-cline)
+        [配置认证](/getting-started/authorizing-with-cline)
       </Step>
     </Steps>
 
-    Alternative: install from the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/28247-cline).
+    发布前不要把旧 Marketplace 页面作为 NBG 安装入口。
   </Tab>
 </Tabs>
 
 ## CLI
 
-Use this if you want Cline in terminal workflows (interactive + automation).
+需要终端交互和自动化任务时使用 CLI。
 
 <Steps>
-  <Step title="Install Node.js">
-    Install Node.js 20+ (22 recommended).
+  <Step title="安装 Node.js">
+    安装 Node.js 20+，推荐 Node.js 22。
   </Step>
-  <Step title="Install CLI">
+  <Step title="安装 CLI">
     ```bash
-    npm install -g cline
+    npm install -g @nbg/cli
     ```
   </Step>
-  <Step title="Authenticate">
+  <Step title="配置认证">
     ```bash
-    cline auth
+    nbg auth
     ```
   </Step>
-  <Step title="Run Cline">
+  <Step title="运行 NBG">
     ```bash
-    cline
-    # or
-    cline "your task"
+    nbg
+    # 或
+    nbg "你的任务"
     ```
   </Step>
 </Steps>
 
-More details: [CLI Installation & Setup](/usage/cli-overview)
+更多信息见 [CLI 参考](/cli/cli-reference)。
 
 ## Kanban
 
-Use this if you want task-board workflows with agent execution.
+需要用任务看板管理 agent 执行时使用 Kanban。
 
 <Steps>
-  <Step title="Install Node.js">
-    Install Node.js 18+.
+  <Step title="安装 CLI">
+    先安装 NBG CLI。
   </Step>
-  <Step title="Launch Kanban">
+  <Step title="启动 Kanban">
     ```bash
-    npx kanban
+    nbg kanban
     ```
   </Step>
 </Steps>
 
-More details: [Kanban](/usage/kanban)
+更多信息见 [Kanban](/usage/kanban)。
 
 ## SDK
 
-Use this if you are building your own app/agent on top of Cline.
+需要在 NBG 底座上构建自己的 app 或 agent 时使用 SDK。包名当前保留 `@cline/sdk` 作为兼容层。
 
 <Steps>
-  <Step title="Create project">
+  <Step title="创建项目">
     ```bash
     mkdir my-agent && cd my-agent
     npm init -y
     ```
   </Step>
-  <Step title="Install SDK">
+  <Step title="安装 SDK">
     ```bash
     npm install @cline/sdk
     ```
   </Step>
-  <Step title="Build and run">
-    Browse SDK examples to run your first agent.
+  <Step title="构建并运行">
+    浏览 SDK 示例，运行你的第一个 agent。
   </Step>
 </Steps>
 
-Start here: [SDK Examples](/sdk/examples)
+从这里开始：[SDK 示例](/sdk/examples)。
 
 
-## Need Help?
+## 需要帮助？
 
 - [Troubleshooting](/troubleshooting/networking-and-proxies)
-- [Discord community](https://discord.gg/cline)
+- [GitHub Issues](https://github.com/libUE4/NBG-CLI/issues)
