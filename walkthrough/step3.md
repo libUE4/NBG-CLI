@@ -1,7 +1,7 @@
-# Always Use the Best Models
+# 接入适合你的最佳模型
 
-**Connect your keys for Anthropic (Claude), Google (Gemini), OpenAI (GPT), and other leading LLMs.**
+**连接 Anthropic、Google、OpenAI 以及 OpenAI 兼容服务等模型提供方。**
 
-Cline puts you at the forefront of AI. Bring your own API keys for leading models like Anthropic (Claude), Google (Gemini), and OpenAI (GPT). Always leverage the most powerful State-of-the-Art (SOTA) capabilities, ensuring you control both cost and cutting-edge performance.
+NBG 支持自带 API Key，并保留面向企业私有网关和本地模型的扩展空间。你可以按任务选择模型，在能力、成本和延迟之间取得平衡。
 
-![Cline Models Demo](https://storage.googleapis.com/cline_public_images/docs/assets/clines-models-hifi-3_compress.webp)
+![NBG 模型配置演示](https://storage.googleapis.com/cline_public_images/docs/assets/clines-models-hifi-3_compress.webp)

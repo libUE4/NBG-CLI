@@ -1,7 +1,7 @@
-# No Black Box: Full Visibility & Control
+# 全程可见、可控、可回滚
 
-**Cline operates with complete transparency, showing you every file read and every proposed diff.**
+**NBG 会展示读取的文件、拟执行的命令和每一处待应用的 diff。**
 
-Understand exactly what Cline is doing and why—no obfuscation. Review all actions and approve changes before they're made. Cline uses checkpoints, allowing you to easily revert if needed, maintaining full control over your codebase. With BYO-key, you also have clear cost transparency.
+你可以在改动落地前审查动作并决定是否批准。检查点用于恢复任务和工作区状态，自带 Key 模式也让成本边界更清楚。
 
-![Cline Transparency Demo](https://storage.googleapis.com/cline_public_images/docs/assets/clines-transparency-hifi-5_compress.webp)
+![NBG 透明执行演示](https://storage.googleapis.com/cline_public_images/docs/assets/clines-transparency-hifi-5_compress.webp)

@@ -1,7 +1,7 @@
-# Deep Codebase Intelligence
+# 深入理解代码库
 
-**Cline starts with broad context and explores deeply where needed.**
+**NBG 会先建立全局上下文，再按需深入关键文件。**
 
-Cline is designed with inherent codebase intelligence. It doesn't operate in a vacuum, but starts with a structural understanding of your project. Before making changes, it performs targeted agentic exploration to gain any additional specific context required, ensuring its actions are always well-informed and aligned with your architecture.
+NBG 不会脱离项目结构直接改代码。它会理解目录、依赖和调用关系，并在修改前进行有目标的上下文探索，让执行动作更贴近你的工程约束。
 
-![Cline Deep Codebase Intelligence Demo](https://storage.googleapis.com/cline_public_images/docs/assets/cline-reading-codebase-hifi-2_compress.webp)
+![NBG 代码库理解演示](https://storage.googleapis.com/cline_public_images/docs/assets/cline-reading-codebase-hifi-2_compress.webp)

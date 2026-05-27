@@ -1,7 +1,7 @@
-# Unlock Specialized Capabilities with MCP
+# 使用 MCP 扩展专业能力
 
-**The Model Context Protocol (MCP) connects Cline to a world of powerful tools.**
+**模型上下文协议（MCP）让 NBG 连接更多安全、可审计的工具。**
 
-Go beyond local code. With the Model Context Protocol (MCP), Cline accesses vital context from external datasources like databases and APIs. It can interact with these platforms and leverage a growing marketplace of specialized, secure tools to tackle complex, real-world development tasks.
+不止本地代码。通过 MCP，NBG 可以接入数据库、API、内部平台和团队工具，并在明确授权下完成更贴近真实业务的开发任务。
 
-![Cline MCP Servers Demo](https://storage.googleapis.com/cline_public_images/docs/assets/clines-mcp-servers-4_compress.webp)
+![NBG MCP 服务器演示](https://storage.googleapis.com/cline_public_images/docs/assets/clines-mcp-servers-4_compress.webp)
