@@ -1,0 +1,82 @@
+name: nbg-cli-publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      npm_tag:
+        description: "npm dist-tag to publish"
+        required: true
+        default: "next"
+        type: choice
+        options:
+          - next
+          - latest
+      dry_run:
+        description: "Preview package generation without publishing"
+        required: true
+        default: true
+        type: boolean
+      confirm_publish:
+        description: 'Required when dry_run=false. Type "publish" to publish.'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    name: Publish NBG CLI
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    if: ${{ inputs.dry_run || inputs.confirm_publish == 'publish' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.13"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install SDK workspace dependencies
+        run: bun install
+        working-directory: sdk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run release gate
+        run: bun run check:release
+        working-directory: sdk/apps/cli
+
+      - name: Build all platform packages
+        run: bun script/build.ts --install-native-variants
+        working-directory: sdk/apps/cli
+        env:
+          TELEMETRY_SERVICE_API_KEY: ${{ secrets.TELEMETRY_SERVICE_API_KEY }}
+          ERROR_SERVICE_API_KEY: ${{ secrets.ERROR_SERVICE_API_KEY }}
+          OTEL_TELEMETRY_ENABLED: ${{ secrets.OTEL_TELEMETRY_ENABLED }}
+          OTEL_LOGS_EXPORTER: otlp
+          OTEL_METRICS_EXPORTER: otlp
+          OTEL_EXPORTER_OTLP_PROTOCOL: ${{ secrets.OTEL_EXPORTER_OTLP_PROTOCOL }}
+          OTEL_EXPORTER_OTLP_ENDPOINT: ${{ secrets.OTEL_EXPORTER_OTLP_ENDPOINT }}
+          OTEL_EXPORTER_OTLP_HEADERS: ${{ secrets.OTEL_EXPORTER_OTLP_HEADERS }}
+
+      - name: Publish or dry-run NBG CLI packages
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            bun script/publish-npm.ts --tag "${{ inputs.npm_tag }}" --dry-run
+          else
+            bun script/publish-npm.ts --tag "${{ inputs.npm_tag }}"
+          fi
+        working-directory: sdk/apps/cli
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
