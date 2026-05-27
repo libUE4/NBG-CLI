@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="assets/icons/icon.png" width="80" alt="Cline" />
+  <img src="assets/icons/icon.png" width="80" alt="NBG" />
 </p>
 
 <h1 align="center">NBG</h1>
 
 <p align="center">
-Commercial-grade developer AI agent CLI and SDK, built on the Cline runtime foundation.
+商业化开发者 AI 代理 CLI 与 SDK，基于 Cline 运行时底座演进，面向中文开发工作流。
 </p>
 
 <div align="center">
@@ -14,19 +14,19 @@ Commercial-grade developer AI agent CLI and SDK, built on the Cline runtime foun
 <table>
 <tbody>
 <td align="center">
-<a href="https://docs.cline.bot" target="_blank"><strong>Docs</strong></a>
+<a href="./sdk/apps/cli/README.md" target="_blank"><strong>中文文档</strong></a>
 </td>
 <td align="center">
-<a href="https://discord.gg/cline" target="_blank"><strong>Discord</strong></a>
+<a href="https://github.com/libUE4/NBG-CLI" target="_blank"><strong>GitHub</strong></a>
 </td>
 <td align="center">
-<a href="https://www.reddit.com/r/cline/" target="_blank"><strong>r/cline</strong></a>
+<a href="https://github.com/libUE4/NBG-CLI/issues" target="_blank"><strong>Issues</strong></a>
 </td>
 <td align="center">
-<a href="https://github.com/cline/cline/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop" target="_blank"><strong>Feature Requests</strong></a>
+<a href="./docs-internal/commercialization-plan.md" target="_blank"><strong>商业化计划</strong></a>
 </td>
 <td align="center">
-<a href="https://cline.bot/join-us" target="_blank"><strong>Join us!</strong></a>
+<a href="./AGENTS.md" target="_blank"><strong>贡献指南</strong></a>
 </td>
 </tbody>
 </table>
@@ -43,15 +43,15 @@ Commercial-grade developer AI agent CLI and SDK, built on the Cline runtime foun
 
 ### CLI
 
-Run NBG in your terminal.
-Interactive chat or fully headless
-for CI/CD and scripting.
+在终端运行 NBG。
+支持交互式中文 TUI，
+也支持 CI/CD 和脚本中的无头模式。
 
 ```
 npm i -g nbg
 ```
 
-<a href="./sdk/apps/cli/README.md">Learn more</a>
+<a href="./sdk/apps/cli/README.md">查看 CLI 文档</a>
 <br><br>
 
 </td>

@@ -17,9 +17,9 @@
 	"publisher": "nbg-ai",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/nbg-ai/nbg"
+		"url": "https://github.com/libUE4/NBG-CLI"
 	},
-	"homepage": "https://github.com/nbg-ai/nbg",
+	"homepage": "https://github.com/libUE4/NBG-CLI",
 	"categories": [
 		"AI",
 		"Chat",

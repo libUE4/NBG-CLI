@@ -11,61 +11,61 @@
 <a href="https://www.npmjs.com/package/nbg" target="_blank">NPM</a>
 </td>
 <td align="center">
-<a href="https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev" target="_blank">VS Code Extension</a>
+<a href="https://github.com/libUE4/NBG-CLI" target="_blank">GitHub</a>
 </td>
 <td align="center">
-<a href="https://discord.gg/cline" target="_blank">Discord</a>
+<a href="https://github.com/libUE4/NBG-CLI/issues" target="_blank">Issues</a>
 </td>
 <td align="center">
-<a href="https://www.reddit.com/r/cline/" target="_blank">r/cline</a>
+<a href="../../../AGENTS.md" target="_blank">贡献指南</a>
 </td>
 <td align="center">
-<a href="https://github.com/cline/cline/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop" target="_blank">Feature Requests</a>
+<a href="../../../docs-internal/commercialization-plan.md" target="_blank">商业化计划</a>
 </td>
 <td align="center">
-<a href="https://docs.cline.bot" target="_blank">Docs</a>
+<a href="../../../README.md" target="_blank">项目首页</a>
 </td>
 </tbody>
 </table>
 </div>
 
-Run NBG in your terminal. Interactive chat for paired sessions, or fully headless for CI/CD and scripting. NBG currently uses the Cline-derived runtime as its compatibility layer while the public product shell moves to independent NBG branding.
+在终端运行 NBG。它提供中文交互式 TUI，也支持 CI/CD 和脚本场景的无头模式。当前 NBG 以 Cline 派生运行时作为兼容层，用户可见产品外壳、文案和发布入口逐步迁移到独立 NBG 品牌。
 
-## Install
+## 安装
 
 ```sh
 npm install -g nbg
 ```
 
-For nightly builds:
+夜间版本：
 
 ```sh
 npm install -g nbg@nightly
 ```
 
-Platform binaries are published for macOS, Linux, and Windows on `arm64` and `x64`. The `nbg` package resolves the correct binary for your platform via optional dependencies, so no Node, Bun, or Zig runtime is required at install time.
+平台二进制覆盖 macOS、Linux、Windows 的 `arm64` 和 `x64`。`nbg` 包会通过 optional dependencies 选择当前平台二进制，安装后运行 CLI 不需要额外 Node、Bun 或 Zig 运行时。
 
-## Quick start
+## 快速开始
 
-Run interactively:
+交互式运行：
 
 ```sh
 nbg
 ```
 
-Run a single prompt:
+运行单次提示词：
 
 ```sh
 nbg "Audit this package and propose fixes"
 ```
 
-Pipe input:
+管道输入：
 
 ```sh
 cat file.txt | nbg "Summarize this"
 ```
 
-See `nbg --help` for the full flag reference.
+完整参数参考见 `nbg --help`。
 
 ## Use any provider
 
