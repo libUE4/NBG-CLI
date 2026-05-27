@@ -1,52 +1,52 @@
 <div align="center"><sub>
-English | <a href="https://github.com/cline/cline/blob/main/locales/es/README.md" target="_blank">Español</a> | <a href="https://github.com/cline/cline/blob/main/locales/de/README.md" target="_blank">Deutsch</a> | <a href="https://github.com/cline/cline/blob/main/locales/ja/README.md" target="_blank">日本語</a> | <a href="https://github.com/cline/cline/blob/main/locales/zh-cn/README.md" target="_blank">简体中文</a> | <a href="https://github.com/cline/cline/blob/main/locales/zh-tw/README.md" target="_blank">繁體中文</a> | <a href="https://github.com/cline/cline/blob/main/locales/ko/README.md" target="_blank">한국어</a>
+简体中文 | <a href="https://github.com/libUE4/NBG-CLI" target="_blank">GitHub</a> | <a href="https://github.com/libUE4/NBG-CLI/issues" target="_blank">Issues</a>
 </sub></div>
 
-# Cline
+# NBG
 <div align="center">
 <table>
 <tbody>
 <td align="center">
-<a href="https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev" target="_blank"><strong>Download on VS Marketplace</strong></a>
+<a href="https://github.com/libUE4/NBG-CLI" target="_blank"><strong>GitHub 仓库</strong></a>
 </td>
 <td align="center">
-<a href="https://discord.gg/cline" target="_blank"><strong>Discord</strong></a>
+<a href="https://github.com/libUE4/NBG-CLI/issues" target="_blank"><strong>反馈问题</strong></a>
 </td>
 <td align="center">
-<a href="https://www.reddit.com/r/cline/" target="_blank"><strong>r/cline</strong></a>
+<a href="./CONTRIBUTING.md" target="_blank"><strong>贡献指南</strong></a>
 </td>
 <td align="center">
-<a href="https://github.com/cline/cline/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop" target="_blank"><strong>Feature Requests</strong></a>
+<a href="./docs-internal/commercialization-plan.md" target="_blank"><strong>商业化计划</strong></a>
 </td>
 <td align="center">
-<a href="https://docs.cline.bot/getting-started/for-new-coders" target="_blank"><strong>Getting Started</strong></a>
+<a href="./README.md" target="_blank"><strong>快速开始</strong></a>
 </td>
 </tbody>
 </table>
 </div>
 
-Meet Cline, an AI assistant that can use your **CLI** a**N**d **E**ditor.
+认识 NBG，一个面向中文开发工作流的商业化 AI 代理，覆盖 **CLI** 与编辑器场景。
 
-Thanks to [Claude Sonnet's agentic coding capabilities](https://www.anthropic.com/claude/sonnet), Cline can handle complex software development tasks step-by-step. With tools that let him create & edit files, explore large projects, use the browser, and execute terminal commands (after you grant permission), he can assist you in ways that go beyond code completion or tech support. Cline can even use the Model Context Protocol (MCP) to create new tools and extend his own capabilities. While autonomous AI scripts traditionally run in sandboxed environments, this extension provides a human-in-the-loop GUI to approve every file change and terminal command, providing a safe and accessible way to explore the potential of agentic AI.
+NBG 基于 Cline 派生运行时构建，保留成熟的工具调用、文件编辑、终端执行、浏览器自动化与 MCP 扩展能力，同时把用户可见体验迁移到独立 NBG 品牌和中文文案。它可以分步骤处理复杂开发任务，并在关键文件修改和命令执行前保留人工确认路径。
 
 1. Enter your task and add images to convert mockups into functional apps or fix bugs with screenshots.
-2. Cline starts by analyzing your file structure & source code ASTs, running regex searches, and reading relevant files to get up to speed in existing projects. By carefully managing what information is added to context, Cline can provide valuable assistance even for large, complex projects without overwhelming the context window.
-3. Once Cline has the information he needs, he can:
+2. NBG starts by analyzing your file structure & source code ASTs, running regex searches, and reading relevant files to get up to speed in existing projects. By carefully managing what information is added to context, NBG can provide valuable assistance even for large, complex projects without overwhelming the context window.
+3. Once NBG has the information it needs, it can:
     - Create and edit files + monitor linter/compiler errors along the way, letting him proactively fix issues like missing imports and syntax errors on his own.
     - Execute commands directly in your terminal and monitor their output as he works, letting him e.g., react to dev server issues after editing a file.
-    - For web development tasks, Cline can launch the site in a headless browser, click, type, scroll, and capture screenshots + console logs, allowing him to fix runtime errors and visual bugs.
-4. When a task is completed, Cline will present the result to you with a terminal command like `open -a "Google Chrome" index.html`, which you run with a click of a button.
+    - For web development tasks, NBG can launch the site in a headless browser, click, type, scroll, and capture screenshots + console logs, allowing it to fix runtime errors and visual bugs.
+4. When a task is completed, NBG will present the result to you with a terminal command like `open -a "Google Chrome" index.html`, which you run with a click of a button.
 
 > [!TIP]
-> Follow [this guide](https://docs.cline.bot/features/customization/opening-cline-in-sidebar) to open Cline on the right side of your editor. This lets you use Cline side-by-side with your file explorer, and see how he changes your workspace more clearly.
+> 当前 NBG 保留 Cline 兼容层的部分内部命名。贡献时不要机械替换 provider ID、存储路径或兼容 API。
 
 ---
 
 <img align="right" width="340" src="https://github.com/user-attachments/assets/3cf21e04-7ce9-4d22-a7b9-ba2c595e88a4">
 
-### Use any API and Model
+### 使用任意 API 和模型
 
-Cline supports API providers like OpenRouter, Anthropic, OpenAI, Google Gemini, AWS Bedrock, Azure, GCP Vertex, Cerebras and Groq. You can also configure any OpenAI compatible API, or use a local model through LM Studio/Ollama. If you're using OpenRouter, the extension fetches their latest model list, allowing you to use the newest models as soon as they're available.
+NBG 支持 OpenRouter、Anthropic、OpenAI、Google Gemini、AWS Bedrock、Azure、GCP Vertex、Cerebras、Groq 等 API provider，也支持任意 OpenAI-compatible 端点和 LM Studio/Ollama 本地模型。OpenRouter 模型列表会自动拉取，方便使用最新模型。
 
 The extension also keeps track of total tokens and API usage cost for the entire task loop and individual requests, keeping you informed of spend every step of the way.
 
@@ -56,11 +56,11 @@ The extension also keeps track of total tokens and API usage cost for the entire
 
 <img align="left" width="370" src="https://github.com/user-attachments/assets/81be79a8-1fdb-4028-9129-5fe055e01e76">
 
-### Run Commands in Terminal
+### 在终端执行命令
 
-Thanks to the new [shell integration updates in VSCode v1.93](https://code.visualstudio.com/updates/v1_93#_terminal-shell-integration-api), Cline can execute commands directly in your terminal and receive the output. This allows him to perform a wide range of tasks, from installing packages and running build scripts to deploying applications, managing databases, and executing tests, all while adapting to your dev environment & toolchain to get the job done right.
+借助 [VS Code v1.93 shell integration](https://code.visualstudio.com/updates/v1_93#_terminal-shell-integration-api)，NBG 可以直接在终端执行命令并读取输出。它能安装依赖、运行构建脚本、部署应用、管理数据库、执行测试，并根据你的开发环境和工具链调整执行方式。
 
-For long running processes like dev servers, use the "Proceed While Running" button to let Cline continue in the task while the command runs in the background. As Cline works he’ll be notified of any new terminal output along the way, letting him react to issues that may come up, such as compile-time errors when editing files.
+对于开发服务器这类长时间运行的进程，可以让命令在后台继续运行，同时让 NBG 根据新的终端输出继续推进任务，例如在编辑文件后处理编译错误。
 
 <!-- Transparent pixel to create line break after floating image -->
 
@@ -68,11 +68,11 @@ For long running processes like dev servers, use the "Proceed While Running" but
 
 <img align="right" width="400" src="https://github.com/user-attachments/assets/c5977833-d9b8-491e-90f9-05f9cd38c588">
 
-### Create and Edit Files
+### 创建和编辑文件
 
-Cline can create and edit files directly in your editor, presenting you a diff view of the changes. You can edit or revert Cline's changes directly in the diff view editor, or provide feedback in chat until you're satisfied with the result. Cline also monitors linter/compiler errors (missing imports, syntax errors, etc.) so he can fix issues that come up along the way on his own.
+NBG 可以直接在编辑器中创建和修改文件，并以 diff 视图展示变更。你可以在 diff 编辑器里修改或撤销 NBG 的变更，也可以继续在聊天中给出反馈，直到结果满足预期。NBG 还会关注 linter/compiler 错误，例如缺失 import 或语法错误，并在任务过程中修复。
 
-All changes made by Cline are recorded in your file's Timeline, providing an easy way to track and revert modifications if needed.
+NBG 对文件的改动会记录在 Timeline 中，便于追踪和回滚。
 
 <!-- Transparent pixel to create line break after floating image -->
 
@@ -80,11 +80,11 @@ All changes made by Cline are recorded in your file's Timeline, providing an eas
 
 <img align="left" width="370" src="https://github.com/user-attachments/assets/bc2e85ba-dfeb-4fe6-9942-7cfc4703cbe5">
 
-### Use the Browser
+### 使用浏览器
 
-With Claude Sonnet's new [Computer Use](https://www.anthropic.com/news/3-5-models-and-computer-use) capability, Cline can launch a browser, click elements, type text, and scroll, capturing screenshots and console logs at each step. This allows for interactive debugging, end-to-end testing, and even general web use! This gives him autonomy to fixing visual bugs and runtime issues without you needing to handhold and copy-pasting error logs yourself.
+在支持浏览器自动化的模型和工具链下，NBG 可以启动浏览器、点击元素、输入文本、滚动页面，并在每一步采集截图和控制台日志。这适合交互式调试、端到端测试和 Web QA。
 
-Try asking Cline to "test the app", and watch as he runs a command like `npm run dev`, launches your locally running dev server in a browser, and performs a series of tests to confirm that everything works. [See a demo here.](https://x.com/sdrzn/status/1850880547825823989)
+例如让 NBG “测试这个应用”，它可以运行 `npm run dev`，在浏览器中打开本地服务，并执行一系列检查来确认功能是否正常。
 
 <!-- Transparent pixel to create line break after floating image -->
 
@@ -92,13 +92,13 @@ Try asking Cline to "test the app", and watch as he runs a command like `npm run
 
 <img align="right" width="350" src="https://github.com/user-attachments/assets/ac0efa14-5c1f-4c26-a42d-9d7c56f5fadd">
 
-### "add a tool that..."
+### “添加一个工具……”
 
-Thanks to the [Model Context Protocol](https://github.com/modelcontextprotocol), Cline can extend his capabilities through custom tools. While you can use [community-made servers](https://github.com/modelcontextprotocol/servers), Cline can instead create and install tools tailored to your specific workflow. Just ask Cline to "add a tool" and he will handle everything, from creating a new MCP server to installing it into the extension. These custom tools then become part of Cline's toolkit, ready to use in future tasks.
+通过 [Model Context Protocol](https://github.com/modelcontextprotocol)，NBG 可以接入自定义工具。你既可以使用社区 MCP server，也可以让 NBG 为你的特定工作流创建和安装工具。这些工具会成为后续任务可复用的能力。
 
--   "add a tool that fetches Jira tickets": Retrieve ticket ACs and put Cline to work
+-   “添加一个读取 Jira ticket 的工具”：拉取验收条件并交给 NBG 处理
 -   "add a tool that manages AWS EC2s": Check server metrics and scale instances up or down
--   "add a tool that pulls the latest PagerDuty incidents": Fetch details and ask Cline to fix bugs
+-   “添加一个读取 PagerDuty incident 的工具”：拉取告警详情并让 NBG 修复问题
 
 <!-- Transparent pixel to create line break after floating image -->
 
@@ -106,11 +106,11 @@ Thanks to the [Model Context Protocol](https://github.com/modelcontextprotocol),
 
 <img align="left" width="360" src="https://github.com/user-attachments/assets/7fdf41e6-281a-4b4b-ac19-020b838b6970">
 
-### Add Context
+### 添加上下文
 
-**`@url`:** Paste in a URL for the extension to fetch and convert to markdown, useful when you want to give Cline the latest docs
+**`@url`:** 粘贴 URL，让扩展抓取并转换为 Markdown，适合把最新文档交给 NBG
 
-**`@problems`:** Add workspace errors and warnings ('Problems' panel) for Cline to fix
+**`@problems`:** 添加工作区 Problems 面板中的错误和警告，让 NBG 修复
 
 **`@file`:** Adds a file's contents so you don't have to waste API requests approving read file (+ type to search files)
 
@@ -122,9 +122,9 @@ Thanks to the [Model Context Protocol](https://github.com/modelcontextprotocol),
 
 <img align="right" width="350" src="https://github.com/user-attachments/assets/140c8606-d3bf-41b9-9a1f-4dbf0d4c90cb">
 
-### Checkpoints: Compare and Restore
+### 检查点：比较和恢复
 
-As Cline works through a task, the extension takes a snapshot of your workspace at each step. You can use the 'Compare' button to see a diff between the snapshot and your current workspace, and the 'Restore' button to roll back to that point.
+NBG 在任务执行过程中会为工作区创建检查点。你可以用“Compare”查看检查点和当前工作区的差异，也可以用“Restore”回滚到某一步。
 
 For example, when working with a local web server, you can use 'Restore Workspace Only' to quickly test different versions of your app, then use 'Restore Task and Workspace' when you find the version you want to continue building from. This lets you safely explore different approaches without losing progress.
 
@@ -134,13 +134,13 @@ For example, when working with a local web server, you can use 'Restore Workspac
 
 ## Contributing
 
-To contribute to the project, start with our [Contributing Guide](CONTRIBUTING.md) to learn the basics. You can also join our [Discord](https://discord.gg/cline) to chat with other contributors in the `#contributors` channel. If you're looking for full-time work, check out our open positions on our [careers page](https://cline.bot/join-us)!
+如需贡献，请从 [Contributing Guide](CONTRIBUTING.md) 开始。NBG 当前优先推进中文化、CLI 商业化体验、SDK 兼容层和安全发布流程。
 
 ## Enterprise
 
-Get the same Cline experience with enterprise-grade controls: SSO (SAML/OIDC), global policies and configuration, observability with audit trails, private networking (VPC/private link), and self-hosted or on-prem deployments, and enterprise support. Learn more at our [enterprise page](https://cline.bot/enterprise) or [talk to us](https://cline.bot/contact-sales).
+NBG 的企业化方向包括 SSO、全局策略配置、审计和观测、私有网络、自托管或本地化部署，以及企业支持。当前规划记录在 [商业化计划](./docs-internal/commercialization-plan.md) 中。
 
 
 ## License
 
-[Apache 2.0 © 2026 Cline Bot Inc.](./LICENSE)
+[Apache 2.0](./LICENSE)
