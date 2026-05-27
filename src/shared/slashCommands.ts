@@ -8,31 +8,31 @@ export interface SlashCommand {
 export const BASE_SLASH_COMMANDS: SlashCommand[] = [
 	{
 		name: "newtask",
-		description: "Create a new task with context from the current task",
+		description: "基于当前任务上下文创建新任务",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "deep-planning",
-		description: "Create a comprehensive implementation plan before coding",
+		description: "编码前创建完整实施计划",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "smol",
-		description: "Condenses your current context window",
+		description: "压缩当前上下文窗口",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "newrule",
-		description: "Create a new Cline rule based on your conversation",
+		description: "基于当前对话创建新的 NBG 规则",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "reportbug",
-		description: "Create a Github issue with Cline",
+		description: "使用 NBG 创建 GitHub issue",
 		section: "default",
 		cliCompatible: true,
 	},
@@ -42,7 +42,7 @@ export const BASE_SLASH_COMMANDS: SlashCommand[] = [
 export const VSCODE_ONLY_COMMANDS: SlashCommand[] = [
 	{
 		name: "explain-changes",
-		description: "Explain code changes between git refs (PRs, commits, branches, etc.)",
+		description: "解释 git refs 之间的代码变更（PR、提交、分支等）",
 		section: "default",
 	},
 ]
@@ -51,49 +51,49 @@ export const VSCODE_ONLY_COMMANDS: SlashCommand[] = [
 export const CLI_ONLY_COMMANDS: SlashCommand[] = [
 	{
 		name: "help",
-		description: "Learn how to use Cline CLI",
+		description: "了解如何使用 NBG CLI",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "settings",
-		description: "Change API provider, auto-approve, and feature settings",
+		description: "修改 API provider、自动批准和功能设置",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "models",
-		description: "Change the model used for the current mode",
+		description: "修改当前模式使用的模型",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "history",
-		description: "Browse and search task history",
+		description: "浏览和搜索任务历史",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "clear",
-		description: "Clear the current task and start fresh",
+		description: "清空当前任务并重新开始",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "exit",
-		description: "Alternative to Ctrl+C",
+		description: "Ctrl+C 的替代命令",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "q",
-		description: "Alternative to Ctrl+C",
+		description: "Ctrl+C 的替代命令",
 		section: "default",
 		cliCompatible: true,
 	},
 	{
 		name: "skills",
-		description: "View and manage installed skills",
+		description: "查看和管理已安装技能",
 		section: "default",
 		cliCompatible: true,
 	},
