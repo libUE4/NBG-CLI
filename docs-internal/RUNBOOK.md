@@ -161,6 +161,19 @@ Repository root:
 /root/nbg
 ```
 
+GitHub remote:
+
+```text
+origin git@github.com:libUE4/NBG-CLI.git
+main   435a4e3 chore: initialize nbg fork
+```
+
+SSH key notes:
+
+- GitHub authentication uses `/root/.ssh/nbg_github_ed25519`.
+- The public key note is stored outside the repository at `/root/.ssh/nbg_github_key.txt`.
+- Do not commit private keys, deploy-key notes, session logs, or local provider settings.
+
 Current fork strategy:
 
 - `/root/nbg` was created from the current `/root/cline` worktree, excluding `.git`, `node_modules`, `dist`, `dist-standalone`, package dist folders, caches, coverage, and `*.jsonl` files.
@@ -174,6 +187,31 @@ package.json                  name: nbg
 sdk/package.json              name: @nbg/packages
 sdk/apps/cli/package.json     name: @nbg/cli
 sdk/apps/cli/package.json     bin: nbg -> bin/nbg
+```
+
+Current SDK/CLI verification:
+
+```text
+cd /root/nbg/sdk/packages/agents && bun run typecheck
+cd /root/nbg/sdk/packages/llms && bun run typecheck
+cd /root/nbg/sdk/packages/shared && bun run typecheck
+cd /root/nbg/sdk/apps/cli && bun run typecheck
+cd /root/nbg/sdk/packages/llms && bun run vitest run --config vitest.config.ts src/providers/aaa-openai-compatible-relay.test.ts
+cd /root/nbg/sdk/apps/cli && bun run vitest run --config vitest.config.ts src/commands/auth.test.ts
+cd /root/nbg/sdk/apps/cli && bun script/build.ts --single
+```
+
+Observed result:
+
+```text
+agents typecheck passed
+llms typecheck passed
+shared typecheck passed
+cli typecheck passed
+llms relay vitest passed: 4 tests
+cli auth vitest passed: 4 tests
+cli single-platform build passed: @nbg/cli-linux-arm64@3.0.13
+binary smoke test passed: dist/cli-linux-arm64/bin/nbg --version -> 3.0.13
 ```
 
 Dependency install notes:

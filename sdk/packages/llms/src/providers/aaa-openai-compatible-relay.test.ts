@@ -11,7 +11,8 @@ const fixturePath = resolve(
 function runFixture(
 	scenario: "success" | "auth" | "anthropic" | "anthropic-auto",
 ) {
-	const result = spawnSync(process.execPath, [fixturePath, scenario], {
+	const runtime = process.versions.bun ? process.execPath : "bun";
+	const result = spawnSync(runtime, [fixturePath, scenario], {
 		cwd: resolve(dirname(fileURLToPath(import.meta.url)), "../../../../.."),
 		encoding: "utf8",
 		env: {

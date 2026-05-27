@@ -308,6 +308,11 @@
         "@cline/shared": "workspace:*",
         "nanoid": "^5.1.7",
       },
+      "devDependencies": {
+        "@types/node": "^25.3.5",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.18",
+      },
     },
     "packages/core": {
       "name": "@cline/core",
@@ -337,7 +342,10 @@
         "zod": "4.3.6",
       },
       "devDependencies": {
+        "@types/node": "^25.3.5",
         "@types/ws": "^8.18.1",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.18",
       },
     },
     "packages/llms": {
@@ -366,6 +374,11 @@
         "nanoid": "^5.1.7",
         "zod": "4.3.6",
       },
+      "devDependencies": {
+        "@types/node": "^25.3.5",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.18",
+      },
       "peerDependencies": {
         "@aws-sdk/client-bedrock-runtime": "^3.0.0",
       },
@@ -379,6 +392,10 @@
       "dependencies": {
         "@cline/core": "workspace:*",
       },
+      "devDependencies": {
+        "@types/node": "^25.3.5",
+        "typescript": "^5.9.3",
+      },
     },
     "packages/shared": {
       "name": "@cline/shared",
@@ -389,6 +406,11 @@
         "nanoid": "^5.1.7",
         "zod": "4.3.6",
         "zod-to-json-schema": "^3.25.1",
+      },
+      "devDependencies": {
+        "@types/node": "^25.3.5",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.18",
       },
     },
   },

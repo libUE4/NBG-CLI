@@ -1,13 +1,11 @@
-import type { AgentMessage, AgentModelEvent } from "@cline/shared";
+import type { AgentMessage } from "@cline/shared";
 import { registerProvider, unregisterProvider } from "../model-registry";
 import { createGateway } from "../gateway";
 
 type Scenario = "success" | "auth" | "anthropic" | "anthropic-auto";
 
-async function collect(
-	iterable: AsyncIterable<AgentModelEvent>,
-): Promise<AgentModelEvent[]> {
-	const events: AgentModelEvent[] = [];
+async function collect<T>(iterable: AsyncIterable<T>): Promise<T[]> {
+	const events: T[] = [];
 	for await (const event of iterable) {
 		events.push(event);
 	}
@@ -36,8 +34,8 @@ async function runSuccessScenario() {
 		body: unknown;
 	}> = [];
 	const fetchImpl = async (
-		input: RequestInfo | URL,
-		init?: RequestInit,
+		input: Parameters<typeof fetch>[0],
+		init?: Parameters<typeof fetch>[1],
 	): Promise<Response> => {
 		const headers = new Headers(init?.headers);
 		requests.push({
@@ -176,8 +174,8 @@ async function runAnthropicScenario() {
 		body: unknown;
 	}> = [];
 	const fetchImpl = async (
-		input: RequestInfo | URL,
-		init?: RequestInit,
+		input: Parameters<typeof fetch>[0],
+		init?: Parameters<typeof fetch>[1],
 	): Promise<Response> => {
 		const headers = new Headers(init?.headers);
 		requests.push({
@@ -272,8 +270,8 @@ async function runAnthropicAutoScenario() {
 		body: unknown;
 	}> = [];
 	const fetchImpl = async (
-		input: RequestInfo | URL,
-		init?: RequestInit,
+		input: Parameters<typeof fetch>[0],
+		init?: Parameters<typeof fetch>[1],
 	): Promise<Response> => {
 		const headers = new Headers(init?.headers);
 		requests.push({

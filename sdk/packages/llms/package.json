@@ -16,12 +16,14 @@
 	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
+			"development": "./src/index.ts",
 			"browser": "./dist/index.browser.js",
 			"react-server": "./dist/index.browser.js",
 			"import": "./dist/index.js",
 			"types": "./dist/index.d.ts"
 		},
 		"./browser": {
+			"development": "./src/index.browser.ts",
 			"import": "./dist/index.browser.js",
 			"types": "./dist/index.browser.d.ts"
 		}
@@ -68,5 +70,10 @@
 	},
 	"peerDependencies": {
 		"@aws-sdk/client-bedrock-runtime": "^3.0.0"
+	},
+	"devDependencies": {
+		"@types/node": "^25.3.5",
+		"typescript": "^5.9.3",
+		"vitest": "^4.0.18"
 	}
 }
