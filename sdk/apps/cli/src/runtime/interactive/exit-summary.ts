@@ -93,7 +93,7 @@ export function formatInteractiveExitSummary(
 		showUsageCost && typeof summary.totalCost === "number"
 			? `  费用    ${formatUsd(summary.totalCost)}`
 			: undefined,
-		`  继续    ${c.cyan}cline --id ${summary.sessionId}${c.reset}`,
+		`  继续    ${c.cyan}nbg --id ${summary.sessionId}${c.reset}`,
 		"",
 	];
 	return lines.filter((line): line is string => line !== undefined).join("\n");

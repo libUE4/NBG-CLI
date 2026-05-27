@@ -88,7 +88,7 @@ describe("interactive exit summary", () => {
 		expect(output).toContain("  消息数  2");
 		expect(output).toContain("  费用    $0.250000");
 		expect(output).toContain("  继续    ");
-		expect(output).toContain("cline --id sess_123");
+		expect(output).toContain("nbg --id sess_123");
 	});
 
 	it("formats an invalid start time without leaking NaN", () => {
