@@ -1,305 +1,317 @@
 ---
-title: "CLI Reference"
-description: "Complete command reference for Cline CLI including all commands, flags, and configuration options."
+title: "CLI 参考"
+description: "NBG CLI 的命令、参数和配置参考。"
 ---
 
 ```bash
-cline --help           # Show all commands
-cline <command> --help # Show help for a specific command
+nbg --help           # 查看所有命令
+nbg <command> --help # 查看指定命令帮助
 ```
 
-## Synopsis
+## 用法概览
 
 ```bash
-cline [options] [command] [prompt]
+nbg [options] [command] [prompt]
 ```
 
-## Help Menu (Source of Truth)
+## 帮助菜单
 
 ```text
-Usage: cline [options] [command] [prompt]
+用法： nbg [选项] [命令] [prompt]
 
-Cline CLI - AI coding assistant in your terminal
+nbg - 终端里的 AI 编码助手
 
-Arguments:
-  prompt                       Your prompt. Default to start in act mode with auto-approve enabled.
+参数：
+  prompt                        你的提示词。默认以执行模式启动，并启用自动批准。
 
-Options:
-  -V, --version                Output the version number
-  -p, --plan                   Run in plan mode
-  --json                       Output messages as JSON instead of styled text
-  --auto-approve <boolean>     Set tool auto-approval for all tools (default: true)
-  -t, --timeout <seconds>      Optional timeout in seconds (default: 0 for no timeout)
-  -m, --model <model-id>       Model to use for the session with the selected provider
-  -v, --verbose                Show verbose output
-  -c, --cwd <path>             Working directory
-  --config <path>              Configuration directory (default: ~/.cline/data/settings)
-  --data-dir <path>            Use isolated local state at this directory path (default: ~/.cline)
-  --thinking <level>           Set reasoning effort level between none|low|medium|high|xhigh (default: medium)
-  --retries <count>            Maximum consecutive mistakes (retries) before halting
-  --hooks-dir <path>           Directory path to additional hooks for runtime hook injection (default: ~/.cline/hooks)
-  --acp                        Run in Agent Client Protocol (ACP) mode for editor integration
-  -i, --tui                    Open the terminal user interface (TUI) for interactive sessions
-  --id <session-id>            Resume an existing session by ID
-  -k, --key <api-key>          API key override for this run
-  -P, --provider <id>          Provider id (default: cline)
-  -s, --system <system-prompt> Override the default system prompt
-  -z, --zen                    Start a session that runs in the background hub
-  -h, --help                   display help for command
+选项：
+  -V, --version                 输出版本号
+  -p, --plan                    以规划模式运行
+  --json                        以 JSON 输出消息，而不是带样式的文本
+  --auto-approve <boolean>      为所有工具设置自动批准（默认：true）
+  -c, --cwd <path>              工作目录
+  --thinking <level>            设置推理强度，可选 none|low|medium|high|xhigh（默认：medium）
+  --compaction <mode>           上下文压缩模式：agentic|basic|off（默认：basic）
+  -i, --tui                     打开终端用户界面（TUI）进行交互会话
+  --id <session-id>             按 ID 恢复已有会话
+  -P, --provider <id>           提供方 ID（默认：openai-compatible）
+  -k, --key <api-key>           仅本次运行覆盖 API Key
+  -m, --model <model-id>        当前会话在所选提供方下使用的模型
+  -s, --system <system-prompt>  覆盖默认系统提示词
+  -z, --zen                     启动在后台 hub 中运行的会话
+  --retries [value]             退出前允许的最大连续错误次数（重试次数，默认：6）
+  -t, --timeout <seconds>       可选超时时间，单位秒（默认：0 表示不超时）
+  --acp                         以 Agent Client Protocol（ACP）模式运行，用于编辑器集成
+  --config <path>               配置目录（默认：~/.cline/data/settings）
+  --data-dir <path>             在指定目录使用隔离的本地状态（默认：~/.cline）
+  --hooks-dir <path>            运行时注入额外 hooks 的目录路径（默认：~/.cline/hooks）
+  --worktree                    在 ~/.cline/worktrees/ 下自动创建独立 git worktree 并在其中运行任务
+  --update                      检查更新，有可用更新时安装
+  --kanban                      运行看板应用
+  -v, --verbose                 显示详细输出
+  -h, --help                    显示命令帮助
 
-Commands:
-  auth [options] [provider]    Authenticate a provider and configure what model is used
-  config [options]             Show current configuration
-  connect [options] [adapter]  Connect to an editor or IDE adapter
-  mcp                          Manage MCP servers
-  dev                          Developer tools and utilities
-  doctor                       Diagnose and fix configuration issues
-  history|h [options]          List session history or manage saved sessions
-  hook                         Handle a hook payload from stdin
-  plugin                       Manage Cline Plugins
-  schedule                     Manage scheduled tasks
-  hub                          Manage the local hub daemon
-  update [options]             Check for updates and install if available
-  version                      Show Cline CLI version number
-  kanban                       Launch the kanban app and exit
+命令：
+  auth [options] [provider]     认证提供方并配置要使用的模型
+  config [options]              显示当前配置
+  plugin                        管理 NBG 插件
+  connect [options] [channel]   连接到外部频道
+  mcp                           管理 MCP 服务器
+  doctor                        诊断并修复配置问题
+  history|h [options]           列出会话历史或管理已保存会话
+  hook                          处理来自 stdin 的 hook payload
+  schedule                      管理计划任务
+  hub                           管理本地 hub 守护进程
+  update [options]              检查更新，有可用更新时安装
+  version                       显示 nbg 版本号
+  kanban                        运行看板应用
+  help [command]                显示指定命令的帮助
 ```
 
-## Global Options
+## 全局参数
 
-| Option | Description |
+| 参数 | 说明 |
 |--------|-------------|
-| `-V, --version` | Output the version number |
-| `-p, --plan` | Run in plan mode |
-| `--json` | Output messages as JSON instead of styled text |
-| `--auto-approve <boolean>` | Set tool auto-approval for all tools (default: `true`) |
-| `-t, --timeout <seconds>` | Optional timeout in seconds (default: `0` for no timeout) |
-| `-m, --model <model-id>` | Model to use for the session with the selected provider |
-| `-v, --verbose` | Show verbose output |
-| `-c, --cwd <path>` | Working directory |
-| `--config <path>` | Configuration directory (default: `~/.cline/data/settings`) |
-| `--data-dir <path>` | Use isolated local state at this directory path (default: `~/.cline`) |
-| `--thinking <level>` | Set reasoning effort: `none\|low\|medium\|high\|xhigh` (default `medium`) |
-| `--retries <count>` | Maximum consecutive mistakes (retries) before halting |
-| `--hooks-dir <path>` | Directory path to additional hooks for runtime hook injection (default: `~/.cline/hooks`) |
-| `--acp` | Run in Agent Client Protocol (ACP) mode for editor integration |
-| `-i, --tui` | Open the terminal user interface (TUI) for interactive sessions |
-| `--id <session-id>` | Resume an existing session by ID |
-| `-k, --key <api-key>` | API key override for this run |
-| `-P, --provider <id>` | Provider id (default: `cline`) |
-| `-s, --system <system-prompt>` | Override the default system prompt |
-| `-z, --zen` | Start a session that runs in the background hub |
-| `-h, --help` | Display help for command |
+| `-V, --version` | 输出版本号 |
+| `-p, --plan` | 以规划模式运行 |
+| `--json` | 以 JSON 输出消息，而不是带样式的文本 |
+| `--auto-approve <boolean>` | 设置工具自动批准（默认：`true`） |
+| `-c, --cwd <path>` | 工作目录 |
+| `--thinking <level>` | 推理强度：`none\|low\|medium\|high\|xhigh`（默认：`medium`） |
+| `--compaction <mode>` | 上下文压缩模式：`agentic\|basic\|off`（默认：`basic`） |
+| `-i, --tui` | 打开交互式终端界面（TUI） |
+| `--id <session-id>` | 按 ID 续接已有会话 |
+| `-P, --provider <id>` | Provider id（默认：`openai-compatible`） |
+| `-k, --key <api-key>` | 本次运行临时覆盖 API key |
+| `-m, --model <model-id>` | 当前会话使用的模型 |
+| `-s, --system <system-prompt>` | 覆盖默认系统提示词 |
+| `-z, --zen` | 在后台 hub 中启动会话 |
+| `--retries [value]` | 停止前允许的连续错误次数（默认：`6`） |
+| `-t, --timeout <seconds>` | 可选超时时间，单位秒（默认：`0`，表示不超时） |
+| `--acp` | 以 Agent Client Protocol (ACP) 模式运行 |
+| `--config <path>` | 配置目录（默认：`~/.cline/data/settings`） |
+| `--data-dir <path>` | 使用隔离本地状态目录（默认：`~/.cline`） |
+| `--hooks-dir <path>` | 运行时注入额外 hooks 的目录（默认：`~/.cline/hooks`） |
+| `--worktree` | 在 `~/.cline/worktrees/` 下自动创建独立 git worktree 并运行任务 |
+| `--update` | 检查并安装可用更新 |
+| `--kanban` | 运行看板应用 |
+| `-v, --verbose` | 显示详细输出 |
+| `-h, --help` | 显示命令帮助 |
 
-## Commands
+## 命令
 
-### `cline` (default)
+### `nbg`（默认）
 
-Start a task or enter interactive mode.
+启动任务或进入交互模式。
 
 ```bash
-cline
-cline "your prompt here"
-cline "Run tests and fix failures"
-echo "prompt" | cline
+nbg
+nbg "你的提示词"
+nbg "运行测试并修复失败"
+echo "提示词" | nbg
 ```
 
 ### `auth [options] [provider]`
 
-Configure authentication with an AI provider.
+配置 AI provider 认证。
 
 ```bash
-cline auth
+nbg auth
 ```
 
 ### `config [options]`
 
-Show current configuration.
+显示当前配置。
 
 ```bash
-cline config
+nbg config
 ```
 
-### `connect [options] [adapter]`
+### `connect [options] [channel]`
 
-Connect to messaging platforms. See [Connectors](/cli/connectors).
+连接外部频道。详见 [Connectors](/cli/connectors)。
 
 ```bash
-cline connect
-cline connect [adapter]
+nbg connect
+nbg connect [channel]
 ```
 
 ### `mcp`
 
-Manage MCP servers. See [MCP](/mcp/mcp-overview).
+管理 MCP server。详见 [MCP](/mcp/mcp-overview)。
 
 ```bash
-cline mcp
-```
-
-### `dev`
-
-Developer tools and utilities.
-
-```bash
-cline dev
+nbg mcp
 ```
 
 ### `doctor`
 
-Diagnose and fix configuration issues.
+诊断并修复配置问题。
 
 ```bash
-cline doctor
+nbg doctor
 ```
 
 ### `history|h [options]`
 
-List session history or manage saved sessions.
+查看会话历史或管理保存的会话。
 
 ```bash
-cline history
-cline h
+nbg history
+nbg h
 ```
 
 ### `hook`
 
-Handle a hook payload from stdin.
+从 stdin 处理 hook payload。
 
 ```bash
-cat payload.json | cline hook
+cat payload.json | nbg hook
 ```
 
 ### `plugin`
 
-Manage Cline plugins. Install plugins from file URLs, npm, git repositories, or local paths. See [Plugins](/customization/plugins) for full details and the plugin manifest format.
+管理 NBG 插件。支持从文件 URL、npm、git 仓库或本地路径安装插件。详见 [Plugins](/customization/plugins)。
 
 ```bash
-cline plugin install <source>  # Install a plugin
-cline plugin i <source>        # Shorthand alias
+nbg plugin install <source>  # 安装插件
+nbg plugin i <source>        # 简写别名
 ```
 
-| Option | Description |
+| 参数 | 说明 |
 |--------|-------------|
-| `--npm` | Treat source as an npm package |
-| `--git` | Treat source as a git repository |
-| `--force` | Replace an existing install for the same source |
-| `--json` | Output result as JSON |
-| `--cwd <path>` | Install to `<path>/.cline/plugins` instead of the global directory |
+| `--npm` | 将 source 视为 npm 包 |
+| `--git` | 将 source 视为 git 仓库 |
+| `--force` | 替换同一 source 的已有安装 |
+| `--json` | 以 JSON 输出结果 |
+| `--cwd <path>` | 安装到 `<path>/.cline/plugins`，而不是全局目录 |
 
-Try it with the [TypeScript Navigation Plugin](https://github.com/cline/typescript-lsp-plugin):
+可以用仓库内的 TypeScript LSP 插件示例验证安装：
 
 ```bash
-cline plugin install https://github.com/cline/typescript-lsp-plugin.git
+nbg plugin install ./sdk/examples/plugins/typescript-lsp
 ```
 
 ### `schedule`
 
-Manage scheduled agents. See [Scheduling](/cli/scheduling).
+管理定时 agent。详见 [Scheduling](/cli/scheduling)。
 
 ```bash
-cline schedule
+nbg schedule
 ```
 
 ### `hub`
 
-Manage the local hub daemon.
+管理本地 hub daemon。
 
 ```bash
-cline hub
+nbg hub
 ```
 
 ### `update [options]`
 
-Check for updates and install if available.
+检查并安装可用更新。
 
 ```bash
-cline update
+nbg update
 ```
 
 ### `version`
 
-Show Cline CLI version number.
+显示 NBG CLI 版本号。
 
 ```bash
-cline version
-cline -V
+nbg version
+nbg -V
 ```
 
 ### `kanban`
 
-Launch the kanban app and exit.
+启动 kanban 应用并退出。
 
 ```bash
-cline kanban
+nbg kanban
 ```
 
-## Environment Variables
+### `help [command]`
 
-| Variable | Description |
+显示指定命令的帮助。
+
+```bash
+nbg help doctor
+```
+
+## 环境变量
+
+NBG 当前保留 Cline 运行时兼容层，因此这些变量名暂时仍使用 `CLINE_*`。
+
+| 变量 | 说明 |
 |----------|-------------|
-| `CLINE_DATA_DIR` | Custom configuration directory (replaces `~/.cline/data/`) |
-| `CLINE_HUB_ADDRESS` | Override hub address (default: `127.0.0.1:25463`) |
-| `CLINE_SESSION_BACKEND_MODE` | Force backend mode (`local`, `hub`, `remote`, `auto`) |
-| `CLINE_SANDBOX_DATA_DIR` | Sandbox session storage directory |
-| `CLINE_SANDBOX` | Enable sandbox mode |
-| `CLINE_HOOKS_DIR` | Additional hooks directory |
-| `CLINE_BUILD_ENV` | Set to `development` for debug features |
-| `CLINE_DEBUG_PORT_BASE` | Base port for Node.js inspector |
-| `CLINE_COMMAND_PERMISSIONS` | JSON policy restricting shell commands (see below) |
+| `CLINE_DATA_DIR` | 自定义配置目录（替代 `~/.cline/data/`） |
+| `CLINE_HUB_ADDRESS` | 覆盖 hub 地址（默认：`127.0.0.1:25463`） |
+| `CLINE_SESSION_BACKEND_MODE` | 强制 backend 模式（`local`、`hub`、`remote`、`auto`） |
+| `CLINE_SANDBOX_DATA_DIR` | 沙箱会话存储目录 |
+| `CLINE_SANDBOX` | 启用沙箱模式 |
+| `CLINE_HOOKS_DIR` | 额外 hooks 目录 |
+| `CLINE_BUILD_ENV` | 设置为 `development` 以启用调试功能 |
+| `CLINE_DEBUG_PORT_BASE` | Node.js inspector 起始端口 |
+| `CLINE_COMMAND_PERMISSIONS` | 限制 shell 命令的 JSON 策略（见下方） |
 
 ### CLINE_COMMAND_PERMISSIONS
 
-Restrict which shell commands the agent can execute:
+限制 agent 可以执行的 shell 命令：
 
 ```bash
 export CLINE_COMMAND_PERMISSIONS='{"allow": ["npm *", "git *"], "deny": ["rm -rf *", "sudo *"]}'
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `allow` | `string[]` | Glob patterns for allowed commands. If set, only matching commands are permitted. |
-| `deny` | `string[]` | Glob patterns for denied commands. Deny rules always take precedence. |
-| `allowRedirects` | `boolean` | Whether to allow shell redirects (`>`, `>>`, `<`). Default: `false`. |
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `allow` | `string[]` | 允许执行的命令 glob。设置后只允许匹配命令。 |
+| `deny` | `string[]` | 禁止执行的命令 glob。拒绝规则优先级最高。 |
+| `allowRedirects` | `boolean` | 是否允许 shell 重定向（`>`、`>>`、`<`）。默认：`false`。 |
 
-## JSON Output Format
+## JSON 输出格式
 
-When using `--json`, each message is a JSON object on its own line:
+使用 `--json` 时，每条消息会作为独立 JSON 对象输出一行：
 
 ```json
-{"type": "say", "text": "I'll create the file now.", "ts": 1760501486669, "say": "text"}
+{"type": "say", "text": "我现在创建文件。", "ts": 1760501486669, "say": "text"}
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `type` | `"ask"` or `"say"` | Message category |
-| `text` | `string` | Message content |
-| `ts` | `number` | Unix timestamp in milliseconds |
-| `say` | `string` | Subtype when `type` is `"say"` |
-| `ask` | `string` | Subtype when `type` is `"ask"` |
-| `reasoning` | `string` | Model reasoning (if available) |
-| `partial` | `boolean` | `true` while streaming |
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `type` | `"ask"` or `"say"` | 消息类别 |
+| `text` | `string` | 消息内容 |
+| `ts` | `number` | Unix 毫秒时间戳 |
+| `say` | `string` | `type` 为 `"say"` 时的子类型 |
+| `ask` | `string` | `type` 为 `"ask"` 时的子类型 |
+| `reasoning` | `string` | 模型推理内容（如果可用） |
+| `partial` | `boolean` | 流式输出未完成时为 `true` |
 
-## Configuration Files
+## 配置文件
+
+这些路径当前仍沿用 `.cline` 兼容目录。迁移到 `.nbg` 需要单独的兼容方案。
 
 ```
 ~/.cline/
   data/
     settings/
-      providers.json             # API keys and provider config
-      rules/                     # Global rules
-      skills/                    # Global skills
-    teams/                       # Team state
-    sessions/                    # Session database (SQLite)
+      providers.json             # API key 和 provider 配置
+      rules/                     # 全局规则
+      skills/                    # 全局技能
+    teams/                       # 团队状态
+    sessions/                    # 会话数据库（SQLite）
     logs/
-      hub-daemon.log             # Hub logs
-  plugins/                       # Global plugins
-    _installed/                  # Managed by `cline plugin install`
+      hub-daemon.log             # Hub 日志
+  plugins/                       # 全局插件
+    _installed/                  # 由 `nbg plugin install` 管理
 
-.cline/                          # Project root
-  rules/                         # Project rules
-  skills/                        # Project skills
-  hooks/                         # Lifecycle hooks
-  plugins/                       # Project plugins
-  mcp.json                       # MCP server config
-  agents.yaml                    # Agent definitions
+.cline/                          # 项目根目录
+  rules/                         # 项目规则
+  skills/                        # 项目技能
+  hooks/                         # 生命周期 hooks
+  plugins/                       # 项目插件
+  mcp.json                       # MCP server 配置
+  agents.yaml                    # Agent 定义
 ```

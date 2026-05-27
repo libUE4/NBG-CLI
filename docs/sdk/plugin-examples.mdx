@@ -1,92 +1,92 @@
 ---
-title: "Plugin Examples"
-sidebarTitle: "Plugin Examples"
-description: "Explore installable plugin examples from the Cline SDK repository."
+title: "插件示例"
+sidebarTitle: "插件示例"
+description: "查看 NBG 仓库中可安装的 SDK 插件示例。"
 ---
 
-The [SDK repository](https://github.com/cline/cline/tree/main/sdk) includes installable plugin examples under [`examples/plugins/`](https://github.com/cline/cline/tree/main/sdk/examples/plugins). Use them as starting points for tools, lifecycle hooks, message rewriting, policy enforcement, background jobs, and multi-agent workflows.
+NBG 仓库的 [`sdk/examples/plugins/`](https://github.com/libUE4/NBG-CLI/tree/main/sdk/examples/plugins) 提供可安装插件示例，可作为工具、生命周期 hooks、消息改写、策略控制、后台任务和多 agent 工作流的起点。
 
-## Examples
+## 示例列表
 
-| Example | What it shows |
-|---------|---------------|
-| [`weather-metrics.ts`](https://github.com/cline/cline/blob/main/sdk/examples/plugins/weather-metrics.ts) | Tool registration plus lifecycle metrics hooks. Best starting point. |
-| [`mac-notify.ts`](https://github.com/cline/cline/blob/main/sdk/examples/plugins/mac-notify.ts) | macOS Notification Center alert from an `afterRun` hook. |
-| [`custom-compaction.ts`](https://github.com/cline/cline/blob/main/sdk/examples/plugins/custom-compaction.ts) | Provider-message compaction with `registerMessageBuilder`. |
-| [`background-terminal.ts`](https://github.com/cline/cline/blob/main/sdk/examples/plugins/background-terminal.ts) | Detached shell jobs with persisted logs and optional session steering. |
-| [`automation-events.ts`](https://github.com/cline/cline/blob/main/sdk/examples/plugins/automation-events.ts) | Plugin-emitted automation events. |
-| [`gitignore-read-files-guard.ts`](https://github.com/cline/cline/blob/main/sdk/examples/plugins/gitignore-read-files-guard.ts) | Runtime hook policy that blocks file access outside workspace `.gitignore` boundaries. |
-| [`web-search.ts`](https://github.com/cline/cline/blob/main/sdk/examples/plugins/web-search.ts) | `web_search` tool backed by an Exa API key. |
-| [`typescript-lsp/`](https://github.com/cline/cline/tree/main/sdk/examples/plugins/typescript-lsp) | `goto_definition` tool powered by the TypeScript Language Service. |
-| [`agents-squad/`](https://github.com/cline/cline/tree/main/sdk/examples/plugins/agents-squad) | Multi-agent team with subagents that have their own models and personalities. |
+| 示例 | 展示内容 |
+|------|----------|
+| [`weather-metrics.ts`](https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/weather-metrics.ts) | 工具注册和生命周期指标 hooks。适合作为第一个示例。 |
+| [`mac-notify.ts`](https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/mac-notify.ts) | 通过 `afterRun` hook 发送 macOS 通知。 |
+| [`custom-compaction.ts`](https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/custom-compaction.ts) | 使用 `registerMessageBuilder` 做 provider 消息压缩。 |
+| [`background-terminal.ts`](https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/background-terminal.ts) | 后台 shell 任务、持久化日志和可选会话 steering。 |
+| [`automation-events.ts`](https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/automation-events.ts) | 插件主动发出 automation events。 |
+| [`gitignore-read-files-guard.ts`](https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/gitignore-read-files-guard.ts) | 通过 runtime hook 阻止访问 workspace `.gitignore` 忽略的文件。 |
+| [`web-search.ts`](https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/web-search.ts) | 使用 Exa API key 驱动的 `web_search` 工具。 |
+| [`typescript-lsp/`](https://github.com/libUE4/NBG-CLI/tree/main/sdk/examples/plugins/typescript-lsp) | 基于 TypeScript Language Service 的 `goto_definition` 工具。 |
+| [`agents-squad/`](https://github.com/libUE4/NBG-CLI/tree/main/sdk/examples/plugins/agents-squad) | 多 agent 团队，每个 subagent 可以有独立模型和角色。 |
 
-## Try a File Plugin with the CLI
+## 用 CLI 试用单文件插件
 
-The CLI auto-discovers plugins from `.cline/plugins` in the workspace, `~/.cline/plugins`, and the system plugins folder.
+CLI 会从 workspace 的 `.cline/plugins`、`~/.cline/plugins` 和系统插件目录自动发现插件。`.cline` 路径当前作为兼容层保留。
 
 ```sh
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/weather-metrics.ts --cwd .
-cline -i "What's the weather like in Tokyo and Paris?"
+nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/weather-metrics.ts --cwd .
+nbg -i "东京和巴黎的天气怎么样？"
 ```
 
-Swap `weather-metrics.ts` for any other single-file plugin example.
+也可以把 `weather-metrics.ts` 换成其他单文件插件示例。
 
-## Block Ignored File Access
+## 阻止访问被忽略文件
 
-Use `gitignore-read-files-guard.ts` to block tools from reading or editing files ignored by workspace `.gitignore` files:
+使用 `gitignore-read-files-guard.ts` 阻止工具读取或编辑 workspace `.gitignore` 忽略的文件：
 
 ```sh
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/gitignore-read-files-guard.ts --cwd .
-cline -i "Read the ignored .env file"
+nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/gitignore-read-files-guard.ts --cwd .
+nbg -i "读取被忽略的 .env 文件"
 ```
 
-The guard uses the `beforeTool` runtime hook. When a `read_files`, `editor`, or `apply_patch` call targets an ignored workspace file, the hook returns `{ skip: true }`, so the tool records a policy error and does not access the file.
+该 guard 使用 `beforeTool` runtime hook。当 `read_files`、`editor` 或 `apply_patch` 调用命中被忽略的 workspace 文件时，hook 返回 `{ skip: true }`，工具会记录策略错误且不会访问文件。
 
-## Install a Directory Plugin
+## 安装目录插件
 
-For a plugin that lives in a directory with its own `package.json`, use `cline plugin install`:
+如果插件是带独立 `package.json` 的目录，使用 `nbg plugin install`：
 
 ```sh
-cline plugin install ./examples/plugins/agents-squad
+nbg plugin install ./sdk/examples/plugins/agents-squad
 ```
 
-See [Installing Plugins](/sdk/plugin-install) for more install options.
+更多安装方式见 [Installing Plugins](/sdk/plugin-install)。
 
-## Add Web Search
+## 添加 Web 搜索
 
-The `web-search.ts` plugin registers a `web_search` tool backed by Exa. Use `web_search` to discover relevant URLs, then use `fetch_web_content` when the agent needs to inspect a specific page.
+`web-search.ts` 插件会注册基于 Exa 的 `web_search` 工具。先用 `web_search` 发现相关 URL，再在需要检查页面内容时使用 `fetch_web_content`。
 
 ```sh
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/web-search.ts --cwd .
+nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/web-search.ts --cwd .
 
 export EXA_API_KEY=...
 export OPENROUTER_API_KEY=...
 
-cline auth --provider openrouter --apikey "$OPENROUTER_API_KEY" --modelid anthropic/claude-sonnet-4.6
-cline -P openrouter -m anthropic/claude-sonnet-4.6 "Search the web for recent Bun release notes, then fetch the most relevant page"
+nbg auth --provider openrouter --apikey "$OPENROUTER_API_KEY" --modelid anthropic/claude-sonnet-4.6
+nbg -P openrouter -m anthropic/claude-sonnet-4.6 "搜索最近的 Bun release notes，并抓取最相关的页面"
 ```
 
-`EXA_API_KEY` authenticates the search backend. The CLI still needs a normal model provider key or saved provider auth for inference.
+`EXA_API_KEY` 用于认证搜索 backend。CLI 仍需要普通模型 provider key 或已保存的 provider 认证来执行推理。
 
-## Custom Message Compaction
+## 自定义消息压缩
 
-Use `registerMessageBuilder` when a plugin needs to rewrite the provider-bound message list before the model call.
+插件需要在模型调用前改写 provider-bound 消息列表时，使用 `registerMessageBuilder`。
 
-| Example | Extension point | Best for |
-|---------|-----------------|----------|
-| [`custom-compaction.ts`](https://github.com/cline/cline/blob/main/sdk/examples/plugins/custom-compaction.ts) | `api.registerMessageBuilder()` | Reusable, plugin-owned compaction policies. |
-| [`custom-compaction-hook.example.ts`](https://github.com/cline/cline/blob/main/sdk/examples/hooks/custom-compaction-hook.example.ts) | `hooks.beforeModel` | Runtime hook logic that needs runtime hook context or direct request mutation. |
+| 示例 | 扩展点 | 适用场景 |
+|------|--------|----------|
+| [`custom-compaction.ts`](https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/custom-compaction.ts) | `api.registerMessageBuilder()` | 可复用、由插件拥有的压缩策略。 |
+| [`custom-compaction-hook.example.ts`](https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/hooks/custom-compaction-hook.example.ts) | `hooks.beforeModel` | 需要 runtime hook 上下文或直接修改请求的逻辑。 |
 
-Prefer the message-builder version for normal compaction. It runs in the core message pipeline before the built-in safety builder, multiple builders run in registration order, and the final pass enforces provider-safe truncation.
+普通压缩优先使用 message-builder 版本。它在内置 safety builder 之前运行于 core message pipeline，多个 builder 按注册顺序执行，最后一轮会强制做 provider-safe 截断。
 
-## Background Terminal Plugin
+## 后台终端插件
 
-`background-terminal.ts` registers three tools for long-running shell jobs:
+`background-terminal.ts` 为长时间运行的 shell 任务注册三个工具：
 
-| Tool | Purpose |
-|------|---------|
-| `start_background_command` | Starts a detached shell command, returns a job ID immediately, and captures stdout/stderr under Cline's data directory. |
-| `get_background_command` | Reads job status plus recent stdout/stderr tails. |
-| `delete_background_command` | Deletes saved job metadata and optionally deletes captured logs. |
+| 工具 | 用途 |
+|------|------|
+| `start_background_command` | 启动 detached shell 命令，立即返回 job ID，并在兼容数据目录下捕获 stdout/stderr。 |
+| `get_background_command` | 读取 job 状态和最近的 stdout/stderr tail。 |
+| `delete_background_command` | 删除已保存的 job metadata，并可选删除捕获日志。 |
 
-When `notifyParent` is true, the plugin emits a `steer_message` after the command exits, pushing a completion summary back into the active session so the agent can react to long-running commands without blocking the original tool call.
+当 `notifyParent` 为 true 时，插件会在命令退出后发出 `steer_message`，把完成摘要推回活跃会话，让 agent 在不阻塞原始工具调用的情况下响应长任务。

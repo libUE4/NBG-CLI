@@ -1,88 +1,88 @@
 ---
-title: "Plugins"
-sidebarTitle: "Plugins"
-description: "Install and manage plugins that extend Cline with custom tools, hooks, and capabilities."
+title: "插件"
+sidebarTitle: "插件"
+description: "安装和管理扩展 NBG 的工具、hooks 和能力插件。"
 ---
 <Warning>
-  This feature currently only applies to Cline SDK, CLI, and Kanban. This feature is not applicable on VSCode and JetBrains Extension for now.
+  插件功能当前适用于 NBG CLI、SDK 和 Kanban，暂不适用于 VSCode 与 JetBrains 扩展。
 </Warning>
 
-Plugins extend Cline with custom tools, lifecycle hooks, slash commands, and more. They can be installed globally (available in all sessions) or per-project.
+插件可以为 NBG 增加自定义工具、生命周期 hooks、斜杠命令等能力。插件既可以全局安装，也可以按项目安装。
 
-## Installing Plugins via CLI
+## 通过 CLI 安装插件
 
-The `cline plugin install` command installs plugins from four source types:
+`nbg plugin install` 支持四类来源：
 
 <Tabs>
   <Tab title="File URL">
     ```bash
-    cline plugin install https://github.com/owner/repo/blob/main/plugins/my-plugin.ts
-    cline plugin install https://raw.githubusercontent.com/owner/repo/main/plugins/my-plugin.ts
+    nbg plugin install https://github.com/owner/repo/blob/main/plugins/my-plugin.ts
+    nbg plugin install https://raw.githubusercontent.com/owner/repo/main/plugins/my-plugin.ts
     ```
 
-    File URLs install a single `.ts` or `.js` plugin file directly. GitHub `blob` and raw URLs are supported, and remote plugin file URLs must use `https://`.
+    文件 URL 会直接安装单个 `.ts` 或 `.js` 插件文件。支持 GitHub `blob` 和 raw URL，远程插件文件必须使用 `https://`。
   </Tab>
   <Tab title="Git Repository">
     ```bash
-    cline plugin install https://github.com/owner/repo.git
-    cline plugin install git@github.com:owner/repo.git
+    nbg plugin install https://github.com/owner/repo.git
+    nbg plugin install git@github.com:owner/repo.git
     ```
 
-    The installer clones the repository, installs production dependencies, and registers the plugin entry files.
+    安装器会克隆仓库、安装生产依赖，并注册插件入口文件。
 
-    To install a specific branch or tag, append `@ref`:
+    如需安装指定分支或 tag，在末尾追加 `@ref`：
 
     ```bash
-    cline plugin install https://github.com/owner/repo.git@v1.2.0
-    cline plugin install https://github.com/owner/repo.git@main
+    nbg plugin install https://github.com/owner/repo.git@v1.2.0
+    nbg plugin install https://github.com/owner/repo.git@main
     ```
   </Tab>
   <Tab title="npm Package">
     ```bash
-    cline plugin install npm:@scope/my-plugin
-    cline plugin install --npm my-plugin
+    nbg plugin install npm:@scope/my-plugin
+    nbg plugin install --npm my-plugin
     ```
   </Tab>
   <Tab title="Local Path">
     ```bash
-    cline plugin install ./my-plugin
-    cline plugin install ~/plugins/my-tool
-    cline plugin install /absolute/path/to/plugin.ts
+    nbg plugin install ./my-plugin
+    nbg plugin install ~/plugins/my-tool
+    nbg plugin install /absolute/path/to/plugin.ts
     ```
 
-    Local installs copy the file or directory into the plugin store. Both single `.ts`/`.js` files and directories with a `package.json` are supported.
+    本地安装会把文件或目录复制到插件存储区。支持单个 `.ts`/`.js` 文件，也支持带 `package.json` 的目录。
   </Tab>
 </Tabs>
 
-Additional flags:
+常用参数：
 
-| Flag | Description |
+| 参数 | 说明 |
 |------|-------------|
-| `--force` | Replace an existing install for the same source |
-| `--json` | Output the result as JSON (useful for scripting) |
-| `--cwd <path>` | Install to `<path>/.cline/plugins` instead of the global directory |
+| `--force` | 替换同一 source 的已有安装 |
+| `--json` | 以 JSON 输出结果，便于脚本调用 |
+| `--cwd <path>` | 安装到 `<path>/.cline/plugins`，而不是全局目录 |
 
-After installation, confirm the plugin is loaded by running `cline config` and checking the plugin tab.
+安装后运行 `nbg config`，在插件信息中确认插件已加载。
 
-### Example: TypeScript Navigation Plugin
+### 示例：TypeScript 导航插件
 
-The [typescript-lsp-plugin](https://github.com/cline/typescript-lsp-plugin) is a good reference for how plugins work. It adds a `goto_definition` tool that uses the TypeScript Language Service API to resolve symbol definitions through imports, re-exports, and type aliases.
+仓库内的 [`typescript-lsp`](https://github.com/libUE4/NBG-CLI/tree/main/sdk/examples/plugins/typescript-lsp) 示例展示了插件如何工作。它会增加 `goto_definition` 工具，通过 TypeScript Language Service API 解析 import、re-export 和 type alias 后的符号定义。
 
-Install it with:
+在仓库根目录运行：
 
 ```bash
-cline plugin install https://github.com/cline/typescript-lsp-plugin.git
+nbg plugin install ./sdk/examples/plugins/typescript-lsp
 ```
 
-Once installed, Cline can call `goto_definition` with a file path and line number to find where symbols are defined, which is much more precise than text search.
+安装后，NBG 可以使用文件路径和行号调用 `goto_definition`，比纯文本搜索更精确地定位符号定义。
 
-## Plugin Manifest Format
+## 插件 Manifest 格式
 
-For a repository or npm package to be installable as a Cline plugin, its `package.json` should include a `cline` field that declares plugin entry points:
+为保持兼容，插件仓库或 npm 包仍通过 `package.json` 中的 `cline` 字段声明入口：
 
 ```json
 {
-  "name": "my-cline-plugin",
+  "name": "my-nbg-plugin",
   "version": "1.0.0",
   "cline": {
     "plugins": [
@@ -95,20 +95,20 @@ For a repository or npm package to be installable as a Cline plugin, its `packag
 }
 ```
 
-The `cline.plugins` array accepts:
+`cline.plugins` 数组支持：
 
-| Format | Example |
-|--------|---------|
-| Object with `paths` array | `{ "paths": ["./src/plugin.ts"], "capabilities": ["tools"] }` |
-| Plain string | `"./index.ts"` |
+| 格式 | 示例 |
+|------|------|
+| 带 `paths` 数组的对象 | `{ "paths": ["./src/plugin.ts"], "capabilities": ["tools"] }` |
+| 字符串路径 | `"./index.ts"` |
 
-Each path should point to a `.ts` or `.js` file that exports an `AgentPlugin` (either as the default export or a named export).
+每个路径应指向导出 `AgentPlugin` 的 `.ts` 或 `.js` 文件，可以是 default export，也可以是 named export。
 
-If no `cline.plugins` field is present, the installer falls back to auto-discovery: it looks for standard entry points, then recursively scans for `.ts` and `.js` files (skipping `node_modules` and `.git`).
+如果没有 `cline.plugins` 字段，安装器会回退到自动发现：先查找标准入口，再递归扫描 `.ts` 和 `.js` 文件（跳过 `node_modules` 与 `.git`）。
 
-### Host-Provided Dependencies
+### Host 提供的依赖
 
-Dependencies under the `@cline/` scope are provided by the host runtime. The installer automatically strips these from the plugin's dependency list before running `npm install`, so declare any `@cline/*` package your plugin imports as an optional peer dependency. The host currently provides `@cline/sdk`, `@cline/core`, `@cline/agents`, `@cline/llms`, and `@cline/shared`.
+`@cline/` scope 下的依赖由当前兼容运行时提供。安装器在执行 `npm install` 前会从插件依赖列表中移除这些包，因此插件导入的 `@cline/*` 包应声明为可选 peer dependency。当前 host 提供 `@cline/sdk`、`@cline/core`、`@cline/agents`、`@cline/llms` 和 `@cline/shared`。
 
 ```json
 {
@@ -123,25 +123,25 @@ Dependencies under the `@cline/` scope are provided by the host runtime. The ins
 }
 ```
 
-## Plugin Directory Structure
+## 插件目录结构
 
-Plugins are stored in the `plugins` directory at two levels:
+插件存储在两级 `plugins` 目录中：
 
 ```
 ~/.cline/
-  plugins/                     # Global plugins
-    _installed/                # Managed by `cline plugin install`
-      npm/                     # npm-sourced plugins
-      git/                     # git-sourced plugins
-      remote/                  # file URL-sourced plugins
-      local/                   # local-sourced plugins
+  plugins/                     # 全局插件
+    _installed/                # 由 `nbg plugin install` 管理
+      npm/                     # npm 来源插件
+      git/                     # git 来源插件
+      remote/                  # 文件 URL 来源插件
+      local/                   # 本地来源插件
 
-.cline/                        # Project root
-  plugins/                     # Project-scoped plugins
+.cline/                        # 项目根目录
+  plugins/                     # 项目级插件
 ```
 
-Global plugins (`~/.cline/plugins/`) are available across all sessions. Project plugins (`.cline/plugins/` in your repo) are available only when working in that project.
+全局插件（`~/.cline/plugins/`）对所有会话可用。项目插件（仓库内 `.cline/plugins/`）只在该项目中可用。
 
-## Writing Plugins
+## 编写插件
 
-For a guide on building plugins with the SDK, see [Writing Plugins](/sdk/guides/writing-plugins). For the plugin API reference, see [SDK Plugins](/sdk/plugins).
+SDK 插件开发指南见 [Writing Plugins](/sdk/guides/writing-plugins)，API 参考见 [SDK Plugins](/sdk/plugins)。
