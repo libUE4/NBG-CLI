@@ -21,15 +21,15 @@ nbg schedule
 
 | 操作 | 说明 |
 |------|------|
-| Create new schedule | 使用 cron 和 prompt 创建重复任务 |
-| List schedules | 查看所有任务的状态和下次运行时间 |
-| Upcoming runs | 预览接下来 10 次计划执行 |
-| Active executions | 查看当前正在运行的任务 |
-| Trigger now | 立即运行选中的定时任务 |
-| Pause / Resume | 暂停或恢复定时任务 |
-| Execution history | 查看历史运行的状态、耗时、token 和成本 |
-| Statistics | 查看成功率、平均耗时和最近失败 |
-| Delete | 删除定时任务 |
+| 新建定时任务 | 使用 cron 和 prompt 创建重复任务 |
+| 查看定时任务 | 查看所有任务的状态和下次运行时间 |
+| 即将运行 | 预览接下来 10 次计划执行 |
+| 活跃执行 | 查看当前正在运行的任务 |
+| 立即触发 | 立即运行选中的定时任务 |
+| 暂停 / 恢复 | 暂停或恢复定时任务 |
+| 执行历史 | 查看历史运行的状态、耗时、token 和成本 |
+| 统计信息 | 查看成功率、平均耗时和最近失败 |
+| 删除 | 删除定时任务 |
 
 ## 使用参数创建定时任务
 
@@ -99,7 +99,7 @@ nbg schedule create "代码健康检查" \
 
 ## 路由执行结果
 
-结合 [connectors](/cli/connectors) 可以把结果发送到消息平台：
+结合 [连接器](/cli/connectors) 可以把结果发送到消息平台：
 
 ```bash
 nbg connect telegram -k $BOT_TOKEN
