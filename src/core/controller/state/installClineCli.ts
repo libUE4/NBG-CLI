@@ -6,13 +6,13 @@ import { Logger } from "@/shared/services/Logger"
 import { Controller } from ".."
 
 /**
- * Handles the installation of the Cline CLI tool
+ * Handles the installation of the NBG CLI tool.
  * @param controller The controller instance
  * @param _request The empty request
  * @returns Empty response
  */
 export async function installClineCli(_controller: Controller, _request: EmptyRequest): Promise<Empty> {
-	const installCommand = "npm install -g cline"
+	const installCommand = "npm install -g @nbg/cli"
 
 	try {
 		// Use the HostProvider to execute the command in a terminal
@@ -27,10 +27,10 @@ export async function installClineCli(_controller: Controller, _request: EmptyRe
 			throw new Error("Failed to execute command in terminal")
 		}
 	} catch (error) {
-		Logger.error("Error executing CLI installation:", error)
+		Logger.error("Error executing NBG CLI installation:", error)
 		await HostProvider.window.showMessage({
 			type: ShowMessageType.ERROR,
-			message: `Failed to start CLI installation: ${error instanceof Error ? error.message : "Unknown error"}`,
+			message: `启动 NBG CLI 安装失败：${error instanceof Error ? error.message : "未知错误"}`,
 			options: { items: [] },
 		})
 	}
