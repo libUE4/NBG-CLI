@@ -12,6 +12,7 @@
 - `cd sdk && bun run build:sdk`: 构建共享 SDK 包。
 - `cd sdk/apps/cli && bun script/build.ts --single`: 构建当前平台的 NBG CLI 二进制。
 - `cd sdk/apps/cli && bun run test:smoke`: 验证当前平台二进制的 `nbg --version` 和 `nbg --help`。
+- `cd sdk/apps/cli && bun run test:dist`: 验证当前平台 dist 包 manifest、bin 映射和可执行权限。
 - `cd sdk/apps/cli && bun run test:unit`: 运行 NBG CLI 单元测试。
 - `cd sdk/apps/cli && bun run typecheck`: 运行 CLI TypeScript 检查。
 - `cd sdk && bun run check`: 运行格式、构建、类型检查和发布检查。

@@ -67,6 +67,7 @@
 		"test:watch": "vitest --config vitest.config.ts",
 		"test:e2e:cli:tui": "cd src/tests && tui-test",
 		"test:smoke": "bun script/smoke.ts",
+		"test:dist": "bun script/verify-dist.ts",
 		"link": "bun unlink && bun link"
 	},
 	"dependencies": {
