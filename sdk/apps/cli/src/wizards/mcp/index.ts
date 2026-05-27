@@ -1,0 +1,520 @@
+import * as p from "@clack/prompts";
+import { authorizeMcpServerOAuth } from "@cline/core";
+import open from "open";
+import {
+	addServer,
+	clearServerOAuth,
+	getSettingsPath,
+	loadServers,
+	type McpServerEntry,
+	type McpTransport,
+	removeServer,
+	toggleServer,
+	updateServer,
+} from "./settings";
+
+function isCancel(value: unknown): value is symbol {
+	return p.isCancel(value);
+}
+
+function toErrorMessage(error: unknown): string {
+	if (error instanceof Error) {
+		const message = error.message.trim();
+		if (message.length > 0) {
+			return message;
+		}
+	}
+	return String(error);
+}
+
+function transportLabel(t: McpTransport): string {
+	if (t.type === "stdio") return `stdio: ${t.command}`;
+	return `${t.type}: ${t.url}`;
+}
+
+function statusLabel(entry: McpServerEntry): string {
+	return entry.disabled ? "已禁用" : "已启用";
+}
+
+function authLabel(entry: McpServerEntry): string {
+	if (entry.transport.type === "stdio") return "本地";
+	if (entry.oauth?.lastError) return "OAuth 错误";
+	const accessToken = entry.oauth?.tokens?.access_token;
+	if (typeof accessToken === "string" && accessToken.trim().length > 0) {
+		return "OAuth 已授权";
+	}
+	if (entry.oauth && Object.keys(entry.oauth).length > 0) {
+		return "OAuth 待完成";
+	}
+	if (
+		entry.transport.headers &&
+		Object.keys(entry.transport.headers).length > 0
+	) {
+		return "静态请求头";
+	}
+	return "无认证";
+}
+
+type RemoteAuthMode = "none" | "headers" | "oauth";
+
+interface UrlServerConfig {
+	transport: McpTransport;
+	authMode: RemoteAuthMode;
+}
+
+export function parseStdioCommand(input: string): string[] {
+	const tokens: string[] = [];
+	let current = "";
+	let quote: '"' | "'" | undefined;
+	let escaping = false;
+	for (const char of input.trim()) {
+		if (escaping) {
+			current += char;
+			escaping = false;
+			continue;
+		}
+		if (char === "\\") {
+			escaping = true;
+			continue;
+		}
+		if (quote) {
+			if (char === quote) {
+				quote = undefined;
+			} else {
+				current += char;
+			}
+			continue;
+		}
+		if (char === '"' || char === "'") {
+			quote = char;
+			continue;
+		}
+		if (/\s/.test(char)) {
+			if (current) {
+				tokens.push(current);
+				current = "";
+			}
+			continue;
+		}
+		current += char;
+	}
+	if (escaping) {
+		current += "\\";
+	}
+	if (current) {
+		tokens.push(current);
+	}
+	return tokens;
+}
+
+async function collectStdioTransport(): Promise<McpTransport | null> {
+	p.log.info("支持带引号的参数和转义空格");
+
+	const command = await p.text({
+		message: "要运行的命令",
+		placeholder: "npx -y @modelcontextprotocol/server-filesystem",
+		validate: (v) => {
+			if (!v?.trim()) return "命令必填";
+			return undefined;
+		},
+	});
+	if (isCancel(command)) return null;
+
+	const parts = parseStdioCommand(command as string);
+	const cmd = parts[0] ?? "";
+	const args = parts.slice(1);
+
+	const envInput = await p.text({
+		message: "环境变量（KEY=VALUE，逗号分隔）",
+		placeholder: "留空表示无",
+	});
+	if (isCancel(envInput)) return null;
+
+	let env: Record<string, string> | undefined;
+	const envStr = (envInput as string).trim();
+	if (envStr) {
+		env = {};
+		for (const pair of envStr.split(",")) {
+			const eqIdx = pair.indexOf("=");
+			if (eqIdx > 0) {
+				env[pair.slice(0, eqIdx).trim()] = pair.slice(eqIdx + 1).trim();
+			}
+		}
+	}
+
+	return {
+		type: "stdio",
+		command: cmd,
+		args: args.length > 0 ? args : undefined,
+		env,
+	};
+}
+
+async function collectUrlTransport(
+	type: "sse" | "streamableHttp",
+): Promise<UrlServerConfig | null> {
+	const url = await p.text({
+		message: "服务器 URL",
+		placeholder: "https://example.com/mcp",
+		validate: (v) => {
+			if (!v?.trim()) return "URL 必填";
+			try {
+				new URL(v.trim());
+			} catch {
+				return "必须是有效 URL";
+			}
+			return undefined;
+		},
+	});
+	if (isCancel(url)) return null;
+
+	const authMode = await p.select({
+		message: "认证方式",
+		options: [
+			{
+				value: "oauth",
+				label: "OAuth",
+				hint: "打开浏览器并把 token 保存到 MCP 设置",
+			},
+			{
+				value: "headers",
+				label: "静态请求头",
+				hint: "手动配置请求头",
+			},
+			{
+				value: "none",
+				label: "无认证",
+			},
+		],
+	});
+	if (isCancel(authMode)) return null;
+
+	if (authMode === "oauth" || authMode === "none") {
+		return {
+			transport: { type, url: (url as string).trim() },
+			authMode,
+		};
+	}
+
+	const headersInput = await p.text({
+		message: "请求头（KEY:VALUE，逗号分隔）",
+		placeholder: "留空表示无",
+	});
+	if (isCancel(headersInput)) return null;
+
+	let headers: Record<string, string> | undefined;
+	const headersStr = (headersInput as string).trim();
+	if (headersStr) {
+		headers = {};
+		for (const pair of headersStr.split(",")) {
+			const colonIdx = pair.indexOf(":");
+			if (colonIdx > 0) {
+				headers[pair.slice(0, colonIdx).trim()] = pair
+					.slice(colonIdx + 1)
+					.trim();
+			}
+		}
+	}
+
+	return {
+		transport: { type, url: (url as string).trim(), headers },
+		authMode,
+	};
+}
+
+async function authorizeOAuth(name: string): Promise<void> {
+	p.log.info("正在打开浏览器进行 MCP OAuth 授权");
+	try {
+		const result = await authorizeMcpServerOAuth({
+			serverName: name,
+			filePath: getSettingsPath(),
+			openUrl: async (url) => {
+				p.log.message(`授权 URL：${url}`);
+				await open(url, { wait: false });
+			},
+			onServerListening: (info) => {
+				p.log.message(`正在等待 OAuth 回调：${info.callbackUrl}`);
+			},
+		});
+		p.log.success(result.message);
+	} catch (error) {
+		p.log.error(`OAuth 授权失败：${toErrorMessage(error)}`);
+		p.log.warn(
+			`服务器 "${name}" 仍已保存。选择 "授权 OAuth" 可重试。`,
+		);
+	}
+}
+
+async function actionAdd(): Promise<void> {
+	const name = await p.text({
+		message: "服务器名称",
+		placeholder: "my-mcp-server",
+		validate: (v) => {
+			if (!v?.trim()) return "名称必填";
+			const existing = loadServers();
+			if (existing.some((s) => s.name === v.trim())) {
+				return "已存在同名服务器";
+			}
+			return undefined;
+		},
+	});
+	if (isCancel(name)) return;
+
+	const type = await p.select({
+		message: "服务器类型",
+		options: [
+			{
+				value: "stdio",
+				label: "本地",
+				hint: "在本机运行命令",
+			},
+			{
+				value: "sse",
+				label: "远程（SSE）",
+				hint: "通过 Server-Sent Events 连接 URL",
+			},
+			{
+				value: "streamableHttp",
+				label: "远程（HTTP）",
+				hint: "通过 streamable HTTP 连接 URL",
+			},
+		],
+	});
+	if (isCancel(type)) return;
+
+	let transport: McpTransport | null;
+	let authMode: RemoteAuthMode = "none";
+	if (type === "stdio") {
+		transport = await collectStdioTransport();
+	} else {
+		const config = await collectUrlTransport(type as "sse" | "streamableHttp");
+		transport = config?.transport ?? null;
+		authMode = config?.authMode ?? "none";
+	}
+	if (!transport) return;
+
+	const serverName = (name as string).trim();
+	addServer(serverName, transport);
+	if (authMode !== "oauth") {
+		clearServerOAuth(serverName);
+	}
+	p.log.success(`已将 "${serverName}" 添加到 ${getSettingsPath()}`);
+	if (authMode === "oauth") {
+		await authorizeOAuth(serverName);
+	}
+}
+
+async function actionList(): Promise<void> {
+	const servers = loadServers();
+	if (servers.length === 0) {
+		p.log.info("未配置 MCP 服务器");
+		p.log.info(`设置文件：${getSettingsPath()}`);
+		return;
+	}
+	for (const s of servers) {
+		const status = s.disabled ? "（已禁用）" : "";
+		p.log.info(`${s.name}${status}`);
+		p.log.message(`  ${transportLabel(s.transport)}`);
+		p.log.message(`  认证：${authLabel(s)}`);
+		if (s.oauth?.lastError) {
+			p.log.message(`  最近 OAuth 错误：${s.oauth.lastError}`);
+		}
+	}
+	p.log.message(`\n设置文件：${getSettingsPath()}`);
+}
+
+function pickServer(
+	servers: McpServerEntry[],
+	message: string,
+): Promise<string | null> {
+	if (servers.length === 0) {
+		p.log.warn("未配置 MCP 服务器");
+		return Promise.resolve(null);
+	}
+	return p
+		.select({
+			message,
+			options: servers.map((s) => ({
+				value: s.name,
+				label: s.name,
+				hint: `${s.transport.type} [${statusLabel(s)}, ${authLabel(s)}]`,
+			})),
+		})
+		.then((v) => (isCancel(v) ? null : (v as string)));
+}
+
+async function pickRemoteServer(message: string): Promise<string | null> {
+	const servers = loadServers().filter(
+		(server) => server.transport.type !== "stdio",
+	);
+	return pickServer(servers, message);
+}
+
+async function actionEdit(): Promise<void> {
+	const servers = loadServers();
+	const name = await pickServer(servers, "选择要编辑的服务器");
+	if (!name) return;
+
+	const current = servers.find((s) => s.name === name);
+	if (!current) return;
+
+	p.log.step(`正在编辑 ${name} (${current.transport.type})`);
+
+	const type = await p.select({
+		message: "服务器类型",
+		initialValue: current.transport.type,
+		options: [
+			{
+				value: "stdio",
+				label: "本地",
+				hint: "运行命令",
+			},
+			{
+				value: "sse",
+				label: "远程（SSE）",
+				hint: "Server-Sent Events",
+			},
+			{
+				value: "streamableHttp",
+				label: "远程（HTTP）",
+				hint: "streamable HTTP",
+			},
+		],
+	});
+	if (isCancel(type)) return;
+
+	let transport: McpTransport | null;
+	let authMode: RemoteAuthMode = "none";
+	if (type === "stdio") {
+		transport = await collectStdioTransport();
+	} else {
+		const config = await collectUrlTransport(type as "sse" | "streamableHttp");
+		transport = config?.transport ?? null;
+		authMode = config?.authMode ?? "none";
+	}
+	if (!transport) return;
+
+	updateServer(name, transport);
+	if (type === "stdio" || authMode !== "oauth") {
+		clearServerOAuth(name);
+	}
+	p.log.success(`已更新 "${name}"`);
+	if (authMode === "oauth") {
+		await authorizeOAuth(name);
+	}
+}
+
+async function actionDelete(): Promise<void> {
+	const servers = loadServers();
+	const name = await pickServer(servers, "选择要删除的服务器");
+	if (!name) return;
+
+	const confirm = await p.confirm({
+		message: `删除 "${name}"？`,
+		initialValue: false,
+	});
+	if (isCancel(confirm) || !confirm) return;
+
+	if (removeServer(name)) {
+		p.log.success(`已删除 "${name}"`);
+	} else {
+		p.log.error("删除服务器失败");
+	}
+}
+
+async function actionToggle(): Promise<void> {
+	const servers = loadServers();
+	const name = await pickServer(servers, "选择要启用/禁用的服务器");
+	if (!name) return;
+
+	const current = servers.find((s) => s.name === name);
+	if (!current) return;
+
+	const newDisabled = !current.disabled;
+	toggleServer(name, newDisabled);
+	p.log.success(`${name} 现在${newDisabled ? "已禁用" : "已启用"}`);
+}
+
+async function actionAuthorizeOAuth(): Promise<void> {
+	const name = await pickRemoteServer("选择要授权的远程服务器");
+	if (!name) return;
+	await authorizeOAuth(name);
+}
+
+export async function runMcpWizard(): Promise<number> {
+	p.intro("MCP 服务器");
+
+	let keepGoing = true;
+	while (keepGoing) {
+		const action = await p.select({
+			message: "你想做什么？",
+			options: [
+				{
+					value: "list",
+					label: "列出服务器",
+					hint: "查看已配置 MCP 服务器",
+				},
+				{
+					value: "add",
+					label: "添加服务器",
+					hint: "配置新的 MCP 服务器",
+				},
+				{
+					value: "edit",
+					label: "编辑服务器",
+					hint: "修改服务器配置",
+				},
+				{
+					value: "toggle",
+					label: "启用/禁用服务器",
+				},
+				{
+					value: "authorize",
+					label: "授权 OAuth",
+					hint: "为远程服务器运行或重新运行浏览器授权",
+				},
+				{
+					value: "delete",
+					label: "删除服务器",
+				},
+				{
+					value: "exit",
+					label: "退出",
+				},
+			],
+		});
+
+		if (isCancel(action) || action === "exit") {
+			keepGoing = false;
+			continue;
+		}
+
+		try {
+			switch (action) {
+				case "list":
+					await actionList();
+					break;
+				case "add":
+					await actionAdd();
+					break;
+				case "edit":
+					await actionEdit();
+					break;
+				case "toggle":
+					await actionToggle();
+					break;
+				case "authorize":
+					await actionAuthorizeOAuth();
+					break;
+				case "delete":
+					await actionDelete();
+					break;
+			}
+		} catch (err) {
+			p.log.error(err instanceof Error ? err.message : String(err));
+		}
+	}
+
+	p.outro("完成");
+	return 0;
+}

@@ -1,0 +1,111 @@
+#!/usr/bin/env node
+
+// Binary resolver for NBG CLI.
+//
+// This script runs with Node.js and finds the correct platform-specific
+// compiled binary to execute. The compiled binary has Bun embedded, so users
+// do not need Bun installed.
+
+const childProcess = require("child_process");
+const fs = require("fs");
+const path = require("path");
+const os = require("os");
+
+const scriptPath = fs.realpathSync(__filename);
+const scriptDir = path.dirname(scriptPath);
+const childEnv = {
+	...process.env,
+	NBG_WRAPPER_PATH: scriptPath,
+	CLINE_WRAPPER_PATH: process.env.CLINE_WRAPPER_PATH ?? scriptPath,
+};
+
+function run(target) {
+	const result = childProcess.spawnSync(target, process.argv.slice(2), {
+		stdio: "inherit",
+		env: childEnv,
+	});
+	if (result.error) {
+		console.error(result.error.message);
+		process.exit(1);
+	}
+	if (typeof result.status === "number") {
+		process.exit(result.status);
+	}
+	if (result.signal) {
+		process.kill(process.pid, result.signal);
+		process.exit(128);
+	}
+	process.exit(1);
+}
+
+const envPath = process.env.NBG_BIN_PATH || process.env.CLINE_BIN_PATH;
+if (envPath) {
+	run(envPath);
+}
+
+const cached = path.join(scriptDir, ".nbg");
+if (fs.existsSync(cached)) {
+	run(cached);
+}
+
+const legacyCached = path.join(scriptDir, ".cline");
+if (fs.existsSync(legacyCached)) {
+	run(legacyCached);
+}
+
+const platformMap = {
+	darwin: "darwin",
+	linux: "linux",
+	win32: "windows",
+};
+const archMap = {
+	x64: "x64",
+	arm64: "arm64",
+};
+
+const platform = platformMap[os.platform()] || os.platform();
+const arch = archMap[os.arch()] || os.arch();
+const binary = platform === "windows" ? "nbg.exe" : "nbg";
+const legacyBinary = platform === "windows" ? "cline.exe" : "cline";
+const names = [
+	"@nbg/cli-" + platform + "-" + arch,
+	"@cline/cli-" + platform + "-" + arch,
+];
+
+function findBinary(startDir) {
+	let current = startDir;
+	for (;;) {
+		const modules = path.join(current, "node_modules");
+		if (fs.existsSync(modules)) {
+			for (const name of names) {
+				const packageBinary = name.startsWith("@nbg/")
+					? binary
+					: legacyBinary;
+				const candidate = path.join(modules, name, "bin", packageBinary);
+				if (fs.existsSync(candidate)) return candidate;
+			}
+		}
+		const parent = path.dirname(current);
+		if (parent === current) return undefined;
+		current = parent;
+	}
+}
+
+const resolved = findBinary(scriptDir);
+if (!resolved) {
+	console.error(
+		"Could not find the NBG CLI binary for your platform.\n" +
+			"Your platform: " +
+			os.platform() +
+			" " +
+			os.arch() +
+			"\n" +
+			"Looked for: " +
+			names.map((name) => `"${name}"`).join(" or ") +
+			"\n\n" +
+			"Try reinstalling: npm install -g nbg",
+	);
+	process.exit(1);
+}
+
+run(resolved);

@@ -1,0 +1,31 @@
+import { FoldVerticalIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { cn } from "@/lib/utils"
+
+const CompactTaskButton: React.FC<{
+	className?: string
+	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+}> = ({ onClick, className }) => {
+	return (
+		<Tooltip>
+			<TooltipContent side="left">压缩任务</TooltipContent>
+			<TooltipTrigger className={cn("flex items-center", className)}>
+				<Button
+					aria-label="压缩任务"
+					className="[&_svg]:size-3"
+					onClick={(e) => {
+						e.preventDefault()
+						e.stopPropagation()
+						onClick(e)
+					}}
+					size="icon"
+					variant="icon">
+					<FoldVerticalIcon />
+				</Button>
+			</TooltipTrigger>
+		</Tooltip>
+	)
+}
+
+export default CompactTaskButton

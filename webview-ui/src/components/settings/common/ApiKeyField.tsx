@@ -1,0 +1,60 @@
+import { VSCodeLink, VSCodeTextField } from "@vscode/webview-ui-toolkit/react"
+import { useDebouncedInput } from "../utils/useDebouncedInput"
+
+/**
+ * Props for the ApiKeyField component
+ */
+interface ApiKeyFieldProps {
+	initialValue: string
+	onChange: (value: string) => void
+	providerName: string
+	signupUrl?: string
+	placeholder?: string
+	helpText?: string
+}
+
+/**
+ * A reusable component for API key input fields with standard styling and help text for signing up for key
+ */
+export const ApiKeyField = ({
+	initialValue,
+	onChange,
+	providerName,
+	signupUrl,
+	placeholder = "输入 API Key...",
+	helpText,
+}: ApiKeyFieldProps) => {
+	const [localValue, setLocalValue] = useDebouncedInput(initialValue, onChange)
+
+	return (
+		<div>
+			<VSCodeTextField
+				onInput={(e: any) => setLocalValue(e.target.value)}
+				placeholder={placeholder}
+				required={true}
+				style={{ width: "100%" }}
+				type="password"
+				value={localValue}>
+				<span style={{ fontWeight: 500 }}>{providerName} API Key</span>
+			</VSCodeTextField>
+			<p
+				style={{
+					fontSize: "12px",
+					marginTop: 3,
+					color: "var(--vscode-descriptionForeground)",
+				}}>
+				{helpText || "此密钥仅保存在本地，只会用于从本扩展发起 API 请求。"}
+				{!localValue && signupUrl && (
+					<VSCodeLink
+						href={signupUrl}
+						style={{
+							display: "inline",
+							fontSize: "inherit",
+						}}>
+						你可以在这里注册获取 {providerName} API Key。
+					</VSCodeLink>
+				)}
+			</p>
+		</div>
+	)
+}
