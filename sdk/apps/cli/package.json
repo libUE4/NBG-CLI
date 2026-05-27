@@ -60,6 +60,7 @@
 		"publish:npm:dry": "bun script/publish-npm.ts --dry-run",
 		"dev": "CLINE_BUILD_ENV=development bun --conditions=development ./src/index.ts",
 		"typecheck": "tsc --noEmit",
+		"check:release": "bun run typecheck && bun run test:unit && bun script/build.ts --single && bun run test:dist && bun run test:smoke && bun run test:install && bun run test:privacy",
 		"test": "bun run test:unit",
 		"test:unit": "vitest run --config vitest.config.ts",
 		"test:e2e": "vitest run --config vitest.e2e.config.ts",
