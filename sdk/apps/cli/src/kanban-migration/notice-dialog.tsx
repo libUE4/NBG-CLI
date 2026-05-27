@@ -23,18 +23,18 @@ export function MigrationNoticeContent(
 			<box flexDirection="column">
 				<text selectable>
 					我们使用新的 NBG SDK 重建了 CLI。了解更多：{" "}
-					<a href="https://github.com/cline/cline">
-						<span fg={palette.act}>https://github.com/cline/cline</span>
+					<a href="https://github.com/libUE4/NBG-CLI">
+						<span fg={palette.act}>https://github.com/libUE4/NBG-CLI</span>
 					</a>
 				</text>
 				<text selectable>
 					运行{" "}
 					<span fg="#98c379" bg="#1f2937">
-						{" cline "}
+						{" nbg "}
 					</span>{" "}
 					现在会打开终端 UI。要打开 Kanban，请先使用 /quit，然后在终端运行{" "}
 					<span fg="#98c379" bg="#1f2937">
-						{" cline kanban "}
+						{" nbg kanban "}
 					</span>{" "}
 				</text>
 			</box>

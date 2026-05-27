@@ -129,6 +129,6 @@ describe("createClineAccountService", () => {
 
 		await expect(
 			createClineAccountService({ config: makeConfig() }),
-		).rejects.toThrow("Cline 账户需要重新认证。请运行 cline auth cline。");
+		).rejects.toThrow("Cline 账户需要重新认证。请运行 nbg auth cline。");
 	});
 });
