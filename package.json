@@ -52,7 +52,7 @@
 	"contributes": {
 		"icons": {
 			"cline-icon": {
-				"description": "Cline 图标",
+				"description": "NBG 图标",
 				"default": {
 					"fontPath": "assets/icons/cline-bot.woff",
 					"fontCharacter": "\\e900"
@@ -62,21 +62,21 @@
 		"walkthroughs": [
 			{
 				"id": "ClineWalkthrough",
-				"title": "认识 Cline，你的新编码伙伴",
-				"description": "Cline 像开发者一样思考和编码。下面是 5 种开始使用它的方式：",
+				"title": "认识 NBG，你的中文开发者 AI 代理",
+				"description": "NBG 基于 Cline 兼容运行时，面向中文开发工作流。下面是 5 种开始使用它的方式：",
 				"steps": [
 					{
 						"id": "welcome",
 						"title": "从目标开始，而不只是输入提示词",
-						"description": "告诉 Cline 你想完成什么。它会规划、提问，然后像真正的伙伴一样编码。",
+						"description": "告诉 NBG 你想完成什么。它会规划、提问，然后像真正的开发伙伴一样编码。",
 						"media": {
 							"markdown": "walkthrough/step1.md"
 						}
 					},
 					{
 						"id": "learn",
-						"title": "让 Cline 理解你的代码库",
-						"description": "把 Cline 指向你的项目。它会建立上下文理解，做出更准确的修改。",
+						"title": "让 NBG 理解你的代码库",
+						"description": "把 NBG 指向你的项目。它会建立上下文理解，做出更准确的修改。",
 						"media": {
 							"markdown": "walkthrough/step2.md"
 						}
@@ -84,7 +84,7 @@
 					{
 						"id": "advanced-features",
 						"title": "使用优秀的 AI 模型",
-						"description": "Cline 可连接 Anthropic、Gemini、OpenAI 等主流模型，帮助你完成开发任务。",
+						"description": "NBG 可连接 Anthropic、Gemini、OpenAI 等主流模型，帮助你完成开发任务。",
 						"media": {
 							"markdown": "walkthrough/step3.md"
 						}
@@ -100,7 +100,7 @@
 					{
 						"id": "getting-started",
 						"title": "控制权始终在你手里",
-						"description": "审阅 Cline 的计划和差异，在变更发生前确认。过程透明可控。",
+						"description": "审阅 NBG 的计划和差异，在变更发生前确认。过程透明可控。",
 						"media": {
 							"markdown": "walkthrough/step5.md"
 						},
@@ -115,7 +115,7 @@
 			"activitybar": [
 				{
 					"id": "claude-dev-ActivityBar",
-					"title": "Cline",
+					"title": "NBG",
 					"icon": "assets/icons/icon.svg"
 				}
 			]
@@ -159,90 +159,90 @@
 			{
 				"command": "cline.dev.createTestTasks",
 				"title": "创建测试任务",
-				"category": "Cline",
+				"category": "NBG",
 				"when": "cline.isDevMode"
 			},
 			{
 				"command": "cline.dev.expireMcpOAuthTokens",
 				"title": "使 MCP OAuth 令牌过期（测试用）",
-				"category": "Cline",
+				"category": "NBG",
 				"when": "cline.isDevMode"
 			},
 			{
 				"command": "cline.addToChat",
-				"title": "添加到 Cline",
-				"category": "Cline"
+				"title": "添加到 NBG",
+				"category": "NBG"
 			},
 			{
 				"command": "cline.addTerminalOutputToChat",
-				"title": "添加到 Cline",
-				"category": "Cline"
+				"title": "添加到 NBG",
+				"category": "NBG"
 			},
 			{
 				"command": "cline.focusChatInput",
 				"title": "跳转到聊天输入框",
-				"category": "Cline"
+				"category": "NBG"
 			},
 			{
 				"command": "cline.generateGitCommitMessage",
-				"title": "用 Cline 生成提交信息",
-				"category": "Cline",
+				"title": "用 NBG 生成提交信息",
+				"category": "NBG",
 				"icon": "$(cline-icon)"
 			},
 			{
 				"command": "cline.abortGitCommitMessage",
-				"title": "停止生成 Cline 提交信息",
-				"category": "Cline",
+				"title": "停止生成 NBG 提交信息",
+				"category": "NBG",
 				"icon": "$(debug-stop)"
 			},
 			{
 				"command": "cline.explainCode",
-				"title": "用 Cline 解释",
-				"category": "Cline"
+				"title": "用 NBG 解释",
+				"category": "NBG"
 			},
 			{
 				"command": "cline.improveCode",
-				"title": "用 Cline 改进",
-				"category": "Cline"
+				"title": "用 NBG 改进",
+				"category": "NBG"
 			},
 			{
 				"command": "cline.jupyterGenerateCell",
-				"title": "用 Cline 生成 Jupyter 单元格",
-				"category": "Cline",
+				"title": "用 NBG 生成 Jupyter 单元格",
+				"category": "NBG",
 				"icon": "$(sparkle)"
 			},
 			{
 				"command": "cline.jupyterExplainCell",
-				"title": "用 Cline 解释 Jupyter 单元格",
-				"category": "Cline",
+				"title": "用 NBG 解释 Jupyter 单元格",
+				"category": "NBG",
 				"icon": "$(question)"
 			},
 			{
 				"command": "cline.jupyterImproveCell",
-				"title": "用 Cline 改进 Jupyter 单元格",
-				"category": "Cline",
+				"title": "用 NBG 改进 Jupyter 单元格",
+				"category": "NBG",
 				"icon": "$(lightbulb)"
 			},
 			{
 				"command": "cline.openWalkthrough",
 				"title": "打开引导",
-				"category": "Cline"
+				"category": "NBG"
 			},
 			{
 				"command": "cline.reconstructTaskHistory",
 				"title": "重建任务历史",
-				"category": "Cline"
+				"category": "NBG"
 			},
 			{
 				"command": "cline.reviewComment.reply",
 				"title": "回复",
-				"category": "Cline",
+				"category": "NBG",
 				"enablement": "!commentIsEmpty"
 			},
 			{
 				"command": "cline.reviewComment.addToChat",
-				"title": "添加到 Cline 聊天",
-				"category": "Cline",
+				"title": "添加到 NBG 聊天",
+				"category": "NBG",
 				"icon": "$(link-external)"
 			}
 		],
@@ -375,7 +375,7 @@
 			]
 		},
 		"configuration": {
-			"title": "Cline",
+			"title": "NBG",
 			"properties": {}
 		}
 	},
