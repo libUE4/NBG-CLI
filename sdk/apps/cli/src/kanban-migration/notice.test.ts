@@ -27,7 +27,7 @@ describe("migration notice", () => {
 		const dataDir = createTempDataDir();
 
 		expect(getClineCliMigrationNotice(dataDir)?.title).toBe(
-			"Welcome to the new Cline CLI",
+			"欢迎使用新版 nbg CLI",
 		);
 	});
 

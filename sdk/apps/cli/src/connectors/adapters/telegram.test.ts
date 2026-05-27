@@ -118,7 +118,7 @@ describe("telegramConnector", () => {
 		expect(fetchImpl).not.toHaveBeenCalled();
 		expect(errors).toEqual([]);
 		expect(output).toEqual([
-			`[telegram] connector already running pid=${process.pid} rpc=127.0.0.1:54321`,
+			`[telegram] 连接器已在运行 pid=${process.pid} rpc=127.0.0.1:54321`,
 		]);
 	});
 });
@@ -182,7 +182,7 @@ describe("telegram bot username resolution", () => {
 
 		await expect(
 			__test__.fetchTelegramBotUsername("bad-token", fetchImpl),
-		).rejects.toThrow("Telegram getMe failed");
+		).rejects.toThrow("Telegram getMe 失败");
 	});
 });
 

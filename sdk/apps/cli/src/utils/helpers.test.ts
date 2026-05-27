@@ -343,12 +343,12 @@ describe("format helpers", () => {
 			}),
 		).toBe(
 			[
-				"The agent is waiting for your input.",
+				"智能体正在等待你的输入。",
 				"How can I best assist you today?",
 				"1. Help me understand or analyze code in a repository",
 				"2. Help me create or edit files",
 				"3. Help me run commands or tests",
-				"> Reply with an option number or type your answer.",
+				"> 回复选项编号，或直接输入你的回答。",
 			].join("\n"),
 		);
 	});
@@ -361,7 +361,7 @@ describe("format helpers", () => {
 				{ result: "second" },
 				{ result: "third" },
 			]),
-		).toBe("first (+2 more)");
+		).toBe("first（另有 2 项）");
 		expect(formatToolOutput(null)).toBe("");
 	});
 });

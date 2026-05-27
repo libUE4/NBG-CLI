@@ -351,7 +351,7 @@ describe("runCli lightweight command dispatch", () => {
 		const { runCli } = await import("./main");
 
 		await expect(runCli()).resolves.toBeUndefined();
-		expect(process.exitCode).toBe(0);
+		expect(process.exitCode).toBe(1);
 		expect(mockState.runAgentImports).toBe(0);
 		expect(mockState.runInteractiveImports).toBe(0);
 	});
@@ -568,7 +568,7 @@ describe("runCli lightweight command dispatch", () => {
 		expect(runtimeMocks.runInteractive).toHaveBeenCalledTimes(1);
 		expect(runtimeMocks.runInteractive).toHaveBeenCalledWith(
 			expect.objectContaining({
-				providerId: "cline",
+				providerId: "openai-compatible",
 				apiKey: "",
 			}),
 			expect.anything(),
@@ -892,7 +892,7 @@ describe("runCli lightweight command dispatch", () => {
 		await expect(runCli()).resolves.toBeUndefined();
 		expect(mockState.runAgentCalls).toBe(0);
 		expect(stdoutWrite).toHaveBeenCalledWith(
-			expect.stringContaining("Usage: /team <task description>"),
+			expect.stringContaining("用法：/team <任务描述>"),
 		);
 	});
 
@@ -1177,7 +1177,7 @@ describe("runCli lightweight command dispatch", () => {
 			expect.objectContaining({
 				outputMode: "json",
 				apiKey: "",
-				providerId: "cline",
+				providerId: "openai-compatible",
 			}),
 			expect.anything(),
 		);
@@ -1204,7 +1204,7 @@ describe("runCli lightweight command dispatch", () => {
 			expect.objectContaining({
 				outputMode: "json",
 				apiKey: "",
-				providerId: "anthropic",
+				providerId: "openai-compatible",
 			}),
 			expect.anything(),
 		);

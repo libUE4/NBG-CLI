@@ -394,7 +394,7 @@ describe("handleConnectorUserTurn", () => {
 				}),
 			}),
 		);
-		expect(messageText(posts.at(-1))).toContain('Scheduled "nightly".');
+		expect(messageText(posts.at(-1))).toContain('已创建计划任务 "nightly"。');
 	});
 
 	it("handles schedule commands directly in connector chats", async () => {
@@ -501,14 +501,14 @@ describe("handleConnectorUserTurn", () => {
 				}),
 			}),
 		);
-		expect(messageText(posts.at(-4))).toContain('Scheduled "nightly".');
-		expect(messageText(posts.at(-3))).toContain("schedule-1 [enabled]");
+		expect(messageText(posts.at(-4))).toContain('已创建计划任务 "nightly"。');
+		expect(messageText(posts.at(-3))).toContain("schedule-1 [已启用]");
 		expect(messageText(posts.at(-3))).not.toContain("schedule-2");
 		expect(messageText(posts.at(-2))).toContain(
-			"Triggered schedule schedule-1.",
+			"已触发计划任务 schedule-1。",
 		);
 		expect(triggerScheduleNow).toHaveBeenCalledWith("schedule-1");
-		expect(messageText(posts.at(-1))).toBe("Deleted schedule schedule-1.");
+		expect(messageText(posts.at(-1))).toBe("已删除计划任务 schedule-1。");
 		expect(deleteSchedule).toHaveBeenCalledWith("schedule-1");
 	});
 
@@ -664,6 +664,6 @@ describe("handleConnectorUserTurn", () => {
 			}),
 			{ timeoutMs: null },
 		);
-		expect(posts.at(-1)).toEqual({ raw: "Steering current task." });
+		expect(posts.at(-1)).toEqual({ raw: "正在引导当前任务。" });
 	});
 });

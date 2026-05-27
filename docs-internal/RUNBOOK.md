@@ -266,3 +266,27 @@ bun -F @nbg/cli build
 ```
 
 If `.bin` is still missing, repair the local install before treating typecheck/build results as meaningful.
+
+## 2026-05-27 NBG CLI 中文化验证
+
+Scope:
+
+```text
+@nbg/cli 测试断言同步到 NBG 中文文案和 openai-compatible 默认 provider。
+小文件元数据更新到 GitHub 远程 git@github.com:libUE4/NBG-CLI.git。
+README 等大文件保持分段后续处理，不做一次性大文件重写。
+```
+
+Verification:
+
+```text
+cd /root/nbg/sdk/apps/cli && bun run typecheck
+passed
+
+cd /root/nbg/sdk/apps/cli && bun run test:unit
+96 test files passed, 611 tests passed
+
+cd /root/nbg/sdk/apps/cli && bun script/build.ts --single
+passed, built @nbg/cli-linux-arm64@3.0.13
+smoke: dist/cli-linux-arm64/bin/nbg --version -> 3.0.13
+```

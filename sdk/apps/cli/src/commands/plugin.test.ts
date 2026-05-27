@@ -118,7 +118,7 @@ describe("plugin install command", () => {
 	it("rejects HTTP plugin file URLs", () => {
 		expect(() =>
 			parsePluginSource("http://example.com/plugins/weather-metrics.ts"),
-		).toThrow(/must use https/);
+		).toThrow(/必须使用 https/);
 	});
 
 	it("installs a local plugin file into the global plugin root", async () => {
@@ -208,7 +208,7 @@ describe("plugin install command", () => {
 		vi.stubGlobal("fetch", fetchMock);
 
 		await expect(installPlugin({ source, cwd: workspace })).rejects.toThrow(
-			/exceeds the 10485760 byte limit/,
+			/超过 10485760 字节限制/,
 		);
 	});
 
@@ -228,7 +228,7 @@ describe("plugin install command", () => {
 		vi.stubGlobal("fetch", fetchMock);
 
 		await expect(installPlugin({ source, cwd: workspace })).rejects.toThrow(
-			/exceeds the 10485760 byte limit/,
+			/超过 10485760 字节限制/,
 		);
 	});
 
@@ -373,7 +373,7 @@ describe("plugin install command", () => {
 		);
 
 		const first = await installPlugin({ source });
-		await expect(installPlugin({ source })).rejects.toThrow(/Use --force/);
+		await expect(installPlugin({ source })).rejects.toThrow(/使用 --force/);
 		const second = await installPlugin({ source, force: true });
 
 		expect(second.installPath).toBe(first.installPath);

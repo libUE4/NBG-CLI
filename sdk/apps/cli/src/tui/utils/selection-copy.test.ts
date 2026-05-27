@@ -75,7 +75,7 @@ describe("createSelectionCopyHandler", () => {
 		await Promise.resolve();
 
 		expect(deps.showToast).toHaveBeenCalledWith(
-			"Copied to clipboard",
+			"已复制到剪贴板",
 			"success",
 		);
 	});
@@ -90,7 +90,7 @@ describe("createSelectionCopyHandler", () => {
 		await Promise.resolve();
 
 		expect(deps.showToast).toHaveBeenCalledWith(
-			"Copied to clipboard",
+			"已复制到剪贴板",
 			"success",
 		);
 	});
@@ -107,7 +107,7 @@ describe("createSelectionCopyHandler", () => {
 		await Promise.resolve();
 
 		expect(deps.showToast).toHaveBeenCalledWith(
-			"Copied to clipboard",
+			"已复制到剪贴板",
 			"success",
 		);
 	});
@@ -122,7 +122,7 @@ describe("createSelectionCopyHandler", () => {
 		await Promise.resolve();
 
 		expect(deps.showToast).toHaveBeenCalledWith(
-			"Unable to copy selection",
+			"无法复制所选内容",
 			"error",
 		);
 	});
@@ -170,7 +170,7 @@ describe("createSelectionCopyHandler", () => {
 		await Promise.resolve();
 		expect(deps.showToast).toHaveBeenCalledTimes(1);
 		expect(deps.showToast).toHaveBeenCalledWith(
-			"Copied to clipboard",
+			"已复制到剪贴板",
 			"success",
 		);
 	});
@@ -195,7 +195,7 @@ describe("createSelectionCopyHandler", () => {
 		await Promise.resolve();
 
 		expect(deps.showToast).toHaveBeenCalledWith(
-			"Copied to clipboard",
+			"已复制到剪贴板",
 			"success",
 		);
 	});

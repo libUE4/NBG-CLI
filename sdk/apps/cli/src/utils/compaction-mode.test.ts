@@ -20,9 +20,7 @@ describe("CLI compaction mode helpers", () => {
 		expect(getCliCompactionMode(createConfig())).toBe(
 			DEFAULT_CLI_COMPACTION_MODE,
 		);
-		expect(formatCliCompactionMode(DEFAULT_CLI_COMPACTION_MODE)).toBe(
-			"Truncation",
-		);
+		expect(formatCliCompactionMode(DEFAULT_CLI_COMPACTION_MODE)).toBe("截断");
 	});
 
 	it("maps basic and off modes to core compaction config", () => {

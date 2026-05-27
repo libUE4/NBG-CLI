@@ -124,7 +124,7 @@ describe("handleEvent text formatting", () => {
 		);
 
 		expect(output).toContain(`\x1b[36m[team_task]\x1b[0m create`);
-		expect(output).toContain("error:");
+		expect(output).toContain("错误：");
 		expect(output).toContain(
 			'Field "status" is not allowed when action=create',
 		);
@@ -142,8 +142,8 @@ describe("handleEvent text formatting", () => {
 			{ verbose: true } as Config,
 		);
 
-		expect(output).toContain("── finished (5 iterations) ──");
-		expect(output).not.toContain("── aborted (5 iterations) ──");
+		expect(output).toContain("── 已完成（5 次迭代）──");
+		expect(output).not.toContain("── 已中止（5 次迭代）──");
 	});
 
 	it("prints aborted done events as aborted in verbose mode", () => {
@@ -157,7 +157,7 @@ describe("handleEvent text formatting", () => {
 			{ verbose: true } as Config,
 		);
 
-		expect(output).toContain("── aborted (2 iterations) ──");
+		expect(output).toContain("── 已中止（2 次迭代）──");
 	});
 
 	it("suppresses heartbeat-only team progress messages", () => {

@@ -349,7 +349,7 @@ describe("createDoctorCommand log subcommand", () => {
 		expect(exitCode).toBe(0);
 		expect(errors).toHaveLength(0);
 		expect(opened).toEqual([expectedPath]);
-		expect(output).toEqual([`Opening logs stored at ${expectedPath}`]);
+		expect(output).toEqual([`正在打开日志文件：${expectedPath}`]);
 		expect(existsSync(expectedPath)).toBe(true);
 	});
 
@@ -383,7 +383,8 @@ describe("createDoctorCommand log subcommand", () => {
 		await cmd.parseAsync(["log"], { from: "user" });
 
 		expect(exitCode).toBe(1);
-		expect(errors[0]).toContain("failed to open log file");
+		expect(errors[0]).toContain("打开日志文件");
+		expect(errors[0]).toContain("失败");
 		expect(errors[0]).toContain("open failed");
 	});
 });

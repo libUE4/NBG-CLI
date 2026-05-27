@@ -70,7 +70,7 @@ describe("runInteractiveChatCommand", () => {
 				usage: { inputTokens: 0, outputTokens: 0 },
 				iterations: 0,
 				commandOutput:
-					"Usage: /team <task description>\nStarts a team of agents for the given task.",
+					"用法：/team <任务描述>\n为指定任务启动一个智能体团队。",
 			},
 		});
 		expect(runtime.restartEmpty).not.toHaveBeenCalled();
@@ -123,7 +123,7 @@ describe("runInteractiveChatCommand", () => {
 			turnResult: {
 				usage: { inputTokens: 0, outputTokens: 0 },
 				iterations: 0,
-				commandOutput: "Started a fresh session.",
+				commandOutput: "已开始新会话。",
 			},
 		});
 		expect(runtime.resetForNewSession).toHaveBeenCalledOnce();

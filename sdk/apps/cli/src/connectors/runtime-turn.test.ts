@@ -60,7 +60,7 @@ describe("createConnectorRuntimeTurnStream", () => {
 			chunks.push(chunk);
 		}
 
-		expect(toolStatuses).toEqual(["Executing read_file..."]);
+		expect(toolStatuses).toEqual(["正在执行 read_file..."]);
 		expect(chunks.join("")).toBe("Here is the result.");
 		expect(sendRuntimeSession).toHaveBeenCalledWith("session-1", request, {
 			timeoutMs: null,

@@ -2,14 +2,14 @@
 	"name": "@nbg/cli",
 	"displayName": "nbg",
 	"version": "3.0.13",
-	"description": "Autonomous coding agent CLI - capable of creating/editing files, running commands, using the browser, and more",
+	"description": "NBG 中文开发者 AI 代理 CLI，支持代码编辑、命令执行、工具调用和自动化工作流。",
 	"type": "module",
 	"publishConfig": {
 		"access": "public"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/nbg-ai/nbg.git",
+		"url": "git+https://github.com/libUE4/NBG-CLI.git",
 		"directory": "sdk/apps/cli"
 	},
 	"keywords": [
@@ -32,9 +32,9 @@
 		"name": "NBG"
 	},
 	"license": "Apache-2.0",
-	"homepage": "https://github.com/nbg-ai/nbg",
+	"homepage": "https://github.com/libUE4/NBG-CLI",
 	"bugs": {
-		"url": "https://github.com/nbg-ai/nbg/issues"
+		"url": "https://github.com/libUE4/NBG-CLI/issues"
 	},
 	"bin": {
 		"nbg": "bin/nbg",
