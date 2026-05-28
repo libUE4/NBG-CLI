@@ -1,10 +1,10 @@
 ---
 title: "OpenTelemetry Integration"
 sidebarTitle: "OpenTelemetry"
-description: "Export Cline telemetry to your observability platform using OpenTelemetry Protocol (OTLP)"
+description: "Export NBG telemetry to your observability platform using OpenTelemetry Protocol (OTLP)"
 ---
 
-Cline includes opt-in OpenTelemetry support for exporting metrics and logs to your own observability infrastructure using the OpenTelemetry Protocol (OTLP).
+NBG includes opt-in OpenTelemetry support for exporting metrics and logs to your own observability infrastructure using the OpenTelemetry Protocol (OTLP).
 
 <Note>
 OpenTelemetry integration is **optional** and intended for advanced users with existing observability infrastructure. Most users won't need this feature.
@@ -14,7 +14,7 @@ OpenTelemetry integration is **optional** and intended for advanced users with e
 
 [OpenTelemetry](https://opentelemetry.io/) is an industry-standard observability framework that provides a unified way to collect and export telemetry data (metrics, logs, and traces).
 
-Cline's OpenTelemetry support allows you to:
+NBG OpenTelemetry support allows you to:
 - Export telemetry to your own systems
 - Integrate with observability platforms like Datadog, New Relic, Grafana Cloud, etc.
 - Maintain full control over your monitoring data
@@ -22,11 +22,11 @@ Cline's OpenTelemetry support allows you to:
 
 ## Supported Features
 
-Cline supports OpenTelemetry's **OTLP (OpenTelemetry Protocol)** export with:
+NBG supports OpenTelemetry's **OTLP (OpenTelemetry Protocol)** export with:
 
 <CardGroup cols={2}>
   <Card title="Metrics Export" icon="chart-bar">
-    Export metrics about Cline usage, performance, and errors
+    Export metrics about NBG usage, performance, and errors
   </Card>
   
   <Card title="Logs Export" icon="file-lines">
@@ -36,7 +36,7 @@ Cline supports OpenTelemetry's **OTLP (OpenTelemetry Protocol)** export with:
 
 ### Export Formats
 
-Cline supports three OTLP export protocols:
+NBG supports three OTLP export protocols:
 
 - **gRPC** (default, recommended)
 - **HTTP/protobuf**
@@ -44,17 +44,11 @@ Cline supports three OTLP export protocols:
 
 ## Configuration
 
-OpenTelemetry is configured using [Remote Configuration](/enterprise-solutions/configuration/remote-configuration/overview#how-remote-configuration-works) from the [dashboard](https://app.cline.bot/dashboard/organization?tab=settings).
+OpenTelemetry is configured using [Remote Configuration](/enterprise-solutions/configuration/remote-configuration/overview#how-remote-configuration-works) from your NBG Enterprise Console.
 
 ### Basic Setup
 
-Enable OpenTelemetry, configure an OTLP endpoint and select a protocol:
-
-<Frame>
-	<img
-		src="https://assets.int.cline.bot/assets/open_telemetry_main_options.png"
-	/>
-</Frame>
+Enable OpenTelemetry, configure an OTLP endpoint, and select a protocol in the NBG Enterprise Console.
 
 If you're using gRPC, you can opt out of TLS.
 
@@ -66,21 +60,13 @@ You only need to configure it further if you need an advanced configuration.
 
 You can add custom protocols and endpoints for both, logs and metrics. You can also configure the metrics export interval, and the logs batch size, batch timeout and max queue size.
 
-<Frame>
-	<img
-		src="https://assets.int.cline.bot/assets/open_telemetry_metrics_and_logs.png"
-	/>
-</Frame>
+Configure metrics and logs independently if your collector requires separate endpoints, protocols, intervals, or batching behavior.
 
 **Custom headers for authentication:**
 
 Finally, if your collector needs authentication headers, you can add key value pairs in the headers section.
 
-<Frame>
-	<img
-		src="https://assets.int.cline.bot/assets/open_telemetry_headers.png"
-	/>
-</Frame>
+Add custom headers as key-value pairs when your collector requires authentication.
 
 ## Integration Examples
 
@@ -88,31 +74,19 @@ Finally, if your collector needs authentication headers, you can add key value p
 
 Export to Datadog using their OTLP endpoint:
 
-<Frame>
-	<img
-		src="https://assets.int.cline.bot/assets/open_telemetry_datadog_example.png"
-	/>
-</Frame>
+Use Datadog's OTLP endpoint and add any required API key headers in the custom headers section.
 
 ### New Relic
 
 Export to New Relic:
 
-<Frame>
-	<img
-		src="https://assets.int.cline.bot/assets/open_telemetry_relic_example.png"
-	/>
-</Frame>
+Use the New Relic OTLP endpoint and configure the required authentication headers.
 
 ### Grafana Cloud
 
 Export to Grafana Cloud:
 
-<Frame>
-	<img
-		src="https://assets.int.cline.bot/assets/open_telemetry_grafana_example.png"
-	/>
-</Frame>
+Use the Grafana Cloud OTLP endpoint and configure the instance-specific authentication headers.
 
 ## Testing Configuration
 
@@ -124,7 +98,7 @@ If you aren’t getting any data in your collector, the easiest way to verify yo
 
 To do this, open the [webview developer tools](https://code.visualstudio.com/api/extension-guides/webview#inspecting-and-debugging-webviews).
 
-Once you’ve done so, if you perform some actions that trigger metrics and/or logs (such as doing a task with Cline), 
+Once you’ve done so, if you perform some actions that trigger metrics and/or logs (such as doing a task with NBG),
 you will see error logs if any error occurs when sending the data to your collector.
 
 If you don't see any logs, enable [debug mode](#debug-mode).
@@ -157,7 +131,7 @@ This will output detailed information about:
 
 ## What Gets Exported
 
-When OpenTelemetry is enabled, Cline exports:
+When OpenTelemetry is enabled, NBG exports:
 
 ### Metrics
 - Feature usage counts
@@ -176,7 +150,7 @@ Exported data is already anonymous and doesn't include code content, file paths,
 
 ## Limitations
 
-Current OpenTelemetry support in Cline:
+Current OpenTelemetry support in NBG:
 - ✅ OTLP metrics export (gRPC, HTTP)
 - ✅ OTLP logs export (gRPC, HTTP)
 - ✅ Basic configuration via [Remote Configuration](/enterprise-solutions/configuration/remote-configuration/overview#how-remote-configuration-works)
@@ -199,7 +173,7 @@ Current OpenTelemetry support in Cline:
     Complete catalog of all emitted OTel events
   </Card>
   
-  <Card title="Cline Telemetry" icon="chart-simple" href="/enterprise-solutions/monitoring/telemetry">
+  <Card title="NBG Telemetry" icon="chart-simple" href="/enterprise-solutions/monitoring/telemetry">
     Configure simple built-in telemetry
   </Card>
   
