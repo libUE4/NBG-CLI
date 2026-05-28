@@ -22,10 +22,10 @@ nbg connect
 | 平台 | 直接命令 | 必需凭据 |
 |------|----------|----------|
 | Telegram | `nbg connect telegram` | Bot token |
-| Slack | `nbg connect slack` | Bot token、signing secret、base URL |
-| Google Chat | `nbg connect gchat` | Service account credentials JSON 或 ADC、base URL |
-| WhatsApp | `nbg connect whatsapp` | Phone number ID、access token、app secret、verify token、base URL |
-| Linear | `nbg connect linear` | API key 或 OAuth 凭据、webhook secret、base URL |
+| Slack | `nbg connect slack` | Bot token、签名密钥、公网 base URL |
+| Google Chat | `nbg connect gchat` | Service account credentials JSON 或 ADC、公网 base URL |
+| WhatsApp | `nbg connect whatsapp` | Phone number ID、access token、app secret、verify token、公网 base URL |
+| Linear | `nbg connect linear` | API key 或 OAuth 凭据、webhook 签名密钥、公网 base URL |
 
 ## Telegram
 
@@ -74,13 +74,13 @@ nbg connect
 
 ## Slack
 
-需要 bot token、signing secret 和公网 base URL。
+需要 bot token、签名密钥和公网 base URL。
 
 ```bash
 nbg connect slack --bot-token <BOT-TOKEN> --signing-secret <SECRET> --base-url <URL>
 ```
 
-每个 Slack thread 会映射到一个 agent 会话，因此 agent 会在 thread 内保持上下文。
+每个 Slack thread 会映射到一个 agent 会话，因此 agent 会在同一 thread 内保持上下文。
 
 ## Google Chat
 
@@ -100,7 +100,7 @@ nbg connect whatsapp --phone-number-id <ID> --access-token <TOKEN> --app-secret 
 
 ## Linear
 
-需要 API key、webhook signing secret 和公网 base URL。
+需要 API key、webhook 签名密钥和公网 base URL。
 
 ```bash
 nbg connect linear --api-key <KEY> --webhook-secret <SECRET> --base-url <URL>
@@ -132,7 +132,7 @@ nbg connect telegram --stop
 }
 ```
 
-返回 `{"action": "allow"}` 或 `{"action": "deny", "message": "reason"}`。
+脚本返回 `{"action": "allow"}` 或 `{"action": "deny", "message": "reason"}`。返回 `deny` 时，连接器不会把该消息交给 agent。
 
 ## 同时运行多个连接器
 
