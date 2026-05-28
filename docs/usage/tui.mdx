@@ -1,51 +1,51 @@
 ---
 title: "TUI"
 sidebarTitle: "TUI"
-description: "Use Cline's terminal UI (TUI) for interactive coding workflows in your terminal."
+description: "使用 NBG terminal UI (TUI) 在终端中进行交互式编码工作流。"
 ---
 
-## What is the TUI?
+## 什么是 TUI？
 
-The TUI is Cline's interactive terminal interface. It is designed for conversational, in-terminal work: ask questions, review plans, approve actions, and iterate quickly.
+TUI 是 NBG 的交互式终端界面，适合在终端中对话式工作：提问、审查计划、批准操作并快速迭代。
 
-## Prerequisites
+## 前置条件
 
-Install the CLI:
-
-```bash
-npm install -g cline
-```
-
-## Launch the TUI
+安装 CLI：
 
 ```bash
-# default interactive launch
-cline
-
-# explicit TUI mode
-cline -i
+npm install -g nbg
 ```
 
-## Core TUI Actions
+## 启动 TUI
 
-- `Tab` to toggle Plan/Act
-- `Shift+Tab` to toggle auto-approve all
-- `Ctrl+C` to abort a running turn; press again to exit
-- `Ctrl+D` to exit when the prompt is empty and idle
-- `Ctrl+L` to clear the chat view or current conversation
+```bash
+# 默认交互启动
+nbg
+
+# 显式 TUI 模式
+nbg -i
+```
+
+## 核心 TUI 操作
+
+- `Tab` 切换 Plan/Act
+- `Shift+Tab` 切换全部自动批准
+- `Ctrl+C` 中止正在运行的 turn；再次按下退出
+- `Ctrl+D` 在 prompt 为空且空闲时退出
+- `Ctrl+L` 清空 chat view 或当前 conversation
 - `/settings`, `/model`, `/account`, `/mcp`, `/compact`, `/undo`, `/clear`, `/history`, `/help`, `/quit`
-- `@file` mentions for workspace context
+- 使用 `@file` mentions 引入 workspace context
 
-The status area shows the active model, context usage, cost, workspace/branch, git diff stats, Plan/Act state, and whether auto-approve all is enabled.
+状态区域会显示当前模型、上下文使用量、成本、workspace/branch、git diff 统计、Plan/Act 状态，以及是否启用全部自动批准。
 
-## When to Use TUI vs Headless
+## 何时使用 TUI 或 headless
 
-- Use **TUI** when you want collaboration and approvals.
-- Use **headless** (`--json`, piped stdin/stdout, CI scripts) for automation.
+- 需要协作、审查和批准时使用 **TUI**。
+- 自动化场景使用 **headless**（`--json`、piped stdin/stdout、CI scripts）。
 
-See: [CLI Headless Mode](/usage/cli-overview#headless-mode)
+参考：[CLI headless mode](/usage/cli-overview#headless-mode)
 
-## Next Steps
+## 下一步
 
-- [CLI Overview](/usage/cli-overview)
-- [CLI Reference](/cli/cli-reference)
+- [CLI 概览](/usage/cli-overview)
+- [CLI 参考](/cli/cli-reference)
