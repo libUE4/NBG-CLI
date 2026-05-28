@@ -1,74 +1,74 @@
 ---
 title: "Chat Completions"
 sidebarTitle: "Chat Completions"
-description: "Full reference for the POST /chat/completions endpoint including all parameters, streaming, and tool calling."
+description: "NBG API 的 POST /chat/completions endpoint reference，包含参数、streaming 和 tool calling。"
 ---
 
-The Chat Completions endpoint generates model responses from a conversation. It follows the [OpenAI Chat Completions](https://platform.openai.com/docs/api-reference/chat/create) format.
+Chat Completions endpoint 根据对话消息生成模型响应。NBG API 使用 [OpenAI Chat Completions](https://platform.openai.com/docs/api-reference/chat/create) 兼容格式，便于复用现有 SDK、代理和网关。
 
 ## Endpoint
 
 ```
-POST https://api.cline.bot/api/v1/chat/completions
+POST https://<your-nbg-api>/api/v1/chat/completions
 ```
 
 ## Request Headers
 
-| Header | Required | Description |
+| Header | Required | 说明 |
 |--------|----------|-------------|
 | `Authorization` | Yes | `Bearer YOUR_API_KEY` |
 | `Content-Type` | Yes | `application/json` |
-| `HTTP-Referer` | No | Your application URL (for usage tracking) |
-| `X-Title` | No | Your application name (for usage logs) |
+| `HTTP-Referer` | No | 应用 URL，用于用量跟踪 |
+| `X-Title` | No | 应用名称，用于日志和用量展示 |
 
 ## Request Body
 
-| Parameter | Type | Required | Default | Description |
+| Parameter | Type | Required | Default | 说明 |
 |-----------|------|----------|---------|-------------|
-| `model` | string | Yes | | Model ID in `provider/model` format. See [Models](/api/models). |
-| `messages` | array | Yes | | Conversation messages. Each has `role` (`system`, `user`, `assistant`) and `content`. |
-| `stream` | boolean | No | `true` | Return the response as a stream of Server-Sent Events. |
-| `tools` | array | No | | Tool/function definitions in OpenAI format. |
-| `temperature` | number | No | Model default | Sampling temperature (0.0 to 2.0). Lower values are more deterministic. |
+| `model` | string | Yes | | `provider/model` 格式的 model ID，见 [模型](/api/models)。 |
+| `messages` | array | Yes | | 对话消息。每条消息包含 `role` (`system`, `user`, `assistant`) 和 `content`。 |
+| `stream` | boolean | No | `true` | 以 Server-Sent Events stream 返回响应。 |
+| `tools` | array | No | | OpenAI 格式的 tool/function definitions。 |
+| `temperature` | number | No | Model default | 采样温度，范围 0.0 到 2.0。值越低越确定。 |
 
 ### Message Format
 
-Each message in the `messages` array has this structure:
+`messages` 数组中的每条消息使用以下结构：
 
 ```json
 {
   "role": "user",
-  "content": "Your message here"
+  "content": "你的消息"
 }
 ```
 
-**Roles:**
+**Roles：**
 
-| Role | Purpose |
+| Role | 用途 |
 |------|---------|
-| `system` | Sets the model's behavior and persona. Place first in the array. |
-| `user` | The human's input. |
-| `assistant` | Previous model responses (for multi-turn conversations). |
+| `system` | 设置模型行为和角色，通常放在数组第一条。 |
+| `user` | 用户输入。 |
+| `assistant` | 之前的模型响应，用于多轮对话。 |
 
-### Multi-Turn Conversation
+### 多轮对话
 
-Include previous messages to maintain context:
+包含历史消息即可保留上下文：
 
 ```json
 {
   "model": "anthropic/claude-sonnet-4-6",
   "messages": [
-    {"role": "system", "content": "You are a helpful coding assistant."},
-    {"role": "user", "content": "What is a closure in JavaScript?"},
+    {"role": "system", "content": "You are a helpful coding assistant. Answer in Chinese."},
+    {"role": "user", "content": "JavaScript 中的闭包是什么？"},
     {"role": "assistant", "content": "A closure is a function that..."},
-    {"role": "user", "content": "Can you show me an example?"}
+    {"role": "user", "content": "可以给一个例子吗？"}
   ]
 }
 ```
 
 ## Streaming Response
 
-When `stream: true` (the default), the response is a series of [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-Sent_Events):
+当 `stream: true`（默认值）时，响应是一组 [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-Sent_Events)：
 
 ```
 data: {"id":"gen-abc123","choices":[{"delta":{"role":"assistant"},"index":0}],"model":"anthropic/claude-sonnet-4-6"}
@@ -82,19 +82,19 @@ data: {"id":"gen-abc123","choices":[{"delta":{"content":" is Paris."},"index":0,
 data: [DONE]
 ```
 
-Each `data:` line contains a JSON chunk. Key fields:
+每个 `data:` 行包含一个 JSON chunk。关键字段如下：
 
-| Field | Description |
+| Field | 说明 |
 |-------|-------------|
-| `id` | Generation ID, consistent across all chunks |
-| `choices[0].delta.content` | The new text in this chunk |
-| `choices[0].delta.reasoning` | Reasoning/thinking content (for reasoning models) |
-| `choices[0].finish_reason` | `stop` when complete, `error` on failure |
-| `usage` | Token counts and cost (included in the final chunk) |
+| `id` | 生成 ID，所有 chunks 保持一致 |
+| `choices[0].delta.content` | 当前 chunk 的新增文本 |
+| `choices[0].delta.reasoning` | reasoning/thinking 内容，适用于 reasoning models |
+| `choices[0].finish_reason` | 完成时为 `stop`，失败时为 `error` |
+| `usage` | token 用量和成本，通常在最后一个 chunk 中返回 |
 
 ### Usage Object
 
-The final chunk includes token usage and cost:
+最后一个 chunk 会包含 token 用量和成本：
 
 ```json
 {
@@ -109,16 +109,16 @@ The final chunk includes token usage and cost:
 }
 ```
 
-| Field | Description |
+| Field | 说明 |
 |-------|-------------|
-| `prompt_tokens` | Total input tokens |
-| `completion_tokens` | Total output tokens |
-| `prompt_tokens_details.cached_tokens` | Tokens served from cache (reduces cost) |
-| `cost` | Total cost in USD for this request |
+| `prompt_tokens` | 输入 token 总数 |
+| `completion_tokens` | 输出 token 总数 |
+| `prompt_tokens_details.cached_tokens` | 命中缓存的 tokens，可降低成本 |
+| `cost` | 当前请求的美元成本 |
 
 ## Non-Streaming Response
 
-When `stream: false`, the response is a single JSON object:
+当 `stream: false` 时，响应是单个 JSON object：
 
 ```json
 {
@@ -143,7 +143,7 @@ When `stream: false`, the response is a single JSON object:
 
 ## Tool Calling
 
-You can define tools that the model can call using the OpenAI function calling format:
+可以使用 OpenAI function calling 格式定义模型可调用的 tools：
 
 ```json
 {
@@ -173,7 +173,7 @@ You can define tools that the model can call using the OpenAI function calling f
 }
 ```
 
-When the model decides to call a tool, the response includes a `tool_calls` array:
+当模型决定调用 tool 时，响应会包含 `tool_calls` 数组：
 
 ```json
 {
@@ -198,7 +198,7 @@ When the model decides to call a tool, the response includes a `tool_calls` arra
 }
 ```
 
-To continue the conversation after a tool call, include the tool result:
+tool 调用后继续对话时，需要把 tool result 一并传回：
 
 ```json
 {
@@ -212,23 +212,26 @@ To continue the conversation after a tool call, include the tool result:
 
 ## Reasoning Models
 
-Some models support extended thinking (reasoning). When using these models, the response may include reasoning content in the streaming delta:
+部分模型支持 extended thinking 或 reasoning。使用这些模型时，streaming delta 中可能包含 reasoning 内容：
 
 ```json
 {"choices":[{"delta":{"reasoning":"Let me think about this step by step..."}}]}
 ```
 
-Reasoning tokens are separate from the main content and appear in the `delta.reasoning` field. Some providers return encrypted reasoning blocks via `delta.reasoning_details` that can be passed back in subsequent requests to preserve the reasoning trace.
+Reasoning tokens 与主输出分开，通常出现在 `delta.reasoning` 字段中。部分 provider 会通过 `delta.reasoning_details` 返回加密 reasoning blocks，可在后续请求中传回以保留 reasoning trace。
 
 <Note>
-  Not all models support reasoning. See [Models](/api/models) for which models have reasoning capabilities.
+  并非所有模型都支持 reasoning。支持情况见 [模型](/api/models)。
 </Note>
 
-## Complete Example
+## 完整示例
 
 ```bash
-curl -X POST https://api.cline.bot/api/v1/chat/completions \
-  -H "Authorization: Bearer YOUR_API_KEY" \
+export NBG_API_BASE_URL="https://<your-nbg-api>/api/v1"
+export NBG_API_KEY="YOUR_API_KEY"
+
+curl -X POST "$NBG_API_BASE_URL/chat/completions" \
+  -H "Authorization: Bearer $NBG_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "anthropic/claude-sonnet-4-6",
@@ -244,15 +247,15 @@ curl -X POST https://api.cline.bot/api/v1/chat/completions \
 
 <CardGroup cols={2}>
   <Card title="Models" icon="brain" href="/api/models">
-    Browse available models and their capabilities.
+    查看可用模型和能力。
   </Card>
   <Card title="Errors" icon="triangle-exclamation" href="/api/errors">
-    Handle errors and implement retry logic.
+    处理错误并实现重试逻辑。
   </Card>
   <Card title="SDK Examples" icon="code" href="/api/sdk-examples">
-    Use this endpoint from Python, Node.js, and more.
+    在 Python、Node.js、curl 和 NBG CLI 中使用该 endpoint。
   </Card>
   <Card title="Authentication" icon="key" href="/api/authentication">
-    API key management and security practices.
+    API key 管理和安全实践。
   </Card>
 </CardGroup>
