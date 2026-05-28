@@ -1,65 +1,54 @@
 ---
-title: "ACP: Editor Integrations"
-description: "Use Cline in JetBrains, Neovim, Zed, and other editors via the Agent Client Protocol"
+title: "ACP 编辑器集成"
+description: "通过 Agent Client Protocol 在 JetBrains、Neovim、Zed 和其他编辑器中使用 NBG"
 ---
 
 
-Cline CLI supports the [Agent Client Protocol (ACP)](https://agentclientprotocol.com/), an open standard that enables AI coding agents to work across different editors and IDEs. This means you can use the full Cline agent—with all its capabilities including Skills, Hooks, and MCP integrations—in your preferred development environment.
+NBG CLI 支持 [Agent Client Protocol (ACP)](https://agentclientprotocol.com/)。ACP 是一个开放标准，让 AI coding agent 可以接入不同编辑器和 IDE。通过 ACP，你可以在常用开发环境中使用 NBG 的 Skills、Hooks 和 MCP 集成能力。
 
-## Why ACP?
+## 为什么使用 ACP？
 
-- **Editor flexibility**: Use Cline in JetBrains, Neovim, Zed, or any ACP-compatible editor
-- **No feature compromises**: Full access to Cline's capabilities regardless of editor
-- **Team consistency**: Same AI assistant across different developer workflows
-- **Open standard**: Built on Zed's open Agent Client Protocol specification
+- **编辑器灵活性**：在 JetBrains、Neovim、Zed 或任何 ACP-compatible editor 中使用 NBG
+- **能力一致**：跨编辑器访问 NBG CLI 的核心 agent 能力
+- **团队一致性**：不同开发工作流使用同一套 assistant 配置
+- **开放标准**：基于 Zed 推出的 Agent Client Protocol specification
 
 ## JetBrains IDEs
 
-[JetBrains](https://www.jetbrains.com) IDEs include IntelliJ IDEA, PyCharm, WebStorm, and more. They offer built-in AI Assistant with ACP support.
+[JetBrains](https://www.jetbrains.com) IDEs 包括 IntelliJ IDEA、PyCharm、WebStorm 等。内置 AI Assistant 支持 ACP。
 
 <Note>
-**Recommended: Native JetBrains Plugin**
+**推荐：原生 JetBrains 插件**
 
-For the best JetBrains experience, install the [native Cline plugin](/getting-started/installing-cline#jetbrains-ides) from the JetBrains Marketplace. It provides full IDE integration and the complete Cline experience.
+如果需要完整 IDE 集成，优先参考 NBG 安装指南中的原生插件路径。
 
-The ACP setup below is an alternative way to use Cline CLI features in JetBrains IDEs.
+下面的 ACP 配置是另一种在 JetBrains IDE 中使用 NBG CLI 能力的方式。
 </Note>
 
-Alternatively, you can run Cline CLI in IntelliJ IDEA, PyCharm, WebStorm, and all other JetBrains IDEs through their built-in AI Assistant with ACP support.
+### 配置
 
-<video
-  src="https://storage.googleapis.com/cline_public_images/cline-acp-jetbrains.mp4"
-  autoPlay
-  loop
-  muted
-  playsInline
-  style={{ width: "100%", borderRadius: "8px", marginTop: "16px", marginBottom: "16px" }}
-/>
-
-### Setup
-
-1. **Install Cline CLI** (if not already installed):
+1. **安装 NBG CLI**：
    ```bash
-   npm i -g cline
+   npm i -g nbg
    ```
 
-2. **Authenticate with Cline**:
+2. **配置认证**：
    ```bash
-   cline auth
+   nbg auth
    ```
 
-3. **Configure JetBrains AI Assistant**:
-   - Open your JetBrains IDE
-   - Navigate to `Settings | Tools | AI Assistant | Agents`
-   - Click "Add Custom Agent"
-   - This opens/creates `~/.jetbrains/acp.json`
+3. **配置 JetBrains AI Assistant**：
+   - 打开 JetBrains IDE
+   - 进入 `Settings | Tools | AI Assistant | Agents`
+   - 点击 "Add Custom Agent"
+   - 打开或创建 `~/.jetbrains/acp.json`
 
-4. **Add Cline to `acp.json`**:
+4. **把 NBG 加入 `acp.json`**：
    ```json
    {
      "agent_servers": {
-       "Cline": {
-         "command": "cline",
+       "NBG": {
+         "command": "nbg",
          "args": ["--acp"],
          "env": {}
        }
@@ -67,92 +56,83 @@ Alternatively, you can run Cline CLI in IntelliJ IDEA, PyCharm, WebStorm, and al
    }
    ```
 
-5. **Use Cline**:
-   - Open the AI Chat tool window
-   - Select "Cline" from the agent dropdown
-   - Start coding with Cline in your JetBrains IDE!
+5. **使用 NBG**：
+   - 打开 AI Chat tool window
+   - 在 agent dropdown 中选择 "NBG"
+   - 开始在 JetBrains IDE 中使用 NBG
 
 <Tip>
-JetBrains AI Assistant can expose its built-in MCP server to Cline, giving Cline access to IDE-specific tools and context.
+JetBrains AI Assistant 可以把内置 MCP server 暴露给 NBG，让 NBG 访问 IDE 专属工具和上下文。
 </Tip>
 
 ## Neovim
 
-[Neovim](https://neovim.io) is a hyperextensible Vim-based text editor loved by developers for its speed and flexibility. Use Cline in Neovim through the [agentic.nvim](https://github.com/carlos-algms/agentic.nvim) or [avante.nvim](https://github.com/yetone/avante.nvim) plugins, which provide ACP integration.
+[Neovim](https://neovim.io) 是可扩展的 Vim-based text editor。可以通过支持 ACP 的 [agentic.nvim](https://github.com/carlos-algms/agentic.nvim) 或 [avante.nvim](https://github.com/yetone/avante.nvim) 接入 NBG。
 
-<video
-  src="https://storage.googleapis.com/cline_public_images/cline-acp-neovim-avante.mp4"
-  autoPlay
-  loop
-  muted
-  playsInline
-  style={{ width: "100%", borderRadius: "8px", marginTop: "16px", marginBottom: "16px" }}
-/>
+### 使用 agentic.nvim 配置
 
-### Setup with agentic.nvim
-
-1. **Install Cline CLI** (if not already installed):
+1. **安装 NBG CLI**：
    ```bash
-   npm i -g cline
+   npm i -g nbg
    ```
 
-2. **Authenticate with Cline**:
+2. **配置认证**：
    ```bash
-   cline auth
+   nbg auth
    ```
 
-3. **Install agentic.nvim** using lazy.nvim:
+3. **使用 lazy.nvim 安装 agentic.nvim**：
    ```lua
    {
      "carlos-algms/agentic.nvim",
      opts = {
-       provider = "cline-acp",
+       provider = "nbg-acp",
        acp_providers = {
-         ["cline-acp"] = {
-           command = "cline",
+         ["nbg-acp"] = {
+           command = "nbg",
            args = {"--acp"},
          },
        },
      },
      keys = {
-       {"<C-\\>", function() require("agentic").toggle() end, mode={"n","v","i"}, desc="Toggle Cline Chat"},
+       {"<C-\\>", function() require("agentic").toggle() end, mode={"n","v","i"}, desc="Toggle NBG Chat"},
      },
    }
    ```
 
-4. **Use Cline**:
-   - Press `<C-\>` to toggle Cline chat
-   - Start coding with Cline in Neovim!
+4. **使用 NBG**：
+   - 按 `<C-\>` 打开或关闭 NBG chat
+   - 在 Neovim 中使用 NBG
 
-### Setup with avante.nvim
+### 使用 avante.nvim 配置
 
-Follow the [avante.nvim documentation](https://github.com/yetone/avante.nvim) for configuring external ACP agents and point it to `cline --acp`.
+参考 [avante.nvim documentation](https://github.com/yetone/avante.nvim) 配置 external ACP agent，并指向 `nbg --acp`。
 
 ## Zed
 
-[Zed](https://zed.dev) is a high-performance, multiplayer code editor built from the ground up for speed and collaboration. Zed's team created the Agent Client Protocol, making Cline a natural fit for this editor.
+[Zed](https://zed.dev) 是强调速度和协作的 code editor。Zed 团队创建了 Agent Client Protocol，因此可以自然接入 NBG CLI。
 
-### Setup
+### 配置
 
-1. **Install Cline CLI** (if not already installed):
+1. **安装 NBG CLI**：
    ```bash
-   npm i -g cline
+   npm i -g nbg
    ```
 
-2. **Authenticate with Cline**:
+2. **配置认证**：
    ```bash
-   cline auth
+   nbg auth
    ```
 
-3. **Configure Zed**:
-   - Open Zed settings (`Cmd/Ctrl + ,`)
-   - Add Cline to your `settings.json`:
+3. **配置 Zed**：
+   - 打开 Zed settings (`Cmd/Ctrl + ,`)
+   - 把 NBG 加入 `settings.json`：
    ```json
    {
      "agent_servers": {
-       "Cline": {
+       "NBG": {
          "type": "custom",
-         "command": "cline",
+         "command": "nbg",
          "args": ["--acp"],
          "env": {}
        }
@@ -160,57 +140,57 @@ Follow the [avante.nvim documentation](https://github.com/yetone/avante.nvim) fo
    }
    ```
 
-4. **Use Cline**:
-   - Open the AI assistant panel
-   - Select "Cline" from the agent dropdown
-   - Start coding with Cline in Zed!
+4. **使用 NBG**：
+   - 打开 AI assistant panel
+   - 在 agent dropdown 中选择 "NBG"
+   - 在 Zed 中使用 NBG
 
-## Other Editors
+## 其他编辑器
 
-Any editor that supports the Agent Client Protocol can run Cline. Check your editor's documentation for ACP configuration instructions, then point it to:
+任何支持 Agent Client Protocol 的编辑器都可以运行 NBG。查看对应编辑器的 ACP 配置说明，并指向：
 
 ```bash
-cline --acp
+nbg --acp
 ```
 
-## Troubleshooting
+## 故障排查
 
-### Agent not appearing
+### Agent 没有出现
 
-- Ensure Cline CLI is installed globally: `npm i -g cline`
-- Verify authentication: `cline auth`
-- Check that `cline --acp` runs without errors
-- Restart your editor after configuration changes
+- 确认已全局安装 NBG CLI：`npm i -g nbg`
+- 确认认证已配置：`nbg auth`
+- 确认 `nbg --acp` 可以正常运行
+- 修改配置后重启编辑器
 
-### Permission errors
+### 权限错误
 
-If Cline can't access files or run commands:
-- Check that your editor's ACP integration passes the correct working directory
-- Verify file permissions in your project
-- Ensure Cline has approval settings configured correctly
+如果 NBG 无法访问文件或运行命令：
+- 确认编辑器的 ACP integration 传入了正确 working directory
+- 检查项目文件权限
+- 确认 NBG 的 approval settings 配置正确
 
-### Connection issues
+### 连接问题
 
-- Make sure no other Cline instance is using the same configuration directory
-- Check editor logs for ACP-related errors
-- Try running `cline --acp` manually to test the connection
+- 确认没有其他 NBG 实例占用同一配置目录
+- 查看编辑器日志中的 ACP 相关错误
+- 手动运行 `nbg --acp` 测试连接
 
-## Learn More
+## 了解更多
 
 <Columns cols={2}>
-  <Card title="CLI Overview" icon="terminal" href="/usage/cli-overview">
-    Learn about Cline CLI's core capabilities and use cases.
+  <Card title="CLI 概览" icon="terminal" href="/usage/cli-overview">
+    了解 NBG CLI 的核心能力和使用场景。
   </Card>
   
   <Card title="Headless Mode" icon="robot" href="/usage/cli-overview#headless-mode">
-    Run Cline autonomously in scripts, CI/CD pipelines, and automated workflows.
+    在脚本、CI/CD pipeline 和自动化工作流中运行 NBG。
   </Card>
   
   <Card title="Skills" icon="graduation-cap" href="/customization/skills">
-    Understand how Cline's Skills work across all editors via ACP.
+    了解 NBG Skills 如何通过 ACP 跨编辑器工作。
   </Card>
   
   <Card title="Hooks" icon="link" href="/customization/hooks">
-    Learn how to enforce policies with Hooks in any editor.
+    了解如何在任意编辑器中通过 Hooks 执行策略。
   </Card>
 </Columns>
