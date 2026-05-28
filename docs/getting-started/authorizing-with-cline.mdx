@@ -1,5 +1,5 @@
 ---
-title: "Authorization"
+title: "认证配置"
 description: "为 NBG 配置 provider 并选择第一个 AI 模型"
 ---
 
@@ -8,12 +8,12 @@ NBG 通过 **provider** 连接 AI 模型。当前保留 Cline 兼容 provider，
 - **OpenAI-compatible / BYOK**：使用自己的 provider 凭据，适合商业化部署和自有模型网关。
 - **Cline 兼容 provider**：使用继承运行时中的 OAuth provider id `cline`。
 
-## Menu
+## 目录
 
-- [CLI Setup](#cli-setup)
-- [IDE Setup](#ide-setup)
+- [CLI 配置](#cli-配置)
+- [IDE 配置](#ide-配置)
 
-## CLI Setup
+## CLI 配置
 
 ```bash
 # 打开交互式认证设置
@@ -28,7 +28,7 @@ nbg auth --provider openai-compatible --apikey <key> --baseurl <url> --modelid <
 
 无交互运行时，如果选择了 OAuth provider 但没有已保存凭据，`nbg` 会直接给出认证错误，不会隐藏式打开浏览器。
 
-## IDE Setup
+## IDE 配置
 
 <Steps>
   <Step title="打开 NBG 设置">
@@ -50,13 +50,13 @@ nbg auth --provider openai-compatible --apikey <key> --baseurl <url> --modelid <
   </Step>
 </Steps>
 
-## Provider Options
+## Provider 选项
 
 ### BYOK 和 OpenAI-compatible
 
 适合把 NBG 接入自有模型网关、云厂商或本地推理服务。生产环境优先把 key 放在本地配置或环境变量中，不要提交到仓库。
 
-### Cline 兼容 Provider
+### Cline 兼容 provider
 
 - 继承运行时中的 provider id 是 `cline`
 - 支持 OAuth 登录
@@ -64,36 +64,36 @@ nbg auth --provider openai-compatible --apikey <key> --baseurl <url> --modelid <
 
 NBG 不把旧 Dashboard 作为默认商业化入口。需要使用该兼容 provider 时，通过 `nbg auth cline` 或 IDE 登录入口完成认证。
 
-### BYOK (cloud + local)
+### BYOK（云端和本地）
 
-### Cloud Providers
+### 云端 provider
 
-| Provider | Best For | Setup Guide |
+| Provider | 适用场景 | 配置指南 |
 |----------|----------|-------------|
-| **OpenRouter** | Multiple models, competitive pricing | [Setup](/provider-config/openrouter) |
-| **Anthropic** | Direct Claude access | [Setup](/provider-config/anthropic) |
-| **Claude Code** | Claude Max/Pro subscription | [Setup](/provider-config/anthropic) |
-| **OpenAI** | GPT models | [Setup](/provider-config/openai) |
-| **Google Gemini** | Gemini models | [Setup](/provider-config/google-gemini) |
-| **AWS Bedrock** | Enterprise | [Setup](/provider-config/aws-bedrock/api-key) |
-| **DeepSeek** | Great value | [Setup](/provider-config/deepseek) |
+| **OpenRouter** | 多模型接入和灵活价格 | [配置](/provider-config/openrouter) |
+| **Anthropic** | 直连 Claude API | [配置](/provider-config/anthropic) |
+| **Claude Code** | Claude Max/Pro 订阅 | [配置](/provider-config/anthropic) |
+| **OpenAI** | GPT 模型 | [配置](/provider-config/openai) |
+| **Google Gemini** | Gemini 模型 | [配置](/provider-config/google-gemini) |
+| **AWS Bedrock** | 企业云环境 | [配置](/provider-config/aws-bedrock/api-key) |
+| **DeepSeek** | 高性价比模型 | [配置](/provider-config/deepseek) |
 
-### Local Models
+### 本地模型
 
-Run models on your own hardware for complete privacy and zero per-request costs.
+在自己的硬件上运行模型，适合需要本地隐私控制或避免按请求计费的场景。
 
-| Provider | Best For | Setup Guide |
+| Provider | 适用场景 | 配置指南 |
 |----------|----------|-------------|
-| **Ollama** | CLI-based local runtime | [Setup](/running-models-locally/overview#runtime-options) |
-| **LM Studio** | GUI-based local runtime | [Setup](/running-models-locally/overview#runtime-options) |
+| **Ollama** | 命令行本地运行时 | [配置](/running-models-locally/overview#runtime-options) |
+| **LM Studio** | 图形界面本地运行时 | [配置](/running-models-locally/overview#runtime-options) |
 
-Local models require sufficient hardware (especially GPU memory). See [Running Models Locally](/running-models-locally/overview) for requirements.
+本地模型需要足够硬件资源，尤其是 GPU 显存。硬件要求见 [本地运行模型](/running-models-locally/overview)。
 
-## Troubleshooting
+## 故障排查
 
-| Issue | Fix |
+| 问题 | 处理方式 |
 |-------|-----|
-| "Unauthorized: Please sign in" | Session expired. Click **Sign In** to re-authenticate. |
-| Browser doesn't open | Check default browser settings. Copy the URL from the NBG output panel manually. |
-| Frequent re-authentication | Check org security policies. Ensure you're not clearing IDE secrets. Try a full sign-out/sign-in. |
-| Can't access organization | Verify membership with the compatible provider account. Ask your admin about permissions. Sign out and back in. |
+| "Unauthorized: Please sign in" | Session 已过期。点击 **Sign In** 重新认证。 |
+| 浏览器没有打开 | 检查默认浏览器设置，或从 NBG 输出面板手动复制 URL。 |
+| 频繁要求重新认证 | 检查组织安全策略，确认 IDE secrets 没有被清理，再完整退出并重新登录。 |
+| 无法访问组织 | 用兼容 provider 账号确认组织成员资格，或联系管理员检查权限，然后重新登录。 |
