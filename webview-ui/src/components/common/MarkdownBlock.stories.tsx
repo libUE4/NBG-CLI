@@ -125,11 +125,11 @@ export const WithLinks: Story = {
 	args: {
 		markdown: `Check out these resources:
 
-- Official documentation: https://github.com/cline/cline
-- API reference: https://api.cline.bot/docs
-- Support forum: https://community.cline.bot
+- Official documentation: https://github.com/libUE4/NBG-CLI
+- API reference: https://github.com/libUE4/NBG-CLI/tree/main/docs/api
+- Support forum: https://github.com/libUE4/NBG-CLI/discussions
 
-You can also visit our website at https://cline.bot for more information.`,
+You can also visit the NBG repository at https://github.com/libUE4/NBG-CLI for more information.`,
 		compact: false,
 		showCursor: false,
 	},

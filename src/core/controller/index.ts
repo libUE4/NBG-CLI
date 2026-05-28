@@ -555,7 +555,7 @@ export class Controller {
 			Logger.error("Failed to handle auth callback:", error)
 			HostProvider.window.showMessage({
 				type: ShowMessageType.ERROR,
-				message: "登录 Cline 失败",
+				message: "登录 NBG 失败",
 			})
 			// Even on login failure, we preserve any existing tokens
 			// Only clear tokens on explicit logout

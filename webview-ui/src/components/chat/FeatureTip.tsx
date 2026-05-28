@@ -8,22 +8,22 @@ interface FeatureTipItem {
 
 const FEATURE_TIPS: FeatureTipItem[] = [
 	{
-		text: "在设置中启用“双重检查完成状态”，让 Cline 在结束任务前验证自己的工作。",
+		text: "在设置中启用“双重检查完成状态”，让 NBG 在结束任务前验证自己的工作。",
 	},
 	{
-		text: "在项目根目录添加 .clinerules 文件，为 Cline 提供项目专属指令。",
+		text: "在项目根目录添加 .clinerules 文件，为 NBG 提供项目专属指令。",
 	},
 	{
-		text: "切换到规划模式，在 Cline 执行前先讨论并制定方案。",
+		text: "切换到规划模式，在 NBG 执行前先讨论并制定方案。",
 	},
 	{
 		text: "在聊天输入框中使用 @，把文件、文件夹或 URL 添加为任务上下文。",
 	},
 	{
-		text: "配置 MCP 服务器，让 Cline 能访问外部工具和 API。",
+		text: "配置 MCP 服务器，让 NBG 能访问外部工具和 API。",
 	},
 	{
-		text: "Cline 会在变更后创建检查点，你可以随时恢复到之前的状态。",
+		text: "NBG 会在变更后创建检查点，你可以随时恢复到之前的状态。",
 	},
 	{
 		text: "使用 /compact 压缩长对话，释放上下文窗口空间。",
@@ -32,13 +32,13 @@ const FEATURE_TIPS: FeatureTipItem[] = [
 		text: "为读取文件等只读工具启用自动批准，可以加快探索速度。",
 	},
 	{
-		text: "使用引用按钮选择 Cline 回复中的文本，并在你的回复中引用它。",
+		text: "使用引用按钮选择 NBG 回复中的文本，并在你的回复中引用它。",
 	},
 	{
-		text: "你可以把图片拖放到聊天中，与 Cline 分享截图。",
+		text: "你可以把图片拖放到聊天中，与 NBG 分享截图。",
 	},
 	{
-		text: "Cline 可以浏览网站，你可以让它在浏览器中测试本地开发服务器。",
+		text: "NBG 可以浏览网站，你可以让它在浏览器中测试本地开发服务器。",
 	},
 	{
 		text: "使用 /reportbug 快速提交包含诊断上下文的 GitHub Issue。",

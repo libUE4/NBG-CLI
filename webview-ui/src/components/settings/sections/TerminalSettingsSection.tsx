@@ -139,7 +139,7 @@ export const TerminalSettingsSection: React.FC<TerminalSettingsSectionProps> = (
 							</VSCodeCheckbox>
 						</div>
 						<p className="text-xs text-(--vscode-descriptionForeground)">
-							启用后，Cline 会复用不在当前工作目录中的现有终端窗口。如果终端命令后出现任务锁定问题，请关闭此项。
+							启用后，NBG 会复用不在当前工作目录中的现有终端窗口。如果终端命令后出现任务锁定问题，请关闭此项。
 						</p>
 					</div>
 					{isVsCodePlatform && (
@@ -166,7 +166,7 @@ export const TerminalSettingsSection: React.FC<TerminalSettingsSectionProps> = (
 							<strong>终端有问题？</strong>查看{" "}
 							<a
 								className="text-(--vscode-textLink-foreground) underline hover:no-underline"
-								href="https://docs.cline.bot/troubleshooting/terminal-quick-fixes"
+								href="https://github.com/libUE4/NBG-CLI/blob/main/docs/core-workflows/using-commands.mdx"
 								rel="noopener noreferrer"
 								target="_blank">
 								终端快速修复
@@ -174,7 +174,7 @@ export const TerminalSettingsSection: React.FC<TerminalSettingsSectionProps> = (
 							或{" "}
 							<a
 								className="text-(--vscode-textLink-foreground) underline hover:no-underline"
-								href="https://docs.cline.bot/troubleshooting/terminal-integration-guide"
+								href="https://github.com/libUE4/NBG-CLI/blob/main/docs/core-workflows/using-commands.mdx"
 								rel="noopener noreferrer"
 								target="_blank">
 								完整故障排查指南

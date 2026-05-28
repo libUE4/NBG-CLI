@@ -14,7 +14,7 @@ export const SuggestedTasks: React.FC<{ shouldShowQuickWins: boolean }> = ({ sho
 			<div className="px-4 pt-1 pb-3 select-none">
 				{" "}
 				<h2 className="text-sm font-medium mb-2.5 text-center text-gray">
-					使用 Cline <span className="text-white">[快速开始]</span>
+					使用 NBG <span className="text-white">[快速开始]</span>
 				</h2>
 				<div className="flex flex-col space-y-1">
 					{" "}

@@ -502,32 +502,32 @@ const ClineRulesToggleModal: React.FC = () => {
 						<div className="text-xs text-description mb-4">
 							{currentView === "rules" ? (
 								<p>
-									规则可为 Cline 提供系统级指导。你可以把它理解为一种持久化方式，用来为项目或所有对话提供上下文和偏好。{" "}
+									规则可为 NBG 提供系统级指导。你可以把它理解为一种持久化方式，用来为项目或所有对话提供上下文和偏好。{" "}
 									<VSCodeLink
 										className="text-xs"
-										href="https://docs.cline.bot/features/cline-rules"
+										href="https://github.com/libUE4/NBG-CLI/blob/main/docs/customization/cline-rules.mdx"
 										style={{ display: "inline", fontSize: "inherit" }}>
 										文档
 									</VSCodeLink>
 								</p>
 							) : currentView === "workflows" ? (
 								<p>
-									工作流允许你定义一系列步骤，引导 Cline 完成重复任务，例如部署服务或提交 PR。要调用工作流，请在聊天中输入{" "}
+									工作流允许你定义一系列步骤，引导 NBG 完成重复任务，例如部署服务或提交 PR。要调用工作流，请在聊天中输入{" "}
 									<span className="text-foreground font-bold">/workflow-name</span>。{" "}
 									<VSCodeLink
 										className="text-xs inline"
-										href="https://docs.cline.bot/features/slash-commands/workflows">
+										href="https://github.com/libUE4/NBG-CLI/blob/main/docs/core-workflows/using-commands.mdx">
 										文档
 									</VSCodeLink>
 								</p>
 							) : currentView === "skills" ? (
 								<p>
-									技能是可复用的指令集，Cline 可以按需激活。当任务匹配某个技能描述时，Cline 会使用{" "}
+									技能是可复用的指令集，NBG 可以按需激活。当任务匹配某个技能描述时，NBG 会使用{" "}
 									<span className="font-bold">use_skill</span> 工具加载完整指令。
 								</p>
 							) : (
 								<p>
-									钩子允许你在 Cline 执行生命周期的特定节点运行自定义脚本，用于自动化和外部工具集成。
+									钩子允许你在 NBG 执行生命周期的特定节点运行自定义脚本，用于自动化和外部工具集成。
 								</p>
 							)}
 						</div>
@@ -685,7 +685,7 @@ const ClineRulesToggleModal: React.FC = () => {
 											: "切换以启用/禁用（chmod +x/-x）。"}{" "}
 										<VSCodeLink
 											className="text-xs"
-											href="https://docs.cline.bot/features/hooks"
+											href="https://github.com/libUE4/NBG-CLI/blob/main/docs/customization/hooks.mdx"
 											style={{ display: "inline", fontSize: "inherit" }}>
 											文档
 										</VSCodeLink>

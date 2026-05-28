@@ -42,19 +42,12 @@ const GeneralSettingsSection = ({ renderSectionHeader }: GeneralSettingsSectionP
 					</Tooltip>
 
 					<p className="text-sm mt-[5px] text-description">
-						发送使用数据和错误报告可帮助改进 Cline。代码、提示词或个人信息不会被发送。查看我们的{" "}
+						发送使用数据和错误报告可帮助改进 NBG。代码、提示词或个人信息不会被发送。查看{" "}
 						<VSCodeLink
 							className="text-inherit"
-							href="https://docs.cline.bot/more-info/telemetry"
+							href="https://github.com/libUE4/NBG-CLI/blob/main/docs/enterprise-solutions/monitoring/telemetry.mdx"
 							style={{ fontSize: "inherit", textDecoration: "underline" }}>
-							遥测说明
-						</VSCodeLink>{" "}
-						和{" "}
-						<VSCodeLink
-							className="text-inherit"
-							href="https://cline.bot/privacy"
-							style={{ fontSize: "inherit", textDecoration: "underline" }}>
-							隐私政策
+							NBG 遥测与隐私说明
 						</VSCodeLink>{" "}
 						了解更多细节。
 					</p>

@@ -132,7 +132,7 @@ const CreateWorktreeModal = ({ open, onClose, openAfterCreate = false, onSuccess
 							未检测到 .worktreeinclude。{" "}
 							<a
 								className="text-[var(--vscode-textLink-foreground)] hover:text-[var(--vscode-textLink-activeForeground)]"
-								href="https://docs.cline.bot/features/worktrees#worktreeinclude"
+								href="https://github.com/libUE4/NBG-CLI/blob/main/docs/usage/kanban.mdx"
 								rel="noopener noreferrer"
 								style={{ fontSize: "inherit" }}
 								target="_blank">

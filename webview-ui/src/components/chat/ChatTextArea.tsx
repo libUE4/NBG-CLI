@@ -1615,7 +1615,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 							className="text-xs px-2 flex flex-col gap-1"
 							hidden={shownTooltipMode === null}
 							side="top">
-							{`在${shownTooltipMode === "act" ? "执行" : "规划"}模式下，Cline 会${shownTooltipMode === "act" ? "立即完成任务" : "收集信息并制定方案"}`}
+							{`在${shownTooltipMode === "act" ? "执行" : "规划"}模式下，NBG 会${shownTooltipMode === "act" ? "立即完成任务" : "收集信息并制定方案"}`}
 							<p className="text-description/80 text-xs mb-0">
 								使用 <kbd className="text-muted-foreground mx-1">{togglePlanActKeys}</kbd> 切换
 							</p>

@@ -250,10 +250,10 @@ Please help me resolve these merge conflicts, then complete the merge, and delet
 			<div className="flex-1 overflow-y-auto p-5">
 				{/* Description */}
 				<p className="text-sm text-[var(--vscode-descriptionForeground)] m-0 mb-4">
-					Git worktree 允许你同时在多个分支上工作，每个分支都有独立文件夹。把工作树打开到独立窗口后，Cline 可以并行处理多个任务。{" "}
+					Git worktree 允许你同时在多个分支上工作，每个分支都有独立文件夹。把工作树打开到独立窗口后，NBG 可以并行处理多个任务。{" "}
 					<a
 						className="text-[var(--vscode-textLink-foreground)] hover:text-[var(--vscode-textLink-activeForeground)]"
-						href="https://docs.cline.bot/features/worktrees"
+						href="https://github.com/libUE4/NBG-CLI/blob/main/docs/usage/kanban.mdx"
 						rel="noopener noreferrer"
 						style={{ fontSize: "inherit" }}
 						target="_blank">
@@ -275,7 +275,7 @@ Please help me resolve these merge conflicts, then complete the merge, and delet
 								检测到 .worktreeinclude。{" "}
 								<a
 									className="text-[var(--vscode-textLink-foreground)] hover:text-[var(--vscode-textLink-activeForeground)]"
-									href="https://docs.cline.bot/features/worktrees#worktreeinclude"
+									href="https://github.com/libUE4/NBG-CLI/blob/main/docs/usage/kanban.mdx"
 									rel="noopener noreferrer"
 									style={{ fontSize: "inherit" }}
 									target="_blank">
@@ -296,7 +296,7 @@ Please help me resolve these merge conflicts, then complete the merge, and delet
 									这样的文件或目录，避免重复安装依赖。{" "}
 									<a
 										className="text-[var(--vscode-textLink-foreground)] hover:text-[var(--vscode-textLink-activeForeground)]"
-										href="https://docs.cline.bot/features/worktrees#worktreeinclude"
+										href="https://github.com/libUE4/NBG-CLI/blob/main/docs/usage/kanban.mdx"
 										rel="noopener noreferrer"
 										style={{ fontSize: "inherit" }}
 										target="_blank">

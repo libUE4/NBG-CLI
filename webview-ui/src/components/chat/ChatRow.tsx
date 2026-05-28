@@ -1045,12 +1045,12 @@ export const ChatRowContent = memo(
 									<span className="font-medium text-foreground">Shell 集成不可用</span>
 								</div>
 								<div className="text-foreground opacity-80">
-									Cline 可能无法正常查看命令输出。请更新 VS Code（<code>CMD/CTRL + Shift + P</code> → "Update"），
+									NBG 可能无法正常查看命令输出。请更新 VS Code（<code>CMD/CTRL + Shift + P</code> → "Update"），
 									并确认你使用的是受支持的 shell：zsh、bash、fish 或 PowerShell（
 									<code>CMD/CTRL + Shift + P</code> → "Terminal: Select Default Profile"）。
 									<a
 										className="px-1"
-										href="https://github.com/cline/cline/wiki/Troubleshooting-%E2%80%90-Shell-Integration-Unavailable">
+										href="https://github.com/libUE4/NBG-CLI/blob/main/docs/core-workflows/using-commands.mdx">
 										仍有问题？
 									</a>
 								</div>

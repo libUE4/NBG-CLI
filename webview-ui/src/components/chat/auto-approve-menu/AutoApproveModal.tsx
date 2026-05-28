@@ -72,10 +72,10 @@ const AutoApproveModal: React.FC<AutoApproveModalProps> = ({ isVisible, setIsVis
 					maxHeight: "60vh",
 				}}>
 				<div className="mb-2.5 text-muted-foreground text-xs cursor-pointer" onClick={() => setIsVisible(false)}>
-					允许 Cline 执行这些操作时不再请求批准。{" "}
+					允许 NBG 执行这些操作时不再请求批准。{" "}
 					<a
 						className="text-link hover:text-link-hover"
-						href="https://docs.cline.bot/features/auto-approve#auto-approve"
+						href="https://github.com/libUE4/NBG-CLI/blob/main/docs/features/auto-approve.mdx"
 						rel="noopener"
 						style={{ fontSize: "inherit" }}
 						target="_blank">

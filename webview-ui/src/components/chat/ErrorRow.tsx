@@ -83,7 +83,7 @@ const ErrorRow = memo(({ message, errorType, apiRequestFailedMessage, apiReqStre
 									你似乎已经退出登录，请点击下方按钮登录
 								</div>
 								<Button className="w-full" disabled={isLoginLoading} onClick={handleSignIn}>
-									登录 Cline
+									登录 NBG
 									{isLoginLoading && (
 										<span className="ml-1 animate-spin">
 											<span className="codicon codicon-refresh" />
@@ -116,7 +116,7 @@ const ErrorRow = memo(({ message, errorType, apiRequestFailedMessage, apiReqStre
 									你似乎遇到了 Windows PowerShell 问题，请查看此{" "}
 									<a
 										className="underline text-inherit"
-										href="https://github.com/cline/cline/wiki/TroubleShooting-%E2%80%90-%22PowerShell-is-not-recognized-as-an-internal-or-external-command%22">
+										href="https://github.com/libUE4/NBG-CLI/blob/main/docs/troubleshooting/networking-and-proxies.mdx">
 										故障排查指南
 									</a>
 									.

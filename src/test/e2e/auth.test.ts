@@ -22,7 +22,7 @@ e2e("Views - can set up API keys and navigate to Settings from Chat", async ({ s
 	// Wait for dropdown to appear and find Cline option
 	await expect(sidebar.getByTestId("provider-option-cline")).toBeVisible()
 	await sidebar.getByTestId("provider-option-cline").click({ delay: 100 })
-	await expect(sidebar.getByRole("button", { name: "Sign Up with Cline" })).toBeVisible()
+	await expect(sidebar.getByRole("button", { name: "Sign Up with NBG" })).toBeVisible()
 
 	// Switch to OpenRouter and complete setup
 	await providerSelectorInput.click({ delay: 100 })
