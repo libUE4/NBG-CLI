@@ -1,55 +1,49 @@
 ---
-title: "Auto Compact"
-sidebarTitle: "Auto Compact"
-description: "Automatic context summarization to keep working when approaching context limits."
+title: "自动压缩"
+sidebarTitle: "自动压缩"
+description: "在接近上下文限制时自动总结会话，让 NBG 继续工作。"
 ---
 
-When your conversation approaches the model's context window limit, Cline automatically summarizes it to free up space and keep working.
+当会话接近模型上下文窗口限制时，NBG 会自动总结已有上下文，释放空间并继续执行任务。
 
-<Frame>
-	<img
-		src="https://storage.googleapis.com/cline_public_images/docs/assets/condensing.png"
-		alt="Auto-compact condensing conversation context"
-	/>
-</Frame>
+## 工作方式
 
-## How It Works
+NBG 会在会话中监控 token 使用量。接近限制时，它会：
 
-Cline monitors token usage during your conversation. When you're getting close to the limit, it:
+1. 为已发生的工作生成完整摘要
+2. 保留技术细节、代码修改和关键决策
+3. 用摘要替换较长的历史消息
+4. 从中断点继续执行
 
-1. Creates a comprehensive summary of everything that's happened
-2. Preserves all technical details, code changes, and decisions
-3. Replaces the conversation history with the summary
-4. Continues exactly where it left off
+发生自动压缩时，你会看到一次 summarization tool call。它和其他 API 调用一样会产生费用记录。
 
-You'll see a summarization tool call when this happens, showing the cost like any other API call.
+## 为什么重要
 
-## Why This Matters
+没有摘要时，达到上下文限制通常只能截断旧消息，容易丢失关键上下文。
 
-Previously, Cline would truncate older messages when hitting context limits, losing important context.
+启用自动压缩后：
 
-Now with summarization:
-- All technical decisions and code patterns are preserved
-- File changes and project context remain intact
-- Cline remembers everything it's done
-- You can work on much larger projects without interruption
+- 技术决策和代码模式会被保留
+- 文件修改和项目上下文保持连续
+- NBG 可以记住已经完成的工作
+- 长任务和大项目不容易被上下文窗口打断
 
 <Tip>
-Auto Compact works especially well for long-running tasks. Structured task lists can help maintain progress across summarizations so Cline can stay on track across multiple context windows.
+自动压缩特别适合长任务。结构化任务列表能让摘要后的进度更稳定，帮助 NBG 跨多个上下文窗口保持方向一致。
 </Tip>
 
-## Cost Considerations
+## 成本说明
 
-Summarization leverages your existing prompt cache from the conversation, so it costs about the same as any other tool call.
+摘要会利用会话中已有的 prompt cache，成本通常接近一次普通 tool call。
 
-Since most input tokens are already cached, you're primarily paying for summary generation (output tokens), making it cost-effective.
+由于多数 input tokens 已被缓存，主要成本来自摘要生成的 output tokens。
 
 <Note>
-With other models, Cline falls back to standard rule-based context truncation, even if Auto Compact is enabled.
+部分模型不支持 agentic summarization 时，即使启用自动压缩，NBG 也会回退到标准规则式上下文截断。
 </Note>
 
-## Restoring Context
+## 恢复上下文
 
-You can use [checkpoints](/core-workflows/checkpoints) to restore your task state from before a summarization occurred. You never truly lose context since you can always roll back.
+可以使用 [checkpoints](/core-workflows/checkpoints) 恢复到摘要发生前的任务状态。只要 checkpoint 可用，就可以回滚到更早的上下文。
 
-Editing a message before a summarization tool call works similarly, restoring the conversation to that point.
+编辑 summarization tool call 之前的消息也类似，会把会话恢复到对应位置。
