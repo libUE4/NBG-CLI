@@ -1,117 +1,107 @@
 ---
-title: "Auto Approve & YOLO Mode"
-sidebarTitle: "Auto Approve"
-description: "Control which actions Cline can take without asking for approval."
+title: "自动批准与 YOLO 模式"
+sidebarTitle: "自动批准"
+description: "控制哪些 NBG 操作可以无需逐次确认。"
 ---
 
-Auto Approve lets you decide which actions Cline can take without prompting you each time. It keeps you out of approval popups during routine work while letting you keep tight control over high-risk actions.
+自动批准让你决定哪些 NBG 操作可以跳过逐次确认。它适合处理日常低风险操作，同时保留对高风险动作的控制。
 
-If you find yourself repeatedly clicking approve for the same safe operations, Auto Approve fixes that.
+如果你经常为同一类安全操作反复点击批准，可以启用自动批准减少打断。
 
-<Frame>
-	<video
-		style={{ width: "100%" }}
-		src="https://storage.googleapis.com/cline_public_images/autoapprove.mp4"
-		autoPlay
-		controls
-		playsInline
-	/>
-</Frame>
+## 工作方式
 
-## How It Works
+自动批准会按 tool call 逐次判断。NBG 准备读取文件、编辑文件、运行命令或使用浏览器时，会检查该类别对应的自动批准设置。
 
-Auto Approve is evaluated per tool call. When Cline is about to read a file, edit a file, run a command, or use the browser, it checks your Auto Approve settings for that category.
+需要注意的细节：
 
-A few details matter:
+- **Workspace 内外**："Read all files" 和 "Edit all files" 只是在基础开关上扩展范围。如果基础开关关闭，"all files" 选项不会生效。
+- **终端命令**：NBG 会把命令区分为安全命令和需要批准的命令。"Execute safe commands" 覆盖安全命令，"Execute all commands" 会扩展到标记为需要批准的命令。
+- **通知**：启用后，当需要批准，或自动批准的终端命令运行超过 30 秒时，NBG 会发送系统通知。
 
-- **Workspace vs outside workspace**: "Read all files" and "Edit all files" only extend the base toggle. If the base toggle is off, the "all files" option does nothing.
-- **Terminal commands**: Cline treats commands as either safe or requiring approval. "Execute safe commands" covers safe commands. "Execute all commands" extends to commands flagged as requiring approval.
-- **Notifications**: If enabled, Cline sends OS-level notifications when approval is required, and when an auto-approved terminal command has been running for 30 seconds.
+## 权限项
 
-## Permissions
-
-| Setting | What It Allows |
+| 设置 | 允许的操作 |
 |---------|----------------|
-| Read project files | Read files, list files, search in your workspace |
-| Read all files | Read files outside your workspace (requires base toggle) |
-| Edit project files | Create and edit files in your workspace |
-| Edit all files | Edit files outside your workspace (requires base toggle) |
-| Execute safe commands | Run terminal commands marked safe |
-| Execute all commands | Run commands requiring approval (requires base toggle) |
-| Use the browser | Browser tool for web fetching and searching |
-| Use MCP servers | MCP tools and resources |
-| Enable notifications | Notifies you about long-running commands |
+| Read project files | 读取、列出和搜索 workspace 内文件 |
+| Read all files | 读取 workspace 外文件（需要基础开关开启） |
+| Edit project files | 在 workspace 内创建和编辑文件 |
+| Edit all files | 编辑 workspace 外文件（需要基础开关开启） |
+| Execute safe commands | 运行标记为安全的终端命令 |
+| Execute all commands | 运行需要批准的命令（需要基础开关开启） |
+| Use the browser | 使用浏览器工具抓取和搜索网页 |
+| Use MCP servers | 使用 MCP tools 和 resources |
+| Enable notifications | 为长时间运行命令发送通知 |
 
 <Warning>
-"Read all files" and "Edit all files" only matter if their base toggle is enabled. They extend access outside your workspace.
+"Read all files" 和 "Edit all files" 只有在对应基础开关开启时才有效。它们会把访问范围扩展到 workspace 外。
 </Warning>
 
-## Safe vs Approval-Required Commands
+## 安全命令与需批准命令
 
-Cline does not use a fixed allowlist. The model marks each command with a `requires_approval` flag based on the command and arguments. These are examples, not guarantees.
+NBG 不使用固定 allowlist。模型会根据命令和参数为每条命令标记 `requires_approval`。下面只是常见示例，不是绝对保证。
 
-**Commonly treated as safe:**
-- `npm run build`, `npm test` - Build/test output
-- `git status`, `ls -la`, `cat package.json` - Read-only commands
+**通常会被视为安全：**
+- `npm run build`、`npm test`：构建或测试输出
+- `git status`、`ls -la`、`cat package.json`：只读命令
 
-**Commonly requires approval:**
-- `npm install <pkg>` - Modifies dependencies
-- `rm -rf <path>` - Deletes files
-- `mv <a> <b>` - Moves files (can overwrite)
-- `sed -i ...` - In-place file edits
+**通常需要批准：**
+- `npm install <pkg>`：修改依赖
+- `rm -rf <path>`：删除文件
+- `mv <a> <b>`：移动文件，可能覆盖目标
+- `sed -i ...`：原地编辑文件
 
-## Recommendations
+## 推荐设置
 
-A good default setup:
-- Enable **Read project files**
-- Leave edits, commands, browser, and MCP off until you have a specific reason
+建议默认配置：
+- 启用 **Read project files**
+- 在没有明确理由前，先关闭编辑、命令、浏览器和 MCP 自动批准
 
-If you enable edits, use [Checkpoints](/core-workflows/checkpoints) so you can roll back quickly.
+如果启用编辑自动批准，建议同时使用 [Checkpoints](/core-workflows/checkpoints)，方便快速回滚。
 
 ---
 
-## YOLO Mode
+## YOLO 模式
 
-YOLO mode is Auto Approve on steroids. Check the box and Cline auto-approves everything: file changes, terminal commands, browser actions, MCP tools, and mode transitions.
+YOLO 模式会自动批准所有操作：文件修改、终端命令、浏览器动作、MCP tools 和模式切换。
 
 <Note>
-**Warning: This is dangerous.** YOLO mode disables all safety checks. Cline executes whatever it decides without asking permission.
+**警告：该模式风险很高。** YOLO 模式会关闭所有批准检查。NBG 会直接执行它决定执行的操作，不再逐次请求确认。
 </Note>
 
-### What Gets Auto-Approved
+### 自动批准范围
 
-When YOLO mode is enabled:
-- All file operations anywhere on your system
-- All terminal commands including potentially destructive ones
-- Browser actions
+启用 YOLO 模式后：
+- 系统任意位置的所有文件操作
+- 所有终端命令，包括潜在破坏性命令
+- 浏览器操作
 - MCP server tools
-- Mode transitions (Plan to Act)
+- 模式切换（Plan 到 Act）
 
-### When to Use YOLO Mode
+### 适用场景
 
-**Rapid prototyping** where you want zero friction and don't care about potential mistakes. Perfect for throwaway experiments.
+**快速原型**：需要零阻力执行，并且可以接受潜在错误，适合一次性实验。
 
-**Trusted, repetitive tasks** where you've validated Cline's approach and want to eliminate approval overhead.
+**可信重复任务**：你已经验证过 NBG 的执行方式，希望去掉批准开销。
 
-**Demonstration purposes** where you want to show Cline's capabilities without interruptions.
+**演示场景**：需要展示 NBG 能力，并避免中途被批准弹窗打断。
 
-### What Could Go Wrong
+### 可能的风险
 
-Cline could:
-- Delete important files without warning
-- Execute commands that modify system settings
-- Make network requests to external services
-- Overwrite configuration files
-- Install or uninstall packages
-- Commit and push changes to version control
+NBG 可能会：
+- 在没有警告的情况下删除重要文件
+- 执行修改系统设置的命令
+- 向外部服务发起网络请求
+- 覆盖配置文件
+- 安装或卸载依赖包
+- 提交并推送版本控制变更
 
-### Best Practices for YOLO Mode
+### YOLO 模式最佳实践
 
-- **Start with isolated environments.** Use throwaway projects or sandboxed environments first.
-- **Be specific with requests.** Vague instructions + unlimited permissions = unpredictable results.
-- **Monitor the output.** Cline still shows what it's doing. Watch the terminal and file changes.
-- **Keep version control handy.** Git becomes your safety net.
+- **先使用隔离环境。** 优先在一次性项目或 sandbox 环境中验证。
+- **给出具体请求。** 模糊指令加无限权限会带来不可预测结果。
+- **持续观察输出。** NBG 仍会展示正在做什么，注意终端输出和文件变化。
+- **保持版本控制可用。** Git 是最后的回滚保障。
 
-### Enabling YOLO Mode
+### 启用 YOLO 模式
 
-Navigate to Cline Settings, then Features, and check "YOLO Mode." No confirmation dialogs. Once enabled, Cline auto-approves all actions immediately. Uncheck to disable.
+进入 NBG Settings，然后打开 Features，勾选 "YOLO Mode"。启用后不会再出现确认对话框，NBG 会立即自动批准所有动作。取消勾选即可关闭。
