@@ -71,7 +71,7 @@ export const WhatsNewModal: React.FC<WhatsNewModalProps> = ({ open, onClose, ver
 							<a
 								aria-label="加入 Discord"
 								className="text-[var(--vscode-foreground)] hover:text-[var(--vscode-textLink-activeForeground)] transition-colors"
-								href="https://discord.gg/cline"
+								href="https://github.com/libUE4/NBG-CLI/discussions"
 								rel="noopener noreferrer"
 								target="_blank">
 								<DiscordIcon />
@@ -81,7 +81,7 @@ export const WhatsNewModal: React.FC<WhatsNewModalProps> = ({ open, onClose, ver
 							<a
 								aria-label="在 GitHub 上给我们星标"
 								className="text-[var(--vscode-foreground)] hover:text-[var(--vscode-textLink-activeForeground)] transition-colors"
-								href="https://github.com/cline/cline"
+								href="https://github.com/libUE4/NBG-CLI"
 								rel="noopener noreferrer"
 								target="_blank">
 								<GitHubIcon />
@@ -91,7 +91,7 @@ export const WhatsNewModal: React.FC<WhatsNewModalProps> = ({ open, onClose, ver
 							<a
 								aria-label="加入 subreddit"
 								className="text-[var(--vscode-foreground)] hover:text-[var(--vscode-textLink-activeForeground)] transition-colors"
-								href="https://www.reddit.com/r/cline/"
+								href="https://github.com/libUE4/NBG-CLI/discussions"
 								rel="noopener noreferrer"
 								target="_blank">
 								<RedditIcon />
@@ -112,13 +112,13 @@ export const WhatsNewModal: React.FC<WhatsNewModalProps> = ({ open, onClose, ver
 						<p className="text-sm text-center" style={{ color: "var(--vscode-descriptionForeground)" }}>
 							请通过{" "}
 							<a
-								href="https://github.com/cline/cline"
+								href="https://github.com/libUE4/NBG-CLI"
 								rel="noopener noreferrer"
 								style={{ color: "var(--vscode-textLink-foreground)" }}
 								target="_blank">
 								在 GitHub 上给我们星标
 							</a>
-							来支持 Cline。
+							来支持 NBG。
 						</p>
 					</div>
 				</div>

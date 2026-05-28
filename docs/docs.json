@@ -39,18 +39,18 @@
 			{
 				"label": "GitHub",
 				"icon": "github",
-				"href": "https://github.com/cline/cline"
+				"href": "https://github.com/libUE4/NBG-CLI"
 			},
 			{
 				"label": "Discord",
 				"icon": "discord",
-				"href": "https://discord.gg/cline"
+				"href": "https://github.com/libUE4/NBG-CLI/discussions"
 			}
 		],
 		"primary": {
 			"type": "button",
-			"label": "Install Cline",
-			"href": "https://cline.bot/install?utm_source=website&utm_medium=header"
+			"label": "Install NBG",
+			"href": "https://github.com/libUE4/NBG-CLI#readme"
 		}
 	},
 	"navigation": {
@@ -350,8 +350,8 @@
 	"footer": {
 		"socials": {
 			"x": "https://x.com/cline",
-			"github": "https://github.com/cline/cline",
-			"discord": "https://discord.gg/cline"
+			"github": "https://github.com/libUE4/NBG-CLI",
+			"discord": "https://github.com/libUE4/NBG-CLI/discussions"
 		}
 	},
 	"anchors": [
