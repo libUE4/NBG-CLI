@@ -1,53 +1,41 @@
 ---
-title: "Multi-Root Workspaces"
-sidebarTitle: "Multi-Root Workspaces"
+title: "Multi-root workspaces"
+sidebarTitle: "Multi-root workspaces"
 ---
 
-Cline works with VSCode's multi-root workspaces, letting you manage multiple project folders or repositories in a single window. Whether you're working with a monorepo or separate Git repositories, Cline can read files, write code, and run commands across all of them.
-
-<Frame>
-  <video
-    src="https://storage.googleapis.com/cline_public_images/multiworkspace.mp4"
-    autoPlay
-    muted
-    loop
-    playsInline
-    controls
-  />
-</Frame>
+NBG 支持 VS Code multi-root workspaces，可以在同一个窗口中管理多个项目文件夹或仓库。无论是 monorepo 还是多个独立 Git 仓库，NBG 都可以跨 workspace 读取文件、修改代码并运行命令。
 
 <Warning>
-Multi-root workspaces have two limitations:
-- **Cline rules** only work in the primary workspace folder
-- **[Checkpoints](/core-workflows/checkpoints)** are disabled (restored when you return to a single folder)
+Multi-root workspaces 当前有两个限制：
+- **NBG 规则** 只在 primary workspace folder 中生效
+- **[Checkpoints](/core-workflows/checkpoints)** 会被禁用，回到单文件夹 workspace 后恢复
 
-See [Current Limitations](#current-limitations) for details.
+详情见 [当前限制](#当前限制)。
 </Warning>
 
-## Understanding Multi-Root Workspaces
+## 理解 Multi-root workspaces
 
-Before diving in, it helps to understand the two common patterns for organizing related projects.
+开始前，先区分两种常见的关联项目组织方式。
 
-### Why Use Multi-Root Workspaces?
+### 为什么使用 multi-root workspace？
 
-Cline can complete tasks that span multiple projects or repositories:
+NBG 可以完成跨多个项目或仓库的任务：
 
-- **Refactoring**: Update an API contract and fix all consumers across repos
-- **Feature development**: Implement a feature that touches frontend, backend, and shared code
-- **Dependency updates**: Coordinate version bumps across related projects
-- **Documentation**: Generate docs that reference code from multiple repositories
+- **重构**：更新 API contract，并修复多个仓库中的所有 consumers
+- **功能开发**：实现同时涉及 frontend、backend 和 shared code 的功能
+- **依赖更新**：协调多个相关项目的版本升级
+- **文档生成**：生成引用多个仓库代码的文档
 
-**Example prompt:**
+**示例 prompt：**
 ```text
-Update the User type in the contracts repo, then update both the frontend 
-and backend to use the new fields. Make sure the API validates the new 
-required field.
+更新 contracts repo 中的 User 类型，然后同步更新 frontend 和 backend，
+让它们使用新字段。确保 API 会校验新的必填字段。
 ```
-## Setting Up a Multi-Root Workspace
+## 设置 Multi-root workspace
 
-### Monorepos vs Multiple Repositories
+### Monorepos 与多个仓库
 
-**Monorepo**: One Git repository containing multiple projects or packages. All code shares the same version history.
+**Monorepo**：一个 Git 仓库包含多个项目或 packages，所有代码共享同一套版本历史。
 
 <Files>
   <Folder name="my-company" defaultOpen>
@@ -67,7 +55,7 @@ required field.
   </Folder>
 </Files>
 
-**Multiple Repositories**: Separate Git repositories, each with their own history, opened together in one VSCode workspace.
+**多个仓库**：多个独立 Git 仓库各自拥有版本历史，并一起打开在同一个 VS Code workspace 中。
 
 ```text
 ~/projects/
@@ -80,45 +68,45 @@ required field.
     └── .git/
 ```
 
-Cline supports both patterns, as well as hybrid setups where some folders are Git repositories and others are not. The key difference: with multiple repositories, each folder has its own `.git` directory and Cline tracks them independently.
+NBG 支持这两种模式，也支持部分文件夹是 Git 仓库、部分不是的 hybrid setup。关键区别是：多个仓库模式下，每个文件夹都有自己的 `.git` 目录，NBG 会独立跟踪它们。
 
-### Adding Folders to Your Workspace
+### 添加文件夹到 workspace
 
-You can add folders to your workspace in several ways:
+可以通过几种方式添加文件夹：
 
-- **File menu**: Use `File > Add Folder to Workspace` in VSCode
-- **Drag and drop**: Drag folders directly into VSCode's file explorer
-- **Workspace file**: Create a `.code-workspace` file (recommended for teams)
-- **Command palette**: Run `Workspaces: Add Folder to Workspace`
+- **File menu**：在 VS Code 中使用 `File > Add Folder to Workspace`
+- **拖拽**：把文件夹直接拖到 VS Code file explorer
+- **Workspace file**：创建 `.code-workspace` 文件，推荐团队使用
+- **Command palette**：运行 `Workspaces: Add Folder to Workspace`
 
-For detailed instructions, see [Microsoft's multi-root workspace guide](https://code.visualstudio.com/docs/editor/multi-root-workspaces).
+详细步骤见 [Microsoft multi-root workspace guide](https://code.visualstudio.com/docs/editor/multi-root-workspaces)。
 
-## Working with Multiple Repositories
+## 使用多个仓库
 
-When you open separate Git repositories in one workspace, Cline treats each as an independent project with its own version control.
+当你在一个 workspace 中打开多个独立 Git 仓库时，NBG 会把每个仓库视为拥有独立版本控制的项目。
 
-### What Cline Tracks Per Repository
+### NBG 会跟踪什么
 
-For each workspace folder, Cline detects:
+对每个 workspace folder，NBG 会检测：
 
-| Property | Description |
+| 属性 | 说明 |
 |----------|-------------|
-| **Path** | Absolute path to the folder |
-| **Name** | Derived from folder name or workspace file |
-| **VCS Type** | Git, Mercurial, or None |
-| **Commit Hash** | Current HEAD commit (for Git/Mercurial repos) |
+| **Path** | 文件夹绝对路径 |
+| **Name** | 从文件夹名或 workspace file 推导 |
+| **VCS Type** | Git、Mercurial 或 None |
+| **Commit Hash** | 当前 HEAD commit（Git/Mercurial repos） |
 
-This means Cline understands that your frontend and backend might be at different commits, on different branches, or even use different version control systems.
+这意味着 NBG 可以理解 frontend 和 backend 可能处于不同 commit、不同 branch，甚至使用不同版本控制系统。
 
 <Note>
-While Cline detects VCS information for all workspace folders, certain features only use the **primary workspace** (the first folder): [Cline rules](/customization/cline-rules), [skills](/customization/skills#triggering-skills-with-slash-commands), and [Git-related features](/core-workflows/working-with-files) like `@git` mentions.
+虽然 NBG 会检测所有 workspace folders 的 VCS 信息，但部分功能只使用 **primary workspace**（第一个 folder）：[规则](/customization/cline-rules)、[skills](/customization/skills#triggering-skills-with-slash-commands)，以及 `@git` mentions 等 [Git 相关功能](/core-workflows/working-with-files)。
 </Note>
 
-## Referencing Files Across Workspaces
+## 跨 workspace 引用文件
 
-### Natural Language References
+### 自然语言引用
 
-Cline understands natural references to your workspaces:
+NBG 可以理解对 workspace 的自然语言引用：
 
 ```text
 "Read the package.json in the frontend folder"
@@ -132,32 +120,32 @@ Cline understands natural references to your workspaces:
 "Search for TODO comments across all workspaces"
 ```
 
-### Workspace Hints Syntax
+### Workspace hints 语法
 
-For explicit references, use the `@workspace:path` syntax:
+需要显式引用时，使用 `@workspace:path` 语法：
 
-| Syntax | Description |
+| 语法 | 说明 |
 |--------|-------------|
-| `@frontend:src/App.tsx` | File in the "frontend" workspace |
-| `@backend:server.ts` | File in the "backend" workspace |
-| `@contracts:types/` | Folder in the "contracts" workspace |
+| `@frontend:src/App.tsx` | "frontend" workspace 中的文件 |
+| `@backend:server.ts` | "backend" workspace 中的文件 |
+| `@contracts:types/` | "contracts" workspace 中的文件夹 |
 
-This syntax is especially useful when:
-- Multiple workspaces have files with the same name
-- You want to be explicit about which project you mean
-- Cline needs to resolve ambiguity
+该语法特别适合：
+- 多个 workspaces 中有同名文件
+- 需要明确指定目标项目
+- NBG 需要消除歧义
 
-### How Workspace Names Work
+### Workspace 名称来源
 
-Workspace names are derived from:
-1. The `name` field in your `.code-workspace` file (if specified)
-2. The folder name (default)
+Workspace 名称来自：
+1. `.code-workspace` 文件中的 `name` 字段（如果指定）
+2. 文件夹名称（默认）
 
-If two folders have the same name, append numbers or use the workspace file to give them unique names.
+如果两个文件夹同名，可以追加数字，或在 workspace file 中指定唯一名称。
 
-## Common Configurations
+## 常见配置
 
-### Monorepo Development
+### Monorepo 开发
 
 ```text
 ~/projects/my-app/
@@ -168,11 +156,11 @@ If two folders have the same name, append numbers or use the workspace file to g
 └── shared/       (Common utilities)
 ```
 
-All folders share one Git history. Changes across packages are atomic.
+所有文件夹共享同一套 Git 历史，跨 package 的变更可以作为一个整体提交。
 
-**Example prompt:** *"Update the API endpoint in both web and mobile apps to match the new backend route"*
+**示例 prompt：** *"更新 web 和 mobile apps 中的 API endpoint，使其匹配新的 backend route"*
 
-### Microservices with Separate Repos
+### 独立仓库的微服务
 
 ```text
 ~/projects/services/
@@ -183,11 +171,11 @@ All folders share one Git history. Changes across packages are atomic.
 └── proto/              (git: github.com/acme/service-protos)
 ```
 
-Each service has its own repository. Cline can update the proto definitions and regenerate clients across all services.
+每个 service 都有自己的仓库。NBG 可以更新 proto definitions，并跨所有 services 重新生成 clients。
 
-**Example prompt:** *"Add a new field to the UserProfile message in proto, then update user-service and gateway to handle it"*
+**示例 prompt：** *"在 proto 的 UserProfile message 中添加新字段，然后更新 user-service 和 gateway 处理该字段"*
 
-### Full-Stack with Shared Contracts
+### 带 shared contracts 的 full-stack 项目
 
 ```text
 ~/projects/fullstack/
@@ -197,9 +185,9 @@ Each service has its own repository. Cline can update the proto definitions and 
 └── types/          (git: github.com/acme/shared-types)
 ```
 
-The types repository defines interfaces used by both client and server. When you update a type, Cline can fix both consumers.
+types 仓库定义 client 和 server 共同使用的 interfaces。更新 type 时，NBG 可以同时修复两端 consumers。
 
-### Hybrid Setup
+### Hybrid setup
 
 ```text
 ~/projects/project/
@@ -209,60 +197,60 @@ The types repository defines interfaces used by both client and server. When you
 └── scripts/        (no VCS - local automation)
 ```
 
-Mix of repositories and plain folders. Cline adapts to each folder's configuration.
+该模式混合了仓库和普通文件夹。NBG 会按每个 folder 的配置适配。
 
-## Current Limitations
+## 当前限制
 
-Two features have limitations in multi-root workspace mode:
+Multi-root workspace mode 下有两个功能限制：
 
-### Cline Rules
+### NBG 规则
 
-[Cline rules](/customization/cline-rules) (`.clinerules/` directory) only work in the **primary workspace** (the first folder in your workspace). Rules in other workspace folders are ignored.
+[规则](/customization/cline-rules)（`.clinerules/` directory）只在 **primary workspace**（workspace 中第一个 folder）中生效。其他 workspace folders 中的 rules 会被忽略。
 
-**Workaround:** Place shared rules in the primary workspace, or use global rules (`~/Documents/Cline/Rules/`) which apply everywhere.
+**替代方案：** 把 shared rules 放在 primary workspace，或使用全局 rules（`~/Documents/Cline/Rules/`），让它们对所有 workspace 生效。
 
 ### Checkpoints
 
-[Checkpoints](/core-workflows/checkpoints) are disabled in multi-root workspace mode. Cline displays a warning when this happens.
+[Checkpoints](/core-workflows/checkpoints) 在 multi-root workspace mode 下会被禁用。发生时 NBG 会显示警告。
 
-**Why:** Checkpoints use a shadow Git repository to track changes. With multiple repositories, coordinating checkpoints across independent Git histories adds complexity that isn't yet supported.
+**原因：** Checkpoints 使用 shadow Git repository 跟踪变更。多个仓库拥有独立 Git 历史，跨仓库协调 checkpoints 的复杂度目前还未支持。
 
-**Workaround:** Use your normal Git workflow. Commit frequently, or create branches for experimental work.
+**替代方案：** 使用常规 Git workflow。频繁提交，或为实验性工作创建分支。
 
-Both limitations are restored when you return to a single-folder workspace.
+回到单文件夹 workspace 后，这两个限制会恢复正常。
 
-## Best Practices
+## 最佳实践
 
-### Organizing Your Workspaces
+### 组织 workspace
 
-1. **Group related projects** that often need coordinated changes
-2. **Use a workspace file** for reproducible setups across your team
-3. **Name folders clearly** so workspace hints are intuitive
-4. **Consider the primary workspace** for Cline rules placement
+1. **把相关项目放在一起**，尤其是经常需要协同修改的项目
+2. **使用 workspace file**，让团队成员复现同一套配置
+3. **清晰命名 folders**，让 workspace hints 更直观
+4. **提前考虑 primary workspace**，用于放置 NBG rules
 
-### Effective Prompting
+### 高效提示
 
-- **Be specific** when it matters: *"Update the user model in the backend workspace"*
-- **Reference relationships**: *"The frontend uses types from the contracts workspace"*
-- **Describe cross-workspace changes**: *"This needs to update both web and mobile"*
-- **Scope searches** for large codebases: *"Search for 'TODO' only in the frontend workspace"*
+- **在关键处具体说明**：*"更新 backend workspace 中的 user model"*
+- **描述项目关系**：*"frontend 使用 contracts workspace 中的 types"*
+- **说明跨 workspace 变更**：*"这需要同时更新 web 和 mobile"*
+- **为大型代码库限定搜索范围**：*"只在 frontend workspace 中搜索 'TODO'"*
 
-### Working with Large Workspaces
+### 处理大型 workspace
 
-- Break large tasks into workspace-specific operations when possible
-- Use [Plan mode](/core-workflows/plan-and-act) to let Cline understand structure first
-- Add a `.clineignore` file to reduce noise, speed up scanning, and keep Cline focused on source code:
+- 尽量把大任务拆成针对具体 workspace 的操作
+- 使用 [Plan mode](/core-workflows/plan-and-act) 让 NBG 先理解结构
+- 添加 `.clineignore` 文件减少噪声、加快扫描，并让 NBG 聚焦源码：
 
 ```text
-# Dependencies
+# 依赖
 **/node_modules/
 
-# Build outputs
+# 构建输出
 **/dist/
 **/build/
 
-# VCS metadata
+# VCS 元数据
 **/.git/
 ```
 
-For more patterns and gotchas, see the [.clineignore File Guide](/customization/clineignore).
+更多模式和注意事项见 [.clineignore 文件指南](/customization/clineignore)。
