@@ -1,10 +1,10 @@
-# Cline SDK Examples
+# NBG SDK Examples
 
-Learn how to build with the Cline SDK through practical, runnable examples.
+Learn how to build with the NBG SDK through practical, runnable examples.
 
 ## 📁 Plugin, Hook, and Automation Examples
 
-Plugins extend the CLI and SDK with custom capabilities. Install local files, GitHub file URLs, package directories, git repos, and npm packages with `cline plugin install`:
+Plugins extend the CLI and SDK with custom capabilities. Install local files, GitHub file URLs, package directories, git repos, and npm packages with `nbg plugin install`:
 
 ### [`./plugins/`](./plugins/)
 
@@ -22,8 +22,8 @@ Examples include:
 - `background-terminal.ts` - Background shell jobs with logging
 
 ```bash
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/weather-metrics.ts
-cline -i "What's the weather like in Tokyo and Paris?"
+nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/weather-metrics.ts
+nbg -i "What's the weather like in Tokyo and Paris?"
 ```
 
 ### [`./plugins/typescript-lsp/`](./plugins/typescript-lsp)
@@ -36,8 +36,8 @@ TypeScript LSP plugin that gives the agent a `goto_definition` tool powered by t
 - Zero extra dependencies -- resolves `typescript` from the target project
 
 ```bash
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/typescript-lsp/index.ts
-cline -i "Find where createTool is defined"
+nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/typescript-lsp/index.ts
+nbg -i "Find where createTool is defined"
 ```
 
 ### [`./plugins/agents-squad/`](./plugins/agents-squad)
@@ -58,8 +58,8 @@ Skills available:
 - API design, code review, debugging, documentation, migration, refactoring, test generation
 
 ```bash
-cline plugin install ./examples/plugins/agents-squad
-cline -i "Use subagents to inspect this repository and report back."
+nbg plugin install ./examples/plugins/agents-squad
+nbg -i "Use subagents to inspect this repository and report back."
 ```
 
 Once loaded, the agent can call tools like `start_subagent`, `message_subagent`, `get_subagent`, `list_agent_presets`, `list_skills`, and the handoff tools.
@@ -121,7 +121,7 @@ chmod +x ~/.cline/hooks/PreToolUse.py
 cp examples/hooks/PreToolUse.ts ~/.cline/hooks/PreToolUse.ts
 chmod +x ~/.cline/hooks/PreToolUse.ts
 
-cline -i "do something"  # Hooks will execute automatically
+nbg -i "do something"  # Hooks will execute automatically
 ```
 
 ## 🚀 Quick Start
@@ -156,7 +156,7 @@ Current SDK layering:
 
 ## 📖 Documentation
 
-- [Cline SDK README](../packages/README.md)
+- [NBG SDK README](../packages/README.md)
 - [Architecture Guide](../ARCHITECTURE.md)
 - [Individual Package Docs](../packages/)
 

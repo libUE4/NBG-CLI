@@ -1,6 +1,6 @@
 # [experimental] @cline/llms
 
-`@cline/llms` is the model and provider layer for the Cline SDK. It gives
+`@cline/llms` is the model and provider layer for the NBG SDK. It gives
 you typed provider settings, model catalogs, shared gateway contracts, and
 AI SDK-backed handler creation for supported LLM backends.
 
@@ -89,8 +89,8 @@ For generated catalog field semantics and token-limit behavior, see
 
 ## More Examples
 
-- Workspace overview: [README.md](https://github.com/cline/cline/blob/main/README.md)
-- API and architecture references: [DOC.md](https://github.com/cline/cline/blob/main/DOC.md), [ARCHITECTURE.md](https://github.com/cline/cline/blob/main/ARCHITECTURE.md)
+- SDK overview: [README.md](../../README.md)
+- SDK architecture reference: [ARCHITECTURE.md](../../ARCHITECTURE.md)
 
 ## Live Provider Smoke Test
 

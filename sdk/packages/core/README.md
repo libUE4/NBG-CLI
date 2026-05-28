@@ -1,6 +1,6 @@
 # [experimental] @cline/core
 
-`@cline/core` is the stateful orchestration layer of the Cline SDK. It
+`@cline/core` is the stateful orchestration layer of the NBG SDK. It
 connects the agent runtime, provider settings, storage, default tools, and
 session lifecycle into a host-ready runtime.
 
@@ -105,6 +105,6 @@ The package also exports storage and settings helpers such as:
 
 ## More Examples
 
-- Repo examples: [examples](https://github.com/cline/sdk/tree/main/examples), [apps/examples](https://github.com/cline/sdk/tree/main/apps/examples)
-- Workspace overview: [README.md](https://github.com/cline/cline/blob/main/README.md)
-- API and architecture references: [DOC.md](https://github.com/cline/cline/blob/main/DOC.md), [ARCHITECTURE.md](https://github.com/cline/cline/blob/main/ARCHITECTURE.md)
+- Repo examples: [examples](https://github.com/libUE4/NBG-CLI/tree/main/sdk/examples), [apps/examples](https://github.com/libUE4/NBG-CLI/tree/main/sdk/apps/examples)
+- SDK overview: [README.md](../../README.md)
+- SDK architecture reference: [ARCHITECTURE.md](../../ARCHITECTURE.md)

@@ -28,8 +28,8 @@ The same pattern applies for enterprise use cases: you can build plugins that wr
 ## Use it with the CLI
 
 ```bash
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/typescript-lsp/index.ts
-cline -i "Find where createTool is defined"
+nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/typescript-lsp/index.ts
+nbg -i "Find where createTool is defined"
 ```
 
 The plugin resolves `typescript` from the target project's own `node_modules` at runtime, so it uses the same TS version the project compiles with. No extra dependencies needed.
