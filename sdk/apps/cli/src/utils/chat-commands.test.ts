@@ -26,7 +26,7 @@ describe("chat commands", () => {
 
 			expect(handled).toBe(true);
 			expect(reply).toHaveBeenCalledWith(
-				expect.stringContaining("Cline 连接器命令："),
+				expect.stringContaining("NBG 连接器命令："),
 			);
 			expect(reply).toHaveBeenCalledWith(
 				expect.stringContaining("当前状态：tools=on，yolo=off"),

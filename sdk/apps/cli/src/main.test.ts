@@ -523,7 +523,7 @@ describe("runCli lightweight command dispatch", () => {
 	it("passes the migration notice marker into interactive mode", async () => {
 		const notice = {
 			id: "cline-cli-tui-default",
-			title: "Welcome to the new Cline CLI",
+			title: "Welcome to the new NBG CLI",
 		};
 		migrationNoticeMocks.getClineCliMigrationNotice.mockReturnValue(notice);
 		Object.defineProperty(process.stdout, "isTTY", {

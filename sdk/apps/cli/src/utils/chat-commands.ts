@@ -236,7 +236,7 @@ function usage(text: string): string {
 
 function formatHelp(state: ChatCommandState): string {
 	return [
-		"Cline 连接器命令：",
+		"NBG 连接器命令：",
 		"/help 或 /start - 显示此帮助",
 		"/new 或 /clear - 开始新会话",
 		"/whereami - 显示线程、cwd、工具和 yolo 状态",

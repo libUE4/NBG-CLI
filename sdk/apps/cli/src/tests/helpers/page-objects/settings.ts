@@ -57,13 +57,13 @@ export async function assertFeaturesTab(terminal: Terminal): Promise<void> {
 
 /** Assert the Account tab content is visible */
 export async function assertAccountTab(terminal: Terminal): Promise<void> {
-	// The account tab shows sign-in options when not authenticated to Cline
+	// The account tab shows sign-in options when not authenticated to NBG
 	await expectVisible(terminal, /sign in|sign out/i);
 }
 
 /** Assert the Other tab content is visible */
 export async function assertOtherTab(terminal: Terminal): Promise<void> {
-	await expectVisible(terminal, ["Preferred language:", "Cline v"]);
+	await expectVisible(terminal, ["Preferred language:", "NBG v"]);
 }
 
 /**

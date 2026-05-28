@@ -175,7 +175,7 @@ export const BrowserSettingsSection: React.FC<BrowserSettingsSectionProps> = ({ 
 								color: "var(--vscode-descriptionForeground)",
 								margin: "4px 0 0 0px",
 							}}>
-							阻止 Cline 使用浏览器操作（例如启动、点击、输入）。
+							阻止 NBG 使用浏览器操作（例如启动、点击、输入）。
 						</p>
 					</div>
 

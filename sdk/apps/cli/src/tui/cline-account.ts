@@ -100,7 +100,7 @@ async function resolveValidClineAccountAuthToken(input: {
 			{ apiBaseUrl: input.apiBaseUrl },
 		);
 		if (!credentials) {
-			throw new Error("Cline 账户需要重新认证。请运行 nbg auth cline。");
+			throw new Error("NBG 账户需要重新认证。请运行 nbg auth cline。");
 		}
 		const nextAccessToken = toProviderApiKey("cline", credentials);
 		if (

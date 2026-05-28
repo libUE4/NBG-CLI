@@ -588,7 +588,7 @@ const ClineModelPicker: React.FC<ClineModelPickerProps> = ({ isPopup, currentMod
 						marginTop: 0,
 						color: "var(--vscode-descriptionForeground)",
 					}}>
-					扩展会自动获取最新的 Cline 模型列表。如果不确定选择哪个模型，Cline 推荐使用{" "}
+					扩展会自动获取最新的 NBG 兼容模型列表。如果不确定选择哪个模型，NBG 推荐使用{" "}
 					<strong>anthropic/claude-sonnet-4.5</strong>。
 				</p>
 			)}

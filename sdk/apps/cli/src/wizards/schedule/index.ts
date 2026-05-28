@@ -112,7 +112,7 @@ async function actionCreate(client: HubScheduleClient): Promise<void> {
 	}
 
 	const prompt = await p.text({
-		message: "希望 Cline 做什么？",
+		message: "希望 NBG 做什么？",
 		placeholder: "检查打开的 PR 并发布摘要",
 		validate: (v) => {
 			if (!v?.trim()) return "提示词必填";
