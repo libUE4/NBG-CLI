@@ -1,18 +1,19 @@
 ---
 title: "Configure LiteLLM Provider (Admin)"
 sidebarTitle: "Configure LiteLLM (Admin)"
-description: "This guide explains how administrators configure LiteLLM as the organization-wide LLM provider for Cline."
+description: "管理员在 NBG 中将 LiteLLM 配置为组织级 LLM provider 的指南。"
 ---
 
 
-As an administrator, you can add LiteLLM as the organization-wide LLM provider for all Cline users through the hosted admin console. This centralized approach provides unified access to multiple AI models through your LiteLLM proxy interface.
+管理员可以在 NBG Enterprise Console 中将 LiteLLM 配置为所有组织成员使用的 LLM provider。该集中配置方式可通过你的 LiteLLM proxy 统一访问多个 AI models。
 
 ## Before You Begin
 
 To get started with setting up LiteLLM as your organization's LLM provider, you'll need a few items in place.
 
-**Administrator access to the Cline Admin console**  
-You need admin privileges to enforce provider settings across your organization. If you can navigate to **Settings → Cline Settings** in the admin console at [app.cline.bot](https://app.cline.bot), you have the right access level.
+**NBG Enterprise Console 管理员权限**
+
+你需要管理员权限才能在组织范围内强制下发 provider 设置。如果可以在 NBG Enterprise Console 中进入 **Settings → NBG Settings**，说明权限满足要求。
 
 <Info>
 **Quick Check**: Try accessing the settings page now. If you can see the provider configuration options, you're good to go.
@@ -35,8 +36,8 @@ Ensure your LiteLLM proxy is accessible from your team's development environment
 ## Configuration Steps
 
 <Steps>
-<Step title="Access Cline Settings">
-Navigate to [app.cline.bot](https://app.cline.bot) and sign in with your administrator account. Go to **Settings → Cline Settings**.
+<Step title="Access NBG Settings">
+打开你的 NBG Enterprise Console，并使用 administrator account 登录。进入 **Settings → NBG Settings**。
 
 <Info>
 You should see the provider configuration options if you have the correct admin access level.
@@ -80,10 +81,10 @@ The master key provides full access to your LiteLLM proxy. Only enter this if yo
 <Step title="Save Configuration">
 After configuring your settings, close the provider configuration panel and click **Save** on the settings page to persist your changes.
 
-Once saved, all organization members signed into the Cline extension will automatically use LiteLLM with your configured settings. They won't be able to select other providers or switch to their personal Cline accounts.
+Once saved, all organization members signed into NBG will automatically use LiteLLM with your configured settings. They won't be able to select other providers or switch to their personal NBG accounts.
 
 <Warning>
-Members can't switch to personal Cline accounts or join other organizations once remote configuration is enabled. This ensures consistent provider usage across your team.
+Members can't switch to personal NBG accounts or join other organizations once remote configuration is enabled. This ensures consistent provider usage across your team.
 </Warning>
 </Step>
 </Steps>

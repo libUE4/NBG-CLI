@@ -1,22 +1,23 @@
 ---
 title: "Configure AWS Bedrock Provider (Admin)"
 sidebarTitle: "Configure AWS Bedrock (Admin)"
-description: "This guide explains how administrators configure AWS Bedrock as the organization-wide LLM provider for Cline."
+description: "管理员在 NBG 中将 AWS Bedrock 配置为组织级 LLM provider 的指南。"
 ---
 
 
-As an administrator, you can add AWS Bedrock as the organization-wide LLM provider for all Cline users through the hosted admin console. This centralized approach ensures consistent access to Amazon's AI models while maintaining your organization's security and compliance requirements through region controls and basic configuration options.
+管理员可以在 NBG Enterprise Console 中将 AWS Bedrock 配置为所有组织成员使用的 LLM provider。该集中配置方式可统一访问 Amazon AI models，并通过 region controls 和基础配置选项保留组织安全与合规要求。
 
 ## Before You Begin
 
-To get started with setting up AWS Bedrock as your organization's LLM provider, you'll need a few items in place. 
+To get started with setting up AWS Bedrock as your organization's LLM provider, you'll need a few items in place.
 
-**Administrator access to the Cline Admin console**  
-You need admin privileges to enforce provider settings across your organization. If you can navigate to **Settings → Cline Settings** in the admin console at [app.cline.bot](https://app.cline.bot), you have the right access level.
+**NBG Enterprise Console 管理员权限**
+
+你需要管理员权限才能在组织范围内强制下发 provider 设置。如果可以在 NBG Enterprise Console 中进入 **Settings → NBG Settings**，说明权限满足要求。
 
 
 **AWS Bedrock account with the right permissions**  
-Your AWS account needs specific Bedrock permissions to work with Cline. 
+Your AWS account needs specific Bedrock permissions to work with NBG.
 
 <Note>
 If you don't have direct AWS access, coordinate with your cloud team to get these permissions set up before proceeding.
@@ -29,17 +30,11 @@ Choose your primary AWS region carefully since this will be enforced for all use
 Check which models are available in your region first. Some newer models might not be available in all regions yet.
 </Tip>
 
-<Frame>
-	<img
-		src="https://assets.int.cline.bot/assets/AWS%20Remote%20Config.gif"
-	/>
-</Frame>
-
 ## Configuration Steps
 
 <Steps>
-<Step title="Access Cline Settings">
-Navigate to [app.cline.bot](https://app.cline.bot) and sign in with your administrator account. Go to **Settings → Cline Settings**.
+<Step title="Access NBG Settings">
+打开你的 NBG Enterprise Console，并使用 administrator account 登录。进入 **Settings → NBG Settings**。
 
 <Info>
 You should see the provider configuration options if you have the correct admin access level.
@@ -95,10 +90,10 @@ Enable prompt caching to reduce costs and latency. Bedrock caches portions of pr
 <Step title="Save Configuration">
 After configuring your settings, close the provider configuration panel and click **Save** on the settings page to persist your changes.
 
-Once saved, all organization members signed into the Cline extension will automatically use AWS Bedrock with your configured settings. They won't be able to select other providers or switch to their personal Cline accounts.
+Once saved, all organization members signed into NBG will automatically use AWS Bedrock with your configured settings. They won't be able to select other providers or switch to their personal NBG accounts.
 
 <Warning>
-Members can't switch to personal Cline accounts or join other organizations once remote configuration is enabled. This ensures consistent provider usage across your team.
+Members can't switch to personal NBG accounts or join other organizations once remote configuration is enabled. This ensures consistent provider usage across your team.
 </Warning>
 </Step>
 </Steps>
