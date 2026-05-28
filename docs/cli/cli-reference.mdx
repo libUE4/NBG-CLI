@@ -129,7 +129,7 @@ nbg config
 
 ### `connect [options] [channel]`
 
-连接外部频道。详见 [Connectors](/cli/connectors)。
+连接外部频道。详见 [连接器](/cli/connectors)。
 
 ```bash
 nbg connect
@@ -171,7 +171,7 @@ cat payload.json | nbg hook
 
 ### `plugin`
 
-管理 NBG 插件。支持从文件 URL、npm、git 仓库或本地路径安装插件。详见 [Plugins](/customization/plugins)。
+管理 NBG 插件。支持从文件 URL、npm、git 仓库或本地路径安装插件。详见 [插件](/customization/plugins)。
 
 ```bash
 nbg plugin install <source>  # 安装插件
@@ -180,9 +180,9 @@ nbg plugin i <source>        # 简写别名
 
 | 参数 | 说明 |
 |--------|-------------|
-| `--npm` | 将 source 视为 npm 包 |
-| `--git` | 将 source 视为 git 仓库 |
-| `--force` | 替换同一 source 的已有安装 |
+| `--npm` | 将 source 参数视为 npm 包 |
+| `--git` | 将 source 参数视为 git 仓库 |
+| `--force` | 替换同一 source 参数的已有安装 |
 | `--json` | 以 JSON 输出结果 |
 | `--cwd <path>` | 安装到 `<path>/.cline/plugins`，而不是全局目录 |
 
@@ -194,7 +194,7 @@ nbg plugin install ./sdk/examples/plugins/typescript-lsp
 
 ### `schedule`
 
-管理定时 agent。详见 [Scheduling](/cli/scheduling)。
+管理定时 agent。详见 [定时任务](/cli/scheduling)。
 
 ```bash
 nbg schedule
@@ -202,7 +202,7 @@ nbg schedule
 
 ### `hub`
 
-管理本地 hub daemon。
+管理本地 hub 守护进程。
 
 ```bash
 nbg hub
@@ -227,7 +227,7 @@ nbg -V
 
 ### `kanban`
 
-启动 kanban 应用并退出。
+启动 Kanban 看板应用并退出。
 
 ```bash
 nbg kanban
@@ -249,7 +249,7 @@ NBG 当前保留 Cline 运行时兼容层，因此这些变量名暂时仍使用
 |----------|-------------|
 | `CLINE_DATA_DIR` | 自定义配置目录（替代 `~/.cline/data/`） |
 | `CLINE_HUB_ADDRESS` | 覆盖 hub 地址（默认：`127.0.0.1:25463`） |
-| `CLINE_SESSION_BACKEND_MODE` | 强制 backend 模式（`local`、`hub`、`remote`、`auto`） |
+| `CLINE_SESSION_BACKEND_MODE` | 强制后端模式（`local`、`hub`、`remote`、`auto`） |
 | `CLINE_SANDBOX_DATA_DIR` | 沙箱会话存储目录 |
 | `CLINE_SANDBOX` | 启用沙箱模式 |
 | `CLINE_HOOKS_DIR` | 额外 hooks 目录 |
@@ -281,7 +281,7 @@ export CLINE_COMMAND_PERMISSIONS='{"allow": ["npm *", "git *"], "deny": ["rm -rf
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
-| `type` | `"ask"` or `"say"` | 消息类别 |
+| `type` | `"ask"` 或 `"say"` | 消息类别 |
 | `text` | `string` | 消息内容 |
 | `ts` | `number` | Unix 毫秒时间戳 |
 | `say` | `string` | `type` 为 `"say"` 时的子类型 |
