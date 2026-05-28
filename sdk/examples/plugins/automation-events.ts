@@ -2,14 +2,14 @@
  * Automation Event Plugin Example
  *
  * Shows how a plugin can declare normalized event types and emit events into
- * ClineCore automation without importing cron internals.
+ * NBG automation without importing cron internals.
  *
  * Local demo:
- *   cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/automation-events.ts --cwd .
+ *   nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/automation-events.ts --cwd .
  *   mkdir -p .cline/cron/events
  *   cp examples/cron/events/local-plugin-event.event.md .cline/cron/events/local-plugin-event.event.md
  *   perl -0pi -e "s#/absolute/path/to/repo#$PWD#g" .cline/cron/events/local-plugin-event.event.md
- *   CLINE_LOCAL_EVENT_INTERVAL_MS=2000 cline -i "wait for the plugin event"
+ *   CLINE_LOCAL_EVENT_INTERVAL_MS=2000 nbg -i "wait for the plugin event"
  */
 
 import type { AgentPlugin } from "@cline/core";

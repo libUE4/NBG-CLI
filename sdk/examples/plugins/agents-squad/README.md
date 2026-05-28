@@ -1,6 +1,6 @@
 # Agent Squad Plugin
 
-Spin up background subagents from any Cline SDK agent. Each subagent runs as its own session with its own provider, model, and system prompt — useful for parallel recon, planning, implementation, and review.
+Spin up background subagents from any NBG SDK agent. Each subagent runs as its own session with its own provider, model, and system prompt — useful for parallel recon, planning, implementation, and review.
 
 ## Quick start
 
@@ -119,4 +119,4 @@ All optional. Environment variables override defaults:
 
 ## How it works
 
-Each subagent is a full Cline SDK session created via `ClineCore.create(...)`. `start_subagent` resolves the preset, merges any overrides, starts a non-interactive session, and returns the session ID immediately. The first turn runs in the background; when it finishes (or fails) the result is stored and — unless `notifyParent: false` — pushed back to the parent session as a steer message. The parent can also poll with `get_subagent`.
+Each subagent is a full NBG SDK session created via `ClineCore.create(...)`. `start_subagent` resolves the preset, merges any overrides, starts a non-interactive session, and returns the session ID immediately. The first turn runs in the background; when it finishes (or fails) the result is stored and — unless `notifyParent: false` — pushed back to the parent session as a steer message. The parent can also poll with `get_subagent`.

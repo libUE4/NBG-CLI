@@ -9,8 +9,8 @@
  * at runtime, so it has zero dependencies beyond Node builtins.
  *
  * CLI usage:
- *   cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/typescript-lsp/index.ts
- *   cline -i "Find where createTool is defined"
+ *   nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/typescript-lsp/index.ts
+ *   nbg -i "Find where createTool is defined"
  *
  * Direct demo usage:
  *   ANTHROPIC_API_KEY=sk-... bun run examples/plugins/typescript-lsp/index.ts

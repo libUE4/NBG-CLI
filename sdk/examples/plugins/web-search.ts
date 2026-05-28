@@ -4,8 +4,8 @@
  * Registers a `web_search` tool backed by Exa.
  *
  * CLI usage:
- *   cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/web-search.ts --cwd .
- *   EXA_API_KEY=... cline "Search the web for recent TypeScript 6 updates"
+ *   nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/web-search.ts --cwd .
+ *   EXA_API_KEY=... nbg "Search the web for recent TypeScript 6 updates"
  *
  * Provider key:
  *   EXA_API_KEY              Enables Exa search. A separate model provider key

@@ -1,10 +1,10 @@
 {
 	"name": "@cline/shared",
 	"version": "0.0.42",
-	"description": "Shared utilities, types, and schemas for Cline packages",
+	"description": "Shared utilities, types, and schemas for NBG SDK packages",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/cline/cline",
+		"url": "https://github.com/libUE4/NBG-CLI",
 		"directory": "sdk/packages/shared"
 	},
 	"type": "module",

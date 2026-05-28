@@ -5,8 +5,8 @@
  * workspace .gitignore file.
  *
  * CLI usage:
- *   cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/gitignore-read-files-guard.ts --cwd .
- *   cline -i "Read the ignored .env file"
+ *   nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/gitignore-read-files-guard.ts --cwd .
+ *   nbg -i "Read the ignored .env file"
  */
 
 import { spawn } from "node:child_process";

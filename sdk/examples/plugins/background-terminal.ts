@@ -20,12 +20,12 @@ import {
  * Background Terminal Plugin Example
  *
  * Starts shell commands in detached background processes, stores stdout/stderr
- * under Cline's data directory, and optionally steers a completion summary back
+ * under NBG's data directory, and optionally steers a completion summary back
  * into the current session when the command exits.
  *
  * CLI usage:
- *   cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/background-terminal.ts --cwd .
- *   cline -i "Start the dev server in the background and keep working"
+ *   nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/background-terminal.ts --cwd .
+ *   nbg -i "Start the dev server in the background and keep working"
  */
 
 type JobStatus = "running" | "completed" | "failed";

@@ -1,6 +1,6 @@
-# Cline Automation Examples
+# NBG Automation Examples
 
-This directory contains example automation specs for file-based and event-driven automation in Cline. Use these as templates to set up your own recurring or event-driven tasks.
+This directory contains example automation specs for file-based and event-driven automation in NBG. Use these as templates to set up your own recurring or event-driven tasks.
 
 ## 🚀 Quick Start: Pick Your Automation
 
@@ -22,7 +22,7 @@ This directory contains example automation specs for file-based and event-driven
 
 ## 📋 Overview
 
-Cline automation supports two types of specs:
+NBG automation supports two types of specs:
 
 1. **Recurring specs** (`.cron.md`) — Run on a schedule
 2. **Event-driven specs** (`.event.md`) — Run when an event occurs
@@ -223,10 +223,10 @@ mkdir -p ~/.cline/cron/events
 cp examples/cron/events/local-plugin-event.event.md ~/.cline/cron/events/
 
 # Load the plugin that emits these events
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/automation-events.ts
+nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/automation-events.ts
 
 # Run CLI with automation enabled; the plugin emits events
-cline --enable-automation -i "Test automation events"
+nbg --enable-automation -i "Test automation events"
 ```
 
 ## 🚀 Getting Started
@@ -272,7 +272,7 @@ const cline = await ClineCore.create({
 
 **In the CLI:**
 ```bash
-cline --enable-automation
+nbg --enable-automation
 ```
 
 ### 5. Monitor runs
@@ -416,4 +416,4 @@ Summarize the changes, check for security risks, and recommend approval or chang
 
 - [Architecture automation overview](../../ARCHITECTURE.md#automation) — Runtime architecture and flow details
 - [`plugins/automation-events.ts`](../plugins/automation-events.ts) — Plugin event emission
-- [Cline SDK Examples](../) — Other integration examples
+- [NBG SDK Examples](../) — Other integration examples

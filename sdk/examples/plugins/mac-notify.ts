@@ -1,11 +1,11 @@
 /**
  * macOS Notification Plugin Example
  *
- * Sends a Notification Center alert when a Cline run completes successfully.
+ * Sends a Notification Center alert when an NBG run completes successfully.
  *
  * CLI usage:
- *   cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/mac-notify.ts --cwd .
- *   cline -i "Run the test suite"
+ *   nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/mac-notify.ts --cwd .
+ *   nbg -i "Run the test suite"
  */
 
 import { execFile } from "node:child_process";

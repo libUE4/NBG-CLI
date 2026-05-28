@@ -11,8 +11,8 @@
  * so provider-safe normalization and hard truncation remain the final pass.
  *
  * CLI usage:
- *   cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/custom-compaction.ts --cwd .
- *   cline -i "Search the codebase for dispatcher usage, then summarize it"
+ *   nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plugins/custom-compaction.ts --cwd .
+ *   nbg -i "Search the codebase for dispatcher usage, then summarize it"
  */
 
 import type { AgentPlugin, Message, ToolResultContent } from "@cline/core";

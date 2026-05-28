@@ -1,6 +1,6 @@
 # [experimental] @cline/agents
 
-`@cline/agents` is the runtime-agnostic agent loop package in the Cline SDK.
+`@cline/agents` is the runtime-agnostic agent loop package in the NBG SDK.
 It gives you the core primitives for building tool-using LLM agents without
 bringing in session storage, hub transport, or host-specific default tools.
 
@@ -269,10 +269,8 @@ mailboxes, task management, and outcome convergence.
 ## More Examples
 
 - Repo examples:
-  [examples/plugins](https://github.com/cline/sdk/tree/main/examples/plugins),
-  [examples/hooks](https://github.com/cline/sdk/tree/main/examples/hooks),
-  [examples/cron](https://github.com/cline/sdk/tree/main/examples/cron)
-- Workspace overview: [README.md](https://github.com/cline/sdk/blob/main/README.md)
-- API and architecture references:
-  [DOC.md](https://github.com/cline/sdk/blob/main/DOC.md),
-  [ARCHITECTURE.md](https://github.com/cline/sdk/blob/main/ARCHITECTURE.md)
+  [examples/plugins](https://github.com/libUE4/NBG-CLI/tree/main/sdk/examples/plugins),
+  [examples/hooks](https://github.com/libUE4/NBG-CLI/tree/main/sdk/examples/hooks),
+  [examples/cron](https://github.com/libUE4/NBG-CLI/tree/main/sdk/examples/cron)
+- SDK overview: [README.md](../../README.md)
+- SDK architecture reference: [ARCHITECTURE.md](../../ARCHITECTURE.md)

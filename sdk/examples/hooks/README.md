@@ -45,7 +45,7 @@ Log every tool call and its inputs. Useful for auditing what the agent is about 
 mkdir -p .cline/hooks
 cp examples/hooks/PreToolUse.sh .cline/hooks/
 chmod +x .cline/hooks/PreToolUse.sh
-cline -i "do something"  # See tool calls logged to stderr
+nbg -i "do something"  # See tool calls logged to stderr
 ```
 
 #### `PostToolUse.sh`
@@ -56,7 +56,7 @@ Inspect tool results and add supplementary context.
 mkdir -p .cline/hooks
 cp examples/hooks/PostToolUse.sh .cline/hooks/
 chmod +x .cline/hooks/PostToolUse.sh
-cline -i "do something"  # See tool results logged and enriched
+nbg -i "do something"  # See tool results logged and enriched
 ```
 
 #### `PreToolUse_BlockDestructive.sh`
@@ -67,7 +67,7 @@ Prevent destructive operations like force pushes or bulk deletes.
 mkdir -p .cline/hooks
 cp examples/hooks/PreToolUse_BlockDestructive.sh .cline/hooks/PreToolUse.sh
 chmod +x .cline/hooks/PreToolUse.sh
-cline -i "clean up the repo"  # Destructive operations will be blocked
+nbg -i "clean up the repo"  # Destructive operations will be blocked
 ```
 
 #### `PreToolUse_RequireReview.sh`
@@ -78,7 +78,7 @@ Require user review before certain operations (file writes to critical files).
 mkdir -p .cline/hooks
 cp examples/hooks/PreToolUse_RequireReview.sh .cline/hooks/PreToolUse.sh
 chmod +x .cline/hooks/PreToolUse.sh
-cline -i "update dependencies"  # Critical file writes will pause for review
+nbg -i "update dependencies"  # Critical file writes will pause for review
 ```
 
 #### `PreToolUse_InjectFileContext.sh`
@@ -89,7 +89,7 @@ Extract and inject file context before tool execution (related test files, lock 
 mkdir -p .cline/hooks
 cp examples/hooks/PreToolUse_InjectFileContext.sh .cline/hooks/PreToolUse.sh
 chmod +x .cline/hooks/PreToolUse.sh
-cline -i "review the configuration"  # Related files will be mentioned automatically
+nbg -i "review the configuration"  # Related files will be mentioned automatically
 ```
 
 #### `TaskStart.sh`, `TaskComplete.sh`, `SessionShutdown.sh`
@@ -102,7 +102,7 @@ cp examples/hooks/TaskStart.sh .cline/hooks/
 cp examples/hooks/TaskComplete.sh .cline/hooks/
 cp examples/hooks/SessionShutdown.sh .cline/hooks/
 chmod +x .cline/hooks/Task*.sh .cline/hooks/SessionShutdown.sh
-cline -i "do something"  # Session lifecycle will be logged
+nbg -i "do something"  # Session lifecycle will be logged
 ```
 
 ### Python Examples
@@ -115,7 +115,7 @@ Python-based hook to log and filter tool calls.
 mkdir -p .cline/hooks
 cp examples/hooks/PreToolUse.py .cline/hooks/
 chmod +x .cline/hooks/PreToolUse.py
-cline -i "do something"  # Python hook will log tool calls
+nbg -i "do something"  # Python hook will log tool calls
 ```
 
 #### `PostToolUse.py`
@@ -126,7 +126,7 @@ Python-based post-tool-use hook for result enrichment.
 mkdir -p .cline/hooks
 cp examples/hooks/PostToolUse.py .cline/hooks/
 chmod +x .cline/hooks/PostToolUse.py
-cline -i "do something"  # Python hook will enrich tool results
+nbg -i "do something"  # Python hook will enrich tool results
 ```
 
 #### `PreToolUse_InjectContext.py`
@@ -137,7 +137,7 @@ Python-based context injection with file analysis (test files, config files, loc
 mkdir -p .cline/hooks
 cp examples/hooks/PreToolUse_InjectContext.py .cline/hooks/PreToolUse.py
 chmod +x .cline/hooks/PreToolUse.py
-cline -i "add a new feature"  # Related files and environment will be injected
+nbg -i "add a new feature"  # Related files and environment will be injected
 ```
 
 ### TypeScript Examples
@@ -150,7 +150,7 @@ TypeScript hook for advanced tool call filtering and logging.
 mkdir -p .cline/hooks
 cp examples/hooks/PreToolUse.ts .cline/hooks/
 chmod +x .cline/hooks/PreToolUse.ts
-cline -i "do something"  # TypeScript hook will execute via bun
+nbg -i "do something"  # TypeScript hook will execute via bun
 ```
 
 #### `PostToolUse.ts`
@@ -161,7 +161,7 @@ TypeScript hook for post-execution actions.
 mkdir -p .cline/hooks
 cp examples/hooks/PostToolUse.ts .cline/hooks/
 chmod +x .cline/hooks/PostToolUse.ts
-cline -i "do something"  # TypeScript hook will execute via bun
+nbg -i "do something"  # TypeScript hook will execute via bun
 ```
 
 #### `PreToolUse_ModifyInput.ts`
@@ -172,7 +172,7 @@ Modify tool inputs before execution (normalize paths, add defaults, sanitize).
 mkdir -p .cline/hooks
 cp examples/hooks/PreToolUse_ModifyInput.ts .cline/hooks/PreToolUse.ts
 chmod +x .cline/hooks/PreToolUse.ts
-cline -i "install dependencies"  # npm install will have --save-exact added automatically
+nbg -i "install dependencies"  # npm install will have --save-exact added automatically
 ```
 
 ## Getting Started
@@ -205,9 +205,9 @@ chmod +x .cline/hooks/PostToolUse.*
 ### 3. Test it
 
 ```bash
-cline -i "test prompt"
+nbg -i "test prompt"
 # Or load from a custom hooks directory:
-cline --hooks-dir ./my-hooks -i "test prompt"
+nbg --hooks-dir ./my-hooks -i "test prompt"
 ```
 
 ## Hook Input/Output Format
@@ -391,7 +391,7 @@ async function getGitBranch(): Promise<string> {
 
 ### Print hook invocations
 ```bash
-cline --verbose "your prompt"
+nbg --verbose "your prompt"
 ```
 
 ### Test a hook manually
@@ -409,9 +409,9 @@ echo '{"tool_call": {"name": "read_files", "input": {"filePath": "test.ts"}}}' |
 File hooks observe lifecycle events. For more advanced use cases like message compaction, use a TypeScript **runtime hook** plugin:
 
 ```bash
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/hooks/custom-compaction-hook.example.ts --cwd .
+nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/hooks/custom-compaction-hook.example.ts --cwd .
 
-cline -i "Search the codebase for dispatcher usage, then summarize it"
+nbg -i "Search the codebase for dispatcher usage, then summarize it"
 ```
 
 This example uses `hooks.beforeModel` to estimate request size and replace older middle history with a summary message before the provider request.
