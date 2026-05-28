@@ -216,7 +216,7 @@ const WorktreesView = ({ onDone }: WorktreesViewProps) => {
 		}
 	}, [mergeWorktree, getMainBranch, deleteAfterMerge, loadWorktrees])
 
-	// Ask Cline to resolve conflicts
+	// Ask NBG to resolve conflicts
 	const handleAskClineToResolve = useCallback(async () => {
 		if (!mergeResult || !mergeResult.hasConflicts) return
 
@@ -571,7 +571,7 @@ Please help me resolve these merge conflicts, then complete the merge, and delet
 
 								<div className="flex flex-col gap-2">
 									<VSCodeButton onClick={handleAskClineToResolve} style={{ width: "100%" }}>
-										让 Cline 解决
+										让 NBG 解决
 									</VSCodeButton>
 									<VSCodeButton appearance="secondary" onClick={closeMergeModal} style={{ width: "100%" }}>
 										我手动解决

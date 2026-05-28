@@ -107,7 +107,11 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					setIsStreaming(false);
 					switch (event.contentType) {
 						case "text": {
-							if ((event.text ?? "").trim()) {
+							const text = event.text ?? "";
+							if (!text) {
+								break;
+							}
+							if (text.trim()) {
 								sawAssistantTextRef.current = true;
 							}
 							if (activeInlineStreamRef.current !== "text") {
@@ -115,13 +119,13 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 								activeInlineStreamRef.current = "text";
 								appendEntry({
 									kind: "assistant_text",
-									text: event.text ?? "",
+									text,
 									streaming: true,
 								});
 							} else {
 								updateLastEntry((prev) =>
 									prev.kind === "assistant_text"
-										? { ...prev, text: prev.text + (event.text ?? "") }
+										? { ...prev, text: prev.text + text }
 										: prev,
 								);
 							}

@@ -28,6 +28,22 @@ function trimLeading(text: string): string {
 	return text.replace(/^\n+/, "");
 }
 
+function TranscriptRow(props: {
+	children: React.ReactNode;
+	gutter?: React.ReactNode;
+}) {
+	return (
+		<box flexDirection="row" width="100%">
+			<box width={2} flexShrink={0}>
+				{props.gutter}
+			</box>
+			<box flexGrow={1} flexShrink={1} flexDirection="column" width="100%">
+				{props.children}
+			</box>
+		</box>
+	);
+}
+
 function ToolParamText(props: { children: React.ReactNode; fg?: string }) {
 	return (
 		<text
@@ -48,12 +64,11 @@ function ReasoningBlock(props: { text: string; streaming: boolean }) {
 	if (!content.trim()) {
 		if (props.streaming) {
 			return (
-				<box flexDirection="row" gap={1}>
-					<spinner name="dots" color="gray" />
+				<TranscriptRow gutter={<spinner name="dots" color="gray" />}>
 					<text fg="gray">
 						<em>正在思考...</em>
 					</text>
-				</box>
+				</TranscriptRow>
 			);
 		}
 		return null;
@@ -62,62 +77,69 @@ function ReasoningBlock(props: { text: string; streaming: boolean }) {
 	if (props.streaming) {
 		const lines = content.split("\n");
 		return (
-			<box flexDirection="column">
-				<box flexDirection="row" gap={1}>
-					<spinner name="dots" color="gray" />
+			<TranscriptRow gutter={<spinner name="dots" color="gray" />}>
+				<box flexDirection="column" width="100%">
 					<text fg="gray">
 						<em>正在思考...</em>
 					</text>
+					<box flexDirection="column" paddingLeft={2} width="100%">
+						{lines.map((line, index) => (
+							<text
+								key={`${index}:${line}`}
+								fg="gray"
+								selectable
+								wrapMode="word"
+								width="100%"
+								flexShrink={1}
+							>
+								<em>{line || " "}</em>
+							</text>
+						))}
+					</box>
 				</box>
-				<box flexDirection="column" paddingLeft={2}>
-					{lines.map((line, index) => (
-						<text
-							key={`${index}:${line}`}
-							fg="gray"
-							selectable
-							wrapMode="word"
-							width="100%"
-							flexShrink={1}
-						>
-							<em>{line || " "}</em>
-						</text>
-					))}
-				</box>
-			</box>
+			</TranscriptRow>
 		);
 	}
 
 	if (expanded) {
 		const lines = content.split("\n");
 		return (
-			<box flexDirection="column" onMouseDown={() => setExpanded(false)}>
-				<text fg="gray">
-					{"\u25bc"} <em>思考：</em>
-				</text>
-				<box flexDirection="column" paddingLeft={2}>
-					{lines.map((line, index) => (
-						<text
-							key={`${index}:${line}`}
-							fg="gray"
-							selectable
-							wrapMode="word"
-							width="100%"
-							flexShrink={1}
-						>
-							<em>{line || " "}</em>
-						</text>
-					))}
+			<TranscriptRow gutter={<text fg="gray">{"\u25bc"}</text>}>
+				<box
+					flexDirection="column"
+					width="100%"
+					onMouseDown={() => setExpanded(false)}
+				>
+					<text fg="gray">
+						<em>思考：</em>
+					</text>
+					<box flexDirection="column" paddingLeft={2} width="100%">
+						{lines.map((line, index) => (
+							<text
+								key={`${index}:${line}`}
+								fg="gray"
+								selectable
+								wrapMode="word"
+								width="100%"
+								flexShrink={1}
+							>
+								<em>{line || " "}</em>
+							</text>
+						))}
+					</box>
 				</box>
-			</box>
+			</TranscriptRow>
 		);
 	}
 
 	return (
-		<box width="100%" onMouseDown={() => setExpanded(true)}>
-			<text fg="gray" selectable wrapMode="word" width="100%" flexShrink={1}>
-				{"\u25b6"} <em>思考（已折叠）</em>
-			</text>
-		</box>
+		<TranscriptRow gutter={<text fg="gray">{"\u25b6"}</text>}>
+			<box width="100%" onMouseDown={() => setExpanded(true)}>
+				<text fg="gray" selectable wrapMode="word" width="100%" flexShrink={1}>
+					<em>思考（已折叠）</em>
+				</text>
+			</box>
+		</TranscriptRow>
 	);
 }
 
@@ -243,9 +265,9 @@ function ToolCallView(props: {
 
 	return (
 		<box flexDirection="column" width="100%">
-			<box flexDirection="row" width="100%">
-				<box width={2} flexShrink={0}>
-					{streaming ? (
+			<TranscriptRow
+				gutter={
+					streaming ? (
 						<spinner name="dots" color="gray" />
 					) : warningFailure ? (
 						<text fg="yellow">!</text>
@@ -253,27 +275,26 @@ function ToolCallView(props: {
 						<text fg="red">x</text>
 					) : (
 						<text fg={accent}>*</text>
-					)}
-				</box>
-				<box flexGrow={1} flexShrink={1} flexDirection="column" width="100%">
-					<text fg={defaultFg} selectable wrapMode="word" width="100%">
-						<span fg={accent}>
-							<strong>{toolName}</strong>
-						</span>
-						<span fg="gray"> · </span>
-						<span fg={statusColor}>{statusText}</span>
-					</text>
-					{params && (
-						<box flexDirection="column" paddingLeft={2} width="100%">
-							{typeof params === "string" ? (
-								<ToolParamText fg={defaultFg}>{params}</ToolParamText>
-							) : (
-								params
-							)}
-						</box>
-					)}
-				</box>
-			</box>
+					)
+				}
+			>
+				<text fg={defaultFg} selectable wrapMode="word" width="100%">
+					<span fg={accent}>
+						<strong>{toolName}</strong>
+					</span>
+					<span fg="gray"> · </span>
+					<span fg={statusColor}>{statusText}</span>
+				</text>
+				{params && (
+					<box flexDirection="column" paddingLeft={2} width="100%">
+						{typeof params === "string" ? (
+							<ToolParamText fg={defaultFg}>{params}</ToolParamText>
+						) : (
+							params
+						)}
+					</box>
+				)}
+			</TranscriptRow>
 			{result && (
 				<ToolOutput
 					toolName={toolName}
@@ -305,6 +326,7 @@ export function ChatEntryView(props: {
 			return (
 				<box
 					flexDirection="row"
+					width="100%"
 					backgroundColor={userMsgBg}
 					marginX={-1}
 					paddingLeft={1}
@@ -314,7 +336,7 @@ export function ChatEntryView(props: {
 					<box width={2} flexShrink={0}>
 						<text fg={accent}>{">"}</text>
 					</box>
-					<box flexGrow={1} flexShrink={1}>
+					<box flexGrow={1} flexShrink={1} width="100%">
 						<text fg={defaultFg} selectable wrapMode="word" width="100%">
 							{entry.text}
 						</text>
@@ -326,6 +348,7 @@ export function ChatEntryView(props: {
 			return (
 				<box
 					flexDirection="row"
+					width="100%"
 					backgroundColor={userMsgBg}
 					marginX={-1}
 					paddingLeft={1}
@@ -345,7 +368,7 @@ export function ChatEntryView(props: {
 							[队列]{" "}
 						</text>
 					)}
-					<box flexGrow={1} flexShrink={1}>
+					<box flexGrow={1} flexShrink={1} width="100%">
 						<text fg={defaultFg} selectable wrapMode="word" width="100%">
 							{entry.text}
 						</text>
@@ -357,23 +380,22 @@ export function ChatEntryView(props: {
 			const content = trimLeading(entry.text);
 			if (!content.trim()) return null;
 			return (
-				<box flexDirection="row">
-					<box width={2} flexShrink={0}>
-						{entry.streaming ? (
+				<TranscriptRow
+					gutter={
+						entry.streaming ? (
 							<spinner name="dots" color={accent} />
 						) : (
 							<text fg={accent}>*</text>
-						)}
-					</box>
-					<box flexGrow={1} flexShrink={1} width="100%">
-						<markdown
-							content={content}
-							syntaxStyle={getSyntaxStyle(terminalTheme)}
-							streaming={entry.streaming}
-							fg={defaultFg}
-						/>
-					</box>
-				</box>
+						)
+					}
+				>
+					<markdown
+						content={content}
+						syntaxStyle={getSyntaxStyle(terminalTheme)}
+						streaming={entry.streaming}
+						fg={defaultFg}
+					/>
+				</TranscriptRow>
 			);
 		}
 
@@ -395,9 +417,8 @@ export function ChatEntryView(props: {
 
 		case "error":
 			return (
-				<box flexDirection="row">
-					<text fg="red" content="* " flexShrink={0} />
-					<box flexGrow={1} flexShrink={1}>
+				<TranscriptRow gutter={<text fg="red" content="*" />}>
+					<box width="100%">
 						<text
 							fg="red"
 							selectable
@@ -406,14 +427,13 @@ export function ChatEntryView(props: {
 							width="100%"
 						/>
 					</box>
-				</box>
+				</TranscriptRow>
 			);
 
 		case "status":
 			return (
-				<box flexDirection="row">
-					<text fg="gray" content="* " flexShrink={0} />
-					<box flexGrow={1} flexShrink={1}>
+				<TranscriptRow gutter={<text fg="gray" content="*" />}>
+					<box width="100%">
 						<text
 							fg="gray"
 							selectable
@@ -422,14 +442,13 @@ export function ChatEntryView(props: {
 							width="100%"
 						/>
 					</box>
-				</box>
+				</TranscriptRow>
 			);
 
 		case "team":
 			return (
-				<box flexDirection="row">
-					<text fg="gray" content="* " flexShrink={0} />
-					<box flexGrow={1} flexShrink={1}>
+				<TranscriptRow gutter={<text fg="gray" content="*" />}>
+					<box width="100%">
 						<text
 							fg="gray"
 							selectable
@@ -438,7 +457,7 @@ export function ChatEntryView(props: {
 							width="100%"
 						/>
 					</box>
-				</box>
+				</TranscriptRow>
 			);
 
 		case "done": {
@@ -450,12 +469,14 @@ export function ChatEntryView(props: {
 			if (entry.iterations > 0) parts.push(`${entry.iterations} 次迭代`);
 			if (parts.length === 0) return null;
 			return (
-				<text
-					fg="gray"
-					content={parts.join(" | ")}
-					wrapMode="word"
-					width="100%"
-				/>
+				<TranscriptRow gutter={<text fg="gray" content=" " />}>
+					<text
+						fg="gray"
+						content={parts.join(" | ")}
+						wrapMode="word"
+						width="100%"
+					/>
+				</TranscriptRow>
 			);
 		}
 	}

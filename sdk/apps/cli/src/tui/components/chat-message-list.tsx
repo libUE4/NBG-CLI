@@ -13,6 +13,10 @@ import { useTerminalTheme } from "../hooks/use-terminal-background";
 import { shouldUseNativeTerminalScrollback } from "../opentui-env";
 import { getModeAccent } from "../palette";
 import type { ChatEntry } from "../types";
+import {
+	groupTranscriptEntries,
+	shouldInsertTranscriptEntrySpacer,
+} from "../utils/transcript-layout";
 import { ChatEntryView } from "./chat-entry";
 
 export interface TranscriptScrollHandle {
@@ -37,6 +41,7 @@ export const ChatMessageList = forwardRef<
 	const useNativeScrollback = shouldUseNativeTerminalScrollback();
 	const userSubmissionScrollKey =
 		lastEntry?.kind === "user_submitted" ? props.entries.length : 0;
+	const groups = groupTranscriptEntries(props.entries);
 
 	const runTranscriptCommand = useCallback((command: TranscriptCommand) => {
 		const scrollbox = scrollboxRef.current;
@@ -101,20 +106,39 @@ export const ChatMessageList = forwardRef<
 	}, [userSubmissionScrollKey]);
 
 	const transcript = (
-		<box flexDirection="column" width="100%" paddingX={1} paddingY={1} gap={1}>
-			{props.entries.map((entry, i) => {
-				const key = `${i}:${entry.kind}`;
-				return (
-					<ChatEntryView
-						key={key}
-						entry={entry}
-						accent={accent}
-						terminalTheme={terminalTheme}
-					/>
-				);
-			})}
+		<box flexDirection="column" width="100%" paddingX={1} paddingY={1}>
+			{groups.map((group, groupIndex) => (
+				<box
+					key={`group:${groupIndex}`}
+					flexDirection="column"
+					width="100%"
+					marginTop={groupIndex === 0 ? 0 : group.startsWithUser ? 2 : 1}
+				>
+					{group.entries.map((entry, entryIndex) => {
+						const previous = group.entries[entryIndex - 1];
+						const key = `${groupIndex}:${entryIndex}:${entry.kind}`;
+						return (
+							<box
+								key={key}
+								width="100%"
+								marginTop={
+									previous && shouldInsertTranscriptEntrySpacer(previous, entry)
+										? 1
+										: 0
+								}
+							>
+								<ChatEntryView
+									entry={entry}
+									accent={accent}
+									terminalTheme={terminalTheme}
+								/>
+							</box>
+						);
+					})}
+				</box>
+			))}
 			{props.isStreaming && (
-				<box flexDirection="row" gap={1}>
+				<box flexDirection="row" gap={1} marginTop={1}>
 					<spinner name="dots" color={accent} />
 					<text fg="gray">正在思考...（Esc 取消）</text>
 				</box>

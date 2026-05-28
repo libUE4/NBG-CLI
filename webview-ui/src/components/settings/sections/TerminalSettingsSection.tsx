@@ -107,7 +107,7 @@ export const TerminalSettingsSection: React.FC<TerminalSettingsSectionProps> = (
 							))}
 						</VSCodeDropdown>
 						<p className="text-xs text-(--vscode-descriptionForeground) mt-1">
-							选择 Cline 默认使用的终端。“Default” 会使用 VS Code 的全局设置。
+							选择 NBG 默认使用的终端。“Default” 会使用 VS Code 的全局设置。
 						</p>
 					</div>
 
@@ -126,7 +126,7 @@ export const TerminalSettingsSection: React.FC<TerminalSettingsSectionProps> = (
 							{inputError && <div className="text-(--vscode-errorForeground) text-xs mt-1">{inputError}</div>}
 						</div>
 						<p className="text-xs text-(--vscode-descriptionForeground)">
-							设置 Cline 在执行命令前等待 Shell 集成激活的时间。如果遇到终端连接超时，可以增大这个值。
+							设置 NBG 在执行命令前等待 Shell 集成激活的时间。如果遇到终端连接超时，可以增大这个值。
 						</p>
 					</div>
 
@@ -156,7 +156,7 @@ export const TerminalSettingsSection: React.FC<TerminalSettingsSectionProps> = (
 								<VSCodeOption value="backgroundExec">后台执行</VSCodeOption>
 							</VSCodeDropdown>
 							<p className="text-xs text-[var(--vscode-descriptionForeground)] mt-1">
-								选择 Cline 在 VS Code 终端中运行命令，还是在后台进程中运行。
+								选择 NBG 在 VS Code 终端中运行命令，还是在后台进程中运行。
 							</p>
 						</div>
 					)}

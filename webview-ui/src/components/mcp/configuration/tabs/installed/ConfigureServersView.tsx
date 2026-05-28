@@ -23,11 +23,11 @@ const ConfigureServersView = () => {
 				<VSCodeLink href="https://github.com/modelcontextprotocol" style={{ display: "inline" }}>
 					Model Context Protocol
 				</VSCodeLink>{" "}
-				可以与本地运行的 MCP 服务器通信，这些服务器提供额外工具和资源来扩展 Cline 的能力。你可以使用{" "}
+				可以与本地运行的 MCP 服务器通信，这些服务器提供额外工具和资源来扩展 NBG 的能力。你可以使用{" "}
 				<VSCodeLink href="https://github.com/modelcontextprotocol/servers" style={{ display: "inline" }}>
 					社区服务器
 				</VSCodeLink>{" "}
-				，也可以让 Cline 为你的工作流创建专用工具（例如“添加一个获取最新 npm 文档的工具”）。{" "}
+				，也可以让 NBG 为你的工作流创建专用工具（例如“添加一个获取最新 npm 文档的工具”）。{" "}
 				<VSCodeLink href="https://x.com/sdrzn/status/1867271665086074969" style={{ display: "inline" }}>
 					查看演示。
 				</VSCodeLink>

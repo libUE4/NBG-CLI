@@ -1,16 +1,16 @@
 {
 	"$schema": "https://mintlify.com/docs.json",
 	"theme": "mint",
-	"name": "Cline",
-	"description": "AI-powered coding agent for complex work",
+	"name": "NBG",
+	"description": "面向中文开发者的 AI 编码代理",
 	"colors": {
 		"primary": "#9D4EDD",
 		"light": "#F0E6FF",
 		"dark": "#000000"
 	},
 	"logo": {
-		"light": "/assets/Cline_Logo-complete_black.png",
-		"dark": "/assets/Cline_Logo-complete_white.png"
+		"light": "/assets/robot_panel_dark.png",
+		"dark": "/assets/robot_panel_light.png"
 	},
 	"favicon": {
 		"light": "/assets/robot_panel_light.png",
@@ -56,7 +56,7 @@
 	"navigation": {
 		"tabs": [
 			{
-				"tab": "Cline",
+				"tab": "NBG",
 				"icon": "robot",
 				"groups": [
 					{
@@ -295,7 +295,7 @@
 								]
 							},
 							{
-								"group": "Control Other Cline Features",
+								"group": "Control Other NBG Features",
 								"pages": [
 									"enterprise-solutions/configuration/infrastructure-configuration/control-other-cline-features/yolo-mode",
 									"enterprise-solutions/configuration/infrastructure-configuration/control-other-cline-features/mcp-marketplace"
@@ -322,7 +322,7 @@
 				"icon": "code",
 				"groups": [
 					{
-						"group": "Cline API",
+						"group": "NBG API",
 						"pages": [
 							"api/overview",
 							"api/getting-started",
@@ -1112,6 +1112,6 @@
 		}
 	],
 	"search": {
-		"prompt": "Search Cline documentation..."
+		"prompt": "Search NBG documentation..."
 	}
 }

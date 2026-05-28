@@ -320,12 +320,12 @@ export const ChatRowContent = memo(
 				case "mistake_limit_reached":
 					return [
 						<CircleXIcon className="text-error size-2" />,
-						<span className="text-error font-bold">Cline 遇到问题...</span>,
+						<span className="text-error font-bold">NBG 遇到问题...</span>,
 					]
 				case "command":
 					return [
 						<TerminalIcon className="text-foreground size-2" />,
-						<span className="font-bold text-foreground">Cline 想执行此命令：</span>,
+						<span className="font-bold text-foreground">NBG 想执行此命令：</span>,
 					]
 				case "use_mcp_server":
 					const mcpServerUse = JSON.parse(message.text || "{}") as ClineAskUseMcpServer
@@ -336,7 +336,7 @@ export const ChatRowContent = memo(
 							<span className="codicon codicon-server text-foreground mb-[-1.5px]" />
 						),
 						<span className="ph-no-capture font-bold text-foreground break-words">
-							Cline 想在{" "}
+							NBG 想在{" "}
 							<code className="break-all">
 								{getMcpServerDisplayName(mcpServerUse.serverName, mcpMarketplaceCatalog)}
 							</code>{" "}
@@ -355,7 +355,7 @@ export const ChatRowContent = memo(
 				case "followup":
 					return [
 						<span className="codicon codicon-question text-foreground mb-[-1.5px]" />,
-						<span className="font-bold text-foreground">Cline 有问题想问：</span>,
+						<span className="font-bold text-foreground">NBG 有问题想问：</span>,
 					]
 				default:
 					return [null, null]
@@ -432,9 +432,7 @@ export const ChatRowContent = memo(
 				case "editedExistingFile":
 					const content = tool?.content || ""
 					const isApplyingPatch = content?.startsWith("%%bash") && !content.endsWith("*** End Patch\nEOF")
-					const editToolTitle = isApplyingPatch
-						? "Cline 正在创建补丁以编辑此文件："
-						: "Cline 想编辑此文件："
+					const editToolTitle = isApplyingPatch ? "NBG 正在创建补丁以编辑此文件：" : "NBG 想编辑此文件："
 					return (
 						<div>
 							<div className={HEADER_CLASSNAMES}>
@@ -468,7 +466,7 @@ export const ChatRowContent = memo(
 								<SquareMinusIcon className="size-2" />
 								{tool.operationIsLocatedInWorkspace === false &&
 									toolIcon("sign-out", "yellow", -90, "此文件位于工作区之外")}
-								<span style={{ fontWeight: "bold" }}>Cline 想删除此文件：</span>
+								<span style={{ fontWeight: "bold" }}>NBG 想删除此文件：</span>
 							</div>
 							<CodeAccordian
 								// isLoading={message.partial}
@@ -486,7 +484,7 @@ export const ChatRowContent = memo(
 								<FilePlus2Icon className="size-2" />
 								{tool.operationIsLocatedInWorkspace === false &&
 									toolIcon("sign-out", "yellow", -90, "此文件位于工作区之外")}
-								<span className="font-bold">Cline 想创建新文件：</span>
+								<span className="font-bold">NBG 想创建新文件：</span>
 							</div>
 							{backgroundEditEnabled && tool.path && tool.content ? (
 								<DiffEditRow patch={tool.content} path={tool.path} startLineNumbers={tool.startLineNumbers} />
@@ -509,7 +507,7 @@ export const ChatRowContent = memo(
 								{isImage ? <ImageUpIcon className="size-2" /> : <FileCode2Icon className="size-2" />}
 								{tool.operationIsLocatedInWorkspace === false &&
 									toolIcon("sign-out", "yellow", -90, "此文件位于工作区之外")}
-								<span className="font-bold">Cline 想读取此文件：</span>
+								<span className="font-bold">NBG 想读取此文件：</span>
 							</div>
 							<div className="bg-code rounded-sm overflow-hidden border border-editor-group-border">
 								<div
@@ -549,8 +547,8 @@ export const ChatRowContent = memo(
 									toolIcon("sign-out", "yellow", -90, "此位置位于工作区之外")}
 								<span style={{ fontWeight: "bold" }}>
 									{message.type === "ask"
-										? "Cline 想查看此目录的顶层文件："
-										: "Cline 已查看此目录的顶层文件："}
+										? "NBG 想查看此目录的顶层文件："
+										: "NBG 已查看此目录的顶层文件："}
 								</span>
 							</div>
 							<CodeAccordian
@@ -571,8 +569,8 @@ export const ChatRowContent = memo(
 									toolIcon("sign-out", "yellow", -90, "此位置位于工作区之外")}
 								<span style={{ fontWeight: "bold" }}>
 									{message.type === "ask"
-										? "Cline 想递归查看此目录中的所有文件："
-										: "Cline 已递归查看此目录中的所有文件："}
+										? "NBG 想递归查看此目录中的所有文件："
+										: "NBG 已递归查看此目录中的所有文件："}
 								</span>
 							</div>
 							<CodeAccordian
@@ -593,8 +591,8 @@ export const ChatRowContent = memo(
 									toolIcon("sign-out", "yellow", -90, "此文件位于工作区之外")}
 								<span style={{ fontWeight: "bold" }}>
 									{message.type === "ask"
-										? "Cline 想查看此目录中使用的源码定义名称："
-										: "Cline 已查看此目录中使用的源码定义名称："}
+										? "NBG 想查看此目录中使用的源码定义名称："
+										: "NBG 已查看此目录中使用的源码定义名称："}
 								</span>
 							</div>
 							<CodeAccordian
@@ -613,7 +611,7 @@ export const ChatRowContent = memo(
 								{tool.operationIsLocatedInWorkspace === false &&
 									toolIcon("sign-out", "yellow", -90, "此位置位于工作区之外")}
 								<span className="font-bold">
-									Cline 想在此目录中搜索 <code className="break-all">{tool.regex}</code>：
+									NBG 想在此目录中搜索 <code className="break-all">{tool.regex}</code>：
 								</span>
 							</div>
 							<SearchResultsDisplay
@@ -630,7 +628,7 @@ export const ChatRowContent = memo(
 						<div>
 							<div className={HEADER_CLASSNAMES}>
 								<FoldVerticalIcon className="size-2" />
-								<span className="font-bold">Cline 正在压缩对话：</span>
+								<span className="font-bold">NBG 正在压缩对话：</span>
 							</div>
 							<div className="bg-code overflow-hidden border border-editor-group-border rounded-[3px]">
 								<div
@@ -675,8 +673,8 @@ export const ChatRowContent = memo(
 									toolIcon("sign-out", "yellow", -90, "这是外部 URL")}
 								<span className="font-bold">
 									{message.type === "ask"
-										? "Cline 想从此 URL 获取内容："
-										: "Cline 已从此 URL 获取内容："}
+										? "NBG 想从此 URL 获取内容："
+										: "NBG 已从此 URL 获取内容："}
 								</span>
 							</div>
 							<div
@@ -704,8 +702,8 @@ export const ChatRowContent = memo(
 									toolIcon("sign-out", "yellow", -90, "这是外部搜索")}
 								<span className="font-bold">
 									{message.type === "ask"
-										? "Cline 想联网搜索："
-										: "Cline 已联网搜索："}
+										? "NBG 想联网搜索："
+										: "NBG 已联网搜索："}
 								</span>
 							</div>
 							<div className="bg-code border border-editor-group-border overflow-hidden rounded-xs select-text py-[9px] px-2.5">
@@ -720,7 +718,7 @@ export const ChatRowContent = memo(
 						<div>
 							<div className={HEADER_CLASSNAMES}>
 								<LightbulbIcon className="size-2" />
-								<span className="font-bold">Cline 已加载技能：</span>
+								<span className="font-bold">NBG 已加载技能：</span>
 							</div>
 							<div className="bg-code border border-editor-group-border overflow-hidden rounded-xs py-[9px] px-2.5">
 								<span className="ph-no-capture font-medium">{tool.path}</span>
@@ -1241,7 +1239,7 @@ export const ChatRowContent = memo(
 							<div>
 								<div className={HEADER_CLASSNAMES}>
 									<FilePlus2Icon className="size-2" />
-									<span className="text-foreground font-bold">Cline 想开始新任务：</span>
+									<span className="text-foreground font-bold">NBG 想开始新任务：</span>
 								</div>
 								<NewTaskPreview context={message.text || ""} />
 							</div>
@@ -1251,7 +1249,7 @@ export const ChatRowContent = memo(
 							<div>
 								<div className={HEADER_CLASSNAMES}>
 									<FilePlus2Icon className="size-2" />
-									<span className="text-foreground font-bold">Cline 想压缩你的对话：</span>
+									<span className="text-foreground font-bold">NBG 想压缩你的对话：</span>
 								</div>
 								<NewTaskPreview context={message.text || ""} />
 							</div>
@@ -1261,7 +1259,7 @@ export const ChatRowContent = memo(
 							<div>
 								<div className={HEADER_CLASSNAMES}>
 									<FilePlus2Icon className="size-2" />
-									<span className="text-foreground font-bold">Cline 想创建 GitHub Issue：</span>
+									<span className="text-foreground font-bold">NBG 想创建 GitHub Issue：</span>
 								</div>
 								<ReportBugPreview data={message.text || ""} />
 							</div>

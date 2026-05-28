@@ -88,7 +88,7 @@ export class E2ETestHelper {
 
 				try {
 					const title = await frame.title()
-					if (title.startsWith("Cline")) {
+					if (title.startsWith("NBG")) {
 						this.cachedFrame = frame
 						return frame
 					}
@@ -255,10 +255,10 @@ export class E2ETestHelper {
 	}
 
 	public async signin(webview: Frame): Promise<void> {
-		await webview.getByRole("button", { name: "Login to Cline" }).click({ delay: 100 })
+		await webview.getByRole("button", { name: "Login to NBG" }).click({ delay: 100 })
 
 		// Verify start up page is no longer visible
-		await expect(webview.getByRole("button", { name: "Login to Cline" })).not.toBeVisible()
+		await expect(webview.getByRole("button", { name: "Login to NBG" })).not.toBeVisible()
 
 		const closeButton = webview.getByRole("button", { name: "Close" })
 		let shouldCloseModal = false
