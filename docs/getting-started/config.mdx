@@ -1,6 +1,6 @@
 ---
-title: "Config"
-sidebarTitle: "Config"
+title: "配置"
+sidebarTitle: "配置"
 description: "了解 NBG 的全局配置、项目配置和当前兼容目录。"
 ---
 
@@ -9,7 +9,7 @@ NBG 当前沿用 Cline 运行时的配置目录作为兼容层，配置分为两
 - **全局配置** 位于 `~/.cline/`（当前全局兼容目录，适用于 NBG CLI、IDE 和 SDK）
 - **项目配置** 位于 `.cline/`（只作用于当前 workspace）
 
-## Configuration Directory Layout
+## 配置目录结构
 
 NBG 目前把共享配置存储在几个固定位置。主目录仍是 `~/.cline/`，结构化状态位于 `~/.cline/data/`：
 
@@ -17,12 +17,12 @@ NBG 目前把共享配置存储在几个固定位置。主目录仍是 `~/.cline
 ~/.cline/
   data/
     settings/
-      providers.json           # API keys and provider configuration
+      providers.json           # API key 和 provider 配置
       global-settings.json     # 全局设置
-      cline_mcp_settings.json  # MCP settings
+      cline_mcp_settings.json  # MCP 设置
     teams/                     # 团队状态
     sessions/                  # 会话数据
-    db/                        # SQLite databases (for example cron.db)
+    db/                        # SQLite 数据库（例如 cron.db）
     workflows/                 # 全局 workflows
   rules/                       # 全局规则
   hooks/                       # 全局 hooks
@@ -36,10 +36,10 @@ NBG 目前把共享配置存储在几个固定位置。主目录仍是 `~/.cline
 
 ```text
 ~/Documents/Cline/
-  Rules/                       # Additional global rules
-  Hooks/                       # Additional global hooks
-  Plugins/                     # Additional global plugins
-  Workflows/                   # Additional global workflows
+  Rules/                       # 额外全局规则
+  Hooks/                       # 额外全局 hooks
+  Plugins/                     # 额外全局插件
+  Workflows/                   # 额外全局 workflows
 ```
 
 项目级配置位于仓库根目录的 `.cline/`：
@@ -51,24 +51,24 @@ NBG 目前把共享配置存储在几个固定位置。主目录仍是 `~/.cline
   hooks/                       # 生命周期 hooks
   agents/                      # 项目 agent 定义
   plugins/                     # 项目插件
-  cron/                        # workspace cron specs
+  cron/                        # workspace cron 规格
 ```
 
-Notes:
+说明：
 
 - 全局 provider 设置、全局设置和 MCP 设置存储在 `~/.cline/data/settings/`。
 - 全局 workflows 从 `~/.cline/data/workflows/` 解析。
 - 全局规则、hooks、技能、agents、插件和 cron specs 直接从 `~/.cline/` 解析。
 - 为兼容旧安装，规则、hooks、插件和 workflows 也可能从 `~/Documents/Cline/` 发现。
 
-## What Goes Where?
+## 配置放在哪里？
 
-- 使用 **global (`~/.cline/`)** 存放本机 NBG CLI、IDE 和 SDK 共享的默认配置。
-- 使用 **project (`.cline/`)** 存放应该随仓库共享的团队行为。
+- 使用 **全局配置 (`~/.cline/`)** 存放本机 NBG CLI、IDE 和 SDK 共享的默认配置。
+- 使用 **项目配置 (`.cline/`)** 存放应该随仓库共享的团队行为。
 
 可以提交要与团队共享的 `.cline/` 文件，但不要把密钥提交到仓库。
 
-## Configure Through the CLI
+## 通过 CLI 配置
 
 使用交互式配置 UI：
 
@@ -76,22 +76,22 @@ Notes:
 nbg config
 ```
 
-From there, you can view/edit:
+在交互界面中可以查看或编辑：
 
-- Settings (global + workspace)
+- 设置（全局 + workspace）
 - Rules
 - Skills
 - Hooks
 
-## Useful Configuration Commands
+## 常用配置命令
 
-Use a custom configuration directory:
+使用自定义配置目录：
 
 ```bash
 nbg --config /path/to/custom/config "你的任务"
 ```
 
-Or via environment variable:
+也可以通过环境变量设置：
 
 ```bash
 export CLINE_DATA_DIR=/custom/path/to/cline
@@ -104,13 +104,13 @@ nbg "你的任务"
 nbg doctor log
 ```
 
-## Environment Variables
+## 环境变量
 
 | 变量 | 说明 |
 |------|------|
 | `CLINE_DATA_DIR` | 自定义数据目录（替代 `~/.cline/data/`） |
 | `CLINE_HUB_ADDRESS` | 覆盖 hub 地址（默认：`127.0.0.1:25463`） |
-| `CLINE_SESSION_BACKEND_MODE` | 强制 backend 模式（`local`、`hub`、`remote`、`auto`） |
+| `CLINE_SESSION_BACKEND_MODE` | 强制后端模式（`local`、`hub`、`remote`、`auto`） |
 | `CLINE_SANDBOX` | 启用沙箱模式 |
 | `CLINE_SANDBOX_DATA_DIR` | 沙箱会话存储目录 |
 | `CLINE_HOOKS_DIR` | 额外 hooks 目录 |
@@ -147,16 +147,16 @@ export CLINE_COMMAND_PERMISSIONS='{"allow": ["npm *", "git *"], "deny": ["rm -rf
 - 设置 `allow` 后，不匹配 `allow` 的命令会被拒绝
 - `allowRedirects` 控制 shell 重定向（`>`、`>>`、`<`），默认 `false`
 
-## Related Docs
+## 相关文档
 
-- [CLI Configuration](/cli/configuration)
-- [Rules](/customization/cline-rules)
+- [CLI 配置](/cli/configuration)
+- [规则](/customization/cline-rules)
 - [Skills](/customization/skills)
 - [Hooks](/customization/hooks)
-- [Plugins](/customization/plugins)
+- [插件](/customization/plugins)
 - [.clineignore](/customization/clineignore)
 
-## Security Notes
+## 安全提示
 
 <Warning>
 只使用来自可信来源的 rules、hooks、skills 和 plugins。
