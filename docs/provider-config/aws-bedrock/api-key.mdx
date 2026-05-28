@@ -1,120 +1,116 @@
 ---
 title: "API Key (Simple Setup)"
 sidebarTitle: "API Key"
-description: "Set up AWS Bedrock with Cline using Bedrock API Keys. Simplest setup for individual developers to access frontier provider."
+description: "在 NBG 中通过 Bedrock API Key 快速配置 AWS Bedrock。"
 ---
 
-### Overview
+### 概览
 
--   **AWS Bedrock:** A fully managed service that offers access to leading generative AI models (e.g., Anthropic Claude, Amazon Nova) through AWS.\
-    [Learn more about AWS Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html).
--   **Cline:** A VS Code extension that acts as a coding assistant by integrating with AI models-empowering developers to generate code, debug, and analyze data.
--   **Developer Focus:** This guide is tailored for individual developers that want to enable access to frontier models via AWS Bedrock with a simplified setup using API Keys.
+-   **AWS Bedrock：** AWS 托管的生成式 AI 服务，可访问 Anthropic Claude、Amazon Nova 等模型。\
+    参考 [AWS Bedrock 文档](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)。
+-   **NBG：** 通过 provider 配置接入 Bedrock 模型，用于代码生成、调试、分析和自动化任务。
+-   **适用场景：** 适合个人开发者或快速验证场景。企业生产环境仍建议优先使用 SSO/federated roles 或短期凭证。
 
 ---
 
-### Step 1: Prepare Your AWS Environment
+### Step 1: 准备 AWS 环境
 
-#### 1.1 Individual user setup - Create a Bedrock API Key
+#### 1.1 创建 Bedrock API key
 
-For more detailed instructions check the [documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/api-keys.html).
+详细步骤请参考 [AWS Bedrock API key 文档](https://docs.aws.amazon.com/bedrock/latest/userguide/api-keys.html)。
 
-1. **Sign in to the AWS Management Console:**\
+1. **登录 AWS Management Console：**\
    [AWS Console](https://aws.amazon.com/console/)
-2. **Access Bedrock Console:**
+2. **打开 Bedrock Console：**
     - [Bedrock Console](https://console.aws.amazon.com/bedrock)
-    - Create a new Long Lived API Key. This API Key will have by default the `AmazonBedrockLimitedAccess` IAM policy
-      [View AmazonBedrockLimitedAccess Policy Details](https://docs.aws.amazon.com/bedrock/latest/userguide/security-iam.html)
+    - 创建新的 Long Lived API Key。该 API key 默认关联 `AmazonBedrockLimitedAccess` IAM policy。
+      [查看 AmazonBedrockLimitedAccess policy 详情](https://docs.aws.amazon.com/bedrock/latest/userguide/security-iam.html)
 
-#### 1.2 Create or Modify the Policy
+#### 1.2 创建或调整 policy
 
-To ensure Cline can interact with AWS Bedrock, your IAM user or role needs specific permissions. While the `AmazonBedrockLimitedAccess` managed policy provides comprehensive access, for a more restricted and secure setup adhering to the principle of least privilege, the following minimal permissions are sufficient for Cline's core model invocation functionality:
+为了让 NBG 调用 AWS Bedrock，IAM user 或 role 需要相应权限。`AmazonBedrockLimitedAccess` managed policy 覆盖范围较广；如果希望遵循最小权限原则，核心模型调用通常需要：
 
 -   `bedrock:InvokeModel`
 -   `bedrock:InvokeModelWithResponseStream`
 -   `bedrock:CallWithBearerToken`
 
-You can create a custom IAM policy with these permissions and attach it to your IAM user or role.
+你可以创建自定义 IAM policy，并将其绑定到对应 IAM user 或 role。
 
-1.  In the AWS IAM console, create a new policy.
-2.  Use the JSON editor to add the following policy document:
+1.  在 AWS IAM console 中创建新 policy。
+2.  使用 JSON editor 添加以下 policy document：
     ```json
     {
-    	"Version": "2012-10-17",
-    	"Statement": [
-    		{
-    			"Effect": "Allow",
-    			"Action": ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream", "bedrock:CallWithBearerToken"],
-    			"Resource": "*" // For enhanced security, scope this to specific model ARNs if possible.
-    		}
-    	]
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream", "bedrock:CallWithBearerToken"],
+                "Resource": "*"
+            }
+        ]
     }
     ```
-3.  Name the policy (e.g., `ClineBedrockInvokeAccess`) and attach it to the IAM user associated with the key you created. The IAM user and the API key have the same prefix.
+3.  为 policy 命名，例如 `NBGBedrockInvokeAccess`，并绑定到你创建 API key 时关联的 IAM user。该 IAM user 与 API key 通常具有相同前缀。
 
-**Important Considerations:**
+**重要说明：**
 
--   **Model Listing in Cline:** The minimal permissions (`bedrock:InvokeModel`, `bedrock:InvokeModelWithResponseStream`) are sufficient for Cline to _use_ a model if you specify the model ID directly in Cline's settings. If you rely on Cline to dynamically list available Bedrock models, you might need additional permissions like `bedrock:ListFoundationModels`.
--   **AWS Marketplace Subscriptions:** For third-party models (e.g., Anthropic Claude), the **`AmazonBedrockLimitedAccess`** policy grants you the necessary permissions to subscribe via the AWS Marketplace. There is no explicit access to be enabled. For Anthropic models you are still required to submit a First Time Use (FTU) form via the Console. If you get the following message in the Cline chat `[ERROR] Failed to process response: Model use case details have not been submitted for this account. Fill out the Anthropic use case details form before using the model.` then open the [Playground in the AWS Bedrock Console](https://console.aws.amazon.com/bedrock/home?#/text-generation-playground), select any Anthropic model and fill in the form (you might need to send a prompt first)
+-   **模型列表：** 如果在 NBG 中直接填写 model ID，最小权限通常足够调用模型。若需要动态列出可用 Bedrock 模型，可能还需要 `bedrock:ListFoundationModels`。
+-   **AWS Marketplace 订阅：** 第三方模型，例如 Anthropic Claude，可能需要在 AWS Marketplace 或 Bedrock Console 中完成订阅和 First Time Use (FTU) 表单。如果收到 `Model use case details have not been submitted for this account`，请打开 [AWS Bedrock Console Playground](https://console.aws.amazon.com/bedrock/home?#/text-generation-playground)，选择对应 Anthropic 模型并填写用途信息。
 
 ---
 
-### Step 2: Verify Regional Access
+### Step 2: 确认区域访问
 
-#### 2.1 Choose and Confirm a Region
+#### 2.1 选择并确认 Region
 
-1. **Select a Region:**\
-   AWS Bedrock is available in multiple regions (e.g., US East, Europe, Asia Pacific). Choose the region that meets your latency and compliance needs.\
+1. **选择 Region：**\
+   AWS Bedrock 在多个区域可用，例如 US East、Europe、Asia Pacific。根据延迟、合规和团队策略选择区域。\
    [AWS Global Infrastructure](https://aws.amazon.com/about-aws/global-infrastructure/regions_az/)
-2. **Verify Model Access:**
-    - **Note:** Some models are only accessible via an [Inference Profile](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html). In such case check the box "Cross Region Inference".
+2. **验证模型访问：**
+    - 部分模型只能通过 [Inference Profile](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html) 访问。此类模型需要在 NBG 中勾选 "Cross Region Inference"。
 
 ---
 
-### Step 3: Configure the Cline VS Code Extension
+### Step 3: 在 NBG 中配置
 
-#### 3.1 Install and Open Cline
+#### 3.1 安装并打开 NBG
 
-1. **Install VS Code:**\
-   Download from the [VS Code website](https://code.visualstudio.com/).
-2. **Install the Cline Extension:**
-    - Open VS Code.
-    - Go to the Extensions Marketplace (`Ctrl+Shift+X` or `Cmd+Shift+X`).
-    - Search for **Cline** and install it.
+如果尚未安装 NBG，请参考 [Getting Started](/getting-started/installing-cline)。
 
-#### 3.2 Configure Cline Settings
+#### 3.2 配置 NBG 设置
 
-1. **Open Cline Settings:**
-    - Click on the settings ⚙️ to select your API Provider.
-2. **Select AWS Bedrock as the API Provider:**
-    - From the API Provider dropdown, choose **AWS Bedrock**.
-3. **Enter Your AWS API Key:**
-    - Input your **API Key**
-    - Specify the correct **AWS Region** (e.g., `us-east-1` or your enterprise-approved region).
-4. **Select a Provider Model:**
-5. **Save and Test:**
-    - Click **Done/Save** to apply your settings.
-    - Test the integration by sending a simple prompt (e.g., "Generate a Python function to check if a number is prime.").
+1. **打开 NBG 设置：**
+    - 点击设置图标 ⚙️ 进入 API Provider 配置。
+2. **选择 AWS Bedrock provider：**
+    - 在 "API Provider" 下拉菜单中选择 **AWS Bedrock**。
+3. **填写 AWS API key：**
+    - 输入 **API Key**。
+    - 选择正确的 **AWS Region**，例如 `us-east-1` 或企业批准的区域。
+4. **选择模型：**
+    - 选择可用的 Bedrock provider model。
+5. **保存并测试：**
+    - 点击 **Done/Save** 应用设置。
+    - 发送一个简单请求验证连接，例如生成一个判断质数的 Python 函数。
 
 ---
 
-### Step 4: Security, Monitoring, and Best Practices
+### Step 4: 安全、监控与最佳实践
 
-1. **Secure Access:**
-    - Prefer AWS SSO/federated roles over long-lived API Key when possible.
+1. **访问安全：**
+    - 可行时优先使用 AWS SSO/federated roles，而不是长期 API key。
     - [AWS IAM Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
-2. **Enhance Network Security:**
-    - Consider setting up [AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/userguide/endpoint-services-overview.html) to securely connect to Bedrock.
-3. **Monitor and Log Activity:**
-    - Enable AWS CloudTrail to log Bedrock API calls.
-    - Use CloudWatch to monitor metrics like invocation count, latency, and token usage.
-    - Set up alerts for abnormal activity.
-4. **Handle Errors and Manage Costs:**
-    - Implement exponential backoff for throttling errors.
-    - Use AWS Cost Explorer and set billing alerts to track usage.\
+2. **网络安全：**
+    - 可考虑使用 [AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/userguide/endpoint-services-overview.html) 安全连接 Bedrock。
+3. **监控与日志：**
+    - 启用 AWS CloudTrail 记录 Bedrock API 调用。
+    - 使用 CloudWatch 监控调用次数、延迟和 token 用量。
+    - 为异常活动设置告警。
+4. **错误处理与成本管理：**
+    - 对 throttling errors 实现指数退避。
+    - 使用 AWS Cost Explorer 和账单告警跟踪使用量。\
       [AWS Cost Management](https://docs.aws.amazon.com/cost-management/latest/userguide/what-is-aws-cost-management.html)
-5. **Regular Audits and Compliance:**
-    - Periodically review IAM roles and CloudTrail logs.
-    - Follow internal data privacy and governance policies.
+5. **审计与合规：**
+    - 定期审查 IAM roles 和 CloudTrail logs。
+    - 遵守内部数据隐私和治理策略。
 
 ---
