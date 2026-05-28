@@ -1,52 +1,55 @@
 ---
-title: "Cline API"
-sidebarTitle: "Overview"
-description: "Programmatic access to AI models through an OpenAI-compatible Chat Completions API."
+title: "NBG API"
+sidebarTitle: "概览"
+description: "通过 OpenAI-compatible Chat Completions API 以编程方式访问模型。"
 ---
 
-Welcome to the Cline API documentation. Use the same models that power the Cline extension and CLI from any language, framework, or tool that speaks the OpenAI format.
+欢迎阅读 NBG API 文档。NBG API 面向自有模型网关、企业部署和脚本集成，提供 OpenAI-compatible Chat Completions 接口。
 
-## What is the Cline API?
+## 什么是 NBG API？
 
-The Cline API is an OpenAI-compatible Chat Completions endpoint. You authenticate once with a Cline API key and get access to models from Anthropic, OpenAI, Google, and more through a single base URL. No need to manage separate keys for each provider.
+NBG API 是 OpenAI-compatible Chat Completions endpoint。你可以把 Anthropic、OpenAI、Google、自托管模型或其他兼容 provider 接到同一个 base URL 后面，应用侧只需要使用统一 API key 和模型 ID。
 
 ```
-Your App  →  Cline API (api.cline.bot)  →  Anthropic / OpenAI / Google / etc.
+Your App  ->  NBG API Gateway  ->  Anthropic / OpenAI / Google / local models / etc.
 ```
 
 <CardGroup cols={2}>
-  <Card title="Getting Started" icon="rocket" href="/api/getting-started">
-    Create an API key and make your first request in under a minute.
+  <Card title="快速开始" icon="rocket" href="/api/getting-started">
+    配置 API key，并发起第一条请求。
   </Card>
-  <Card title="Authentication" icon="key" href="/api/authentication">
-    API keys, account tokens, key rotation, and security best practices.
+  <Card title="认证" icon="key" href="/api/authentication">
+    API keys、token rotation 和安全最佳实践。
   </Card>
   <Card title="Chat Completions" icon="message" href="/api/chat-completions">
-    Full endpoint reference with request schemas, streaming, and tool calling.
+    请求 schema、streaming 和 tool calling endpoint reference。
   </Card>
-  <Card title="Code Examples" icon="code" href="/api/sdk-examples">
-    Ready-to-copy examples for Python, Node.js, curl, and the Cline CLI.
+  <Card title="代码示例" icon="code" href="/api/sdk-examples">
+    Python、Node.js、curl 和 NBG CLI 示例。
   </Card>
 </CardGroup>
 
-## Explore the Reference
+## 参考文档
 
 <CardGroup cols={3}>
-  <Card title="Models" icon="brain" href="/api/models">
-    Browse available models, free tier options, reasoning support, and selection guidance.
+  <Card title="模型" icon="brain" href="/api/models">
+    查看模型 ID、reasoning 支持和选择建议。
   </Card>
-  <Card title="Errors" icon="triangle-exclamation" href="/api/errors">
-    Error codes, mid-stream errors, retry strategies, and debugging tips.
+  <Card title="错误" icon="triangle-exclamation" href="/api/errors">
+    错误码、mid-stream errors、重试策略和调试建议。
   </Card>
   <Card title="Enterprise API" icon="building" href="/enterprise-solutions/api-reference">
-    Admin endpoints for managing users, organizations, billing, and API keys.
+    管理 users、organizations、billing 和 API keys 的 admin endpoints。
   </Card>
 </CardGroup>
 
-## Quick Start
+## 快速开始
 
 ```bash
-curl -X POST https://api.cline.bot/api/v1/chat/completions \
+export NBG_API_BASE_URL="https://<your-nbg-api>/api/v1"
+export NBG_API_KEY="YOUR_API_KEY"
+
+curl -X POST "$NBG_API_BASE_URL/chat/completions" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -55,4 +58,4 @@ curl -X POST https://api.cline.bot/api/v1/chat/completions \
   }'
 ```
 
-Get your API key at [app.cline.bot](https://app.cline.bot) (Settings > API Keys), then follow the [Getting Started](/api/getting-started) guide.
+API key 应由你的 NBG API gateway 或企业控制台签发。旧 Cline 托管 dashboard 不作为 NBG 默认商业化入口。

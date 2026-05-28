@@ -1,21 +1,21 @@
 ---
-title: "Authentication"
-sidebarTitle: "Authentication"
-description: "How to authenticate with the Cline API using API keys or account tokens."
+title: "认证"
+sidebarTitle: "认证"
+description: "使用 API keys 或 account tokens 认证 NBG API。"
 ---
 
-Every request to the Cline API requires authentication via a Bearer token in the `Authorization` header.
+每个 NBG API 请求都需要在 `Authorization` header 中携带 Bearer token。
 
-## Authentication Methods
+## 认证方式
 
-There are two ways to authenticate:
+常见认证方式如下：
 
-| Method | Use case | How to get it |
+| 方式 | 使用场景 | 获取方式 |
 |--------|----------|---------------|
-| **API key** | Direct API calls, scripts, CI/CD | Create at [app.cline.bot](https://app.cline.bot) Settings > API Keys |
-| **Account auth token** | Cline extension and CLI | Generated automatically when you sign in |
+| **API key** | 直接 API calls、scripts、CI/CD | 由你的 NBG API gateway 或企业控制台签发 |
+| **Account auth token** | IDE、CLI 或兼容账号体系 | 登录后自动生成和管理 |
 
-Both methods use the same header format:
+两种方式使用相同 header 格式：
 
 ```bash
 Authorization: Bearer YOUR_TOKEN
@@ -23,86 +23,90 @@ Authorization: Bearer YOUR_TOKEN
 
 ## API Keys
 
-API keys are the recommended authentication method for programmatic access.
+API keys 是程序化访问的推荐方式。
 
-### Creating a Key
+### 创建 Key
 
 <Steps>
-  <Step title="Sign in">
-    Go to [app.cline.bot](https://app.cline.bot) and sign in.
+  <Step title="打开控制台">
+    打开你的 NBG API gateway 或企业控制台。
   </Step>
-  <Step title="Open API Keys">
-    Navigate to **Settings** > **API Keys**.
+  <Step title="进入 API Keys">
+    进入 **Settings** > **API Keys**。
   </Step>
-  <Step title="Create and copy">
-    Create a new key. Copy it immediately as you will not be able to see it again.
+  <Step title="创建并复制">
+    创建新 key，并立即复制保存。多数控制台不会再次显示完整 key。
   </Step>
 </Steps>
 
-### Deleting a Key
+### 删除 Key
 
-You can revoke an API key at any time from the same Settings > API Keys page. Deleted keys stop working immediately.
+可以随时在 **Settings** > **API Keys** 页面撤销 API key。删除后的 key 会立即失效。
 
-You can also manage keys programmatically through the [Enterprise API](/enterprise-solutions/api-reference#api-keys):
+如果部署提供 Enterprise API，也可以通过 API 管理 keys：
 
 ```bash
-# List your keys
-curl https://api.cline.bot/api/v1/api-keys \
+export NBG_API_BASE_URL="https://<your-nbg-api>/api/v1"
+
+# 列出 keys
+curl "$NBG_API_BASE_URL/api-keys" \
   -H "Authorization: Bearer YOUR_TOKEN"
 
-# Delete a key
-curl -X DELETE https://api.cline.bot/api/v1/api-keys/KEY_ID \
+# 删除 key
+curl -X DELETE "$NBG_API_BASE_URL/api-keys/KEY_ID" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
 ## Account Auth Tokens
 
-When you sign in to the Cline extension (VS Code, JetBrains) or CLI, an account auth token is generated and managed automatically. You do not need to handle these tokens manually.
+当你在 NBG IDE 入口或 CLI 中登录时，account auth token 会自动生成并管理。通常不需要手动处理这些 tokens。
 
-The Cline CLI uses these tokens when you authenticate via:
+NBG CLI 会在以下认证流程中使用这些 tokens：
 
 ```bash
-# Interactive sign-in
-cline auth
+# 交互式登录
+nbg auth
 
-# Or quick setup with an API key
-cline auth -p cline -k "YOUR_API_KEY" -m anthropic/claude-sonnet-4-6
+# 或使用 API key 快速配置兼容 provider
+nbg auth -p openai-compatible -k "YOUR_API_KEY" -m anthropic/claude-sonnet-4-6
 ```
 
-See the [CLI Reference](/cli/cli-reference#cline-auth) for all auth options.
+完整认证参数见 [CLI 参考](/cli/cli-reference)。
 
-## Security Best Practices
+## 安全最佳实践
 
-**Do:**
-- Store API keys in environment variables or a secrets manager
-- Use different keys for development and production
-- Rotate keys periodically
-- Delete keys you no longer use
+**建议：**
+- 将 API keys 存入环境变量或 secrets manager
+- 开发和生产使用不同 keys
+- 定期轮换 keys
+- 删除不再使用的 keys
 
-**Do not:**
-- Commit keys to version control
-- Share keys in chat or email
-- Embed keys in client-side code (browsers, mobile apps)
-- Log keys in application output
+**不要：**
+- 将 keys 提交到版本控制
+- 在聊天或邮件中分享 keys
+- 将 keys 嵌入浏览器或移动端代码
+- 在应用输出中记录 keys
 
-### Using Environment Variables
+### 使用环境变量
 
 ```bash
-# Set the key
-export CLINE_API_KEY="your_api_key_here"
+# 设置 key
+export NBG_API_KEY="your_api_key_here"
+export NBG_API_BASE_URL="https://<your-nbg-api>/api/v1"
 
-# Use it in requests
-curl -X POST https://api.cline.bot/api/v1/chat/completions \
-  -H "Authorization: Bearer $CLINE_API_KEY" \
+# 在请求中使用
+curl -X POST "$NBG_API_BASE_URL/chat/completions" \
+  -H "Authorization: Bearer $NBG_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model": "anthropic/claude-sonnet-4-6", "messages": [{"role": "user", "content": "Hello"}]}'
 ```
 
-### Using a .env File
+### 使用 .env 文件
 
 ```bash
 # .env (add to .gitignore)
-CLINE_API_KEY=your_api_key_here
+NBG_API_KEY=your_api_key_here
+NBG_API_BASE_URL=https://<your-nbg-api>/api/v1
 ```
 
 ```python
@@ -110,28 +114,28 @@ import os
 from openai import OpenAI
 
 client = OpenAI(
-    base_url="https://api.cline.bot/api/v1",
-    api_key=os.environ["CLINE_API_KEY"],
+    base_url=os.environ["NBG_API_BASE_URL"],
+    api_key=os.environ["NBG_API_KEY"],
 )
 ```
 
-## Custom Headers
+## 自定义 Headers
 
-The Cline API accepts optional headers for tracking and identification:
+NBG API 可以接受用于追踪和识别的可选 headers：
 
-| Header | Description |
+| Header | 说明 |
 |--------|-------------|
-| `HTTP-Referer` | Your application's URL. Helps with usage tracking. |
-| `X-Title` | Your application's name. Appears in usage logs. |
-| `X-Task-ID` | A unique task identifier. Used internally by the Cline extension. |
+| `HTTP-Referer` | 你的应用 URL，帮助追踪用量来源。 |
+| `X-Title` | 你的应用名称，可显示在使用日志中。 |
+| `X-Task-ID` | 唯一任务标识，便于排查和关联请求。 |
 
-## Related
+## 相关文档
 
 <CardGroup cols={2}>
-  <Card title="Getting Started" icon="rocket" href="/api/getting-started">
-    Create your first API key and make a request.
+  <Card title="快速开始" icon="rocket" href="/api/getting-started">
+    创建 API key 并发起请求。
   </Card>
   <Card title="Enterprise API Keys" icon="building" href="/enterprise-solutions/api-reference#api-keys">
-    Manage API keys programmatically.
+    通过 API 管理 keys。
   </Card>
 </CardGroup>
