@@ -1,65 +1,63 @@
 ---
 title: "Z AI (Zhipu AI)"
-description: "Learn how to configure and use Z AI's GLM models with Cline. Experience advanced hybrid reasoning, agentic capabilities, and open-source excellence with regional optimization."
+description: "在 NBG 中配置并使用 Z AI 的 GLM 模型。"
 ---
 
-Z AI (formerly Zhipu AI) offers the GLM model series, featuring hybrid reasoning capabilities and agentic AI design. These models excel in unified reasoning, coding, and intelligent agent applications while maintaining open-source accessibility under MIT license.
+Z AI (formerly Zhipu AI) 提供 GLM 模型系列，覆盖混合推理、编码和智能体应用等场景，并提供国际区和中国区接入方式。
 
 **Website:** [https://z.ai/model-api](https://z.ai/model-api) (International) | [https://open.bigmodel.cn/](https://open.bigmodel.cn/) (China)
 
-### Getting an API Key
+### 获取 API key
 
-#### International Users
-1.  **Sign Up/Sign In:** Go to [https://z.ai/model-api](https://z.ai/model-api). Create an account or sign in.
-2.  **Navigate to API Keys:** Access your account dashboard and find the API keys section.
-3.  **Create a Key:** Generate a new API key for your application.
-4.  **Copy the Key:** Copy the API key immediately and store it securely.
+#### 国际区用户
+1.  **注册或登录：** 打开 [https://z.ai/model-api](https://z.ai/model-api)，创建账号或登录现有账号。
+2.  **进入 API Keys：** 在账号控制台中找到 API keys 区域。
+3.  **创建密钥：** 为应用生成新的 API key。
+4.  **复制密钥：** 立即复制 API key，并妥善保存。
 
-#### China Mainland Users
-1.  **Sign Up/Sign In:** Go to [https://open.bigmodel.cn/](https://open.bigmodel.cn/). Create an account or sign in.
-2.  **Navigate to API Keys:** Access your account dashboard and find the API keys section.
-3.  **Create a Key:** Generate a new API key for your application.
-4.  **Copy the Key:** Copy the API key immediately and store it securely.
+#### 中国大陆用户
+1.  **注册或登录：** 打开 [https://open.bigmodel.cn/](https://open.bigmodel.cn/)，创建账号或登录现有账号。
+2.  **进入 API Keys：** 在账号控制台中找到 API keys 区域。
+3.  **创建密钥：** 为应用生成新的 API key。
+4.  **复制密钥：** 立即复制 API key，并妥善保存。
 
-**Note:** Pricing differs between International and China regions. China region pricing is approximately 50% lower.
+**注意：** 国际区和中国区的可用模型、价格和计费规则可能不同，请以对应控制台为准。
 
-### Configuration in Cline
+### 在 NBG 中配置
 
-> See [Authorization & Model Selection](/getting-started/authorizing-with-cline#menu).
+> 参考 [认证与模型选择](/getting-started/authorizing-with-cline#menu)。
 
-1.  **Open Cline Settings:** Click the settings icon (⚙️) in the Cline panel.
-2.  **Select Provider:** Choose "Z AI" from the "API Provider" dropdown.
-3.  **Select Region:** Choose your region:
-    -   "International" for global access
-    -   "China" for mainland China access
-4.  **Enter API Key:** Paste your Z AI API key into the "Z AI API Key" field.
-5.  **Select Model:** Choose your desired model from the "Model" dropdown.
+1.  **打开 NBG 设置：** 在 NBG 面板中点击设置图标 (⚙️)。
+2.  **选择 provider：** 在 "API Provider" 下拉菜单中选择 "Z AI"。
+3.  **选择区域：** 根据账号选择：
+    -   "International"：国际区
+    -   "China"：中国大陆区
+4.  **填写 API key：** 将 Z AI API key 粘贴到 "Z AI API Key" 字段。
+5.  **选择模型：** 在 "Model" 下拉菜单中选择需要使用的模型。
 
 ### GLM Coding Plans
 
-Z AI offers subscription plans specifically designed for coding applications. These plans provide cost-effective access to GLM series models through a prompt-based structure rather than traditional API usage billing.
+Z AI 提供面向编码应用的订阅计划。此类计划通常通过 prompt-based 结构访问 GLM 系列模型，而不是传统 API 用量计费。
 
-#### Setting up GLM Coding Plans
+#### 配置 GLM Coding Plans
 
-To use the GLM Coding Plans with Cline:
+在 NBG 中使用 GLM Coding Plans：
 
-1. **Subscribe:** Go to [https://z.ai/subscribe](https://z.ai/subscribe) and choose your plan.
+1. **订阅：** 打开 [https://z.ai/subscribe](https://z.ai/subscribe)，选择合适的 plan。
 
-2. **Create API Key:** After subscribing, log into your zAI dashboard and create an API key for your coding plan.
+2. **创建 API key：** 订阅后登录 zAI dashboard，为 coding plan 创建 API key。
 
-3. **Configure in Cline:** Open Cline settings, select "Z AI" as your provider, and paste your API key into the "Z AI API Key" field.
+3. **在 NBG 中配置：** 打开 NBG 设置，选择 "Z AI" provider，并将 API key 粘贴到 "Z AI API Key" 字段。
 
-<Frame>
-  <img src="https://storage.googleapis.com/cline_public_images/docs/assets/zAI-provider.png" alt="Cline settings with zAI provider selected and API key field highlighted" />
-</Frame>
+配置完成后，NBG 会通过所选区域的 Z AI endpoint 访问 GLM 模型。
 
-The setup connects your subscription directly to Cline, giving you access to GLM-4.5's tool-calling capabilities optimized for coding workflows.
+该配置会将订阅能力接入 NBG，以便在编码工作流中使用 GLM 模型的 tool-calling 能力。
 
-### Regional Optimization
+### 区域优化
 
 #### API Endpoints
-- **International:** Uses `https://api.z.ai/api/paas/v4`
-- **China:** Uses `https://open.bigmodel.cn/api/paas/v4`
+- **International：** 使用 `https://api.z.ai/api/paas/v4`
+- **China：** 使用 `https://open.bigmodel.cn/api/paas/v4`
 
-#### Model Availability
-The region setting determines both API endpoint and available models, with automatic filtering to ensure compatibility with your selected region.
+#### 模型可用性
+区域设置会同时决定 API endpoint 和可用模型，并自动过滤不兼容当前区域的模型。

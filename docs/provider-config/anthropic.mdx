@@ -1,69 +1,68 @@
 ---
 title: "Anthropic / Claude Code"
-description: "Configure Anthropic API keys or Claude Code subscription with Cline."
+description: "在 NBG 中通过 Anthropic API key 或 Claude Code 订阅配置 Claude。"
 ---
 
 **Website:** [https://www.anthropic.com/](https://www.anthropic.com/)
 
-## Choose an Anthropic Path
+## 选择 Anthropic 接入方式
 
-- **[Anthropic API (key-based)](#getting-an-api-key):** Use an Anthropic API key.
-- **[Claude Code (subscription-based)](#claude-code-subscription):** Use your Claude Max/Pro subscription through the Claude CLI.
+- **[Anthropic API (key-based)](#getting-an-api-key)：** 使用 Anthropic API key。
+- **[Claude Code (subscription-based)](#claude-code-subscription)：** 通过 Claude CLI 使用 Claude Max/Pro 订阅。
 
 ## Anthropic API (key-based)
 
-### Getting an API Key
+### 获取 API key
 
-1.  **Sign Up/Sign In:** Go to the [Anthropic Console](https://console.anthropic.com/). Create an account or sign in.
-2.  **Navigate to API Keys:** Go to the [API keys](https://console.anthropic.com/settings/keys) section.
-3.  **Create a Key:** Click "Create Key". Give your key a descriptive name (e.g., "Cline").
-4.  **Copy the Key:** **Important:** Copy the API key _immediately_. You will not be able to see it again. Store it securely.
+1.  **注册或登录：** 打开 [Anthropic Console](https://console.anthropic.com/)，创建账号或登录现有账号。
+2.  **进入 API Keys：** 打开 [API keys](https://console.anthropic.com/settings/keys) 页面。
+3.  **创建密钥：** 点击 "Create Key"，使用易识别的名称，例如 "NBG"。
+4.  **复制密钥：** **重要：** 立即复制 API key。离开页面后通常无法再次查看，请妥善保存。
 
-### Configuration in Cline
+### 在 NBG 中配置
 
-> See [Authorization & Model Selection](/getting-started/authorizing-with-cline#menu).
+> 参考 [认证与模型选择](/getting-started/authorizing-with-cline#menu)。
 
-1.  **Open Cline Settings:** Click the settings icon (⚙️) in the Cline panel.
-2.  **Select Provider:** Choose "Anthropic" from the "API Provider" dropdown.
-3.  **Enter API Key:** Paste your Anthropic API key into the "Anthropic API Key" field.
-4.  **Select Model:** Choose your desired Claude model from the "Model" dropdown.
-5.  **(Optional) Custom Base URL:** If you need to use a custom base URL for the Anthropic API, check "Use custom base URL" and enter the URL. Most users won't need to adjust this setting.
+1.  **打开 NBG 设置：** 在 NBG 面板中点击设置图标 (⚙️)。
+2.  **选择 provider：** 在 "API Provider" 下拉菜单中选择 "Anthropic"。
+3.  **填写 API key：** 将 Anthropic API key 粘贴到 "Anthropic API Key" 字段。
+4.  **选择模型：** 在 "Model" 下拉菜单中选择需要使用的 Claude 模型。
+5.  **可选，自定义 Base URL：** 如需使用 Anthropic API 的自定义 base URL，勾选 "Use custom base URL" 并填写地址。大多数用户无需修改。
 
 ## Claude Code (Subscription)
 
-Use this path if you already have Claude Max/Pro and want to use subscription-based access in Cline.
+如果你已经拥有 Claude Max/Pro，并希望在 NBG 中通过订阅方式访问 Claude，可使用该路径。
 
-1. Install and authenticate Claude CLI via Anthropic docs: [Claude Code setup](https://docs.anthropic.com/en/docs/claude-code/setup).
-2. In Cline settings, select **Claude Code** as provider.
-3. Set the Claude CLI path (usually `claude` if available in PATH).
+1. 按 Anthropic 文档安装并认证 Claude CLI：[Claude Code setup](https://docs.anthropic.com/en/docs/claude-code/setup)。
+2. 在 NBG 设置中选择 **Claude Code** provider。
+3. 设置 Claude CLI 路径。如果 `claude` 已在 PATH 中，通常直接填写 `claude`。
 
-Find Claude path:
+查找 Claude 路径：
 - macOS / Linux / WSL / Git Bash: `which claude`
 - Windows Command Prompt: `where claude`
 
-Notes:
-- Uses your Claude subscription limits instead of API token billing.
-- Responses may not stream token-by-token.
-- Image uploads and prompt caching are limited in this mode.
+说明：
+- 使用 Claude 订阅额度，而不是 Anthropic API token 计费。
+- 响应可能不会按 token 逐步流式返回。
+- 此模式下图片上传和 prompt caching 能力有限。
 
 ### Extended Thinking
 
-Anthropic models offer an "Extended Thinking" feature, designed to give them enhanced reasoning capabilities for complex tasks. This feature allows the model to output its step-by-step thought process before delivering a final answer, providing transparency and enabling more thorough analysis for challenging prompts.
+Anthropic 模型提供 "Extended Thinking" 功能，用于增强复杂任务中的推理能力。该功能会返回 `thinking` 内容块或推理摘要，并在最终回答前提供更多分析信号。
 
-When extended thinking is in Cline, the model generates `thinking` content blocks that detail its internal reasoning. These insights are then incorporated into its final response.
-Cline users can leverage this by checking the `Enable Extended Thinking` box below the model selection menu after selecting a Claude Model from any provider.
+在 NBG 中启用 extended thinking 后，模型会生成 `thinking` 内容块，并将其用于最终回答。选择 Claude 模型后，可在模型选择菜单下方勾选 `Enable Extended Thinking`。
 
-**Key Aspects of Extended Thinking:**
+**关键点：**
 
--   **Summarized Thinking (Claude 3.7+):** For Claude 3.7+ models, the API returns a summary of the full thinking process to balance insight with efficiency and prevent misuse. You are billed for the full thinking tokens, not just the summary.
--   **Streaming:** Extended thinking responses, including the `thinking` blocks, can be streamed.
--   **Tool Use & Prompt Caching:** Extended thinking interacts with tool use (requiring thinking blocks to be passed back) and prompt caching (with specific behaviors around cache invalidation and context).
+-   **Summarized Thinking (Claude 3.7+)：** Claude 3.7+ 模型会返回完整 thinking 的摘要，以平衡可观察性、效率和滥用风险。计费通常按完整 thinking token 计算，而不只按摘要计算。
+-   **Streaming：** Extended thinking 响应，包括 `thinking` blocks，可进行流式返回。
+-   **Tool Use 与 Prompt Caching：** Extended thinking 会影响 tool use 和 prompt caching，例如需要回传 thinking blocks，以及涉及上下文和缓存失效规则。
 
-For comprehensive details on how extended thinking works, including API examples, interaction with tool use, prompt caching, and pricing, please refer to the [official Anthropic documentation on Extended Thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking).
+完整机制、API 示例、tool use、prompt caching 和价格说明，请参考 [Anthropic Extended Thinking 官方文档](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking)。
 
-### Tips and Notes
+### 提示
 
--   **Prompt Caching:** Claude 3 models support [prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching), which can significantly reduce costs and latency for repeated prompts.
--   **Context Window:** Claude models have large context windows (200,000 tokens), allowing you to include a significant amount of code and context in your prompts.
--   **Pricing:** Refer to the [Anthropic Pricing](https://www.anthropic.com/pricing) page for the latest pricing information.
--   **Rate Limits:** Anthropic has strict rate limits based on [usage tiers](https://docs.anthropic.com/en/api/rate-limits#requirements-to-advance-tier). If you're repeatedly hitting rate limits, consider contacting Anthropic sales or accessing Claude through a different provider like [OpenRouter](/provider-config/openrouter) or [Requesty](/provider-config/other-30-plus-providers#requesty).
+-   **Prompt Caching：** Claude 3 模型支持 [prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching)，可降低重复 prompt 的成本和延迟。
+-   **上下文窗口：** Claude 模型提供较大的上下文窗口，便于在 prompt 中包含更多代码和上下文。
+-   **价格：** 最新价格请参考 [Anthropic Pricing](https://www.anthropic.com/pricing)。
+-   **速率限制：** Anthropic 根据 [usage tiers](https://docs.anthropic.com/en/api/rate-limits#requirements-to-advance-tier) 设置速率限制。如果频繁触发限制，可联系 Anthropic sales，或通过 [OpenRouter](/provider-config/openrouter)、[Requesty](/provider-config/other-30-plus-providers#requesty) 等 provider 访问 Claude。

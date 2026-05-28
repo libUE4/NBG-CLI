@@ -1,32 +1,32 @@
 ---
 title: "OpenAI Compatible"
-description: "Learn how to configure Cline with various AI model providers that offer OpenAI-compatible APIs."
+description: "在 NBG 中配置支持 OpenAI-compatible API 的模型 provider。"
 ---
 
-Cline supports a wide range of AI model providers that offer APIs compatible with the OpenAI API standard. This allows you to use models from providers _other than_ OpenAI, while still utilizing a familiar API interface. This includes providers such as:
+NBG 支持多种兼容 OpenAI API 标准的模型 provider。你可以在不使用官方 OpenAI API 的情况下，继续通过熟悉的接口访问其他 provider 的模型，例如：
 
--   **Local models** running through tools like Ollama and LM Studio (which are covered in their respective sections).
--   **Cloud providers** like Perplexity, Together AI, Anyscale, and many others.
--   **Any other provider** that offers an OpenAI-compatible API endpoint.
+-   **本地模型：** 通过 Ollama、LM Studio 等工具运行的模型。
+-   **云端 provider：** Perplexity、Together AI、Anyscale 等。
+-   **其他 provider：** 任意提供 OpenAI-compatible API endpoint 的服务。
 
-This document focuses on setting up providers _other than_ the official OpenAI API (which has its own [dedicated configuration page](/provider-config/openai)).
+本文重点说明官方 OpenAI API 之外的 provider。官方 OpenAI API 请参考 [OpenAI 配置页](/provider-config/openai)。
 
-### General Configuration
+### 通用配置
 
-The key to using an OpenAI-compatible provider with Cline is to configure these main settings:
+在 NBG 中使用 OpenAI-compatible provider，核心是配置以下字段：
 
-1.  **Base URL:** This is the API endpoint specific to the provider. It will _not_ be `https://api.openai.com/v1` (that URL is for the official OpenAI API).
-2.  **API Key:** This is the secret key you obtain from your chosen provider. (or **Use Azure Identity Authentication**)
-3.  **Model ID:** This is the specific name or identifier for the model you wish to use.
+1.  **Base URL：** provider 的 API endpoint。它通常不是 `https://api.openai.com/v1`，该地址用于官方 OpenAI API。
+2.  **API Key：** 从目标 provider 获取的密钥，或使用 **Use Azure Identity Authentication**。
+3.  **Model ID：** 需要调用的模型名称或标识符。
 
-You'll find these settings in the Cline settings panel (click the ⚙️ icon):
+在 NBG 设置面板中点击 ⚙️ 图标后，可配置：
 
--   **API Provider:** Select "OpenAI Compatible".
--   **Base URL:** Enter the base URL provided by your chosen provider. **This is a crucial step.**
--   **API Key:** Enter your API key from the provider.
--   **Model:** Choose or enter the model ID.
--   **Use Azure Identity Authentication:** Check the box to authenticate with your Azure managed identity (Note that this will not trigger the authentication, it will use the existing one (e.g., "az login"))
--   **Model Configuration:** This section allows you to customize advanced parameters for the model, such as:
+-   **API Provider：** 选择 "OpenAI Compatible"。
+-   **Base URL：** 填写目标 provider 提供的 base URL。**这是关键步骤。**
+-   **API Key：** 填写 provider API key。
+-   **Model：** 选择或输入 model ID。
+-   **Use Azure Identity Authentication：** 勾选后使用已有的 Azure managed identity 认证。该选项不会触发新的登录流程，而是复用已有状态，例如 `az login`。
+-   **Model Configuration：** 可自定义模型高级参数，例如：
     -   Max Output Tokens
     -   Context Window size
     -   Image Support capabilities
@@ -34,26 +34,26 @@ You'll find these settings in the Cline settings panel (click the ⚙️ icon):
     -   Input Price (per token/million tokens)
     -   Output Price (per token/million tokens)
 
-**Note:** If you are using a different OpenAI-compatible provider (such as Together AI, Anyscale, etc.), the available model IDs will differ. Always refer to your specific provider's documentation for their supported model names and any unique configuration details.
+**注意：** 不同 OpenAI-compatible provider 的 model ID 可能不同。请以目标 provider 的文档为准，确认支持的模型名称和特殊配置要求。
 
-### v0 (Vercel SDK) in Cline:
+### 在 NBG 中使用 v0 (Vercel SDK)
 
--   For developers working with v0, their [AI SDK documentation](https://vercel.com/docs/v0/cline) provides valuable insights and examples for integrating various models, many of which are OpenAI-compatible. This can be a helpful resource for understanding how to structure calls and manage configurations when using Cline with services deployed on or integrated with Vercel.
+-   v0 的 [AI SDK documentation](https://vercel.com/docs/v0/cline) 提供了多模型集成示例，其中不少模型兼容 OpenAI API。该外部原始文档可作为 NBG OpenAI-compatible 配置的参考资料。
 
--   v0 can be used in Cline with the OpenAI Compatible provider.
+-   v0 可通过 NBG 的 OpenAI Compatible provider 使用。
 
--   ### Quickstart
+### Quickstart
 
--   1. With the OpenAI Compatible provider selected, set the Base URL to https://api.v0.dev/v1.
--   2. Paste in your v0 API Key
--   3. Set the Model ID: v0-1.0-md
--   4. Click Verify to confirm the connection.
+1. 选择 OpenAI Compatible provider 后，将 Base URL 设为 `https://api.v0.dev/v1`。
+2. 粘贴 v0 API key。
+3. 设置 Model ID：`v0-1.0-md`。
+4. 点击 Verify 确认连接。
 
-### Troubleshooting
+### 排障
 
--   **"Invalid API Key":** Double-check that you've entered the API key correctly and that it's for the correct provider.
--   **"Model Not Found":** Ensure you're using a valid model ID for your chosen provider and that it's available at the specified Base URL.
--   **Connection Errors:** Verify the Base URL is correct, that your provider's API is accessible from your machine, and that there are no firewall or network issues.
--   **Unexpected Results:** If you're getting unexpected outputs, try a different model or double-check all configuration parameters.
+-   **"Invalid API Key"：** 检查 API key 是否填写正确，并确认它属于当前 provider。
+-   **"Model Not Found"：** 确认 model ID 有效，并且在指定 Base URL 下可用。
+-   **连接错误：** 检查 Base URL 是否正确、provider API 是否可从本机访问，以及网络、防火墙或代理是否正常。
+-   **结果异常：** 尝试切换模型，或复核全部配置参数。
 
-By using an OpenAI-compatible provider, you can leverage the flexibility of Cline with a wider array of AI models. Remember to always consult your provider's documentation for the most accurate and up-to-date information.
+通过 OpenAI-compatible provider，NBG 可以接入更多模型服务。具体模型、价格和限制请始终以对应 provider 的官方文档为准。
