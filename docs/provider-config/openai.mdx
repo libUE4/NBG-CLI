@@ -1,48 +1,48 @@
 ---
 title: "OpenAI (Codex)"
-description: "Configure OpenAI with API key or OpenAI Codex OAuth in Cline."
+description: "在 NBG 中通过 API key 或 OpenAI Codex OAuth 配置 OpenAI。"
 ---
 
-Cline supports accessing models directly through the official OpenAI API.
+NBG 支持通过官方 OpenAI API 直接访问模型。
 
-## Choose an OpenAI Path
+## 选择 OpenAI 接入方式
 
-- **[OpenAI API (key-based)](#get-api-credentials):** Use your OpenAI API key.
-- **[OpenAI Codex (Subscription OAuth)](#openai-codex-oauth):** Sign in with OpenAI account, using OAI subscriptions (no key management).
+- **[OpenAI API (key-based)](#get-api-credentials)：** 使用 OpenAI API key。
+- **[OpenAI Codex (Subscription OAuth)](#openai-codex-oauth)：** 使用 OpenAI 账号登录，通过订阅访问，无需管理 API key。
 
 **Website:** [https://openai.com/](https://openai.com/)
 
 ## OpenAI API (key-based)
 
-### Get API Credentials
+### 获取 API 凭证
 
-1.  **Sign Up/Sign In:** Visit the [OpenAI Platform](https://platform.openai.com/). You'll need to create an account or sign in if you already have one.
-2.  **Navigate to API Keys:** Once logged in, go to the [API keys section](https://platform.openai.com/api-keys) of your account.
-3.  **Create a Key:** Click on "Create new secret key". It's good practice to give your key a descriptive name (e.g., "Cline API Key").
-4.  **Copy the Key:** **Crucial:** Copy the generated API key immediately. For security reasons, OpenAI will not show it to you again. Store this key in a safe and secure location.
+1.  **注册或登录：** 打开 [OpenAI Platform](https://platform.openai.com/)，创建账号或登录现有账号。
+2.  **进入 API Keys：** 登录后进入账号的 [API keys section](https://platform.openai.com/api-keys)。
+3.  **创建密钥：** 点击 "Create new secret key"，建议使用易识别的名称，例如 "NBG API Key"。
+4.  **复制密钥：** **重要：** 立即复制生成的 API key。出于安全原因，OpenAI 不会再次显示该密钥，请妥善保存。
 
-### Configuration in Cline
+### 在 NBG 中配置
 
-> See [Authorization & Model Selection](/getting-started/authorizing-with-cline#menu).
+> 参考 [认证与模型选择](/getting-started/authorizing-with-cline#menu)。
 
-1.  **Open Cline Settings:** Click the settings gear icon (⚙️) in the Cline panel.
-2.  **Select Provider:** Choose "OpenAI" from the "API Provider" dropdown menu.
-3.  **Enter API Key:** Paste your OpenAI API key into the "OpenAI API Key" field.
-4.  **Select Provider Model:** Choose your desired model from the "Model" dropdown list.
-5.  **(Optional) Base URL:** If you need to use a proxy or a custom base URL for the OpenAI API, you can enter it here. Most users will not need to change this from the default.
+1.  **打开 NBG 设置：** 在 NBG 面板中点击设置图标 (⚙️)。
+2.  **选择 provider：** 在 "API Provider" 下拉菜单中选择 "OpenAI"。
+3.  **填写 API key：** 将 OpenAI API key 粘贴到 "OpenAI API Key" 字段。
+4.  **选择模型：** 在 "Model" 下拉菜单中选择需要使用的模型。
+5.  **可选，Base URL：** 如需通过代理或自定义 base URL 访问 OpenAI API，可在此处填写。大多数用户无需修改默认值。
 
-### Tips and Notes
+### 提示
 
--   **Pricing:** Be sure to review the [OpenAI Pricing page](https://openai.com/pricing) for detailed information on the costs associated with different models.
--   **Azure OpenAI Service:** If you are looking to use the Azure OpenAI service, please note that specific documentation for Azure OpenAI with Cline may be found separately, or you might need to configure it as an OpenAI-compatible endpoint if such functionality is supported by Cline for custom configurations.
+-   **价格：** 各模型价格请参考 [OpenAI Pricing page](https://openai.com/pricing)。
+-   **Azure OpenAI Service：** 如需使用 Azure OpenAI，可参考对应文档，或在支持自定义 endpoint 的情况下按 OpenAI-compatible endpoint 配置。
 
 ## OpenAI Codex (OAuth)
 
-1. Open Cline settings.
-2. Select **OpenAI Codex** from **API Provider**.
-3. Click **Sign in with OpenAI** and complete browser OAuth.
-4. Return to Cline and choose a model.
+1. 打开 NBG 设置。
+2. 在 **API Provider** 中选择 **OpenAI Codex**。
+3. 点击 **Sign in with OpenAI**，并在浏览器中完成 OAuth。
+4. 返回 NBG 并选择模型。
 
-Notes:
-- No API key entry required.
-- Available models depend on your OpenAI plan.
+说明：
+- 不需要填写 API key。
+- 可用模型取决于你的 OpenAI plan。

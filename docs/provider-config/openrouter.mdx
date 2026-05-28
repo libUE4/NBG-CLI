@@ -1,32 +1,30 @@
 ---
 title: "OpenRouter"
-description: "Learn how to use OpenRouter with Cline to access a wide variety of language provider through a single API."
+description: "在 NBG 中通过 OpenRouter 使用多个模型 provider。"
 ---
 
-OpenRouter is an AI platform that provides access to a wide variety of language models from different providers, all through a single API. This can simplify setup and allow you to easily experiment with different models.
+OpenRouter 通过统一 API 提供多个 provider 的语言模型访问能力，便于在 NBG 中快速切换和评估不同模型。
 
 **Website:** [https://openrouter.ai/](https://openrouter.ai/)
 
-### Get API Credentials
+### 获取 API 凭证
 
-1.  **Sign Up/Sign In:** Go to the [OpenRouter website](https://openrouter.ai/). Sign in with your Google or GitHub account.
-2.  **Get an API Key:** Go to the [keys page](https://openrouter.ai/keys). You should see an API key listed. If not, create a new key.
-3.  **Copy the Key:** Copy the API key.
+1.  **注册或登录：** 打开 [OpenRouter website](https://openrouter.ai/)，使用 Google 或 GitHub 账号登录。
+2.  **获取 API key：** 打开 [keys page](https://openrouter.ai/keys)。如果没有现有密钥，请创建一个新密钥。
+3.  **复制密钥：** 复制 API key，并妥善保存。
 
-### Configuration in Cline
+### 在 NBG 中配置
 
-> See [Authorization & Model Selection](/getting-started/authorizing-with-cline#menu).
+> 参考 [认证与模型选择](/getting-started/authorizing-with-cline#menu)。
 
-1.  **Open Cline Settings:** Click the settings icon (⚙️) in the Cline panel.
-2.  **Select Provider:** Choose "OpenRouter" from the "API Provider" dropdown.
-3.  **Enter API Key:** Paste your OpenRouter API key into the "OpenRouter API Key" field.
-4.  **Select Provider Model:** Choose your desired model from the "Model" dropdown.
-5.  **(Optional) Custom Base URL:** If you need to use a custom base URL for the OpenRouter API, check "Use custom base URL" and enter the URL. Leave this blank for most users.
+1.  **打开 NBG 设置：** 在 NBG 面板中点击设置图标 (⚙️)。
+2.  **选择 provider：** 在 "API Provider" 下拉菜单中选择 "OpenRouter"。
+3.  **填写 API key：** 将 OpenRouter API key 粘贴到 "OpenRouter API Key" 字段。
+4.  **选择模型：** 在 "Model" 下拉菜单中选择需要使用的模型。
+5.  **可选，自定义 Base URL：** 如需使用 OpenRouter API 的自定义 base URL，勾选 "Use custom base URL" 并填写地址。大多数用户无需修改。
 
-### Tips and Notes
+### 提示
 
--   **Pricing:** OpenRouter charges based on the underlying model's pricing. See the [OpenRouter Models page](https://openrouter.ai/models) for details.
-    -   OpenRouter passes caching requests to underlying models that support it. Check the [OpenRouter Models page](https://openrouter.ai/models) to see which models offer caching.
-    -   For most models, caching should activate automatically if supported by the model itself (similar to how Requesty works).
-    -   **Exception for Gemini Models via OpenRouter:** Due to potential response delays sometimes observed with Google's caching mechanism when accessed via OpenRouter, a manual activation step is required _specifically for Gemini models_.
-    -   If using a **Gemini model** via OpenRouter, you **must manually check** the "Enable Prompt Caching" box in the provider settings to activate caching for that model. This checkbox serves as a temporary workaround. For non-Gemini models on OpenRouter, this checkbox is not necessary for caching.
+-   **价格：** OpenRouter 按底层模型价格计费，详见 [OpenRouter Models page](https://openrouter.ai/models)。
+-   **缓存：** OpenRouter 会将缓存请求传递给支持缓存的底层模型。可在 [OpenRouter Models page](https://openrouter.ai/models) 查看哪些模型支持缓存。
+-   **Gemini 特例：** 通过 OpenRouter 使用 Gemini 模型时，Google 缓存机制偶尔可能导致响应延迟，因此需要在 provider 设置中手动勾选 "Enable Prompt Caching"。非 Gemini 模型通常无需勾选该选项。
