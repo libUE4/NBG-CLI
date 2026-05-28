@@ -1,50 +1,50 @@
 ---
 title: "Kanban"
-sidebarTitle: "Overview"
-description: "Use Cline Kanban to run multiple coding agents in parallel with isolated git worktrees."
+sidebarTitle: "概览"
+description: "使用 NBG Kanban 在隔离 git worktrees 中并行运行多个 coding agents。"
 ---
 
 <Warning>
-Kanban is a **research preview**. Some features described here use experimental capabilities. Expect changes.
+Kanban 是 **research preview**。部分功能仍依赖实验性能力，后续可能变化。
 </Warning>
 
-## Prerequisites
+## 前置条件
 
 - Node.js 18+
-- A git repository (run from repo root)
-- Kanban launcher available (`npx kanban`)
+- Git 仓库（从 repo root 运行）
+- Kanban launcher 可用（`npx kanban`）
 
-## Quick Start
+## 快速开始
 
 ```bash
 cd /path/to/your/repo
 npx kanban
 ```
 
-This starts a local server and opens the board in your browser.
+该命令会启动本地 server，并在浏览器中打开看板。
 
-## Core Workflow
+## 核心流程
 
-1. **Create tasks** on the board (manually or from sidebar chat).
-2. **Start tasks** with play — each card gets an isolated git worktree + terminal.
-3. **Monitor progress** from card status and latest agent output.
-4. **Review diffs** in card detail view and leave inline comments.
-5. **Ship changes** via Commit or Open PR.
-6. **Clean up** by moving cards to trash (worktrees are removed).
+1. **创建任务**：在看板上手动创建，或通过 sidebar chat 创建。
+2. **启动任务**：点击 play 后，每张卡片都会获得隔离 git worktree 和 terminal。
+3. **监控进度**：通过卡片状态和最新 agent output 跟踪。
+4. **审查 diff**：在卡片详情中查看 diff，并留下 inline comments。
+5. **交付变更**：通过 Commit 或 Open PR 完成。
+6. **清理资源**：把卡片移动到 trash 后，对应 worktree 会被移除。
 
-## Key Capabilities
+## 核心能力
 
-- **Parallel execution:** each task runs in a separate worktree to avoid conflicts.
-- **Task linking:** dependency chains can auto-start next tasks.
-- **Inline review loop:** comment directly on diff lines to steer agent work.
-- **Auto-commit / Auto-PR:** optional automation from settings.
-- **Sidebar chat orchestration:** ask an agent to break work into cards and start flows.
+- **并行执行：** 每个任务在独立 worktree 中运行，避免互相冲突。
+- **任务关联：** dependency chains 可以自动启动后续任务。
+- **Inline review loop：** 直接在 diff lines 上评论，引导 agent 修改。
+- **Auto-commit / Auto-PR：** 可在 settings 中启用自动化。
+- **Sidebar chat orchestration：** 让 agent 把工作拆成 cards 并启动流程。
 
-## Agent Compatibility
+## Agent 兼容性
 
-Kanban is designed for CLI-style coding agents and currently works with Cline CLI, Claude Code, Codex, OpenCode, and related runtimes available in settings.
+Kanban 面向 CLI-style coding agents 设计。NBG Kanban 当前可与 NBG CLI、Claude Code、Codex、OpenCode，以及 settings 中可用的相关 runtimes 配合使用。
 
-## Next Steps
+## 下一步
 
-- [Kanban Core Workflow](/kanban/core-workflow)
-- [Kanban Remote Access](/kanban/remote-access)
+- [Kanban 核心流程](/kanban/core-workflow)
+- [Kanban 远程访问](/kanban/remote-access)
