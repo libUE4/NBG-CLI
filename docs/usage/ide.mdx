@@ -1,21 +1,21 @@
 ---
 title: "IDE"
 sidebarTitle: "IDE"
-description: "Use NBG in your IDE to build a working todo app and learn the core workflow."
+description: "在 IDE 中使用 NBG 构建可运行的 todo app，并学习核心 workflow。"
 ---
 
-## Prerequisites
+## 前置条件
 
-Before starting, make sure you have:
+开始前，请确认已经准备好：
 
-- NBG installed in your editor ([Install Guide](/getting-started/installing-cline))
-- An AI model connected ([Model Setup](/getting-started/authorizing-with-cline))
+- 已在编辑器中安装 NBG（[安装指南](/getting-started/installing-cline)）
+- 已连接 AI model（[模型配置](/getting-started/authorizing-with-cline)）
 
-If you haven't done these yet, complete them first and come back here.
+如果还没有完成，请先完成这些步骤，再回到本页。
 
 ## Step 1: Open a Project Folder
 
-NBG needs a workspace, which is a folder on your computer where it can create and edit files. You'll open an empty folder so NBG has a clean place to build your todo app.
+NBG 需要 workspace，也就是电脑上一个可供它创建和编辑文件的目录。这里使用空目录，让 NBG 有干净的位置构建 todo app。
 
 <Tabs>
   <Tab title="VS Code / Cursor / Windsurf">
@@ -35,12 +35,12 @@ NBG needs a workspace, which is a folder on your computer where it can create an
 </Tabs>
 
 <Warning>
-If you skip this step and don't have a folder open, NBG won't know where to create files. Always open a folder before starting a task.
+如果跳过此步骤且没有打开目录，NBG 将不知道在哪里创建文件。开始 task 前请始终先打开目录。
 </Warning>
 
 ## Step 2: Open the NBG Panel
 
-The NBG panel is a chat interface where you communicate with NBG. You need to open it before you can give NBG any instructions.
+NBG panel 是你与 NBG 沟通的聊天界面。需要先打开它，才能向 NBG 发出指令。
 
 <Tabs>
   <Tab title="VS Code / Cursor / Windsurf">
@@ -67,7 +67,7 @@ The NBG panel is a chat interface where you communicate with NBG. You need to op
 
 ## Step 3: Give NBG a Task
 
-Now you'll tell NBG what to build. You communicate with NBG by typing messages in the text input box, just like a chat app.
+现在可以告诉 NBG 要构建什么。像使用聊天应用一样，在 text input box 中输入消息即可。
 
 1. **Click on the text input box** at the bottom of the NBG panel
 2. **Paste (or type) the following prompt** into the text input box:
@@ -84,7 +84,7 @@ Build a todo app in a single HTML file. Include:
 
 3. **Press Enter** on your keyboard (or click the **Send** button) to send the message
 
-NBG will now read your message and start working on a response. You'll see text appearing in the chat area as NBG thinks through your request.
+NBG 会读取你的消息并开始响应。随着 NBG 思考你的请求，chat area 中会出现文字。
 
 ## Step 4: Understand Plan Mode vs Act Mode
 
@@ -248,15 +248,15 @@ You just completed the core NBG workflow:
 
 These same patterns work for any project, from simple scripts to full applications. The more context you give NBG about what you want, the better the results.
 
-## Next Steps
+## 下一步
 
-- [Core Workflows](/core-workflows/task-management): Learn the patterns you'll use daily with NBG
-- [Working with Files](/core-workflows/working-with-files): Use `@` mentions to reference files, folders, and URLs in your prompts
-- [NBG provider](/getting-started/cline-provider): Fastest setup with built-in authentication and unified billing
-- [NBG Rules](/customization/cline-rules): Customize how NBG behaves in your projects
+- [核心 Workflows](/core-workflows/task-management)：学习日常使用 NBG 的核心模式
+- [文件上下文](/core-workflows/working-with-files)：在 prompts 中使用 `@` mentions 引用文件、目录和 URLs
+- [NBG provider](/getting-started/cline-provider)：使用内置认证和统一计费快速配置
+- [NBG Rules](/customization/cline-rules)：定制 NBG 在项目中的行为
 
-## Need Help?
+## 需要帮助？
 
-- **Start a fresh conversation**: Type `/new` in the chat input to begin a new task
-- **Report issues**: Use `/reportbug` to help us improve
-- **Get support**: Use the [NBG GitHub repository](https://github.com/libUE4/NBG-CLI) for issues and project discussion
+- **开始新对话**：在 chat input 中输入 `/new` 开始新 task
+- **报告问题**：使用 `/reportbug` 帮助我们改进
+- **获取支持**：在 [NBG GitHub repository](https://github.com/libUE4/NBG-CLI) 提交 issues 或参与项目讨论

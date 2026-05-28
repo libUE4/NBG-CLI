@@ -6,8 +6,8 @@ description: "订阅 runtime 与 session events，用于 UI、logs、monitoring 
 
 SDK 暴露两个相关 event surfaces：
 
-- `AgentRuntimeEvent` from `@cline/agents`, delivered through `agent.subscribe(listener)`.
-- `AgentEvent` / `CoreSessionEvent` from `@cline/core`, delivered through core session adapters and `cline.subscribe(listener)`.
+- `@cline/agents` 中的 `AgentRuntimeEvent`，通过 `agent.subscribe(listener)` 传递。
+- `@cline/core` 中的 `AgentEvent` / `CoreSessionEvent`，通过 core session adapters 和 `cline.subscribe(listener)` 传递。
 
 本页说明 event handling patterns。Event shapes 见 [Events reference](/sdk/reference/events)。
 
@@ -20,19 +20,19 @@ const unsubscribe = agent.subscribe((event) => {
   }
 })
 
-await agent.run("Explain this codebase")
+await agent.run("解释这个代码库")
 unsubscribe()
 ```
 
-`AgentRuntimeEvent` is the low-level event stream from the browser-compatible runtime.
+`AgentRuntimeEvent` 是 browser-compatible runtime 发出的 low-level event stream。
 
 ## Core / Host-Facing Agent Events
 
-`AgentEvent` is the host-facing event shape used by `@cline/core` session orchestration. For direct `Agent` usage, prefer `agent.subscribe(...)` and `AgentRuntimeEvent`.
+`AgentEvent` 是 `@cline/core` session orchestration 使用的 host-facing event shape。直接使用 `Agent` 时，优先使用 `agent.subscribe(...)` 和 `AgentRuntimeEvent`。
 
-Common host-facing event categories:
+常见 host-facing event categories：
 
-| Category | Events | Use for |
+| Category | Events | 用途 |
 |----------|--------|---------|
 | Content | `content_start`, `content_update`, `content_end` | Text/reasoning/tool UI |
 | Iterations | `iteration_start`, `iteration_end` | Progress tracking |
@@ -42,7 +42,7 @@ Common host-facing event categories:
 
 ## ClineCore Session Events
 
-Use `cline.subscribe()` for session-level events:
+使用 `cline.subscribe()` 订阅 session-level events：
 
 ```typescript
 const unsubscribe = cline.subscribe((event) => {
@@ -53,7 +53,7 @@ await cline.start({ /* ... */ })
 unsubscribe()
 ```
 
-Pass a `sessionId` filter when you only want one session:
+只需要某个 session 时，传入 `sessionId` filter：
 
 ```typescript
 const unsubscribe = cline.subscribe(listener, { sessionId })
@@ -61,7 +61,7 @@ const unsubscribe = cline.subscribe(listener, { sessionId })
 
 ## Streaming UI Pattern
 
-Subscribe to events to build real-time UIs:
+订阅 events 可以构建 real-time UIs：
 
 ```typescript
 agent.subscribe((event) => {
@@ -98,7 +98,7 @@ agent.subscribe((event) => {
 
 ## Runtime State Snapshots
 
-Call `snapshot()` when you need the current state:
+需要读取当前状态时调用 `snapshot()`：
 
 ```typescript
 const snapshot = agent.snapshot()
