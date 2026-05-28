@@ -1,7 +1,7 @@
 ---
 title: "ClineCore"
 sidebarTitle: "ClineCore"
-description: "API reference for ClineCore from @cline/core."
+description: "`@cline/core` 中 ClineCore 的 API reference。"
 ---
 
 ```typescript
@@ -17,19 +17,19 @@ const cline = await ClineCore.create({
 })
 ```
 
-Common options:
+常用 options：
 
-| Option | Type | Description |
+| Option | Type | 说明 |
 |--------|------|-------------|
 | `clientName` | `string` | Human-readable SDK client name |
-| `distinctId` | `string` | Stable telemetry/user identifier |
+| `distinctId` | `string` | 稳定 telemetry/user identifier |
 | `backendMode` | `"auto" \| "local" \| "hub" \| "remote"` | Runtime backend selection |
 | `hub` | `HubOptions` | Local hub connection options |
 | `remote` | `RemoteOptions` | Remote hub options |
-| `capabilities` | `RuntimeCapabilities` | Client-owned tool executors and approval callbacks |
-| `toolPolicies` | `Record<string, ToolPolicy>` | Default tool approval policies |
-| `automation` | `boolean \| ClineCoreAutomationOptions` | Enable automation APIs |
-| `fetch` | `typeof fetch` | Custom fetch for local provider calls |
+| `capabilities` | `RuntimeCapabilities` | Client-owned tool executors 和 approval callbacks |
+| `toolPolicies` | `Record<string, ToolPolicy>` | 默认 tool approval policies |
+| `automation` | `boolean \| ClineCoreAutomationOptions` | 启用 automation APIs |
+| `fetch` | `typeof fetch` | 用于 local provider calls 的 custom fetch |
 
 ## `start(input)`
 
@@ -52,16 +52,16 @@ const session = await cline.start({
 
 ### ClineCoreStartInput
 
-| Field | Type | Required | Description |
+| Field | Type | Required | 说明 |
 |-------|------|----------|-------------|
 | `prompt` | `string` | No | Initial prompt |
 | `config` | `CoreSessionConfig` | Yes | Session model/runtime config |
 | `source` | `SessionSource` | No | Session source label |
-| `interactive` | `boolean` | No | Whether session expects interaction |
-| `sessionMetadata` | `Record<string, unknown>` | No | Metadata persisted with session |
-| `initialMessages` | `Message[]` | No | Preloaded messages |
+| `interactive` | `boolean` | No | Session 是否期待交互 |
+| `sessionMetadata` | `Record<string, unknown>` | No | 随 session 持久化的 metadata |
+| `initialMessages` | `Message[]` | No | 预加载 messages |
 | `toolPolicies` | `Record<string, ToolPolicy>` | No | Per-session tool policies |
-| `capabilities` | `RuntimeCapabilities` | No | Per-session tool executors and approval callbacks |
+| `capabilities` | `RuntimeCapabilities` | No | Per-session tool executors 和 approval callbacks |
 
 ### StartSessionResult
 
@@ -84,25 +84,25 @@ const result = await cline.send({
 })
 ```
 
-Returns `AgentResult | undefined`.
+返回 `AgentResult | undefined`。
 
 ## Session APIs
 
-| Method | Description |
+| Method | 说明 |
 |--------|-------------|
-| `subscribe(listener, options?)` | Subscribe to `CoreSessionEvent` events |
-| `list(limit?, options?)` | List session history records |
-| `listHistory(options?)` | List session history records |
-| `get(sessionId)` | Get session metadata |
-| `readMessages(sessionId)` | Read persisted messages |
-| `getAccumulatedUsage(sessionId)` | Read accumulated token/cost usage |
-| `update(sessionId, updates)` | Update prompt/title/metadata |
-| `abort(sessionId, reason?)` | Abort active work |
-| `stop(sessionId)` | Stop session |
-| `delete(sessionId)` | Delete session |
-| `restore(input)` | Restore from checkpoint |
-| `dispose(reason?)` | Dispose runtime resources |
+| `subscribe(listener, options?)` | 订阅 `CoreSessionEvent` events |
+| `list(limit?, options?)` | 列出 session history records |
+| `listHistory(options?)` | 列出 session history records |
+| `get(sessionId)` | 获取 session metadata |
+| `readMessages(sessionId)` | 读取持久化 messages |
+| `getAccumulatedUsage(sessionId)` | 读取累计 token/cost usage |
+| `update(sessionId, updates)` | 更新 prompt/title/metadata |
+| `abort(sessionId, reason?)` | 中止 active work |
+| `stop(sessionId)` | 停止 session |
+| `delete(sessionId)` | 删除 session |
+| `restore(input)` | 从 checkpoint 恢复 |
+| `dispose(reason?)` | 释放 runtime resources |
 
 ## Automation API
 
-When `automation` is enabled, use `cline.automation` to start/stop automation services, reconcile specs, ingest events, and list events/specs/runs.
+启用 `automation` 后，可以使用 `cline.automation` 启停 automation services、reconcile specs、ingest events，并列出 events/specs/runs。

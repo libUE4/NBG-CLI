@@ -1,10 +1,10 @@
 ---
 title: "Agent"
 sidebarTitle: "Agent"
-description: "API reference for Agent / AgentRuntime from @cline/agents."
+description: "`@cline/agents` 中 Agent / AgentRuntime 的 API reference。"
 ---
 
-`Agent` is an alias for `AgentRuntime` from `@cline/agents`.
+`Agent` 是 `@cline/agents` 中 `AgentRuntime` 的 alias。
 
 ```typescript
 import { Agent, AgentRuntime, createAgent, createAgentRuntime } from "@cline/sdk"
@@ -16,22 +16,22 @@ import { Agent, AgentRuntime, createAgent, createAgentRuntime } from "@cline/sdk
 new Agent(config: AgentRuntimeConfig)
 ```
 
-`AgentRuntimeConfig` accepts either:
+`AgentRuntimeConfig` 接受以下两种形式之一：
 
-- a prebuilt `model: AgentModel`, or
-- `providerId`, `modelId`, and optional provider credentials (`apiKey`, `baseUrl`, `headers`).
+- 预先构建的 `model: AgentModel`
+- `providerId`、`modelId` 以及可选 provider credentials（`apiKey`、`baseUrl`、`headers`）
 
-Common fields:
+常用 fields：
 
-| Field | Type | Required | Description |
+| Field | Type | Required | 说明 |
 |-------|------|----------|-------------|
 | `providerId` | `string` | Yes, unless `model` supplied | Provider ID |
 | `modelId` | `string` | Yes, unless `model` supplied | Model ID |
 | `apiKey` | `string` | No | Provider API key |
 | `baseUrl` | `string` | No | Custom provider base URL |
 | `systemPrompt` | `string` | No | System instructions |
-| `tools` | `AgentTool[]` | No | Tools available to the runtime |
-| `initialMessages` | `AgentMessage[]` | No | Preloaded conversation |
+| `tools` | `AgentTool[]` | No | Runtime 可用 tools |
+| `initialMessages` | `AgentMessage[]` | No | 预加载 conversation |
 | `toolPolicies` | `Record<string, ToolPolicy>` | No | Per-tool enablement/approval |
 | `hooks` | `AgentRuntimeHooks` | No | Runtime lifecycle hooks |
 
@@ -43,7 +43,7 @@ Common fields:
 const result = await agent.run("Analyze this codebase")
 ```
 
-Starts a run with input.
+使用输入启动一次 run。
 
 ### `continue(input?)`
 
@@ -51,7 +51,7 @@ Starts a run with input.
 const result = await agent.continue("Now inspect the auth module")
 ```
 
-Continues with optional new input.
+使用可选新输入继续。
 
 ### `abort(reason?)`
 
@@ -59,7 +59,7 @@ Continues with optional new input.
 agent.abort("User cancelled")
 ```
 
-Aborts the active run.
+中止 active run。
 
 ### `subscribe(listener)`
 
@@ -69,7 +69,7 @@ const unsubscribe = agent.subscribe((event) => {
 })
 ```
 
-Subscribes to `AgentRuntimeEvent` events.
+订阅 `AgentRuntimeEvent` events。
 
 ### `restore(messages)`
 
@@ -77,7 +77,7 @@ Subscribes to `AgentRuntimeEvent` events.
 agent.restore(savedMessages)
 ```
 
-Replaces conversation history and resets runtime state while preserving tools, hooks, model, agent identity, and subscribers.
+替换 conversation history，并重置 runtime state，同时保留 tools、hooks、model、agent identity 和 subscribers。
 
 ### `snapshot()`
 
@@ -85,7 +85,7 @@ Replaces conversation history and resets runtime state while preserving tools, h
 const state = agent.snapshot()
 ```
 
-Returns an `AgentRuntimeStateSnapshot`.
+返回 `AgentRuntimeStateSnapshot`。
 
 ## AgentRunResult
 

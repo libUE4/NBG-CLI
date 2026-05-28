@@ -1,20 +1,20 @@
 ---
 title: "Installing Plugins"
 sidebarTitle: "Installing Plugins"
-description: "Install plugins from file URLs, npm, git, or local sources using the CLI or programmatically."
+description: "使用 CLI 或 SDK 从 file URLs、npm、git 或 local sources 安装 plugins。"
 ---
 
-The NBG CLI provides a `plugin install` command to install plugins from various sources. You can also load plugins programmatically via session config.
+NBG CLI 提供 `plugin install` 命令，可从多种来源安装 plugins。你也可以通过 session config 以编程方式加载 plugins。
 
 ## CLI Installation
 
-Use the `nbg plugin install` command to install plugins from file URLs, npm, git repositories, or local paths.
+使用 `nbg plugin install` 命令从 file URLs、npm、git repositories 或 local paths 安装 plugins。
 
 ```sh
 nbg plugin install <source> [options]
 ```
 
-The shorthand `nbg plugin i` works as well.
+也可以使用 shorthand `nbg plugin i`。
 
 ### Install from a File URL
 
@@ -23,7 +23,7 @@ nbg plugin install https://github.com/libUE4/NBG-CLI/blob/main/sdk/examples/plug
 nbg plugin install https://raw.githubusercontent.com/libUE4/NBG-CLI/main/sdk/examples/plugins/weather-metrics.ts
 ```
 
-Installs a single `.ts` or `.js` plugin file from an HTTPS URL. GitHub `blob` URLs are normalized to raw file downloads automatically.
+从 HTTPS URL 安装单个 `.ts` 或 `.js` plugin file。GitHub `blob` URLs 会自动规范化为 raw file downloads。
 
 ### Install from npm
 
@@ -31,7 +31,7 @@ Installs a single `.ts` or `.js` plugin file from an HTTPS URL. GitHub `blob` UR
 nbg plugin install --npm @scope/plugin-name
 ```
 
-Installs the package from the npm registry into the NBG plugin directory.
+从 npm registry 安装 package 到 NBG plugin directory。
 
 ### Install from Git
 
@@ -40,7 +40,7 @@ nbg plugin install --git https://github.com/owner/repo.git
 nbg plugin install --git github.com/owner/repo
 ```
 
-Clones the repository (shallow, with blobless filter for speed) and installs its dependencies. The `.git` directory is excluded from the final install.
+浅 clone repository，并使用 blobless filter 提升速度，然后安装 dependencies。最终安装结果会排除 `.git` 目录。
 
 ### Install from Local Source
 
@@ -49,17 +49,17 @@ nbg plugin install ./path/to/plugin.ts     # Single file
 nbg plugin install /absolute/path/to/dir   # Directory with package.json
 ```
 
-Supports both files and directories. Local installs copy the source, filter out `.git` and `node_modules`, and run `npm install` to resolve dependencies.
+支持 files 和 directories。本地安装会复制 source，过滤 `.git` 与 `node_modules`，并运行 `npm install` 解析 dependencies。
 
 ### Options
 
-| Option | Description |
+| Option | 说明 |
 |--------|-------------|
-| `--npm` | Treat the source as an npm package name |
-| `--git` | Treat the source as a git repository URL |
-| `--force` | Overwrite an existing plugin at the same path |
-| `--json` | Output results as JSON (useful for scripting) |
-| `--cwd` | Install to `<path>/.cline/plugins` and resolve relative local paths from `<path>` |
+| `--npm` | 将 source 视为 npm package name |
+| `--git` | 将 source 视为 git repository URL |
+| `--force` | 覆盖相同路径下的 existing plugin |
+| `--json` | 以 JSON 输出结果，便于 scripting |
+| `--cwd` | 安装到 `<path>/.cline/plugins`，并从 `<path>` 解析相对 local paths |
 
 ### Examples
 
@@ -83,17 +83,17 @@ nbg plugin install --force --npm @scope/plugin-name
 nbg plugin i --git github.com/owner/repo
 ```
 
-### Listing Installed Plugins
+### 列出已安装 Plugins
 
-Installed plugins appear in the `plugins` section of your CLI config:
+已安装 plugins 会出现在 CLI config 的 `plugins` section 中：
 
 ```sh
 nbg config
 ```
 
-### Find All Your Plugins from your file system
+### 从文件系统查找 Plugins
 
-Project-scoped plugins live in the compatible `.cline/plugins/` folder at your workspace root. The CLI auto-discovers plugins from this folder when you run NBG in that project.
+Project-scoped plugins 位于 workspace root 下兼容的 `.cline/plugins/` folder。在该项目中运行 NBG 时，CLI 会从这个目录自动发现 plugins。
 
 ```text
 your-project/
@@ -104,19 +104,19 @@ your-project/
 └── ...
 ```
 
-To add a single-file plugin to a project, install it with `--cwd`:
+要向项目添加 single-file plugin，可配合 `--cwd` 安装：
 
 ```sh
 nbg plugin install https://github.com/owner/repo/blob/main/plugins/my-plugin.ts --cwd .
 ```
 
-Global plugins are discovered from the compatible `~/.cline/plugins/` path, and NBG may also discover plugins from the system Plugins folder. Use `--cwd .` when you want plugins to stay with a specific project.
+Global plugins 会从兼容路径 `~/.cline/plugins/` 发现，NBG 也可能从系统 Plugins folder 发现 plugins。希望 plugin 留在特定项目中时，使用 `--cwd .`。
 
 ## Programmatic Installation
 
 ### Using `pluginPaths` (ClineCore)
 
-In SDK code, load plugins from file paths using the `pluginPaths` session config option:
+在 SDK code 中，可以使用 `pluginPaths` session config option 从 file paths 加载 plugins：
 
 ```typescript
 import { ClineCore } from "@cline/sdk"
@@ -132,11 +132,11 @@ await cline.start({
 })
 ```
 
-Plugin files must export an `AgentPlugin` as the default export.
+Plugin files 必须 default export 一个 `AgentPlugin`。
 
 ### Using `plugins` (Agent Runtime)
 
-When using the `Agent` or `AgentRuntime` directly, pass plugin instances in the `plugins` array:
+直接使用 `Agent` 或 `AgentRuntime` 时，在 `plugins` array 中传入 plugin instances：
 
 ```typescript
 import { Agent } from "@cline/sdk"
@@ -151,7 +151,7 @@ const agent = new Agent({
 
 ### Using `extensions` (ClineCore)
 
-With `ClineCore`, use the `extensions` config array instead:
+使用 `ClineCore` 时，改用 `extensions` config array：
 
 ```typescript
 import { ClineCore } from "@cline/sdk"
@@ -168,6 +168,6 @@ await cline.start({
 
 ## Next Steps
 
-- **Learn about [Plugins](/sdk/plugins)** — Understand what plugins are and their benefits.
-- **Follow the [Writing Plugins](/sdk/guides/writing-plugins) guide** — Build and distribute your own plugin.
-- Explore [Plugin Examples](/sdk/plugin-examples) to install ready-to-run plugin examples from the SDK repository.
+- **了解 [Plugins](/sdk/plugins)** - 理解 plugins 是什么以及它们的收益。
+- **跟随 [Writing Plugins](/sdk/guides/writing-plugins) guide** - 构建并分发自己的 plugin。
+- 浏览 [Plugin Examples](/sdk/plugin-examples)，安装 SDK repository 中可运行的 plugin examples。

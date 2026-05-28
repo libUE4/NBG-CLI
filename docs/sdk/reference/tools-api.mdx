@@ -1,7 +1,7 @@
 ---
 title: "Tools API"
 sidebarTitle: "Tools API"
-description: "API reference for creating and configuring tools."
+description: "创建和配置 tools 的 API reference。"
 ---
 
 ## `createTool(config)`
@@ -10,7 +10,7 @@ description: "API reference for creating and configuring tools."
 import { createTool } from "@cline/sdk"
 ```
 
-Creates a typed tool. Also re-exported from `@cline/agents` and `@cline/core`.
+创建 typed tool。它也从 `@cline/agents` 和 `@cline/core` re-export。
 
 ```typescript
 const tool = createTool({
@@ -23,7 +23,7 @@ const tool = createTool({
 })
 ```
 
-`inputSchema` can be either JSON Schema or a Zod schema.
+`inputSchema` 可以是 JSON Schema，也可以是 Zod schema。
 
 ## AgentTool
 
@@ -39,7 +39,7 @@ interface AgentTool<TInput = unknown, TOutput = unknown> {
 }
 ```
 
-Defaults from `createTool`:
+`createTool` 的默认值：
 
 | Field | Default |
 |-------|---------|
@@ -68,7 +68,7 @@ interface ToolPolicy {
 }
 ```
 
-Tool names not listed in a policy map default to enabled and auto-approved.
+Policy map 中没有列出的 tool names 默认 enabled 且 auto-approved。
 
 ## ToolCallRecord
 

@@ -1,10 +1,10 @@
 ---
 title: "Types"
 sidebarTitle: "Types"
-description: "Common SDK type surfaces."
+description: "常用 SDK type surfaces。"
 ---
 
-Most common types are exported from `@cline/shared`; runtime entry-point packages re-export selected helpers.
+大多数常用 types 从 `@cline/shared` 导出；runtime entry-point packages 会 re-export 部分 helpers。
 
 ## AgentRuntime Types
 
@@ -19,7 +19,7 @@ import type {
 } from "@cline/sdk"
 ```
 
-`AgentRunResult` is returned by direct `AgentRuntime` / `Agent` runs:
+直接运行 `AgentRuntime` / `Agent` 会返回 `AgentRunResult`：
 
 ```typescript
 interface AgentRunResult {
@@ -49,7 +49,7 @@ import type {
 } from "@cline/sdk"
 ```
 
-`AgentResult` is the host/core-facing result shape:
+`AgentResult` 是面向 host/core 的 result shape：
 
 ```typescript
 interface AgentResult {
@@ -86,4 +86,4 @@ interface ToolPolicy {
 }
 ```
 
-See [Tools API](/sdk/reference/tools-api) for the full tool surface.
+完整 tool surface 见 [Tools API](/sdk/reference/tools-api)。

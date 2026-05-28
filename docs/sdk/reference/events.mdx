@@ -1,14 +1,14 @@
 ---
 title: "Events"
 sidebarTitle: "Events"
-description: "Reference for SDK event surfaces."
+description: "SDK event surfaces reference。"
 ---
 
-The SDK exposes multiple event surfaces.
+SDK 暴露多个 event surfaces。
 
 ## AgentRuntimeEvent
 
-Direct `AgentRuntime` usage emits low-level runtime events through `agent.subscribe(listener)`.
+直接使用 `AgentRuntime` 时，会通过 `agent.subscribe(listener)` 发出 low-level runtime events。
 
 ```typescript
 const unsubscribe = agent.subscribe((event) => {
@@ -16,19 +16,19 @@ const unsubscribe = agent.subscribe((event) => {
 })
 ```
 
-Common runtime events include model events, tool execution events, run lifecycle events, and failure events. Runtime results use `AgentRunResult.status` rather than `finishReason`.
+常见 runtime events 包括 model events、tool execution events、run lifecycle events 和 failure events。Runtime results 使用 `AgentRunResult.status`，而不是 `finishReason`。
 
 ## AgentEvent
 
-Core/host-facing agent events are emitted through `AgentConfig.onEvent` and core adapters.
+Core/host-facing agent events 通过 `AgentConfig.onEvent` 和 core adapters 发出。
 
-| Event | Description |
+| Event | 说明 |
 |-------|-------------|
-| `content_start` | Text/reasoning/tool content begins |
+| `content_start` | Text/reasoning/tool content 开始 |
 | `content_update` | Tool progress update |
-| `content_end` | Text/reasoning/tool content completes |
-| `iteration_start` | Loop iteration begins |
-| `iteration_end` | Loop iteration completes |
+| `content_end` | Text/reasoning/tool content 完成 |
+| `iteration_start` | Loop iteration 开始 |
+| `iteration_end` | Loop iteration 完成 |
 | `usage` | Token/cost usage update |
 | `notice` | Runtime status/recovery notice |
 | `done` | Agent completed/aborted/failed |
@@ -66,7 +66,7 @@ interface AgentUsageEvent {
 
 ## CoreSessionEvent
 
-`ClineCore.subscribe(listener, options?)` emits session-level events from the runtime host.
+`ClineCore.subscribe(listener, options?)` 会从 runtime host 发出 session-level events。
 
 ```typescript
 const unsubscribe = cline.subscribe((event) => {

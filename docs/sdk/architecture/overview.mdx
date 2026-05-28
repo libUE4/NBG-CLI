@@ -1,15 +1,15 @@
 ---
 title: "Packages"
 sidebarTitle: "Packages"
-description: "How SDK packages fit together, what each package exports, and where boundaries are enforced."
+description: "SDK packages 的组合方式、各 package 的 exports，以及边界约束。"
 ---
 
-The SDK is split into layered packages. Dependencies flow downward: `core` depends on `agents`, `llms`, and `shared`; `agents` depends on `llms` and `shared`; `llms` depends on `shared`.
+SDK 拆分为分层 packages。依赖只向下流动：`core` 依赖 `agents`、`llms` 和 `shared`；`agents` 依赖 `llms` 和 `shared`；`llms` 依赖 `shared`。
 
 ## Package Stack
 
 ```txt
-Your application / CLI / VS Code / JetBrains
+Your application / NBG CLI / VS Code / JetBrains
           │
           ▼
 @cline/core
@@ -29,21 +29,21 @@ Sessions, storage, built-in tools, hub, automation, telemetry
 
 ### @cline/core
 
-Node runtime/orchestration layer.
+Node runtime/orchestration layer。
 
-Key exports include:
+主要 exports 包括：
 
-| Export | Description |
+| Export | 说明 |
 |--------|-------------|
-| `ClineCore` | Main runtime entry point |
+| `ClineCore` | 主要 runtime entry point |
 | `ClineCoreOptions` | Constructor options |
 | `ClineCoreStartInput` | Session start input |
 | `CoreSessionConfig` | Session configuration |
-| `SessionRecord` | Persisted session metadata |
+| `SessionRecord` | 持久化 session metadata |
 | `AgentPlugin` | Public plugin type |
-| `createTool` | Re-export from shared |
+| `createTool` | 从 shared re-export |
 
-Capabilities include:
+能力包括：
 
 - local/hub/remote runtime backends
 - session manifests and message artifacts
@@ -54,61 +54,61 @@ Capabilities include:
 - plugin/extension loading
 - team/sub-agent tools
 
-Depends on: `@cline/shared`, `@cline/llms`, `@cline/agents`.
+依赖：`@cline/shared`、`@cline/llms`、`@cline/agents`。
 
 ### @cline/agents
 
-Browser-compatible agent execution loop.
+Browser-compatible agent execution loop。
 
-Key exports include:
+主要 exports 包括：
 
-| Export | Description |
+| Export | 说明 |
 |--------|-------------|
 | `AgentRuntime` | Core runtime class |
-| `Agent` | Alias for `AgentRuntime` |
+| `Agent` | `AgentRuntime` 的 alias |
 | `createAgentRuntime`, `createAgent` | Factory functions |
 | `AgentRuntimeConfig` | Constructor config union |
 | `AgentRunInput`, `AgentEventListener` | Runtime helper types |
-| `createTool` | Re-export from `@cline/shared` |
+| `createTool` | 从 `@cline/shared` re-export |
 
-Methods on `AgentRuntime` include `run`, `continue`, `abort`, `subscribe`, `restore`, and `snapshot`.
+`AgentRuntime` methods 包括 `run`、`continue`、`abort`、`subscribe`、`restore` 和 `snapshot`。
 
-Depends on: `@cline/shared`, `@cline/llms`.
+依赖：`@cline/shared`、`@cline/llms`。
 
 ### @cline/llms
 
-Provider and model layer.
+Provider 和 model layer。
 
-Key exports include:
+主要 exports 包括：
 
-| Export | Description |
+| Export | 说明 |
 |--------|-------------|
-| `DefaultGateway`, `createGateway` | Gateway for creating provider-backed agent models |
+| `DefaultGateway`, `createGateway` | 创建 provider-backed agent models 的 gateway |
 | `createHandler`, `createHandlerAsync` | Provider handler factories |
 | `getAllProviders`, `getProviderIds`, `getModelsForProvider` | Catalog helpers |
 | `registerProvider`, `registerModel` | Runtime registry extension |
 | `ModelInfo`, `ProviderInfo` | Provider/model metadata |
 
-Depends on: `@cline/shared`.
+依赖：`@cline/shared`。
 
 ### @cline/shared
 
-Foundation package for shared contracts and utilities.
+用于 shared contracts 和 utilities 的 foundation package。
 
-Key exports include:
+主要 exports 包括：
 
-| Export | Description |
+| Export | 说明 |
 |--------|-------------|
-| `createTool` | Helper for creating typed tools |
+| `createTool` | 创建 typed tools 的 helper |
 | `AgentTool`, `AgentToolContext`, `ToolPolicy` | Tool interfaces |
 | `AgentEvent`, `AgentResult`, `AgentConfig` | Host-facing agent types |
 | `AgentRuntimeEvent`, `AgentRunResult` | Runtime-facing agent types |
-| `HookEngine`, `HookStage`, `HookPolicies` | Hook contracts and engine |
+| `HookEngine`, `HookStage`, `HookPolicies` | Hook contracts 和 engine |
 | `ContributionRegistry`, `AgentExtensionApi` | Extension registration contracts |
 | `ModelInfo`, `Message`, `ContentBlock` | Model/message types |
 | `BasicLogger`, `noopBasicLogger` | Logging contracts |
 
-No higher-layer dependencies.
+没有 higher-layer dependencies。
 
 ## Install
 
@@ -116,18 +116,18 @@ No higher-layer dependencies.
 npm install @cline/sdk
 ```
 
-`@cline/sdk` re-exports everything from `@cline/core`. Install `@cline/agents` or `@cline/llms` directly only if you need lower-level control.
+`@cline/sdk` 会 re-export `@cline/core` 的全部内容。只有在需要 lower-level control 时，才直接安装 `@cline/agents` 或 `@cline/llms`。
 
 ## Design Principles
 
 ### Strict dependency direction
 
-Dependencies flow downward only. Lower layers stay embeddable without pulling in the full runtime.
+依赖只能向下流动。Lower layers 可以保持 embeddable，不会拉入完整 runtime。
 
 ### Browser-compatible agent loop
 
-`@cline/agents` exposes a browser-compatible runtime. It does not own session storage, built-in file/shell tools, hub transports, or Node-specific orchestration.
+`@cline/agents` 暴露 browser-compatible runtime。它不负责 session storage、built-in file/shell tools、hub transports 或 Node-specific orchestration。
 
 ### Core as orchestration layer
 
-`@cline/core` owns Node runtime integration: session persistence, built-in tools, automation, hub/remote transports, telemetry, and extension loading.
+`@cline/core` 负责 Node runtime integration：session persistence、built-in tools、automation、hub/remote transports、telemetry 和 extension loading。
