@@ -57,18 +57,20 @@ function BashOutput(props: { fullText: string; theme: TerminalTheme }) {
 		return (
 			<box
 				flexDirection="column"
-				paddingLeft={2}
+				marginTop={1}
+				paddingLeft={4}
 				width="100%"
 				onMouseDown={() => hasMore && setExpanded(true)}
 			>
-				<text selectable wrapMode="word" width="100%">
-					<span fg="gray">
-						{RESULT} {firstLine}
-					</span>
-				</text>
+				<text fg="gray">{RESULT} 输出</text>
+				<box paddingLeft={2} width="100%">
+					<text fg="gray" selectable wrapMode="word" width="100%">
+						{firstLine || "（无输出）"}
+					</text>
+				</box>
 				{hasMore && (
 					<text fg="gray">
-						{"   "}... 还有 {lines.length - 1} 行
+						{"  "}... 还有 {lines.length - 1} 行
 					</text>
 				)}
 			</box>
@@ -76,12 +78,13 @@ function BashOutput(props: { fullText: string; theme: TerminalTheme }) {
 	}
 
 	return (
-			<box
-				flexDirection="column"
-				paddingLeft={2}
-				width="100%"
-				onMouseDown={() => setExpanded(false)}
-			>
+		<box
+			flexDirection="column"
+			marginTop={1}
+			paddingLeft={4}
+			width="100%"
+			onMouseDown={() => setExpanded(false)}
+		>
 			<text fg="gray">{RESULT} 输出：</text>
 			<box marginLeft={2} marginTop={1} marginBottom={1} width="100%">
 				<code
@@ -104,7 +107,7 @@ function ReadOutput(props: { fullText: string; rawInput?: unknown }) {
 	const language = filePath ? detectLanguage(filePath) : undefined;
 
 	return (
-		<box paddingLeft={2} width="100%">
+		<box marginTop={1} paddingLeft={4} width="100%">
 			<text fg="gray" wrapMode="word" width="100%">
 				{RESULT} {lines.length} 行
 				{language ? ` | ${language}` : ""}
@@ -266,15 +269,17 @@ function GenericOutput(props: { outputSummary: string; fullText?: string }) {
 		return (
 			<box
 				flexDirection="column"
-				paddingLeft={2}
+				marginTop={1}
+				paddingLeft={4}
 				width="100%"
 				onMouseDown={() => isLong && setExpanded(true)}
 			>
-				<text selectable wrapMode="word" width="100%">
-					<span fg="gray">
-						{isLong ? RESULT : " "} {collapsedText}
-					</span>
-				</text>
+				<text fg="gray">{isLong ? `${RESULT} 输出` : `${RESULT} 结果`}</text>
+				<box paddingLeft={2} width="100%">
+					<text fg="gray" selectable wrapMode="word" width="100%">
+						{collapsedText}
+					</text>
+				</box>
 			</box>
 		);
 	}
@@ -282,11 +287,12 @@ function GenericOutput(props: { outputSummary: string; fullText?: string }) {
 	return (
 		<box
 			flexDirection="column"
-			paddingLeft={2}
+			marginTop={1}
+			paddingLeft={4}
 			width="100%"
 			onMouseDown={() => setExpanded(false)}
 		>
-			<text fg="gray">{RESULT}</text>
+			<text fg="gray">{RESULT} 输出</text>
 			<box marginLeft={2} marginBottom={1} width="100%">
 				<text fg="gray" selectable wrapMode="word" width="100%">
 					{displayText}
@@ -309,7 +315,8 @@ export function ToolOutput(props: ToolOutputProps) {
 		return (
 			<box
 				flexDirection="column"
-				paddingLeft={2}
+				marginTop={1}
+				paddingLeft={4}
 				width="100%"
 				onMouseDown={() => setErrorExpanded(!errorExpanded)}
 			>
@@ -341,7 +348,7 @@ export function ToolOutput(props: ToolOutputProps) {
 		const answer = (fullText || outputSummary).trim();
 		if (!answer) return null;
 		return (
-			<box paddingLeft={2} width="100%">
+			<box marginTop={1} paddingLeft={4} width="100%">
 				<text fg="gray" selectable wrapMode="word" width="100%">
 					{RESULT} {answer}
 				</text>

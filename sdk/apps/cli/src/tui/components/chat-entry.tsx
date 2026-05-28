@@ -1,4 +1,3 @@
-import { useTerminalDimensions } from "@opentui/react";
 import type React from "react";
 import { useState } from "react";
 import "opentui-spinner/react";
@@ -29,9 +28,22 @@ function trimLeading(text: string): string {
 	return text.replace(/^\n+/, "");
 }
 
+function ToolParamText(props: { children: React.ReactNode; fg?: string }) {
+	return (
+		<text
+			fg={props.fg}
+			selectable
+			wrapMode="word"
+			width="100%"
+			flexShrink={1}
+		>
+			{props.children}
+		</text>
+	);
+}
+
 function ReasoningBlock(props: { text: string; streaming: boolean }) {
 	const [expanded, setExpanded] = useState(false);
-	const { width } = useTerminalDimensions();
 	const content = trimLeading(props.text);
 	if (!content.trim()) {
 		if (props.streaming) {
@@ -100,19 +112,10 @@ function ReasoningBlock(props: { text: string; streaming: boolean }) {
 		);
 	}
 
-	const padding = 4;
-	const prefix = "\u25b6 思考：";
-	const available = Math.max(10, width - padding - prefix.length - 3);
-	const flat = content.replace(/\n/g, " ").trim();
-	const tail =
-		flat.length <= available
-			? flat
-			: `...${flat.slice(flat.length - available)}`;
-
 	return (
 		<box width="100%" onMouseDown={() => setExpanded(true)}>
 			<text fg="gray" selectable wrapMode="word" width="100%" flexShrink={1}>
-				{"\u25b6"} <em>思考：{tail}</em>
+				{"\u25b6"} <em>思考（已折叠）</em>
 			</text>
 		</box>
 	);
@@ -127,25 +130,25 @@ function formatToolParams(
 		case "read_files": {
 			const info = parseReadFilesInput(rawInput);
 			if (!info?.files.length) return fallback;
-			return info.files.map((f, i) => {
+			return info.files.map((f) => {
 				const sl = f.startLine != null ? String(f.startLine) : "undefined";
 				const el = f.endLine != null ? String(f.endLine) : "undefined";
-				const sep = i > 0 ? "; " : "";
 				return (
-					<span key={f.path}>
-						{sep}
+					<ToolParamText key={f.path}>
 						{shortenPath(f.path)}
 						<span fg="gray">
 							, start_line={sl}, end_line={el}
 						</span>
-					</span>
+					</ToolParamText>
 				);
 			});
 		}
 		case "run_commands": {
 			const info = parseRunCommandsInput(rawInput);
 			if (!info?.commands.length) return fallback;
-			return info.commands.join(" && ");
+			return info.commands.map((command, index) => (
+				<ToolParamText key={`${index}:${command}`}>{command}</ToolParamText>
+			));
 		}
 		case "editor":
 		case "edit":
@@ -157,17 +160,21 @@ function formatToolParams(
 		case "apply_patch": {
 			const patchInfo = parseApplyPatchInput(rawInput);
 			if (!patchInfo?.files.length) return fallback;
-			return patchInfo.files.map((f) => shortenPath(f)).join(", ");
+			return patchInfo.files.map((file) => (
+				<ToolParamText key={file}>{shortenPath(file)}</ToolParamText>
+			));
 		}
 		case "search_codebase": {
 			const info = parseSearchInput(rawInput);
 			if (!info?.queries.length) return fallback;
-			return info.queries.join(", ");
+			return info.queries.map((query, index) => (
+				<ToolParamText key={`${index}:${query}`}>{query}</ToolParamText>
+			));
 		}
 		case "fetch_web_content": {
 			const info = parseWebFetchInput(rawInput);
 			if (!info?.urls.length) return fallback;
-			return info.urls.join(", ");
+			return info.urls.map((url) => <ToolParamText key={url}>{url}</ToolParamText>);
 		}
 		case "spawn_agent": {
 			const info = parseSpawnAgentInput(rawInput);
@@ -217,10 +224,26 @@ function ToolCallView(props: {
 	const failed = result?.error != null;
 	const warningFailure = isWarningToolError(result?.error);
 	const params = formatToolParams(toolName, props.rawInput, inputSummary);
+	const statusText = streaming
+		? "运行中"
+		: warningFailure
+			? "已跳过"
+			: failed
+				? "失败"
+				: result
+					? "完成"
+					: "已调用";
+	const statusColor = streaming
+		? "gray"
+		: warningFailure
+			? "yellow"
+			: failed
+				? "red"
+				: "gray";
 
 	return (
-		<box flexDirection="column">
-			<box flexDirection="row">
+		<box flexDirection="column" width="100%">
+			<box flexDirection="row" width="100%">
 				<box width={2} flexShrink={0}>
 					{streaming ? (
 						<spinner name="dots" color="gray" />
@@ -232,19 +255,23 @@ function ToolCallView(props: {
 						<text fg={accent}>*</text>
 					)}
 				</box>
-				<box flexGrow={1} flexShrink={1}>
+				<box flexGrow={1} flexShrink={1} flexDirection="column" width="100%">
 					<text fg={defaultFg} selectable wrapMode="word" width="100%">
 						<span fg={accent}>
 							<strong>{toolName}</strong>
 						</span>
-						<span fg={accent}>
-							<strong>(</strong>
-						</span>
-						<span>{params}</span>
-						<span fg={accent}>
-							<strong>)</strong>
-						</span>
+						<span fg="gray"> · </span>
+						<span fg={statusColor}>{statusText}</span>
 					</text>
+					{params && (
+						<box flexDirection="column" paddingLeft={2} width="100%">
+							{typeof params === "string" ? (
+								<ToolParamText fg={defaultFg}>{params}</ToolParamText>
+							) : (
+								params
+							)}
+						</box>
+					)}
 				</box>
 			</box>
 			{result && (
