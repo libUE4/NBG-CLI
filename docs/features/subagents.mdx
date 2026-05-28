@@ -1,79 +1,78 @@
 ---
 title: "Subagents"
 sidebarTitle: "Subagents"
-description: "Run parallel research agents to explore your codebase without filling the main agent's context window."
+description: "运行并行研究 agent，避免占满主 agent 的上下文窗口。"
 ---
 
-Subagents let Cline spawn focused research agents that run in parallel. Each subagent gets its own prompt and context window, explores the codebase independently, and returns a detailed report to the main agent. This keeps the main agent's context clean while gathering broad information fast.
+Subagents 让 NBG 可以启动多个聚焦研究 agent 并行工作。每个 subagent 都有自己的 prompt 和上下文窗口，可以独立探索代码库，并把详细报告返回给主 agent。这样可以快速收集广泛信息，同时保持主 agent 上下文更干净。
 
 <Tip>
-  Subagents is an experimental feature. Behavior may change in future releases.
+  Subagents 仍是实验性能力，未来版本的行为可能调整。
 </Tip>
 
-## How It Works
+## 工作方式
 
-When Cline uses the `use_subagents` tool, it launches independent agents simultaneously. Each one:
+当 NBG 使用 `use_subagents` tool 时，会同时启动多个独立 agent。每个 subagent：
 
-- Gets its own prompt describing what to investigate
-- Runs with a separate context window and token budget
-- Can read files, search code, list directories, run read-only commands, and use skills
-- Cannot edit files, use the browser, access MCP servers, or spawn nested subagents
-- Returns a result focused on the most relevant file paths for the main agent to read next
+- 拥有自己的研究 prompt
+- 使用独立上下文窗口和 token 预算
+- 可以读取文件、搜索代码、列目录、运行只读命令并使用 skills
+- 不能编辑文件、使用浏览器、访问 MCP servers 或继续创建嵌套 subagents
+- 返回结果时会突出主 agent 下一步最该读取的相关文件路径
 
-Subagent costs (tokens and API spend) are tracked separately per subagent and rolled into the task's total cost. You can see per-subagent stats (tool calls, tokens, cost) in the chat UI as they run.
+Subagent 的 token 和 API 成本会按 subagent 单独跟踪，并计入任务总成本。运行时可以在 chat UI 中查看每个 subagent 的 tool calls、tokens 和成本统计。
 
-## Enabling Subagents
+## 启用 Subagents
 
-Subagents are enabled by default. Cline decides when parallel research is worth the overhead — you don't need to opt in or call them out in your prompt. To turn subagents off, disable the `use_subagents` tool in Settings → Features → Agent.
+Subagents 默认启用。NBG 会判断并行研究是否值得额外开销，你不需要在 prompt 中显式开启。需要关闭时，在 Settings -> Features -> Agent 中禁用 `use_subagents` tool。
 
-This setting applies across all editors (VS Code, JetBrains, CLI).
+该设置适用于所有入口，包括 VS Code、JetBrains 和 CLI。
 
-## Using Subagents
+## 使用方式
 
-When subagents are enabled, Cline picks them up on its own when a task benefits from parallel exploration. You can also nudge it explicitly by asking for parallel research in your prompt.
+启用 subagents 后，NBG 会在任务适合并行探索时自动使用它们。你也可以在 prompt 中明确要求并行研究。
 
-Example prompts:
+示例 prompt：
 
-- "Use subagents to explore how authentication works and where the database models are defined"
-- "Spin up subagents to investigate the API routes, the test setup, and the deployment config"
-- "I'm new to this codebase. Use subagents to map out the main entry points, the routing layer, and the data access patterns"
+- "使用 subagents 探索认证流程如何工作，以及数据库模型定义在哪里"
+- "启动 subagents 分别调查 API routes、测试设置和部署配置"
+- "我刚接触这个代码库。使用 subagents 梳理主入口、路由层和数据访问模式"
 
-Each subagent prompt should describe a focused research question. Cline will run them in parallel and synthesize the results.
-You can also run only one subagent when the task is small enough that parallel discovery would be unnecessary overhead.
+每个 subagent prompt 都应该描述一个聚焦的研究问题。NBG 会并行运行它们并综合结果。任务较小时，也可以只运行一个 subagent，避免并行发现带来不必要开销。
 
-## Auto-Approve Behavior
+## 自动批准行为
 
-Subagents follow the **Read project files** auto-approve permission. If you have "Read project files" enabled in [Auto Approve](/features/auto-approve), subagent launches will be auto-approved.
+Subagents 遵循 **Read project files** 自动批准权限。如果你在 [自动批准](/features/auto-approve) 中启用了 "Read project files"，subagent 启动也会被自动批准。
 
-If auto-approve is off, Cline will ask for your approval before launching subagents, showing you the prompts it plans to send.
+如果关闭自动批准，NBG 会在启动 subagents 前请求确认，并展示准备发送的 prompts。
 
-## What Subagents Can Do
+## Subagents 能做什么
 
-Subagents are read-only research agents. Here is what they have access to:
+Subagents 是只读研究 agent。它们可以访问：
 
-| Tool | Purpose |
+| Tool | 用途 |
 |------|---------|
-| `read_file` | Read file contents |
-| `list_files` | List directory contents |
-| `search_files` | Regex search across files |
-| `list_code_definition_names` | List top-level classes, functions, and methods |
-| `execute_command` | Run read-only commands (`ls`, `grep`, `git log`, `git diff`, etc.) |
-| `use_skill` | Load and activate skills |
+| `read_file` | 读取文件内容 |
+| `list_files` | 列出目录内容 |
+| `search_files` | 使用正则搜索文件 |
+| `list_code_definition_names` | 列出顶层 classes、functions 和 methods |
+| `execute_command` | 运行只读命令（`ls`、`grep`、`git log`、`git diff` 等） |
+| `use_skill` | 加载并激活 skills |
 
-Subagents cannot write files, apply patches, use the browser, access MCP servers, or perform web searches. They also cannot spawn their own subagents.
+Subagents 不能写文件、应用 patch、使用浏览器、访问 MCP servers 或执行 web search。它们也不能继续创建自己的 subagents。
 
 <Note>
-  Commands run by subagents execute in the background and are restricted to read-only operations. Subagents will not run commands that modify files or system state.
-  Subagents also benefit from command pipelines and filters to narrow output quickly before reading files, for example `rg ... | sort | uniq`.
+  Subagents 运行的命令会在后台执行，并限制为只读操作。Subagents 不会运行会修改文件或系统状态的命令。
+  Subagents 也适合先使用命令管道和过滤器缩小输出，再读取文件，例如 `rg ... | sort | uniq`。
 </Note>
 
-## When to Use Subagents
+## 适用场景
 
-Subagents work best when you need broad context from multiple areas of a codebase at once:
+当你需要同时从代码库多个区域收集广泛上下文时，subagents 最有价值：
 
-- **Onboarding to an unfamiliar project**: Ask subagents to map out the architecture, key entry points, and data flow in parallel.
-- **Investigating cross-cutting concerns**: Have separate subagents trace authentication, logging, and error handling simultaneously.
-- **Pre-edit research**: Before making changes, use subagents to gather context from related files so the main agent can make informed edits without burning through its context window.
-- **Large codebases**: When reading many files sequentially would consume too much of the main agent's context, subagents let you explore broadly without that tradeoff.
+- **熟悉陌生项目**：让 subagents 并行梳理架构、关键入口和数据流。
+- **调查横切关注点**：让不同 subagents 同时追踪认证、日志和错误处理。
+- **修改前研究**：在改代码前，让 subagents 从相关文件收集上下文，帮助主 agent 在不消耗大量上下文的情况下做出更稳的修改。
+- **大型代码库**：顺序读取大量文件会占用主 agent 上下文时，subagents 可以更广泛地探索。
 
-For small, focused tasks where you already know which files to look at, subagents add unnecessary overhead. Just ask Cline directly.
+如果任务很小且你已经知道要看哪些文件，subagents 会增加不必要开销。直接让 NBG 处理即可。
