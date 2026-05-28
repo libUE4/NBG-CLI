@@ -1,76 +1,77 @@
 ---
 title: "Tools"
 sidebarTitle: "Tools"
-description: "Reference for Cline's built-in tool system, aligned with SDK tool architecture."
+description: "NBG 内置工具系统参考，与 SDK tool architecture 对齐。"
 ---
 
-Cline tools are executable functions the model can call while working. The model decides which tool to call, Cline runs it, then returns results back to the model.
+NBG tools 是模型在工作时可以调用的可执行函数。模型决定调用哪个工具，NBG 执行工具，然后把结果返回给模型。
 
-## Built-In Tools (ClineCore)
+## 内置工具（ClineCore）
 
-When running through `ClineCore`, these built-ins are available:
+通过 `ClineCore` 运行时，可以使用以下内置工具：
 
-| Tool | Description |
+| Tool | 说明 |
 |------|-------------|
-| `bash` | Execute shell commands |
-| `editor` | View and edit files |
-| `read_files` | Batch read multiple files |
-| `apply_patch` | Apply unified diffs to files |
-| `search` | Ripgrep-powered codebase search |
-| `fetch_web` | HTTP requests with HTML-to-markdown conversion |
-| `ask_question` | Ask the user for input |
+| `bash` | 执行 shell commands |
+| `editor` | 查看和编辑文件 |
+| `read_files` | 批量读取多个文件 |
+| `apply_patch` | 将 unified diffs 应用到文件 |
+| `search` | 基于 ripgrep 的代码库搜索 |
+| `fetch_web` | 执行 HTTP requests，并把 HTML 转为 markdown |
+| `ask_question` | 向用户请求输入 |
 
 <Note>
-`Agent` from `@cline/agents` does not include built-ins by default. You provide tools explicitly.
+`@cline/agents` 中的 `Agent` 默认不包含内置工具。你需要显式提供 tools。
 </Note>
 
-## Tool Categories
+## 工具分类
 
-- **Codebase operations**: `editor`, `read_files`, `apply_patch`, `search`
-- **Execution**: `bash`
-- **External retrieval**: `fetch_web`
-- **Human-in-the-loop controls**: `ask_question`
+- **代码库操作**：`editor`、`read_files`、`apply_patch`、`search`
+- **执行**：`bash`
+- **外部检索**：`fetch_web`
+- **Human-in-the-loop 控制**：`ask_question`
 
-## Approval and Policy Controls
+## Approval 与 Policy 控制
 
-Cline can run tools with approval or auto-approval, depending on settings/policies. Typical patterns:
+NBG 可以根据 settings 或 policies，在需要 approval 或 auto-approval 的情况下运行工具。常见模式包括：
 
-- Require approval for risky tools (for example `bash`, write/edit operations)
-- Auto-approve low-risk tools (for example read/search operations)
-- Disable specific tools entirely when needed
+- 对高风险工具要求 approval，例如 `bash`、写入或编辑操作
+- 对低风险工具启用 auto-approve，例如读取或搜索操作
+- 在需要时完全禁用特定工具
 
-For policy examples, see [SDK Tools](/sdk/tools) and [Permission Handling](/sdk/guides/permission-handling).
+Policy 示例见 [SDK Tools](/sdk/tools) 和 [Permission Handling](/sdk/guides/permission-handling)。
 
 ## MCP Tools
 
-Cline can also call tools discovered from MCP servers configured in `.cline/mcp.json`.
+NBG 也可以调用从 `.cline/mcp.json` 中配置的 MCP servers 发现的工具。
 
-MCP tools are loaded alongside built-ins, so Cline can use both local tools and external integrations in one task.
+MCP tools 会和内置工具一起加载，因此 NBG 可以在同一个任务中同时使用本地工具和外部集成。
 
 See [MCP Overview](/mcp/mcp-overview) and [SDK Tools → MCP Tools](/sdk/tools#mcp-tools).
 
-## Custom Tools
+## 自定义工具
 
 <Warning>
-  This feature currently only applies to Cline SDK, CLI, and Kanban. This feature is not applicable on VSCode and JetBrains Extension for now.
+  该能力当前适用于 NBG SDK 兼容层、CLI 和 Kanban，暂不适用于 VS Code 和 JetBrains 扩展。
 </Warning>
 
-Beyond built-ins and MCP, you can create custom tools and add them through plugins.
+除内置工具和 MCP 外，你还可以创建 custom tools，并通过 plugins 添加。
 
-- Define tool behavior and input schema in plugin code
-- Register tools during plugin setup
-- Expose those tools to agents alongside built-ins
+- 在 plugin code 中定义工具行为和输入 schema
+- 在 plugin setup 阶段注册工具
+- 把这些工具和内置工具一起暴露给 agents
 
-See:
+参见：
+
 - [SDK Plugins](/sdk/plugins)
 - [Writing Plugins (examples)](/sdk/guides/writing-plugins)
 - [SDK Tools: Creating Custom Tools](/sdk/tools#creating-custom-tools)
 
-## Legacy Tool Names vs Current Runtime Tools
+## Legacy Tool Names 与当前 Runtime Tools
 
-Some older docs/examples reference XML-style names like `read_file`, `replace_in_file`, or `execute_command`. Current SDK/ClineCore runtime uses the built-in tool names listed above (`read_files`, `apply_patch`, `bash`, etc.).
+部分旧文档或示例会引用 XML-style 名称，例如 `read_file`、`replace_in_file` 或 `execute_command`。当前 SDK/ClineCore runtime 使用上面列出的内置工具名，例如 `read_files`、`apply_patch`、`bash` 等。
 
-## Related
+## 相关
 
 - [SDK Tools](/sdk/tools)
 - [Tools API Reference](/sdk/reference/tools-api)

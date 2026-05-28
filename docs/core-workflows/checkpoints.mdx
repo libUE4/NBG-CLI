@@ -1,95 +1,95 @@
 ---
 title: "Checkpoints"
 sidebarTitle: "Checkpoints"
-description: "Roll back code changes while keeping your conversation. Experiment freely."
+description: "在保留对话的同时回滚代码变更，放心尝试不同方案。"
 ---
 
-Checkpoints let you undo code changes without losing your conversation. Every time Cline modifies a file or runs a command, it saves a snapshot of your project files. You can restore to any checkpoint, keeping the context you've built while reverting the code.
+Checkpoints 让你可以在不丢失对话的情况下撤销代码变更。每次 NBG 修改文件或运行命令时，都会保存一份项目文件快照。你可以恢复到任意 checkpoint，同时保留已经积累的对话上下文。
 
-This changes how you work with Cline. Instead of carefully reviewing every change before approving, you can let Cline move fast and roll back if something goes wrong. The cost of a mistake drops to nearly zero.
+这会改变你使用 NBG 的方式。你不必在批准前逐项检查所有改动，可以让 NBG 更快推进，并在结果不理想时回滚。试错成本会显著降低。
 
 <Tip>
-Checkpoints are enabled by default. See [Enable or Disable Checkpoints](#enable-or-disable-checkpoints) if you need to turn them off.
+Checkpoints 默认启用。如需关闭，见 [启用或禁用 Checkpoints](#enable-or-disable-checkpoints)。
 </Tip>
 
-## How It Works
+## 工作方式
 
-Cline maintains a shadow Git repository separate from your project's actual Git history. After each tool use (file edits, commands, etc.), Cline commits the current state of your files to this shadow repo. Your main Git repository stays untouched.
+NBG 会维护一个独立于项目真实 Git 历史的 shadow Git repository。每次工具调用后，例如文件编辑或命令执行，NBG 都会把当前文件状态提交到这个 shadow repo。你的主 Git repository 不会被改动。
 
-This means:
+这意味着：
 
-- Your Git history remains clean and under your control
-- Checkpoints capture everything, including files not tracked by Git
-- You can restore to any point in a task without affecting commits you've made
-- Checkpoints persist across editor sessions
+- Git 历史保持干净，并继续由你控制
+- Checkpoints 会捕获所有文件，包括未被 Git 跟踪的文件
+- 可以恢复到任务中的任意时刻，不影响你已经创建的 commits
+- Checkpoints 会跨编辑器会话保留
 
-Each checkpoint captures the complete file state at that moment. If Cline edits three files in sequence, you get three checkpoints and can restore to any of them independently.
+每个 checkpoint 都会记录当时完整的文件状态。如果 NBG 连续编辑三个文件，你会得到三个 checkpoints，并且可以独立恢复到其中任意一个。
 
-## Enable or Disable Checkpoints
+## 启用或禁用 Checkpoints
 
-Checkpoints are enabled by default. To toggle them:
+Checkpoints 默认启用。切换方式如下：
 
-1. Open Cline settings (gear icon in the Cline sidebar)
-2. Scroll to the "Feature Settings" section
-3. Toggle "Enable Checkpoints"
+1. 打开 NBG settings（NBG sidebar 中的齿轮图标）
+2. 滚动到 **Feature Settings** 区域
+3. 切换 **Enable Checkpoints**
 
 <Note>
-For very large repositories, checkpoints may use significant storage and slow down Cline as it commits file snapshots after each tool use. Consider disabling them if you notice performance issues.
+对于非常大的 repository，checkpoints 可能占用较多存储，并因为每次工具调用后都要提交文件快照而拖慢 NBG。如果观察到性能问题，可以考虑关闭。
 </Note>
 
-## Viewing and Comparing Changes
+## 查看和比较变更
 
-After each tool use, a checkpoint indicator appears in your conversation. Look for a bookmark icon labeled "Checkpoint" with a dotted line connecting to **Compare** and **Restore** buttons.
+每次工具调用后，对话中都会出现一个 checkpoint indicator。你可以寻找标记为 **Checkpoint** 的 bookmark icon，以及连接到 **Compare** 和 **Restore** 按钮的虚线。
 
-Click **Compare** to open a diff view showing exactly what changed at that checkpoint. This opens in your editor's diff viewer, letting you see additions, deletions, and modifications across all affected files.
+点击 **Compare** 会打开 diff view，展示该 checkpoint 处的具体变更。它会使用编辑器的 diff viewer，帮助你查看所有受影响文件中的新增、删除和修改。
 
-This is useful when Cline makes changes you want to understand before deciding whether to keep them. You can review the diff, then either continue or restore to undo.
+当你想先理解 NBG 的改动，再决定是否保留时，这很有用。你可以先 review diff，然后继续或恢复。
 
-## Restoring Checkpoints
+## 恢复 Checkpoints
 
-Click **Restore** next to any step to open the restore menu. You have three options:
+点击任意步骤旁边的 **Restore** 可以打开恢复菜单。你有三个选项：
 
-| Option | What It Does | When to Use It |
+| 选项 | 作用 | 适用场景 |
 |--------|--------------|----------------|
-| **Restore Files** | Reverts your project's files to the snapshot at this checkpoint | Undoing code changes while keeping the conversation |
-| **Restore Task Only** | Deletes messages after this point, does not affect files | Trying a different prompt while keeping current code |
-| **Restore Files & Task** | Reverts files and deletes messages after this point | Starting over completely from a known good state |
+| **Restore Files** | 把项目文件恢复到该 checkpoint 的快照 | 撤销代码变更，同时保留对话 |
+| **Restore Task Only** | 删除该点之后的消息，不影响文件 | 保留当前代码，换一种 prompt 继续 |
+| **Restore Files & Task** | 恢复文件，并删除该点之后的消息 | 从一个确定的好状态重新开始 |
 
-The right choice depends on what went wrong:
+具体选择取决于问题类型：
 
-- If the conversation is productive but the code changes broke something, use **Restore Files**. Cline keeps all the context you've discussed and can try a different implementation.
+- 如果对话方向正确，但代码变更破坏了某些行为，使用 **Restore Files**。NBG 会保留已经讨论过的上下文，并尝试不同实现。
 
-- If Cline's code changes are good but the conversation went off track, use **Restore Task Only**. You keep the files and can guide the conversation differently.
+- 如果代码变更本身不错，但对话方向偏了，使用 **Restore Task Only**。你会保留文件，并用新的方式引导后续对话。
 
-- If you want to start over from a clean slate, use **Restore Files & Task**. This resets both your files and the conversation to that checkpoint.
+- 如果想从干净状态重新开始，使用 **Restore Files & Task**。它会把文件和对话都重置到该 checkpoint。
 
-## When to Use Checkpoints
+## 何时使用 Checkpoints
 
-| Scenario | Recommended Action |
+| 场景 | 建议操作 |
 |----------|-------------------|
-| Cline refactored code and broke something | Restore Files, ask for a different approach |
-| Experimenting with multiple solutions | Compare each checkpoint, restore to the best one |
-| Cline misunderstood your intent | Restore Files & Task, rephrase your request |
-| Want to try a different prompt | Restore Task Only, keep the files, resubmit |
-| Reviewing changes before committing to Git | Use Compare to inspect, then commit manually |
-| Testing risky changes | Let Cline proceed, restore if it fails |
+| NBG 重构代码后破坏了行为 | Restore Files，然后要求换一种方案 |
+| 尝试多个解决方案 | Compare 每个 checkpoint，恢复到最佳方案 |
+| NBG 误解了你的意图 | Restore Files & Task，然后重新描述需求 |
+| 想尝试不同 prompt | Restore Task Only，保留文件后重新提交 |
+| 在提交 Git 前 review 变更 | 使用 Compare 检查，然后手动 commit |
+| 测试高风险变更 | 让 NBG 继续推进，失败后恢复 |
 
-## Working with Auto-Approve
+## 配合 Auto-Approve 使用
 
-Checkpoints make [auto-approve](/features/auto-approve) practical. Without checkpoints, auto-approve feels risky because Cline can make many changes before you notice a problem. With checkpoints, you can let Cline work autonomously and roll back if needed.
+Checkpoints 让 [auto-approve](/features/auto-approve) 更实用。没有 checkpoints 时，auto-approve 风险较高，因为你可能在注意到问题前已经积累很多变更。有了 checkpoints，就可以让 NBG 自主推进，并在需要时回滚。
 
-A typical workflow:
+典型流程：
 
-1. Enable auto-approve for file edits and commands
-2. Let Cline work through your task quickly
-3. Review the final result
-4. If something is wrong, restore to the last good checkpoint
-5. Give Cline more specific guidance
+1. 为文件编辑和命令启用 auto-approve
+2. 让 NBG 快速完成任务
+3. Review 最终结果
+4. 如果有问题，恢复到最后一个可用 checkpoint
+5. 给 NBG 更具体的指导
 
-This approach is faster than reviewing every change individually, and checkpoints provide the safety net.
+这种方式比逐项 review 每个变更更快，而 checkpoints 提供了回滚保障。
 
-## Checkpoints and Message Editing
+## Checkpoints 与消息编辑
 
-The message editing feature integrates with checkpoints. When you edit a previous message and select "Restore All," Cline restores your files to the checkpoint at that point before resubmitting your edited message.
+消息编辑功能会与 checkpoints 集成。当你编辑之前的消息并选择 **Restore All** 时，NBG 会先把文件恢复到该消息对应的 checkpoint，再重新提交编辑后的消息。
 
-This lets you fix a poorly worded prompt and undo all the changes that resulted from it in one action.
+这可以让你一次性修正表达不清的 prompt，并撤销由它导致的所有变更。

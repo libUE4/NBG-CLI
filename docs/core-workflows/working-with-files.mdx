@@ -1,85 +1,87 @@
 ---
-title: "Adding Context"
-sidebarTitle: "Adding Context"
-description: "Use @ mentions and drag & drop to bring files into your conversations."
+title: "添加上下文"
+sidebarTitle: "添加上下文"
+description: "使用 @ mentions 和拖放把文件带入对话。"
 ---
 
-Cline works best when it has the right context, not just more context. `@` mentions let you pull in the files and folders that matter for your task — no copying, no pasting, no context switching.
+NBG 需要正确的上下文，而不只是更多上下文。`@` mentions 可以把任务相关的文件和目录直接带入对话，避免来回复制、粘贴或切换窗口。
 
-You can add context two ways:
-- Type `@` in the chat input and select a file or folder
-- Click the **+** button in the bottom left to browse files or images
+添加上下文有两种方式：
 
-## Quick Reference
+- 在聊天输入框中输入 `@`，然后选择文件或目录
+- 点击左下角的 **+** 按钮，浏览文件或图片
 
-| What you want | Syntax | Example |
+## 快速参考
+
+| 目标 | 语法 | 示例 |
 |---------------|--------|---------|
-| File content | `@/path/to/file` | `@/src/index.ts` |
-| Folder contents | `@/path/to/folder/` | `@/src/components/` |
+| 文件内容 | `@/path/to/file` | `@/src/index.ts` |
+| 目录内容 | `@/path/to/folder/` | `@/src/components/` |
 
-For other context — git history, web pages, terminal errors — just describe it. Cline will run `git log`, fetch the URL, or read the output itself.
+对于 git 历史、网页、终端错误等其他上下文，直接描述需求即可。NBG 会按需运行 `git log`、拉取 URL，或读取相关输出。
 
-## File Mentions
+## 文件 mentions
 
-Reference any file with `@/path/to/file`. Cline sees the complete file content, including imports, related functions, and surrounding context.
+使用 `@/path/to/file` 引用任意文件。NBG 会读取完整文件内容，包括 imports、相关函数和周边上下文。
 
 ```text
 Can you refactor the error handling in @/src/api/users.ts?
 ```
 
-## Folder Mentions
+## 目录 mentions
 
-Reference entire directories with `@/path/to/folder/` (note the trailing slash). Cline sees the folder structure and all file contents.
+使用 `@/path/to/folder/` 引用整个目录，注意末尾的 `/`。NBG 会读取目录结构和文件内容。
 
 ```text
 Explain how the components in @/src/components/auth/ work together.
 ```
 
 <Note>
-In multi-root workspaces, prefix paths with the workspace name: `@workspace-name:/path/to/file`
+在 multi-root workspace 中，需要给路径加上 workspace 名称前缀：`@workspace-name:/path/to/file`
 </Note>
 
-## Drag & Drop
+## 拖放
 
-Drag files directly into the chat input to add them to your conversation.
+把文件直接拖入聊天输入框即可加入当前对话。
 
 <Note>
-In VS Code, hold **Shift** while dragging files into the chat input.
+在 VS Code 中，把文件拖入聊天输入框时按住 **Shift**。
 </Note>
 
-Dragging workspace files automatically creates file mentions. You can also drag files from Finder or File Explorer directly into Cline.
+拖放 workspace 文件会自动创建 file mentions。你也可以直接从 Finder 或 File Explorer 把文件拖入 NBG。
 
-### Supported File Types
+### 支持的文件类型
 
-Cline supports text files from your workspace, plus images, PDFs, CSVs, and Excel files from your file system.
+NBG 支持 workspace 中的文本文件，也支持从文件系统添加图片、PDF、CSV 和 Excel 文件。
 
 <Note>
-Images require a multimodal model. Check the model selector to see which models support image inputs.
+图片需要使用多模态模型。可以在模型选择器中查看哪些模型支持图片输入。
 </Note>
 
-## Context Menu Commands
+## 右键菜单命令
 
-Right-click on selected code to access Cline without typing. This is the fastest way to get help with specific code since it automatically includes the selected text and its file location as context.
+选中代码后右键即可调用 NBG。这样会自动带上选中文本和文件位置，是处理特定代码最快的入口。
 
-### Code Editor Commands
+### 代码编辑器命令
 
-| Command | When to Use |
+| 命令 | 使用场景 |
 |---------|-------------|
-| **Add to Cline** | Ask questions about code, get suggestions, or start a conversation with specific code as context |
-| **Fix with Cline** | Quick fixes for errors, bugs, or issues in the selected code |
-| **Explain with Cline** | Understand unfamiliar code, complex logic, or code you're reviewing |
-| **Improve with Cline** | Get refactoring suggestions, performance improvements, or cleaner implementations |
+| **Add to NBG** | 围绕代码提问、获取建议，或把特定代码作为上下文开始对话 |
+| **Fix with NBG** | 快速修复选中代码中的错误、bug 或其他问题 |
+| **Explain with NBG** | 理解陌生代码、复杂逻辑或正在 review 的代码 |
+| **Improve with NBG** | 获取重构建议、性能改进或更清晰的实现方式 |
 
-**Fix with Cline** also appears in the lightbulb menu (Quick Fix) when your cursor is on an error or warning, making it easy to fix issues inline.
+当光标位于错误或 warning 上时，**Fix with NBG** 也会出现在 lightbulb menu（Quick Fix）中，便于直接内联修复。
 
-### Terminal Commands
+### 终端命令
 
-Right-click in the terminal to "Add to Cline" and get help with:
-- Build errors and failed commands
-- Test failures and stack traces
-- Configuration issues
-- Any terminal output you need help interpreting
+在终端中右键选择 **Add to NBG**，可以让 NBG 帮你分析：
 
-### Source Control Commands
+- 构建错误和失败命令
+- 测试失败和 stack trace
+- 配置问题
+- 任何需要解释的终端输出
 
-In the Source Control panel, use "Generate Commit Message" to create AI-powered commit messages from your staged changes. Cline analyzes the diff and writes a descriptive commit message following conventional commit patterns.
+### Source Control 命令
+
+在 Source Control 面板中使用 **Generate Commit Message**，可以根据 staged changes 生成 commit message。NBG 会分析 diff，并按 conventional commit 风格写出描述性提交信息。

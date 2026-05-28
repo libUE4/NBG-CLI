@@ -1,20 +1,20 @@
 ---
 title: ".clineignore"
 sidebarTitle: ".clineignore"
-description: "Control which files and directories Cline can access in your project."
+description: "控制 NBG 在项目中可以访问哪些文件和目录。"
 ---
 
-The `.clineignore` file tells Cline which files and directories to skip when analyzing your codebase. It works like `.gitignore`: create a file named `.clineignore` in your project root, add patterns for files you want excluded, and Cline will ignore them.
+`.clineignore` 文件用于告诉 NBG 在分析代码库时跳过哪些文件和目录。它的工作方式类似 `.gitignore`：在项目根目录创建名为 `.clineignore` 的文件，加入需要排除的模式，NBG 就会忽略它们。
 
-## Why It Matters
+## 为什么重要
 
-Without a `.clineignore`, Cline may load your entire project into context, including dependencies, build artifacts, and generated files. This wastes tokens, increases costs, and can push useful context out of the window.
+没有 `.clineignore` 时，NBG 可能把整个项目载入上下文，包括依赖、构建产物和生成文件。这会浪费 tokens、增加成本，并把真正有用的上下文挤出窗口。
 
-Adding a `.clineignore` can cut your starting context from 200k+ tokens to under 50k. That means faster responses, lower costs, and the ability to use smaller, cheaper models effectively.
+添加 `.clineignore` 可以把起始上下文从 200k+ tokens 降到 50k 以下。这意味着响应更快、成本更低，也更容易有效使用较小、较便宜的模型。
 
-## Creating a .clineignore
+## 创建 .clineignore
 
-Create a file named `.clineignore` in your project root:
+在项目根目录创建名为 `.clineignore` 的文件：
 
 ```text
 # Dependencies
@@ -44,66 +44,69 @@ node_modules/
 *.map
 ```
 
-## Pattern Syntax
+## 模式语法
 
-`.clineignore` uses the same pattern syntax as `.gitignore`:
+`.clineignore` 使用与 `.gitignore` 相同的 pattern syntax：
 
-| Pattern | Matches |
+| Pattern | 匹配内容 |
 |---------|---------|
-| `node_modules/` | The `node_modules` directory |
-| `**/node_modules/` | `node_modules` at any depth |
-| `*.csv` | All CSV files |
-| `/build/` | The `build` directory at the project root only |
-| `*.env.*` | Files like `.env.local`, `.env.production` |
-| `!important.csv` | Exception: do not ignore this file |
+| `node_modules/` | `node_modules` 目录 |
+| `**/node_modules/` | 任意层级的 `node_modules` |
+| `*.csv` | 所有 CSV 文件 |
+| `/build/` | 仅项目根目录下的 `build` 目录 |
+| `*.env.*` | 类似 `.env.local`、`.env.production` 的文件 |
+| `!important.csv` | 例外：不要忽略这个文件 |
 
-Lines starting with `#` are comments. Blank lines are ignored.
+以 `#` 开头的行是注释，空行会被忽略。
 
-## What to Exclude
+## 应该排除什么
 
-Start with these categories and adjust for your project:
+可以从以下类别开始，再按项目情况调整：
 
-**Almost always exclude:**
-- Package manager directories (`node_modules/`, `vendor/`, `.venv/`)
-- Build outputs (`dist/`, `build/`, `.next/`, `out/`)
-- Coverage reports (`coverage/`)
-- Lock files if large (`package-lock.json`, `yarn.lock`)
+**几乎总是应该排除：**
 
-**Exclude if present:**
-- Large data files (`.csv`, `.xlsx`, `.sqlite`, `.parquet`)
-- Binary assets (images, fonts, videos)
-- Generated code (API clients, protobuf outputs, minified bundles)
-- Environment files with secrets (`.env`, `.env.local`)
+- 包管理器目录（`node_modules/`、`vendor/`、`.venv/`）
+- 构建产物（`dist/`、`build/`、`.next/`、`out/`）
+- 覆盖率报告（`coverage/`）
+- 体积较大的 lock files（`package-lock.json`、`yarn.lock`）
 
-**Keep accessible:**
-- Source code you actively work on
-- Configuration files Cline needs to understand (`tsconfig.json`, `package.json`)
-- Documentation and READMEs
-- Test files (Cline often needs these for context)
+**存在时建议排除：**
 
-## How It Works
+- 大型数据文件（`.csv`、`.xlsx`、`.sqlite`、`.parquet`）
+- 二进制资源（图片、字体、视频）
+- 生成代码（API clients、protobuf outputs、minified bundles）
+- 包含密钥的环境文件（`.env`、`.env.local`）
 
-When Cline scans your project to build context, it checks each file path against your `.clineignore` patterns. Matching files are excluded from:
+**保持可访问：**
 
-- The file listing Cline sees when starting a task
-- Automatic context gathering during conversations
-- Search results when Cline looks for relevant code
+- 你正在主动修改的源代码
+- NBG 需要理解的配置文件（`tsconfig.json`、`package.json`）
+- 文档和 README
+- 测试文件（NBG 通常需要它们作为上下文）
 
-You can still reference ignored files explicitly using [@ mentions](/core-workflows/working-with-files). If you type `@/node_modules/some-package/index.js`, Cline will read that specific file even though `node_modules/` is in your `.clineignore`. The ignore rules control automatic loading, not explicit access.
+## 工作方式
+
+当 NBG 扫描项目以构建上下文时，会用 `.clineignore` patterns 检查每个文件路径。匹配的文件会从以下范围中排除：
+
+- NBG 启动任务时看到的文件列表
+- 对话中的自动上下文收集
+- NBG 搜索相关代码时的搜索结果
+
+你仍然可以通过 [@ mentions](/core-workflows/working-with-files) 显式引用被忽略的文件。如果输入 `@/node_modules/some-package/index.js`，即使 `node_modules/` 已在 `.clineignore` 中，NBG 也会读取这个指定文件。ignore rules 控制的是自动加载，不是显式访问。
 
 <Note>
-`.clineignore` is separate from `.gitignore`. Files tracked by Git but irrelevant to Cline (like large test fixtures or data files) should go in `.clineignore` even if they're not in `.gitignore`.
+`.clineignore` 独立于 `.gitignore`。即使某些文件被 Git 跟踪，只要与 NBG 上下文无关，例如大型测试 fixtures 或数据文件，也应该加入 `.clineignore`。
 </Note>
 
-## Tips
+## 建议
 
-- Add `.clineignore` early in your project. It's easier to start with broad exclusions and narrow them than to debug why context is bloated later.
-- Check your token usage in the task header after adding a `.clineignore`. The difference is often dramatic.
-- If Cline seems to be missing context about a file, check whether it's being excluded by your ignore patterns.
-- For monorepos or multi-root workspaces, each workspace root can have its own `.clineignore`. See [Multi-Root Workspaces](/features/multiroot-workspace) for details.
+- 尽早在项目中添加 `.clineignore`。先使用较宽的排除规则，再逐步收窄，通常比事后排查上下文膨胀更容易。
+- 添加 `.clineignore` 后，查看 task header 中的 token usage，差异通常很明显。
+- 如果 NBG 似乎缺少某个文件的上下文，检查它是否被 ignore patterns 排除了。
+- 对于 monorepos 或 multi-root workspaces，每个 workspace root 都可以有自己的 `.clineignore`。详情见 [Multi-Root Workspaces](/features/multiroot-workspace)。
 
-## Related
+## 相关
 
-- [Cline Rules](/customization/cline-rules) - Define persistent instructions for Cline
-- [Task Management](/core-workflows/task-management#context-window) - Understand how context windows work
-- [Auto-Compact](/features/auto-compact) - Automatic context compression during long tasks
+- [NBG Rules](/customization/cline-rules) - 定义 NBG 的持久指令
+- [任务管理](/core-workflows/task-management#context-window) - 理解上下文窗口的工作方式
+- [Auto-Compact](/features/auto-compact) - 长任务中的自动上下文压缩
