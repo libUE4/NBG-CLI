@@ -1,34 +1,34 @@
 ---
-title: "Cline SDK"
+title: "NBG SDK"
 sidebarTitle: "Overview"
-description: "TypeScript packages for embedding Cline's agent runtime in your own applications."
+description: "用于在应用中嵌入 NBG agent runtime 的 TypeScript packages。"
 ---
 
-The Cline SDK is an open source framework for building agentic applications, and is the same harness used in the Cline IDE extensions and CLI. It uses a plugin architecture that makes it easy to customize and comes with all the features you expect from agents like checkpoints, web fetch, MCPs, cron jobs, subagents, and more.
+NBG SDK 是用于构建 agentic applications 的开源框架。当前 SDK 包名仍沿用 `@cline/*` 兼容层，但运行时能力与 NBG CLI 和 IDE 集成共享同一套底座。它使用 plugin architecture，支持 checkpoints、web fetch、MCP、cron jobs、subagents 等 agent 常用能力。
 
-Use the Cline SDK to run agents from CI/CD pipelines, create automations for end-to-end workflows, or embed agents directly inside your products.
+你可以使用 NBG SDK 在 CI/CD pipelines 中运行 agents，创建端到端 workflow automations，或把 agents 直接嵌入自己的产品。
 
-## Install
+## 安装
 
 ```bash
 npm install @cline/sdk
 ```
 
-`@cline/sdk` exports all SDK packages: `@cline/core` for the full agent harness, `@cline/agents` for the stateless agent loop, `@cline/llms` for control over the model gateway, and `@cline/shared` for common utilities.
+`@cline/sdk` 会导出所有 SDK packages：`@cline/core` 提供完整 agent harness，`@cline/agents` 提供 stateless agent loop，`@cline/llms` 控制 model gateway，`@cline/shared` 提供通用 utilities。
 
-Requires Node.js 22 or later.
+需要 Node.js 22 或更高版本。
 
 ## SDK Skill
 
-If you use a coding agent (Claude Code, Codex, Cline, etc.), install the [Cline SDK skill](https://github.com/cline/sdk-skill) to give your agent context on the SDK's APIs and best practices to help you build with the Cline SDK.
+如果你使用 coding agent（Claude Code、Codex 等），可以安装当前兼容的 [SDK skill](https://github.com/cline/sdk-skill)，让 agent 获取 SDK API 和最佳实践上下文。该 skill 包名目前仍沿用兼容名称。
 
 ```bash
 npx skills add cline/sdk-skill
 ```
 
-Prompt it to scaffold agents, create custom tools, wire up plugins, configure providers, and more.
+可以让它帮你 scaffold agents、创建 custom tools、接入 plugins、配置 providers 等。
 
-## Your First Agent
+## 第一个 Agent
 
 ```typescript
 import { Agent } from "@cline/sdk"
@@ -50,36 +50,36 @@ const result = await agent.run("Explain what an SDK is in two sentences.")
 ```
 
 <Note>
-  Here is a complete [quickstart example](https://github.com/cline/cline/tree/main/sdk/apps/examples/quickstart). Clone it and run `bun dev` to try it.
+  完整示例见 [quickstart example](https://github.com/libUE4/NBG-CLI/tree/main/sdk/apps/examples/quickstart)。Clone 后运行 `bun dev` 即可试用。
 </Note>
 
 ## Packages
 
-| Package | Purpose |
+| Package | 用途 |
 |---------|---------|
-| `@cline/sdk` | Public SDK surface (re-exports `@cline/core`) |
-| `@cline/core` | Node runtime for sessions, built-in tools, persistence, hub support, automation |
+| `@cline/sdk` | Public SDK surface（re-export `@cline/core`） |
+| `@cline/core` | 面向 sessions、built-in tools、persistence、hub support、automation 的 Node runtime |
 | `@cline/agents` | Browser-compatible stateless agent execution loop |
-| `@cline/llms` | Provider gateway and model catalogs |
-| `@cline/shared` | Types, schemas, tool helpers, hooks, storage helpers |
+| `@cline/llms` | Provider gateway 和 model catalogs |
+| `@cline/shared` | Types、schemas、tool helpers、hooks、storage helpers |
 
 
 
-See [Packages](/sdk/architecture/overview) for package boundaries and exports.
+Package boundaries 和 exports 见 [Packages](/sdk/architecture/overview)。
 
-## Next Steps
+## 下一步
 
 <CardGroup cols={2}>
   <Card title="Examples" icon="rocket" href="/sdk/examples">
-    Browse complete, runnable SDK examples.
+    浏览完整、可运行的 SDK examples。
   </Card>
   <Card title="Plugins" icon="diagram-project" href="/sdk/plugins">
-    Extend Cline's functionality.
+    扩展 NBG SDK 的能力。
   </Card>
   <Card title="Tools" icon="wrench" href="/sdk/tools">
-    Add actions the model can call.
+    添加模型可以调用的 actions。
   </Card>
   <Card title="Building an Agent" icon="code" href="/sdk/guides/building-an-agent">
-    Build a complete SDK agent from a tutorial.
+    通过教程构建完整 SDK agent。
   </Card>
 </CardGroup>

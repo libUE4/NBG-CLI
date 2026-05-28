@@ -1,15 +1,15 @@
 ---
 title: "Events"
 sidebarTitle: "Events"
-description: "Subscribe to runtime and session events for UIs, logs, monitoring, and cancellation."
+description: "订阅 runtime 与 session events，用于 UI、logs、monitoring 和 cancellation。"
 ---
 
-The SDK exposes two related event surfaces:
+SDK 暴露两个相关 event surfaces：
 
 - `AgentRuntimeEvent` from `@cline/agents`, delivered through `agent.subscribe(listener)`.
 - `AgentEvent` / `CoreSessionEvent` from `@cline/core`, delivered through core session adapters and `cline.subscribe(listener)`.
 
-Use this page for event handling patterns. For event shapes, see [Events reference](/sdk/reference/events).
+本页说明 event handling patterns。Event shapes 见 [Events reference](/sdk/reference/events)。
 
 ## AgentRuntime Events
 
@@ -82,7 +82,7 @@ agent.subscribe((event) => {
 })
 ```
 
-For a complete working example of streaming agent events to a browser via SSE, see the [multi-agent example](https://github.com/cline/cline/tree/main/sdk/apps/examples/multi-agent). It spawns multiple agents in parallel and streams each agent's events to separate UI cards.
+通过 SSE 将 agent events 流式发送到浏览器的完整示例见 [multi-agent example](https://github.com/libUE4/NBG-CLI/tree/main/sdk/apps/examples/multi-agent)。它会并行启动多个 agents，并把每个 agent 的 events 流式发送到独立 UI cards。
 
 ## Usage Tracking Pattern
 

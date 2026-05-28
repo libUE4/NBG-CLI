@@ -1,12 +1,12 @@
 ---
 title: "ClineCore"
 sidebarTitle: "ClineCore"
-description: "The full Cline harness: built-in tools, sessions, approvals, scheduling, and hub support."
+description: "NBG SDK 兼容层中的完整 harness：built-in tools、sessions、approvals、scheduling 和 hub support。"
 ---
 
-`ClineCore` is the full Cline harness as a programmable runtime. It gives you everything Cline ships out of the box: built-in tools for files, shell, search, and web; session persistence and message history; tool approval callbacks; local, hub, and remote backends; scheduling and automation APIs; and plugin support.
+`ClineCore` 是 NBG SDK 兼容层中的完整 programmable runtime。它提供文件、shell、search 和 web 等 built-in tools，也包含 session persistence、message history、tool approval callbacks、local/hub/remote backends、scheduling、automation APIs 和 plugin support。
 
-Under the hood, `ClineCore` uses the `Agent` class from `@cline/agents`. You can use `Agent` directly if you want to skip the harness and wire everything yourself: your own tools, your own persistence, your own lifecycle.
+在底层，`ClineCore` 使用 `@cline/agents` 中的 `Agent` class。如果想跳过完整 harness，并自行接入 tools、persistence 和 lifecycle，可以直接使用 `Agent`。
 
 ## When to use which
 

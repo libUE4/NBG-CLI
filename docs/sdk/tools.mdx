@@ -1,38 +1,38 @@
 ---
 title: "Tools"
 sidebarTitle: "Tools"
-description: "Tools let agents read, write, search, call APIs, and run domain-specific actions."
+description: "Tools 让 agents 能读取、写入、搜索、调用 APIs，并执行领域动作。"
 ---
 
-Tools are functions the model can call during execution. Tools consist of a name, description, and schema which the SDK sends to the model. Then the model can direct the SDK to execute tool functions and send results back into the conversation.
+Tools 是模型在执行过程中可以调用的函数。每个 tool 包含 name、description 和 schema，SDK 会把这些信息发送给模型。随后模型可以指示 SDK 执行 tool function，并把结果送回对话。
 
-## Built-In Tools
+## 内置工具
 
-`ClineCore` can enable the built-in tool suite:
+`ClineCore` 可以启用内置 tool suite：
 
-| Tool | Description |
+| Tool | 说明 |
 |------|-------------|
-| `read_files` | Read one or more files |
-| `search_codebase` | Search the workspace |
-| `run_commands` | Execute shell commands |
-| `fetch_web_content` | Fetch web content |
-| `apply_patch` | Apply patch/diff edits |
-| `editor` | Edit files |
-| `skills` | Invoke configured skills |
-| `ask_question` | Ask the user for input |
-| `submit_and_exit` | Submit a final answer and stop |
+| `read_files` | 读取一个或多个文件 |
+| `search_codebase` | 搜索 workspace |
+| `run_commands` | 执行 shell commands |
+| `fetch_web_content` | 获取 web content |
+| `apply_patch` | 应用 patch/diff edits |
+| `editor` | 编辑文件 |
+| `skills` | 调用已配置 skills |
+| `ask_question` | 向用户请求输入 |
+| `submit_and_exit` | 提交最终答案并停止 |
 
 <Note>
-  If you need more control you can use the `Agents` package directly. This does not include built-in tools. You pass in only the tools you want when constructing the agent.
+  如果需要更强控制，可以直接使用 `Agents` package。它默认不包含内置工具，构造 agent 时只传入你需要的 tools。
 </Note>
 
-## Custom Tools with createTool
+## 使用 createTool 创建 Custom Tools
 
-One of the most powerful features of the SDK is the ability to create and register custom tools. This allows you to add and share capabilities that are context efficient and behave deterministically because they are implemented in code rather than prompts.
+SDK 的核心能力之一是创建和注册 custom tools。因为 tools 由代码实现，而不是只靠 prompts，因此可以添加可共享、上下文高效且行为更确定的能力。
 
-### Quick Example
+### 快速示例
 
-Use `createTool` with a zod schema for type-safe tools:
+将 `createTool` 与 zod schema 一起使用，可以创建 type-safe tools：
 
 ```typescript
 import { createTool } from "@cline/sdk"
@@ -52,7 +52,7 @@ const searchDatabase = createTool({
 })
 ```
 
-`createTool` also accepts raw JSON Schema if you prefer:
+`createTool` 也支持 raw JSON Schema：
 
 ```typescript
 const searchDatabase = createTool({
@@ -72,13 +72,13 @@ const searchDatabase = createTool({
 })
 ```
 
-For complete examples of tools in action, see the [cli-agent](https://github.com/cline/cline/tree/main/sdk/apps/examples/cli-agent) (shell tool) and [code-review-bot](https://github.com/cline/cline/tree/main/sdk/apps/examples/code-review-bot) (multiple tools with completion lifecycle).
+完整 tools 示例见 [cli-agent](https://github.com/libUE4/NBG-CLI/tree/main/sdk/apps/examples/cli-agent)（shell tool）和 [code-review-bot](https://github.com/libUE4/NBG-CLI/tree/main/sdk/apps/examples/code-review-bot)（包含多个 tools 与 completion lifecycle）。
 
-For a full tutorial, see [Creating Custom Tools](/sdk/guides/creating-custom-tools). For exact types, see [Tools API](/sdk/reference/tools-api).
+完整教程见 [Creating Custom Tools](/sdk/guides/creating-custom-tools)。精确类型见 [Tools API](/sdk/reference/tools-api)。
 
-## Registering Tools
+## 注册 Tools
 
-With `ClineCore`, custom tools are passed as `extraTools` in session config:
+使用 `ClineCore` 时，可以通过 session config 中的 `extraTools` 传入 custom tools：
 
 ```typescript
 await cline.start({
@@ -90,7 +90,7 @@ await cline.start({
 })
 ```
 
-With `Agent`, you pass all tools into the constructor:
+使用 `Agent` 时，在 constructor 中传入全部 tools：
 
 ```typescript
 const agent = new Agent({
@@ -99,7 +99,7 @@ const agent = new Agent({
 })
 ```
 
-Tools are more easily shared via plugins/extensions:
+通过 plugins/extensions 更容易共享 tools：
 
 ```typescript
 const plugin: AgentPlugin = {
@@ -110,11 +110,11 @@ const plugin: AgentPlugin = {
   },
 }
 ```
-See [Plugins](/sdk/plugins) for more info.
+更多信息见 [Plugins](/sdk/plugins)。
 
 ## Tool Policies
 
-You can control how tools are used through Tool Policies. These control whether a tool is visible and whether it requires approval.
+可以通过 Tool Policies 控制 tools 的使用方式，包括 tool 是否可见以及是否需要 approval。
 
 ```typescript
 const agent = new Agent({
