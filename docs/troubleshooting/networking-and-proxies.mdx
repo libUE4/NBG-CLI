@@ -1,23 +1,20 @@
 ---
-title: "Networking and Proxies"
-sidebarTitle: "Networking & Proxies"
-description: "Configure Cline to work behind firewalls and proxies"
+title: "网络与代理"
+sidebarTitle: "网络与代理"
+description: "配置 NBG 在防火墙和代理环境中工作。"
 ---
 
-If you're working behind a corporate proxy or firewall, you'll need to configure
-proxy settings for Cline to connect to AI providers. The configuration varies
-depending on which version of Cline you're using.
+如果你在公司代理或防火墙后使用 NBG，需要配置代理，让 NBG 能连接 AI providers。具体方式取决于你使用 CLI、VS Code 扩展还是 JetBrains 插件。
 
-## VSCode Extension
+## VS Code 扩展
 
-The VSCode extension automatically uses VSCode's built-in proxy settings. See
+VS Code 扩展会自动使用 VS Code 内置代理设置。参考
 [Network Connections in Visual Studio Code, Proxy server support](https://code.visualstudio.com/docs/setup/network#_proxy-server-support)
-for instructions on how to set up proxies in VSCode. No additional configuration
-is needed for Cline itself.
+配置 VS Code 代理。通常不需要为 NBG 额外配置。
 
 ## CLI
 
-The Cline CLI uses standard HTTP proxy environment variables. Configure these before running `cline` commands.
+NBG CLI 使用标准 HTTP proxy 环境变量。运行 `nbg` 命令前先配置这些变量。
 
 ### Basic Configuration
 
@@ -25,21 +22,21 @@ The Cline CLI uses standard HTTP proxy environment variables. Configure these be
 ```cmd
 set https_proxy=http://proxy.company.com:8080
 set http_proxy=http://proxy.company.com:8080
-cline start
+nbg
 ```
 
 **Windows (PowerShell)**
 ```powershell
 $env:https_proxy="http://proxy.company.com:8080"
 $env:http_proxy="http://proxy.company.com:8080"
-cline start
+nbg
 ```
 
 **macOS/Linux**
 ```bash
 export https_proxy=http://proxy.company.com:8080
 export http_proxy=http://proxy.company.com:8080
-cline start
+nbg
 ```
 
 ### Proxy with Authentication
@@ -76,13 +73,13 @@ If your proxy uses a custom CA certificate:
 **Windows**
 ```cmd
 set NODE_EXTRA_CA_CERTS=C:\path\to\ca-certificate.crt
-cline start
+nbg
 ```
 
 **macOS/Linux**
 ```bash
 export NODE_EXTRA_CA_CERTS=/path/to/ca-certificate.pem
-cline start
+nbg
 ```
 
 ### Permanent Configuration
@@ -105,7 +102,7 @@ export NODE_EXTRA_CA_CERTS=/path/to/ca-certificate.pem
 
 ### Known Limitations
 
-Cline CLI only supports HTTP proxies. It does not support SOCKS proxies,
+NBG CLI 只支持 HTTP proxies，不支持 SOCKS proxies、
 proxy autoconfiguration (PAC) scripts, or HTTP proxies which require
 authentication beyond a basic username and password.
 
@@ -142,11 +139,11 @@ The JetBrains plugin uses the IDE's HTTP proxy settings.
 
 ### Test Connection
 
-After configuring the proxy, test that Cline can connect to your AI provider:
+配置代理后，测试 NBG 是否能连接 AI provider：
 
-1. Open the Cline panel
-2. Try sending a simple message
-3. If connection fails, check the IDE's Event Log for error messages
+1. 打开 NBG panel
+2. 发送一条简单消息
+3. 如果连接失败，查看 IDE Event Log 中的错误信息
 
 ### Custom Certificate Authority
 
@@ -159,12 +156,11 @@ If your proxy uses a custom CA:
 
 ### Known Limitations
 
-Cline in JetBrains only supports HTTP proxies. It does not support SOCKS
+NBG JetBrains 插件只支持 HTTP proxies，不支持 SOCKS
 proxies, proxy autoconfiguration (PAC) scripts, or HTTP proxies which require
 authentication beyond a basic username and password.
 
-Cline does not pick up changed proxy settings dynamically. After changing proxy
-settings, restart the IDE for Cline to use the new settings.
+NBG 不会动态读取已变更的代理设置。修改代理设置后，需要重启 IDE 才会生效。
 
 ## Troubleshooting
 
@@ -182,13 +178,12 @@ If you see certificate-related errors:
 
 1. Check that `NODE_EXTRA_CA_CERTS` points to the correct certificate file
 2. Ensure the certificate file is in PEM format
-3. Use curl to verify the certificate works, for example, `curl -x proxy.corp.example:8080 --cacert /path/to/ca-cert.pem -o - -vv https://api.cline.bot/`
+3. 使用 curl 验证证书是否可用，例如 `curl -x proxy.corp.example:8080 --cacert /path/to/ca-cert.pem -o - -vv https://api.anthropic.com/`
 4. Consider disabling `http.proxyStrictSSL` in VSCode (not recommended for production)
 
 ### Testing Proxy Configuration
 
-If you encounter problems with Cline networking, first verify your proxy
-configuration works using curl:
+如果遇到 NBG 网络问题，先用 curl 验证代理配置是否可用：
 
 ```bash
 # Linux/macOS
@@ -202,8 +197,7 @@ curl.exe -vv https://api.anthropic.com
 
 Use `--cacert $NODE_EXTRA_CA_CERTS` to specify a certificate if necessary.
 
-Next, check ~/.cline/cline-core-service.log (CLI, JetBrains) for log messages
-confirming your proxy configuration and any network-related errors.
+然后检查兼容日志路径 `~/.cline/cline-core-service.log`（CLI、JetBrains），确认代理配置和网络错误信息。
 
 ## Common Proxy Patterns
 
