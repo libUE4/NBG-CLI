@@ -36,7 +36,7 @@ const agentFeatures: FeatureToggle[] = [
 	{
 		id: "subagents",
 		label: "子智能体",
-		description: "允许 Cline 并行运行专注的子智能体，帮你探索代码库。",
+		description: "允许 NBG 并行运行专注的子智能体，帮你探索代码库。",
 		stateKey: "subagentsEnabled",
 		settingKey: "subagentsEnabled",
 	},
@@ -82,7 +82,7 @@ const editorFeatures: FeatureToggle[] = [
 	{
 		id: "show-feature-tips",
 		label: "功能提示",
-		description: "在思考阶段轮播提示，帮助你发现 Cline 功能。",
+		description: "在思考阶段轮播提示，帮助你发现 NBG 功能。",
 		stateKey: "showFeatureTips",
 		settingKey: "showFeatureTips",
 	},
@@ -102,7 +102,7 @@ const editorFeatures: FeatureToggle[] = [
 	},
 	{
 		id: "cline-web-tools",
-		label: "Cline Web 工具",
+		label: "NBG Web 工具",
 		description: "启用网页浏览和搜索能力。",
 		stateKey: "clineWebToolsEnabled",
 		settingKey: "clineWebToolsEnabled",
@@ -110,7 +110,7 @@ const editorFeatures: FeatureToggle[] = [
 	{
 		id: "worktrees",
 		label: "工作树",
-		description: "启用 git worktree 管理，用于并行运行 Cline 任务。",
+		description: "启用 git worktree 管理，用于并行运行 NBG 任务。",
 		stateKey: "worktreesEnabled",
 		settingKey: "worktreesEnabled",
 	},
@@ -136,7 +136,7 @@ const experimentalFeatures: FeatureToggle[] = [
 	{
 		id: "lazy-teammate",
 		label: "懒队友模式",
-		description: "有时 Cline 今天就是不太想干活。仅供娱乐。",
+		description: "有时 NBG 今天就是不太想干活。仅供娱乐。",
 		stateKey: "lazyTeammateModeEnabled",
 		settingKey: "lazyTeammateModeEnabled",
 	},

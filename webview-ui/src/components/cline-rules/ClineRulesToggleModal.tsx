@@ -437,11 +437,11 @@ const ClineRulesToggleModal: React.FC = () => {
 		<div className="inline-flex min-w-0 max-w-full items-center" ref={modalRef}>
 			<div className="inline-flex w-full items-center" ref={buttonRef}>
 				<Tooltip>
-					{!isVisible && <TooltipContent>管理 Cline 规则和工作流</TooltipContent>}
+					{!isVisible && <TooltipContent>管理 NBG 规则和工作流</TooltipContent>}
 					<TooltipTrigger>
 						<VSCodeButton
 							appearance="icon"
-							aria-label={isVisible ? "隐藏 Cline 规则和工作流" : "显示 Cline 规则和工作流"}
+							aria-label={isVisible ? "隐藏 NBG 规则和工作流" : "显示 NBG 规则和工作流"}
 							className="p-0 m-0 flex items-center"
 							onClick={() => setIsVisible(!isVisible)}>
 							<i className="codicon codicon-law" style={{ fontSize: "12.5px" }} />

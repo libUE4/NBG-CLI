@@ -360,7 +360,7 @@ const BrowserSessionRow = memo((props: BrowserSessionRowProps) => {
 					<span className="codicon codicon-inspect" style={browserIconStyle}></span>
 				)}
 				<span style={approveTextStyle}>
-					{isAutoApproved ? "Cline 正在使用浏览器：" : "Cline 想使用浏览器："}
+					{isAutoApproved ? "NBG 正在使用浏览器：" : "NBG 想使用浏览器："}
 				</span>
 			</div>
 			<div

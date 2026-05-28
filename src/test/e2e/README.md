@@ -117,7 +117,7 @@ e2eMultiRoot("[Multi-roots] Test description", async ({ sidebar, helper }) => {
 
 The test fixtures provide the following objects:
 
-- **`sidebar`** - Playwright Frame object for the Cline extension's sidebar
+- **`sidebar`** - Playwright Frame object for the NBG extension's sidebar
 - **`helper`** - E2ETestHelper instance with utility methods
 - **`page`** - Playwright Page object for the main VS Code window
 - **`app`** - ElectronApplication instance for VS Code
@@ -169,7 +169,7 @@ The `--debug` flag enables Playwright's interactive debugging features:
    ```
 
 2. **Playwright will open:**
-   - A VS Code window with Cline extension loaded
+   - A VS Code window with NBG extension loaded
    - Playwright Inspector for step-by-step debugging
    - Browser developer tools for element inspection
 
@@ -191,12 +191,12 @@ The test environment includes:
 
 - **VS Code Configuration:**
   - Disabled updates, workspace trust, and welcome screens
-  - Extension development mode with Cline loaded
+  - Extension development mode with NBG loaded
   - Temporary user data and extensions directories
 
 - **Mock API Server:**
   - Runs on `http://localhost:7777`
-  - Provides mock responses for Cline API calls
+  - Provides mock responses for NBG compatibility API calls
   - Supports authentication, chat completions, and user management
 
 - **Test Workspaces:**

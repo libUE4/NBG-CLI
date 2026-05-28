@@ -232,7 +232,7 @@ Please help me resolve these merge conflicts, then complete the merge, and delet
 			// Close worktrees view to show the chat with the new task
 			onDone()
 		} catch (err) {
-			setMergeError(err instanceof Error ? err.message : "为 Cline 创建任务失败")
+			setMergeError(err instanceof Error ? err.message : "为 NBG 创建任务失败")
 		}
 	}, [mergeResult, mergeWorktree, closeMergeModal, onDone])
 

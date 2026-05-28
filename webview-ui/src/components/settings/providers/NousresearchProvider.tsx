@@ -58,7 +58,7 @@ export const NousResearchProvider = ({ showModelOptions, isPopup, currentMode }:
 							color: "var(--vscode-descriptionForeground)",
 						}}>
 						<span style={{ color: "var(--vscode-errorForeground)" }}>
-							（<span style={{ fontWeight: 500 }}>注意：</span>Cline 使用复杂提示词，搭配 Claude 模型效果最佳。能力较弱的模型可能无法按预期工作。）
+							（<span style={{ fontWeight: 500 }}>注意：</span>NBG 使用复杂提示词，搭配 Claude 模型效果最佳。能力较弱的模型可能无法按预期工作。）
 						</span>
 					</p>
 				</>

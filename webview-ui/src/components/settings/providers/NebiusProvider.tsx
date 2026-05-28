@@ -28,7 +28,7 @@ export const NebiusProvider = ({ showModelOptions, isPopup, currentMode }: Nebiu
 	return (
 		<div>
 			<ApiKeyField
-				helpText="此密钥存储在本地，仅用于从此扩展发起 API 请求。（注意：Cline 使用复杂提示词，搭配 Claude 模型效果最佳。能力较弱的模型可能不符合预期。）"
+				helpText="此密钥存储在本地，仅用于从此扩展发起 API 请求。（注意：NBG 使用复杂提示词，搭配 Claude 模型效果最佳。能力较弱的模型可能不符合预期。）"
 				initialValue={apiConfiguration?.nebiusApiKey || ""}
 				onChange={(value) => handleFieldChange("nebiusApiKey", value)}
 				providerName="Nebius"

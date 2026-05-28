@@ -164,7 +164,7 @@ export const LMStudioProvider = ({ currentMode }: LMStudioProviderProps) => {
 				</VSCodeLink>{" "}
 				功能，运行 <code>lms server start</code> 后才能在此扩展中使用。{" "}
 				<div className="text-error">
-					<span className="font-semibold">注意：</span>Cline 使用复杂提示词，搭配 Claude 模型效果最佳。能力较弱的模型可能无法按预期工作。
+					<span className="font-semibold">注意：</span>NBG 使用复杂提示词，搭配 Claude 模型效果最佳。能力较弱的模型可能无法按预期工作。
 				</div>
 			</div>
 		</div>

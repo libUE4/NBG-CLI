@@ -93,7 +93,7 @@ export const SETTINGS_TABS: SettingsTab[] = [
 	{
 		id: "about",
 		name: "关于",
-		tooltipText: "关于 Cline",
+		tooltipText: "关于 NBG",
 		headerText: "关于",
 		icon: Info,
 	},

@@ -196,7 +196,7 @@ export class Controller {
 			await this.postStateToWebview()
 			HostProvider.window.showMessage({
 				type: ShowMessageType.INFORMATION,
-				message: "已成功退出 Cline 登录",
+				message: "已成功退出 NBG 登录",
 			})
 		} catch (_error) {
 			HostProvider.window.showMessage({

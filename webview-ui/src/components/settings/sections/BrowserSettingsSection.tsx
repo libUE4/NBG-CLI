@@ -246,7 +246,7 @@ export const BrowserSettingsSection: React.FC<BrowserSettingsSectionProps> = ({ 
 									color: "var(--vscode-descriptionForeground)",
 									margin: "0 0 6px 0px",
 								}}>
-								允许 Cline 使用你的 Chrome
+								允许 NBG 使用你的 Chrome
 								{isBundled
 									? "（未在你的机器上检测到）"
 									: detectedChromePath
