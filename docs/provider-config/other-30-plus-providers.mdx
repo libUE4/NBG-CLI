@@ -1,13 +1,13 @@
 ---
 title: "Other 30+ Providers"
-description: "Reference list for additional supported providers with shared configuration flow."
+description: "其他受支持 provider 的参考列表，使用统一的 NBG 配置流程。"
 ---
 
-Use this page for providers that follow the same setup pattern.
+这些 provider 的配置流程基本一致：先在 provider 控制台获取凭证，再在 NBG 中选择对应 provider 并填写凭证。
 
 ## Menu
 
-- [Shared Configuration in Cline](#shared-configuration-in-cline)
+- [NBG Shared Configuration](#nbg-shared-configuration)
 - [Providers](#providers)
   - [AIHubMix](#aihubmix)
   - [AskSage](#asksage)
@@ -35,288 +35,288 @@ Use this page for providers that follow the same setup pattern.
   - [VS Code Language Model API](#vs-code-language-model-api)
   - [xAI (Grok)](#xai-grok)
 
-## Shared Configuration in Cline
+## NBG Shared Configuration
 
-1. Open Cline settings (⚙️).
-2. Select your provider from **API Provider**.
-3. Paste your API key/token in the matching credential field.
-4. Choose a model from **Model**.
+1. 打开 NBG 设置 (⚙️)。
+2. 在 **API Provider** 中选择目标 provider。
+3. 在对应凭证字段中粘贴 API key、token 或其他凭证。
+4. 在 **Model** 中选择模型。
 
-For the full auth flow (IDE + CLI), see [Authorization & Model Selection](/getting-started/authorizing-with-cline#menu).
+完整认证流程，包括 IDE 和 CLI，请参考 [认证与模型选择](/getting-started/authorizing-with-cline#menu)。
 
 ## Providers
 
 ### AIHubMix
-AIHubMix is an OpenAI-compatible model aggregator that gives you one API surface for multiple model backends.
+AIHubMix 是 OpenAI-compatible 模型聚合服务，可通过一个 API surface 访问多个模型后端。
 
 **Website:** [https://aihubmix.com/](https://aihubmix.com/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Create/sign in to your AIHubMix account.
-2. Generate an API key from the dashboard.
-3. In Cline, choose **AIHubMix** and paste the key.
+1. 创建或登录 AIHubMix 账号。
+2. 在 dashboard 中生成 API key。
+3. 在 NBG 中选择 **AIHubMix** 并粘贴 key。
 
 ### AskSage
-AskSage is focused on enterprise and government AI access with compliance-oriented controls.
+AskSage 面向企业和政府场景，提供偏合规控制的 AI 访问能力。
 
 **Website:** [https://www.asksage.ai/](https://www.asksage.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Sign in to AskSage and create API credentials.
-2. Confirm your workspace/organization has model access enabled.
-3. In Cline, select **AskSage** and enter the key.
+1. 登录 AskSage 并创建 API credentials。
+2. 确认 workspace 或 organization 已启用模型访问。
+3. 在 NBG 中选择 **AskSage** 并填写 key。
 
 ### Baseten
-Baseten provides hosted model APIs and deployment infrastructure for production inference.
+Baseten 提供 hosted model APIs 和生产推理部署基础设施。
 
 **Website:** [https://www.baseten.co/products/model-apis/](https://www.baseten.co/products/model-apis/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Create a Baseten account and open the API keys section.
-2. Generate an API key with the required permissions.
-3. In Cline, choose **Baseten** and paste the key.
+1. 创建 Baseten 账号并打开 API keys 区域。
+2. 生成具备所需权限的 API key。
+3. 在 NBG 中选择 **Baseten** 并粘贴 key。
 
 ### Cerebras
-Cerebras offers very fast hosted inference for supported model families.
+Cerebras 为受支持模型系列提供低延迟 hosted inference。
 
 **Website:** [https://cloud.cerebras.ai/](https://cloud.cerebras.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Sign in to Cerebras Cloud.
-2. Create or retrieve your API key.
-3. In Cline, select **Cerebras** and enter the key.
+1. 登录 Cerebras Cloud。
+2. 创建或获取 API key。
+3. 在 NBG 中选择 **Cerebras** 并填写 key。
 
 ### Dify.ai
-Dify.ai is a workflow-centric AI platform with app and pipeline capabilities.
+Dify.ai 是工作流导向的 AI 平台，支持 app 和 pipeline 能力。
 
 **Website:** [https://dify.ai/](https://dify.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Create a Dify workspace and API credential.
-2. Confirm your Dify endpoint/provider settings are active.
-3. In Cline, select **Dify.ai** and paste your key.
+1. 创建 Dify workspace 和 API credential。
+2. 确认 Dify endpoint/provider 设置已启用。
+3. 在 NBG 中选择 **Dify.ai** 并粘贴 key。
 
 ### Doubao
-Doubao is ByteDance’s model family, typically accessed through Volcengine services.
+Doubao 是字节跳动模型系列，通常通过火山引擎服务访问。
 
 **Website:** [https://www.volcengine.com/](https://www.volcengine.com/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Sign in to Volcengine and enable model access.
-2. Generate API credentials for Doubao endpoints.
-3. In Cline, select **Doubao** and paste credentials.
+1. 登录 Volcengine 并启用模型访问。
+2. 为 Doubao endpoints 生成 API credentials。
+3. 在 NBG 中选择 **Doubao** 并粘贴 credentials。
 
 ### Fireworks AI
-Fireworks AI provides hosted inference for open models and performance-focused deployment.
+Fireworks AI 为开源模型和性能导向部署提供 hosted inference。
 
 **Website:** [https://fireworks.ai/](https://fireworks.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Create a Fireworks account.
-2. Generate an API key in your project/account settings.
-3. In Cline, choose **Fireworks AI** and enter the key.
+1. 创建 Fireworks 账号。
+2. 在 project/account settings 中生成 API key。
+3. 在 NBG 中选择 **Fireworks AI** 并填写 key。
 
 ### GCP Vertex AI
-Vertex AI is Google Cloud’s enterprise model platform with IAM and project-level governance.
+Vertex AI 是 Google Cloud 的企业模型平台，支持 IAM 和 project-level governance。
 
 **Website:** [https://cloud.google.com/vertex-ai](https://cloud.google.com/vertex-ai)
 
-#### Basic Setup
+#### 基本配置
 
-1. Set up a GCP project with Vertex AI enabled.
-2. Configure authentication (service account or application default credentials).
-3. In Cline, select **GCP Vertex AI** and provide required config values.
+1. 创建或选择已启用 Vertex AI 的 GCP project。
+2. 配置 authentication，例如 service account 或 application default credentials。
+3. 在 NBG 中选择 **GCP Vertex AI** 并填写所需配置。
 
 ### Groq
-Groq is a low-latency inference provider for supported model families.
+Groq 为受支持模型系列提供低延迟推理服务。
 
 **Website:** [https://groq.com/](https://groq.com/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Sign in to Groq Console.
-2. Create an API key.
-3. In Cline, select **Groq** and paste the key.
+1. 登录 Groq Console。
+2. 创建 API key。
+3. 在 NBG 中选择 **Groq** 并粘贴 key。
 
 ### Hicap
-Hicap provides OpenAI-compatible access with multimodal support.
+Hicap 提供带多模态支持的 OpenAI-compatible 访问能力。
 
 **Website:** [https://hicap.ai](https://hicap.ai)
 
-#### Basic Setup
+#### 基本配置
 
-1. Create your Hicap account.
-2. Generate an API key/token.
-3. In Cline, choose **Hicap** and enter the credential.
+1. 创建 Hicap 账号。
+2. 生成 API key/token。
+3. 在 NBG 中选择 **Hicap** 并填写 credential。
 
 ### Huawei Cloud MaaS
-Huawei Cloud MaaS provides model-as-a-service access within Huawei Cloud.
+Huawei Cloud MaaS 提供华为云内的 model-as-a-service 访问能力。
 
 **Website:** [https://www.huaweicloud.com/](https://www.huaweicloud.com/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Sign in to Huawei Cloud and open MaaS services.
-2. Create API credentials for model access.
-3. In Cline, select **Huawei Cloud MaaS** and add credentials.
+1. 登录 Huawei Cloud 并打开 MaaS services。
+2. 为模型访问创建 API credentials。
+3. 在 NBG 中选择 **Huawei Cloud MaaS** 并添加 credentials。
 
 ### Hugging Face
-Hugging Face provides hosted inference access for open-source models.
+Hugging Face 为开源模型提供 hosted inference 访问能力。
 
 **Website:** [https://huggingface.co/](https://huggingface.co/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Sign in to Hugging Face.
-2. Create an access token with inference permissions.
-3. In Cline, select **Hugging Face** and paste the token.
+1. 登录 Hugging Face。
+2. 创建具备 inference permissions 的 access token。
+3. 在 NBG 中选择 **Hugging Face** 并粘贴 token。
 
 ### Mistral
-Mistral provides direct API access to its model lineup.
+Mistral 提供其模型系列的直接 API 访问。
 
 **Website:** [https://mistral.ai/](https://mistral.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Create/sign in to Mistral platform account.
-2. Generate an API key.
-3. In Cline, choose **Mistral** and paste the key.
+1. 创建或登录 Mistral platform 账号。
+2. 生成 API key。
+3. 在 NBG 中选择 **Mistral** 并粘贴 key。
 
 ### Moonshot
-Moonshot provides API access to Kimi model families.
+Moonshot 提供 Kimi 模型系列的 API 访问。
 
 **Website:** [https://platform.moonshot.ai/](https://platform.moonshot.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Sign in to Moonshot platform.
-2. Create an API key in account settings.
-3. In Cline, select **Moonshot** and enter the key.
+1. 登录 Moonshot platform。
+2. 在 account settings 中创建 API key。
+3. 在 NBG 中选择 **Moonshot** 并填写 key。
 
 ### Nebius AI Studio
-Nebius AI Studio offers managed hosted model APIs.
+Nebius AI Studio 提供托管模型 API。
 
 **Website:** [https://studio.nebius.com/](https://studio.nebius.com/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Create/sign in to Nebius AI Studio.
-2. Generate API credentials.
-3. In Cline, choose **Nebius AI Studio** and provide the credential.
+1. 创建或登录 Nebius AI Studio。
+2. 生成 API credentials。
+3. 在 NBG 中选择 **Nebius AI Studio** 并填写 credential。
 
 ### Nous Research
-Nous Research provides access to Hermes-family model offerings.
+Nous Research 提供 Hermes 系列模型访问能力。
 
 **Website:** [https://nousresearch.com/](https://nousresearch.com/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Get provider access/credentials for Nous-hosted endpoints.
-2. Confirm available model IDs for your account.
-3. In Cline, select **NousResearch** and add credentials.
+1. 获取 Nous-hosted endpoints 的 provider access/credentials。
+2. 确认当前账号可用的 model IDs。
+3. 在 NBG 中选择 **NousResearch** 并添加 credentials。
 
 ### Oracle Code Assist
-Oracle Code Assist provides AI-powered coding assistance through Oracle Cloud Infrastructure (OCI) Generative AI service.
+Oracle Code Assist 通过 Oracle Cloud Infrastructure (OCI) Generative AI service 提供 AI 编码辅助能力。
 
 **Website:** [https://www.oracle.com/application-development/code-assist/](https://www.oracle.com/application-development/code-assist/)
 
-#### Basic Setup
+#### 基本配置
 
-1. **OCI Account:** You need an Oracle Cloud Infrastructure account.
-2. **Enable Generative AI:** Enable the OCI Generative AI service in your tenancy.
-3. **Get Credentials:** Configure OCI authentication (API key, config file, or instance principal).
+1. **OCI Account：** 准备 Oracle Cloud Infrastructure 账号。
+2. **Enable Generative AI：** 在 tenancy 中启用 OCI Generative AI service。
+3. **Get Credentials：** 配置 OCI authentication，例如 API key、config file 或 instance principal。
 
 ### Qwen Code
-Qwen Code provides coding-oriented access to Qwen models.
+Qwen Code 提供面向编码场景的 Qwen 模型访问。
 
 **Website:** [https://chat.qwen.ai/](https://chat.qwen.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Sign in to Qwen platform.
-2. Obtain API access credentials.
-3. In Cline, select **Qwen Code** and enter the credential.
+1. 登录 Qwen platform。
+2. 获取 API access credentials。
+3. 在 NBG 中选择 **Qwen Code** 并填写 credential。
 
 ### Requesty
-Requesty provides multi-provider routing behind a single API surface.
+Requesty 通过统一 API surface 提供 multi-provider routing。
 
 **Website:** [https://www.requesty.ai/](https://www.requesty.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Create/sign in to Requesty.
-2. Generate an API key.
-3. In Cline, select **Requesty** and paste the key.
+1. 创建或登录 Requesty。
+2. 生成 API key。
+3. 在 NBG 中选择 **Requesty** 并粘贴 key。
 
 ### SambaNova
-SambaNova offers hosted inference and enterprise AI platform capabilities.
+SambaNova 提供 hosted inference 和企业 AI 平台能力。
 
 **Website:** [https://sambanova.ai/](https://sambanova.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Create/sign in to SambaNova account.
-2. Create an API key/token.
-3. In Cline, choose **SambaNova** and enter credentials.
+1. 创建或登录 SambaNova 账号。
+2. 创建 API key/token。
+3. 在 NBG 中选择 **SambaNova** 并填写 credentials。
 
 ### SAP AI Core
-SAP AI Core is SAP’s enterprise AI platform for model integration and governance.
+SAP AI Core 是 SAP 的企业 AI 平台，用于模型集成和治理。
 
 **Website:** [https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/what-is-sap-ai-core](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/what-is-sap-ai-core)
 
-#### Basic Setup
+#### 基本配置
 
-1. Set up SAP AI Core / generative AI hub access.
-2. Configure your service key/endpoint credentials.
-3. In Cline, select **SAP AI Core** and provide required values.
+1. 配置 SAP AI Core / generative AI hub access。
+2. 配置 service key/endpoint credentials。
+3. 在 NBG 中选择 **SAP AI Core** 并填写所需值。
 
 ### Together
-Together provides hosted inference for many popular open models.
+Together 为多个主流开源模型提供 hosted inference。
 
 **Website:** [https://together.ai/](https://together.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Create/sign in to Together account.
-2. Generate an API key.
-3. In Cline, choose **Together** and paste the key.
+1. 创建或登录 Together 账号。
+2. 生成 API key。
+3. 在 NBG 中选择 **Together** 并粘贴 key。
 
 ### Vercel AI Gateway
-Vercel AI Gateway gives one API for multiple upstream model providers.
+Vercel AI Gateway 为多个 upstream model providers 提供统一 API。
 
 **Website:** [https://vercel.com/](https://vercel.com/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Sign in to Vercel and open AI Gateway.
-2. Create a Gateway API key.
-3. In Cline, select **Vercel AI Gateway** and add the key.
+1. 登录 Vercel 并打开 AI Gateway。
+2. 创建 Gateway API key。
+3. 在 NBG 中选择 **Vercel AI Gateway** 并添加 key。
 
 ### VS Code Language Model API
-VS Code Language Model API support lets Cline use models exposed by the VS Code host environment.
+VS Code Language Model API 支持让 NBG 使用 VS Code host environment 暴露的模型。
 
 **Website:** [https://code.visualstudio.com/api/extension-guides/language-model](https://code.visualstudio.com/api/extension-guides/language-model)
 
-#### Basic Setup
+#### 基本配置
 
-1. Use VS Code with LM API-compatible model access configured.
-2. Ensure the language model integration is available in your environment.
-3. In Cline, select **VS Code Language Model API**.
+1. 使用已配置 LM API-compatible model access 的 VS Code。
+2. 确认当前环境可用 language model integration。
+3. 在 NBG 中选择 **VS Code Language Model API**。
 
 ### xAI (Grok)
-xAI provides Grok models through its API platform.
+xAI 通过其 API platform 提供 Grok 模型。
 
 **Website:** [https://x.ai/](https://x.ai/)
 
-#### Basic Setup
+#### 基本配置
 
-1. Sign in to xAI platform.
-2. Generate an API key.
-3. In Cline, choose **xAI (Grok)** and paste the key.
+1. 登录 xAI platform。
+2. 生成 API key。
+3. 在 NBG 中选择 **xAI (Grok)** 并粘贴 key。
