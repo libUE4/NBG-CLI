@@ -1,11 +1,7 @@
 import { BannerAction, BannerCardData } from "@shared/cline/banner"
 import React from "react"
 import { useMount } from "react-use"
-import DiscordIcon from "@/assets/DiscordIcon"
 import GitHubIcon from "@/assets/GitHubIcon"
-import LinkedInIcon from "@/assets/LinkedInIcon"
-import RedditIcon from "@/assets/RedditIcon"
-import XIcon from "@/assets/XIcon"
 import WhatsNewItems from "@/components/common/WhatsNewItems"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useExtensionState } from "@/context/ExtensionStateContext"
@@ -53,33 +49,11 @@ export const WhatsNewModal: React.FC<WhatsNewModalProps> = ({ open, onClose, ver
 						welcomeBanners={welcomeBanners}
 					/>
 
-					{/* Social Icons Section */}
+					{/* Project Links Section */}
 					<div className="flex flex-col items-center gap-3 mt-4 pt-4 border-t border-[var(--vscode-widget-border)]">
-						{/* Icon Row */}
 						<div className="flex items-center gap-4">
-							{/* X/Twitter */}
 							<a
-								aria-label="在 X 上关注我们"
-								className="text-[var(--vscode-foreground)] hover:text-[var(--vscode-textLink-activeForeground)] transition-colors"
-								href="https://x.com/cline"
-								rel="noopener noreferrer"
-								target="_blank">
-								<XIcon />
-							</a>
-
-							{/* Discord */}
-							<a
-								aria-label="加入 Discord"
-								className="text-[var(--vscode-foreground)] hover:text-[var(--vscode-textLink-activeForeground)] transition-colors"
-								href="https://github.com/libUE4/NBG-CLI/discussions"
-								rel="noopener noreferrer"
-								target="_blank">
-								<DiscordIcon />
-							</a>
-
-							{/* GitHub */}
-							<a
-								aria-label="在 GitHub 上给我们星标"
+								aria-label="打开 NBG GitHub 仓库"
 								className="text-[var(--vscode-foreground)] hover:text-[var(--vscode-textLink-activeForeground)] transition-colors"
 								href="https://github.com/libUE4/NBG-CLI"
 								rel="noopener noreferrer"
@@ -87,24 +61,13 @@ export const WhatsNewModal: React.FC<WhatsNewModalProps> = ({ open, onClose, ver
 								<GitHubIcon />
 							</a>
 
-							{/* Reddit */}
 							<a
-								aria-label="加入 subreddit"
+								aria-label="打开 NBG 讨论区"
 								className="text-[var(--vscode-foreground)] hover:text-[var(--vscode-textLink-activeForeground)] transition-colors"
 								href="https://github.com/libUE4/NBG-CLI/discussions"
 								rel="noopener noreferrer"
 								target="_blank">
-								<RedditIcon />
-							</a>
-
-							{/* LinkedIn */}
-							<a
-								aria-label="在 LinkedIn 上关注我们"
-								className="text-[var(--vscode-foreground)] hover:text-[var(--vscode-textLink-activeForeground)] transition-colors"
-								href="https://www.linkedin.com/company/clinebot/"
-								rel="noopener noreferrer"
-								target="_blank">
-								<LinkedInIcon />
+								<span className="codicon codicon-comment-discussion text-[18px]" />
 							</a>
 						</div>
 

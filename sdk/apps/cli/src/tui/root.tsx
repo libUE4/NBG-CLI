@@ -104,6 +104,12 @@ function App(props: TuiProps) {
 	}, [props.workflowSlashCommands]);
 
 	useEffect(() => {
+		const providerId = props.config.providerId;
+		const modelId = props.config.modelId;
+		const apiKey = props.config.apiKey;
+		void providerId;
+		void modelId;
+		void apiKey;
 		if (!props.loadAccountBalance) {
 			setAccountBalance(undefined);
 			return;
@@ -132,10 +138,7 @@ function App(props: TuiProps) {
 		props.config.apiKey,
 	]);
 
-	const {
-		registry: slashCommandRegistry,
-		systemCommands,
-	} = useSlashCommands({
+	const { registry: slashCommandRegistry, systemCommands } = useSlashCommands({
 		workflowSlashCommands,
 		loadAdditionalSlashCommands: props.loadAdditionalSlashCommands,
 		canFork: canForkSession,
@@ -673,6 +676,9 @@ function App(props: TuiProps) {
 		appendEntry: session.appendEntry,
 		updateLastEntry: session.updateLastEntry,
 		updateEntry: session.updateEntry,
+		updateEntryById: session.updateEntryById,
+		closeEntryStream: session.closeEntryStream,
+		closeAllStreamingEntries: session.closeAllStreamingEntries,
 		closeInlineStream: session.closeInlineStream,
 		activeInlineStreamRef: session.activeInlineStreamRef,
 		setIsRunning: session.setIsRunning,

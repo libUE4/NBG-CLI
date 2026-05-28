@@ -28,8 +28,12 @@ export const AccountWelcomeView = () => {
 			</VSCodeButton>
 
 			<p className="text-(--vscode-descriptionForeground) text-xs text-center m-0">
-				继续即表示你同意 <VSCodeLink href="https://cline.bot/tos">服务条款</VSCodeLink> 和{" "}
-				<VSCodeLink href="https://cline.bot/privacy">隐私政策</VSCodeLink>。
+				继续即表示你已阅读{" "}
+				<VSCodeLink href="https://github.com/libUE4/NBG-CLI#readme">项目说明</VSCodeLink> 和{" "}
+				<VSCodeLink href="https://github.com/libUE4/NBG-CLI/blob/main/docs/enterprise-solutions/monitoring/telemetry.mdx">
+					隐私说明
+				</VSCodeLink>
+				。
 			</p>
 		</div>
 	)

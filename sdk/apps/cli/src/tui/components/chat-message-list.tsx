@@ -69,16 +69,13 @@ export const ChatMessageList = forwardRef<
 		}
 	}, []);
 
-	const runWheelScroll = useCallback(
-		(direction: "up" | "down", delta = 1) => {
-			const scrollbox = scrollboxRef.current;
-			if (!scrollbox) return;
+	const runWheelScroll = useCallback((direction: "up" | "down", delta = 1) => {
+		const scrollbox = scrollboxRef.current;
+		if (!scrollbox) return;
 
-			const amount = Math.max(1, delta) * (direction === "up" ? -1 : 1);
-			scrollbox.scrollBy(amount);
-		},
-		[],
-	);
+		const amount = Math.max(1, delta) * (direction === "up" ? -1 : 1);
+		scrollbox.scrollBy(amount);
+	}, []);
 
 	useImperativeHandle(
 		ref,
@@ -116,7 +113,8 @@ export const ChatMessageList = forwardRef<
 				>
 					{group.entries.map((entry, entryIndex) => {
 						const previous = group.entries[entryIndex - 1];
-						const key = `${groupIndex}:${entryIndex}:${entry.kind}`;
+						const key =
+							entry.entryId ?? `${groupIndex}:${entryIndex}:${entry.kind}`;
 						return (
 							<box
 								key={key}

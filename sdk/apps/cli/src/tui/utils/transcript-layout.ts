@@ -6,10 +6,15 @@ export interface TranscriptGroup {
 }
 
 export function isUserPromptEntry(entry: ChatEntry): boolean {
-	return entry.kind === "user" || entry.kind === "user_submitted";
+	return (
+		entry.kind === "user" ||
+		(entry.kind === "user_submitted" && entry.delivery == null)
+	);
 }
 
-export function groupTranscriptEntries(entries: ChatEntry[]): TranscriptGroup[] {
+export function groupTranscriptEntries(
+	entries: ChatEntry[],
+): TranscriptGroup[] {
 	const groups: TranscriptGroup[] = [];
 	let current: TranscriptGroup | undefined;
 

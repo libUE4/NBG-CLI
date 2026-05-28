@@ -22,9 +22,31 @@ describe("transcript layout helpers", () => {
 			{ kind: "assistant_text", text: "好的。", streaming: false },
 		];
 
-		expect(groupTranscriptEntries(entries).map((group) => group.entries)).toEqual(
-			[[entries[0]], entries.slice(1, 5), entries.slice(5)],
-		);
+		expect(
+			groupTranscriptEntries(entries).map((group) => group.entries),
+		).toEqual([[entries[0]], entries.slice(1, 5), entries.slice(5)]);
+	});
+
+	it("keeps queued and steering prompts inside the active turn", () => {
+		const entries: ChatEntry[] = [
+			{ kind: "user_submitted", text: "先看看项目" },
+			{ kind: "assistant_text", text: "我先检查。", streaming: true },
+			{
+				kind: "user_submitted",
+				text: "再看测试",
+				delivery: "queue",
+			},
+			{
+				kind: "user_submitted",
+				text: "重点看 CLI",
+				delivery: "steer",
+			},
+			{ kind: "assistant_text", text: "继续分析。", streaming: false },
+		];
+
+		expect(
+			groupTranscriptEntries(entries).map((group) => group.entries),
+		).toEqual([entries]);
 	});
 
 	it("keeps adjacent assistant text tight but separates user, tools, and totals", () => {

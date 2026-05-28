@@ -24,7 +24,13 @@ import type {
 } from "./interactive-config";
 import type { InteractiveSlashCommand } from "./interactive-welcome";
 
-export type ChatEntry =
+export type ChatEntryId = string;
+
+type ChatEntryBase = {
+	entryId?: ChatEntryId;
+};
+
+export type ChatEntry = (
 	| { kind: "user"; text: string }
 	| { kind: "assistant_text"; text: string; streaming: boolean }
 	| { kind: "reasoning"; text: string; streaming: boolean }
@@ -51,7 +57,9 @@ export type ChatEntry =
 			cost: number;
 			elapsed: string;
 			iterations: number;
-	  };
+	  }
+) &
+	ChatEntryBase;
 
 export interface InteractiveTurnResult {
 	usage: {

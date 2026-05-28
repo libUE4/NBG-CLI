@@ -10,12 +10,18 @@ import {
 	formatToolOutput,
 	truncate,
 } from "../../utils/helpers";
-import type { ChatEntry, InlineStream, TuiProps } from "../types";
+import type { ChatEntry, ChatEntryId, InlineStream, TuiProps } from "../types";
 
 interface AgentEventDeps {
-	appendEntry: (entry: ChatEntry) => void;
+	appendEntry: (entry: ChatEntry) => ChatEntryId;
 	updateLastEntry: (updater: (prev: ChatEntry) => ChatEntry) => void;
 	updateEntry: (updater: (entry: ChatEntry) => ChatEntry) => void;
+	updateEntryById: (
+		entryId: ChatEntryId,
+		updater: (entry: ChatEntry) => ChatEntry,
+	) => void;
+	closeEntryStream: (entryId: ChatEntryId) => void;
+	closeAllStreamingEntries: () => void;
 	closeInlineStream: () => void;
 	activeInlineStreamRef: React.MutableRefObject<InlineStream>;
 	setIsRunning: (v: boolean) => void;
@@ -35,6 +41,9 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 		appendEntry,
 		updateLastEntry,
 		updateEntry,
+		updateEntryById,
+		closeEntryStream,
+		closeAllStreamingEntries,
 		closeInlineStream,
 		activeInlineStreamRef,
 		setIsRunning,
@@ -44,6 +53,39 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 		verbose,
 		thinkingEnabled,
 	} = deps;
+	const activeInlineEntryIdRef = useRef<ChatEntryId | undefined>(undefined);
+	const toolEntryIdsByToolCallIdRef = useRef(new Map<string, ChatEntryId>());
+	const anonymousToolEntryIdsRef = useRef<ChatEntryId[]>([]);
+
+	const closeCurrentInlineStream = useCallback(() => {
+		const entryId = activeInlineEntryIdRef.current;
+		activeInlineEntryIdRef.current = undefined;
+		activeInlineStreamRef.current = undefined;
+		if (entryId) {
+			closeEntryStream(entryId);
+			return;
+		}
+		closeInlineStream();
+	}, [activeInlineStreamRef, closeEntryStream, closeInlineStream]);
+
+	const appendInlineEntry = useCallback(
+		(entry: Extract<ChatEntry, { kind: "assistant_text" | "reasoning" }>) => {
+			activeInlineEntryIdRef.current = appendEntry(entry);
+		},
+		[appendEntry],
+	);
+
+	const updateActiveInlineEntry = useCallback(
+		(updater: (entry: ChatEntry) => ChatEntry) => {
+			const entryId = activeInlineEntryIdRef.current;
+			if (!entryId) {
+				return false;
+			}
+			updateEntryById(entryId, updater);
+			return true;
+		},
+		[updateEntryById],
+	);
 
 	const closeToolEntry = useCallback(
 		(event: AgentEvent & { type: "content_end" }) => {
@@ -55,6 +97,19 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 				error,
 			};
 			if (event.toolCallId) {
+				const entryId = toolEntryIdsByToolCallIdRef.current.get(
+					event.toolCallId,
+				);
+				toolEntryIdsByToolCallIdRef.current.delete(event.toolCallId);
+				if (entryId) {
+					updateEntryById(entryId, (entry) => {
+						if (entry.kind !== "tool_call") {
+							return entry;
+						}
+						return { ...entry, streaming: false, result };
+					});
+					return;
+				}
 				updateEntry((entry) => {
 					if (
 						entry.kind !== "tool_call" ||
@@ -65,13 +120,23 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					return { ...entry, streaming: false, result };
 				});
 			} else {
+				const entryId = anonymousToolEntryIdsRef.current.pop();
+				if (entryId) {
+					updateEntryById(entryId, (entry) => {
+						if (entry.kind !== "tool_call") {
+							return entry;
+						}
+						return { ...entry, streaming: false, result };
+					});
+					return;
+				}
 				updateLastEntry((prev) => {
-					if (prev.kind !== "tool_call") return prev;
+					if (prev.kind !== "tool_call" || !prev.streaming) return prev;
 					return { ...prev, streaming: false, result };
 				});
 			}
 		},
-		[updateEntry, updateLastEntry],
+		[updateEntry, updateEntryById, updateLastEntry],
 	);
 
 	const turnErrorReportedRef = useRef(false);
@@ -85,12 +150,16 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 				case "iteration_start":
 					setIsRunning(true);
 					setIsStreaming(true);
-					closeInlineStream();
+					closeAllStreamingEntries();
+					activeInlineEntryIdRef.current = undefined;
+					activeInlineStreamRef.current = undefined;
+					toolEntryIdsByToolCallIdRef.current.clear();
+					anonymousToolEntryIdsRef.current = [];
 					sawVisibleReasoningRef.current = false;
 					sawAssistantTextRef.current = false;
 					break;
 				case "iteration_end":
-					closeInlineStream();
+					closeCurrentInlineStream();
 					if (
 						thinkingEnabled &&
 						sawAssistantTextRef.current &&
@@ -115,19 +184,26 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 								sawAssistantTextRef.current = true;
 							}
 							if (activeInlineStreamRef.current !== "text") {
-								closeInlineStream();
+								closeCurrentInlineStream();
 								activeInlineStreamRef.current = "text";
-								appendEntry({
+								appendInlineEntry({
 									kind: "assistant_text",
 									text,
 									streaming: true,
 								});
 							} else {
-								updateLastEntry((prev) =>
-									prev.kind === "assistant_text"
-										? { ...prev, text: prev.text + text }
-										: prev,
+								const updated = updateActiveInlineEntry((entry) =>
+									entry.kind === "assistant_text"
+										? { ...entry, text: entry.text + text }
+										: entry,
 								);
+								if (!updated) {
+									appendInlineEntry({
+										kind: "assistant_text",
+										text,
+										streaming: true,
+									});
+								}
 							}
 							break;
 						}
@@ -140,26 +216,33 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 								sawVisibleReasoningRef.current = true;
 							}
 							if (activeInlineStreamRef.current !== "reasoning") {
-								closeInlineStream();
+								closeCurrentInlineStream();
 								activeInlineStreamRef.current = "reasoning";
-								appendEntry({
+								appendInlineEntry({
 									kind: "reasoning",
 									text: chunk,
 									streaming: true,
 								});
 							} else {
-								updateLastEntry((prev) =>
-									prev.kind === "reasoning"
-										? { ...prev, text: prev.text + chunk }
-										: prev,
+								const updated = updateActiveInlineEntry((entry) =>
+									entry.kind === "reasoning"
+										? { ...entry, text: entry.text + chunk }
+										: entry,
 								);
+								if (!updated) {
+									appendInlineEntry({
+										kind: "reasoning",
+										text: chunk,
+										streaming: true,
+									});
+								}
 							}
 							break;
 						}
 						case "tool": {
-							closeInlineStream();
+							closeCurrentInlineStream();
 							const toolName = event.toolName ?? "unknown_tool";
-							appendEntry({
+							const entryId = appendEntry({
 								kind: "tool_call",
 								toolCallId: event.toolCallId,
 								toolName,
@@ -167,6 +250,14 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 								rawInput: event.input,
 								streaming: true,
 							});
+							if (event.toolCallId) {
+								toolEntryIdsByToolCallIdRef.current.set(
+									event.toolCallId,
+									entryId,
+								);
+							} else {
+								anonymousToolEntryIdsRef.current.push(entryId);
+							}
 							break;
 						}
 					}
@@ -176,10 +267,10 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					switch (event.contentType) {
 						case "text":
 						case "reasoning":
-							closeInlineStream();
+							closeCurrentInlineStream();
 							break;
 						case "tool": {
-							closeInlineStream();
+							closeCurrentInlineStream();
 							closeToolEntry(event);
 							break;
 						}
@@ -189,12 +280,20 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 				case "done":
 					setIsRunning(false);
 					setIsStreaming(false);
-					closeInlineStream();
+					closeAllStreamingEntries();
+					activeInlineEntryIdRef.current = undefined;
+					activeInlineStreamRef.current = undefined;
+					toolEntryIdsByToolCallIdRef.current.clear();
+					anonymousToolEntryIdsRef.current = [];
 					break;
 				case "error":
 					setIsRunning(false);
 					setIsStreaming(false);
-					closeInlineStream();
+					closeAllStreamingEntries();
+					activeInlineEntryIdRef.current = undefined;
+					activeInlineStreamRef.current = undefined;
+					toolEntryIdsByToolCallIdRef.current.clear();
+					anonymousToolEntryIdsRef.current = [];
 					turnErrorReportedRef.current = true;
 					onTurnErrorReported(true);
 					if (!event.recoverable || verbose) {
@@ -203,7 +302,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					break;
 				case "notice":
 					if (event.displayRole === "status") {
-						closeInlineStream();
+						closeCurrentInlineStream();
 						const label = resolveStatusNoticeLabel(event);
 						if (label) {
 							appendEntry({ kind: "status", text: label });
@@ -221,8 +320,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 		},
 		[
 			appendEntry,
-			updateLastEntry,
-			closeInlineStream,
+			closeAllStreamingEntries,
 			activeInlineStreamRef,
 			setIsRunning,
 			setIsStreaming,
@@ -231,13 +329,16 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 			verbose,
 			thinkingEnabled,
 			closeToolEntry,
+			appendInlineEntry,
+			updateActiveInlineEntry,
+			closeCurrentInlineStream,
 		],
 	);
 
 	const handleTeamEvent = useCallback(
 		(event: TeamEvent) => {
 			const team = (text: string) => {
-				closeInlineStream();
+				closeCurrentInlineStream();
 				appendEntry({ kind: "team", text });
 			};
 			switch (event.type) {
@@ -264,9 +365,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					team(`[团队运行] 已入队 ${event.run.id} -> ${event.run.agentId} ...`);
 					break;
 				case "run_started":
-					team(
-						`[团队运行] 已开始 ${event.run.id} -> ${event.run.agentId} ...`,
-					);
+					team(`[团队运行] 已开始 ${event.run.id} -> ${event.run.agentId} ...`);
 					break;
 				case "run_progress":
 					if (event.message === "heartbeat") break;
@@ -287,9 +386,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					team(`[团队运行] 已中断 ${event.run.id}`);
 					break;
 				case "outcome_created":
-					team(
-						`[团队成果] 已创建 ${event.outcome.id}: ${event.outcome.title}`,
-					);
+					team(`[团队成果] 已创建 ${event.outcome.id}: ${event.outcome.title}`);
 					break;
 				case "outcome_fragment_attached":
 					team(
@@ -310,7 +407,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					break;
 			}
 		},
-		[appendEntry, closeInlineStream],
+		[appendEntry, closeCurrentInlineStream],
 	);
 
 	const handlePendingPrompts = useCallback((event: PendingPromptSnapshot) => {
