@@ -1,115 +1,117 @@
 ---
 title: "Jupyter Notebooks"
 sidebarTitle: "Jupyter Notebooks"
-description: "AI-assisted editing of Jupyter notebooks with cell-level context awareness"
+description: "使用 cell-level context awareness 辅助编辑 Jupyter notebooks。"
 ---
 
-Cline provides comprehensive support for Jupyter notebooks (`.ipynb` files), enabling AI-assisted editing with full cell-level context awareness. This feature was developed in collaboration with Amazon to bring AI coding assistance to data science workflows.
+NBG 支持 Jupyter notebooks（`.ipynb` 文件）的 AI 辅助编辑，并能理解 cell 级上下文。该能力适合数据科学、实验分析和 notebook 型工作流。
 
-## Getting Started
+## 开始使用
 
-Jupyter notebook support is a built-in feature of Cline. To use it, you just need to have the Jupyter notebook extension enabled in VS Code. Once you open any `.ipynb` file, you'll see AI-assisted buttons in your notebook interface.
+Jupyter notebook 支持来自继承运行时的 IDE 能力。使用前需要在 VS Code 中启用 Jupyter notebook extension。打开 `.ipynb` 文件后，可以在 notebook 界面中看到 AI 辅助按钮。
 
-## How to Use
+## 使用方式
 
-### Generate Cell
+### 生成 Cell
 
-Click the sparkle icon in the notebook toolbar to generate new cells with AI assistance.
+点击 notebook toolbar 中的 sparkle 图标，让 AI 生成新的 cell。
 
 <Frame>
   <img src="/assets/jupyter-generate-cell.gif" alt="Generating a new Jupyter cell with AI assistance" />
 </Frame>
 
-The AI receives context from surrounding cells, so it understands the variables and imports already in scope. This means you can reference existing DataFrames, functions, and other objects without re-explaining them.
+AI 会接收周围 cells 的上下文，因此能理解当前作用域中的变量和 imports。你可以直接引用已有 DataFrames、functions 和其他对象，不需要重新解释。
 
-**Example prompt:** "Create a visualization showing the correlation matrix of numeric columns with a heatmap"
+**示例 prompt：** "创建一个 heatmap，可视化数值列的相关矩阵"
 
-The cell is inserted with proper notebook JSON structure, preserving metadata and ready to execute.
+生成的 cell 会按 notebook JSON 结构插入，并保留 metadata，插入后即可执行。
 
-### Explain Cell
+### 解释 Cell
 
-Click the Explain button in any cell's title bar to get a detailed explanation of what the cell does.
+点击任意 cell title bar 中的 Explain button，可以获取该 cell 的详细解释。
 
-This is useful for:
+适合以下场景：
 
-- Revisiting old notebooks
-- Onboarding to a teammate's analysis
-- Understanding complex transformations
+- 回看旧 notebooks
+- 理解队友的分析过程
+- 分析复杂数据转换
 
-Cline extracts the full cell context, including outputs, so explanations can reference actual results like column names, row counts, and computed values.
+NBG 会提取完整 cell 上下文，包括 outputs。因此解释可以引用列名、行数和计算结果等真实输出。
 
-### Improve Cell
+### 改进 Cell
 
-Click the Improve button in any cell's title bar to enhance existing cells with AI suggestions.
+点击任意 cell title bar 中的 Improve button，可以让 AI 提出改进建议。
 
 <Frame>
   <img src="/assets/jupyter-explain-improve-cell.gif" alt="Explaining and improving a Jupyter cell with AI" />
 </Frame>
 
-Use this to:
+适合用于：
 
-- Optimize slow pandas operations
-- Add error handling
-- Refactor for clarity
-- Convert loops to vectorized operations
+- 优化较慢的 pandas 操作
+- 添加错误处理
+- 重构以提升可读性
+- 将循环转换为向量化操作
 
-Cline suggests improvements while preserving the cell's position and metadata in the notebook structure. The AI explains what was changed and why.
+NBG 会在保留 cell 位置和 metadata 的前提下提出修改，并解释变更内容和原因。
 
-## How Cell Context Works
+## Cell 上下文如何工作
 
-Unlike traditional file editing, Jupyter notebooks are JSON documents containing arrays of cells. Each cell has its own type, source content, metadata, execution count, and outputs.
+Jupyter notebooks 与普通文件不同，本质是包含 cell 数组的 JSON 文档。每个 cell 都有自己的 type、source content、metadata、execution count 和 outputs。
 
-When you use a Jupyter command, Cline extracts structured context that includes:
+使用 Jupyter 命令时，NBG 会提取结构化上下文，包括：
 
-- **Cell type** (code, markdown, or raw)
-- **Source content** as an array of lines
-- **Cell metadata** and configuration
-- **Execution count** for code cells
-- **Outputs** including data, text, and error traces
+- **Cell type**（code、markdown 或 raw）
+- **Source content**，以 lines 数组表示
+- **Cell metadata** 和配置
+- code cells 的 **execution count**
+- **Outputs**，包括 data、text 和 error traces
 
-This structured representation allows the AI to understand not just the code, but its context within the notebook and its actual output.
+这种结构化表示能让 AI 不只理解代码本身，也理解它在 notebook 中的位置和实际输出。
 
-### JSON Structure Preservation
+### 保留 JSON 结构
 
-Cline is designed to work carefully with the cell JSON structure, aiming to:
+NBG 会谨慎处理 cell JSON 结构，目标是：
 
-- Keep cell boundaries intact
-- Preserve execution counts
-- Maintain cell metadata
-- Keep outputs associated with their source cells
+- 保持 cell 边界完整
+- 保留 execution counts
+- 维护 cell metadata
+- 保持 outputs 与原 cell 的关联
 
-The AI is specifically prompted to preserve notebook structure, though you should always review changes to ensure your notebook format remains correct.
+系统提示会要求 AI 保留 notebook 结构，但你仍应审查变更，确认 notebook 格式正确。
 
-## Keyboard Shortcuts
+## 快捷键
 
-You can bind any of these commands to keyboard shortcuts for faster access:
+可以把这些命令绑定到快捷键，提高使用效率：
 
-1. Open VS Code keyboard shortcuts (Cmd/Ctrl + K, Cmd/Ctrl + S)
-2. Search for `cline.jupyterGenerateCell`, `cline.jupyterExplainCell`, or `cline.jupyterImproveCell`
-3. Assign your preferred key combinations
+1. 打开 VS Code keyboard shortcuts（Cmd/Ctrl + K, Cmd/Ctrl + S）
+2. 搜索 `cline.jupyterGenerateCell`、`cline.jupyterExplainCell` 或 `cline.jupyterImproveCell`
+3. 分配你偏好的快捷键组合
 
-## Tips for Best Results
+这些 command id 当前仍沿用继承运行时的 `cline.*` 兼容命名。
 
-**For Generate Cell:**
-- Be specific about what you want the cell to do
-- Reference existing variables by name (the AI can see them)
-- Mention preferred libraries if you have a preference (e.g., "use seaborn" or "use plotly")
+## 最佳实践
 
-**For Explain Cell:**
-- Works best on cells that have been executed (outputs provide additional context)
-- Good for complex chained operations like pandas groupby/merge sequences
+**生成 Cell：**
+- 明确说明你希望 cell 完成什么
+- 直接按名称引用已有变量（AI 可以看到它们）
+- 如有偏好，说明希望使用的库，例如 "use seaborn" 或 "use plotly"
 
-**For Improve Cell:**
-- Mention what aspect you want to improve (performance, readability, error handling)
-- The AI will explain the changes it suggests
+**解释 Cell：**
+- 对已经执行过的 cells 效果最好，因为 outputs 会提供额外上下文
+- 适合理解 pandas groupby/merge 这类复杂链式操作
 
-## Limitations
+**改进 Cell：**
+- 指出希望改进的方面，例如性能、可读性或错误处理
+- AI 会解释建议变更
 
-- Notebook support requires the Jupyter notebook extension to be enabled in VS Code
-- Cell context extraction depends on VS Code's notebook API
-- Very large notebooks may require more context than some models can handle efficiently
+## 限制
 
-## Related
+- Notebook 支持需要在 VS Code 中启用 Jupyter notebook extension
+- Cell 上下文提取依赖 VS Code notebook API
+- 超大 notebooks 可能需要超过部分模型可高效处理的上下文
 
-- [All Cline Tools](/tools-reference/all-cline-tools) - Overview of all Cline tools
-- [Cline provider](/getting-started/cline-provider) - Fastest way to get started with built-in provider setup
+## 相关文档
+
+- [全部工具](/tools-reference/all-cline-tools) - 继承运行时工具总览
+- [兼容 provider](/getting-started/cline-provider) - 使用保留 OAuth provider 的配置说明
