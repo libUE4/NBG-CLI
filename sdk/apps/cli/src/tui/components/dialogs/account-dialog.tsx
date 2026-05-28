@@ -80,7 +80,7 @@ const UNAUTHENTICATED_ACTIONS: AccountAction[] = [
 	{
 		id: "learn-more",
 		label: "了解更多",
-		description: "打开 cline.bot",
+		description: "打开 NBG 账号帮助",
 		enabled: true,
 	},
 ];

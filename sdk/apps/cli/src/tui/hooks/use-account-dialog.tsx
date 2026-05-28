@@ -55,7 +55,9 @@ export function useAccountDialog(opts: {
 			return;
 		}
 		if (action === "learn-more") {
-			await open("https://cline.bot", { wait: false }).catch(() => {});
+			await open("https://github.com/libUE4/NBG-CLI", { wait: false }).catch(
+				() => {},
+			);
 			refocusTextarea();
 			return;
 		}

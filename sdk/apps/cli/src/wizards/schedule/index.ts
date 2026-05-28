@@ -401,7 +401,7 @@ export async function runScheduleWizard(): Promise<number> {
 	if (!ensured.ok) {
 		s.stop("连接 hub 服务器失败");
 		p.log.error(
-			"计划任务需要 hub 服务器。请使用 cline hub start 启动。",
+			"计划任务需要 hub 服务器。请使用 nbg hub start 启动。",
 		);
 		p.outro("失败");
 		return 1;

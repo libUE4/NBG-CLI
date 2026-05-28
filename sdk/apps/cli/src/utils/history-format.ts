@@ -87,7 +87,7 @@ export function formatCheckpointDetail(
 		typeof latest.runCount === "number" && Number.isFinite(latest.runCount)
 			? ` 第 ${latest.runCount} 轮`
 			: "";
-	return `检查点 ${shortRef}${latestRun} 创建于 ${created}。共 ${count} 个。恢复命令：cline checkpoint restore latest --session-id ${row.sessionId}`;
+	return `检查点 ${shortRef}${latestRun} 创建于 ${created}。共 ${count} 个。恢复命令：nbg checkpoint restore latest --session-id ${row.sessionId}`;
 }
 
 function formatUtcDate(date: Date): string {

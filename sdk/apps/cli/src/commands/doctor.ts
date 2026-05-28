@@ -562,7 +562,7 @@ export async function runDoctorCommand(
 			before.staleSidecarPids.length > 0
 		) {
 			io.writeln(
-				"\n运行 `cline doctor fix` 可终止所有过期本地进程，包括过期 sidecar。",
+				"\n运行 `nbg doctor fix` 可终止所有过期本地进程，包括过期 sidecar。",
 			);
 		}
 		return 0;

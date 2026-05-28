@@ -12,7 +12,7 @@ import { writeErr } from "../utils/output";
  * Supported ACP OAuth provider IDs.
  */
 export const ACP_AUTH_METHODS = [
-	{ id: "cline", name: "使用 Cline 登录" },
+	{ id: "cline", name: "使用 NBG 兼容 provider 登录" },
 	{ id: "openai-codex", name: "使用 ChatGPT 订阅登录" },
 ] as const;
 
