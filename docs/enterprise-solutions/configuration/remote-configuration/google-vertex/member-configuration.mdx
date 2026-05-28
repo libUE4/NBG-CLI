@@ -1,99 +1,100 @@
 ---
-title: "Configure Google Vertex AI in NBG (Members)"
-sidebarTitle: "Configure Google Vertex (Member)"
-description: "Guide for engineers connecting to their organization's Google Vertex AI setup through VS Code after admin setup"
+title: "在 NBG 中配置 Google Vertex AI（成员）"
+sidebarTitle: "配置 Google Vertex（成员）"
+description: "管理员完成设置后，工程师在 VS Code 中连接组织 Google Vertex AI 配置的指南"
 ---
 
-As a team member, you can connect your local development environment to your organization's Google Vertex AI setup. This guide walks you through configuring your Google Cloud credentials in VS Code so you can start using Vertex AI models through your organization's configured project and regional settings. Your administrator has already configured the provider settings-you just need to add your credentials to get started.
+作为团队成员，你可以把本地开发环境连接到组织的 Google Vertex AI 配置。本指南介绍如何在 VS Code 中配置 Google Cloud credentials，从而通过组织配置好的 project 和 region settings 使用 Vertex AI models。管理员已经完成 provider settings 配置，你只需要添加凭据即可开始。
 
-## Before You Begin
+## 开始之前
 
-To successfully connect to your organization's Google Vertex AI setup, you'll need a few things ready.
+要成功连接组织的 Google Vertex AI 配置，需要先准备以下内容。
 
-**NBG installed and configured**
+**已安装并配置 NBG**
 
-NBG must be installed in VS Code and you need to be signed into your organization account. If you haven't installed NBG yet, follow our [installation guide](/getting-started/installing-cline).
+需要在 VS Code 中安装 NBG，并登录组织账号。如果尚未安装 NBG，请参考 [安装指南](/getting-started/installing-cline)。
 
 <Info>
-**Quick Check**: Open the NBG panel in VS Code. If you see your organization name in the bottom left, you're signed in correctly.
+**快速检查**：在 VS Code 中打开 NBG panel。如果左下角能看到组织名称，说明已经正确登录。
 </Info>
 
-**Google Cloud credentials with Vertex AI access**  
-You need Google Cloud credentials that have permission to access Vertex AI in your organization's configured project and region.
+**具备 Vertex AI access 的 Google Cloud credentials**
+
+你需要拥有权限的 Google Cloud credentials，才能访问组织配置的 project 和 region 中的 Vertex AI。
 
 <Note>
-If you're unsure which method to use, check with your administrator or IT team about how your organization has configured Google Cloud access.
+如果不确定应该使用哪种方式，请向管理员或 IT 团队确认组织如何配置 Google Cloud access。
 </Note>
 
-## Configuration Steps
+## 配置步骤
 
 <Steps>
-<Step title="Open NBG Settings">
-Open VS Code and access the NBG settings panel using either of these methods:
+<Step title="打开 NBG Settings">
+打开 VS Code，并使用以下任一方式进入 NBG settings panel：
 
-- Click the settings icon (⚙️) in the NBG panel
-- Click on the API Provider dropdown located directly below the chat area (it will display as `vertex_ai/gemini-pro` or similar)
+- 点击 NBG panel 中的 settings icon
+- 点击聊天区域正下方的 API Provider dropdown，它会显示为 `vertex_ai/gemini-pro` 或类似名称
 
 </Step>
 
-<Step title="Select Your Authentication Method">
-Choose one of the following credential methods to authenticate with Google Vertex AI:
+<Step title="选择认证方式">
+选择以下任一 credential method 来认证 Google Vertex AI：
 
 <AccordionGroup>
 <Accordion title="Service Account Key">
-Use a service account JSON key file for Vertex AI access.
+使用 service account JSON key file 访问 Vertex AI。
 
 [Learn more about Service Account Keys](https://cloud.google.com/iam/docs/service-accounts)
 
-1. Select the **Service Account Key** authentication method
-2. Upload or paste your service account JSON key content
-3. The key should have `aiplatform.user` or similar Vertex AI permissions
-4. These credentials are stored locally and used only by the VS Code extension
+1. 选择 **Service Account Key** authentication method
+2. 上传或粘贴 service account JSON key 内容
+3. 该 key 应拥有 `aiplatform.user` 或类似 Vertex AI permissions
+4. 这些凭据会保存在本地，并且只由 VS Code extension 使用
 </Accordion>
 
 <Accordion title="Google Cloud SDK">
-Use the Google Cloud SDK installed on your machine with your authenticated account.
+使用本机已安装的 Google Cloud SDK 和已认证账号。
 
 [Learn more about Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
 
-1. Select the **Google Cloud SDK** authentication method
-2. Ensure you've authenticated with `gcloud auth login`
-3. Verify your account has access to the organization's Vertex AI project
-4. NBG will use your default Google Cloud credentials automatically
+1. 选择 **Google Cloud SDK** authentication method
+2. 确认已经通过 `gcloud auth login` 完成认证
+3. 验证账号能访问组织的 Vertex AI project
+4. NBG 会自动使用默认 Google Cloud credentials
 </Accordion>
 
 <Accordion title="Application Default Credentials">
-Use Google Cloud's application default credentials (ADC) chain.
+使用 Google Cloud 的 application default credentials（ADC）chain。
 
-1. Select the **Application Default Credentials** method
-2. Ensure ADC is properly configured in your environment
-3. This works well for environments where Google Cloud credentials are managed centrally
-4. NBG will automatically detect credentials from your environment
+1. 选择 **Application Default Credentials** method
+2. 确认环境中已正确配置 ADC
+3. 这种方式适合 Google Cloud credentials 集中管理的环境
+4. NBG 会自动从环境中检测 credentials
 </Accordion>
 </AccordionGroup>
 
 <Note>
-The Google Cloud Project ID and Region are preconfigured by your administrator and do not need to be set in the extension.
+Google Cloud Project ID 和 Region 已由管理员预先配置，不需要在 extension 中设置。
 </Note>
 </Step>
 
-<Step title="Verify Configuration">
-After selecting your authentication method, the extension will display checkmarks for enabled features:
+<Step title="验证配置">
+选择 authentication method 后，extension 会为启用的功能显示 checkmarks：
 
 - ✓ Supports images (for Gemini Pro Vision and similar models)
 - ✓ Supports multimodal inputs
 - ✓ Supports function calling (for supported models)
 
-The project ID and region settings will be locked (shown with a lock icon 🔒) as they're controlled by your administrator.
+Project ID 和 region settings 会被锁定（显示 lock icon），因为它们由管理员控制。
 </Step>
 
-<Step title="Test the Connection">
-Send a test message in NBG to verify your credentials work correctly with the configured Vertex AI project and region.
+<Step title="测试连接">
+在 NBG 中发送一条测试消息，确认凭据可以正确访问已配置的 Vertex AI project 和 region。
 
 <Tip>
-**Testing Recommendation**
+**测试建议**
 
-Try a simple test like "Hello" first to verify basic connectivity, then test multimodal capabilities if needed by sharing an image.
+先用类似 `Hello` 的简单消息验证基础连接；如有需要，再通过分享图片测试 multimodal capabilities。
 </Tip>
 </Step>
 </Steps>
@@ -104,17 +105,20 @@ Try a simple test like "Hello" first to verify basic connectivity, then test mul
 The models available through your organization's Vertex AI setup typically include:
 
 **Gemini Models:**
+
 - **Gemini Pro**: Advanced reasoning, code generation, and multimodal capabilities
 - **Gemini Pro Vision**: Image understanding and visual question answering
 - **Gemini Ultra**: Most capable model for complex reasoning tasks
 
 **PaLM Models:**
+
 - **PaLM 2 for Text**: Text generation and completion
 - **PaLM 2 for Chat**: Conversational AI interactions
 - **Codey**: Specialized for code generation and explanation
 
 **Specialized Models:**
-- **Text Embedding**: For semantic search and similarity tasks  
+
+- **Text Embedding**: For semantic search and similarity tasks
 - **Custom Models**: Your organization's fine-tuned variants (if available)
 
 ### Model Selection Strategy
@@ -136,19 +140,24 @@ Take advantage of Vertex AI's multimodal features:
 
 ## Troubleshooting
 
-**Google Vertex AI not available as provider option**  
+**Google Vertex AI not available as provider option**
+
 Confirm you're signed into the correct NBG organization. Verify your administrator has saved the Vertex AI configuration and that you have the latest version of NBG.
 
-**Authentication errors ("Access Denied" or "Invalid Credentials")**  
+**Authentication errors ("Access Denied" or "Invalid Credentials")**
+
 Verify your chosen credential method has the necessary IAM permissions to access Vertex AI in the configured project and region. Required permissions include `aiplatform.endpoints.predict` and `aiplatform.models.predict`.
 
-**Project access errors**  
+**Project access errors**
+
 Ask your administrator to confirm which Google Cloud project is configured for your organization. Ensure your Google Cloud credentials have access to that specific project.
 
-**Regional access errors**  
+**Regional access errors**
+
 Verify your credentials have access to Vertex AI in the configured region. Some models may not be available in all regions, so confirm with your administrator about the selected region.
 
-**Google Cloud SDK authentication issues**  
+**Google Cloud SDK authentication issues**
+
 Ensure Google Cloud SDK is properly installed and authenticated:
 ```bash
 gcloud auth login
@@ -156,15 +165,17 @@ gcloud config set project YOUR_PROJECT_ID
 gcloud auth application-default login
 ```
 
-**Service account key errors**  
+**Service account key errors**
+
 Verify the service account key is valid and hasn't expired. Check that the service account has the proper Vertex AI permissions in your organization's project. Ensure the JSON key file is properly formatted and contains all required fields.
 
-**Model access errors or "model not found"**  
+**Model access errors or "model not found"**
+
 Some models may not be enabled in your organization's project or region. Contact your administrator if specific models are not available. Verify that your organization has enabled the models you're trying to use in the Google Cloud Console.
 
-## Security Best Practices
+## 安全最佳实践
 
-When configuring your Google Cloud credentials, follow these security guidelines:
+配置 Google Cloud credentials 时，遵循以下安全规范：
 
 - Use service accounts with minimal required permissions for Vertex AI access
 - Rotate service account keys regularly (every 90 days recommended)
@@ -173,6 +184,6 @@ When configuring your Google Cloud credentials, follow these security guidelines
 - Consider using Workload Identity for containerized development environments
 - Report any suspicious activity or unauthorized access attempts
 
-Your organization administrator controls which models and regions are available. The extension will automatically display available models based on your project's configuration and regional availability.
+组织管理员控制可用 models 和 regions。Extension 会根据 project configuration 和 regional availability 自动显示可用 models。
 
-For more information about Google Cloud authentication and Vertex AI permissions, refer to the [Google Cloud IAM Documentation](https://cloud.google.com/iam/docs) and coordinate with your organization's cloud administrator.
+Google Cloud authentication 和 Vertex AI permissions 的更多信息见 [Google Cloud IAM Documentation](https://cloud.google.com/iam/docs)，并请与组织 cloud administrator 协调。

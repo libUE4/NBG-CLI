@@ -1,96 +1,102 @@
 ---
-title: "Configure Anthropic in NBG (Members)"
-sidebarTitle: "Configure Anthropic (Member)"
-description: "Guide for engineers connecting to their organization's Anthropic provider through VS Code after admin setup"
+title: "在 NBG 中配置 Anthropic（成员）"
+sidebarTitle: "配置 Anthropic（成员）"
+description: "管理员完成设置后，工程师在 VS Code 中连接组织 Anthropic provider 的指南"
 ---
 
-As a team member, you can connect your local development environment to your organization's Anthropic provider setup. This guide walks you through configuring your API key in VS Code so you can start using Claude models through your organization's configuration. Your administrator has already configured the provider settings — you just need to add your API key to get started.
+作为团队成员，你可以把本地开发环境连接到组织的 Anthropic provider 配置。本指南介绍如何在 VS Code 中配置 API key，从而通过组织配置使用 Claude models。管理员已经完成 provider settings 配置，你只需要添加 API key 即可开始。
 
-## Before You Begin
+## 开始之前
 
-To successfully connect to your organization's Anthropic provider, you'll need a few things ready.
+要成功连接组织的 Anthropic provider，需要先准备以下内容。
 
-**NBG installed and configured**
+**已安装并配置 NBG**
 
-NBG must be installed in VS Code and you need to be signed into your organization account. If you haven't installed NBG yet, follow our [installation guide](/getting-started/installing-cline).
+需要在 VS Code 中安装 NBG，并登录组织账号。如果尚未安装 NBG，请参考 [安装指南](/getting-started/installing-cline)。
 
 <Info>
-**Quick Check**: Open the NBG panel in VS Code. If you see your organization name in the bottom left, you're signed in correctly.
+**快速检查**：在 VS Code 中打开 NBG panel。如果左下角能看到组织名称，说明已经正确登录。
 </Info>
 
-**Anthropic API key**  
-You need an API key from Anthropic to authenticate requests. Your organization may provide keys centrally or require you to create one through the [Anthropic Console](https://console.anthropic.com/).
+**Anthropic API key**
+
+你需要 Anthropic API key 来认证请求。组织可能会集中提供 keys，也可能要求你通过 [Anthropic Console](https://console.anthropic.com/) 自行创建。
 
 <Note>
-If you're unsure how to obtain an API key, check with your administrator about your organization's key provisioning process.
+如果不确定如何获取 API key，请向管理员确认组织的 key provisioning process。
 </Note>
 
-## Configuration Steps
+## 配置步骤
 
 <Steps>
-<Step title="Open NBG Settings">
-Open VS Code and access the NBG settings panel using either of these methods:
+<Step title="打开 NBG Settings">
+打开 VS Code，并使用以下任一方式进入 NBG settings panel：
 
-- Click the settings icon (⚙️) in the NBG panel
-- Click on the API Provider dropdown located directly below the chat area
+- 点击 NBG panel 中的 settings icon
+- 点击聊天区域正下方的 API Provider dropdown
 
 </Step>
 
-<Step title="Enter Your API Key">
+<Step title="输入 API Key">
 
-1. Select or confirm the **Anthropic** provider is selected
-2. Enter your Anthropic API key in the **API Key** field
-3. If your administrator configured a custom base URL, it will already be set and locked
-4. Click **Save** to store your credentials
+1. 选择或确认已选择 **Anthropic** provider
+2. 在 **API Key** 字段中输入 Anthropic API key
+3. 如果管理员配置了 custom base URL，它会已经设置并锁定
+4. 点击 **Save** 保存凭据
 
 <Tip>
-API keys are stored locally and are only used by NBG.
+API keys 会保存在本地，并且只由 NBG 使用。
 </Tip>
 
 <Note>
-The base URL setting is controlled by your administrator. If a custom proxy URL is configured, your API requests will be routed through it automatically.
+Base URL setting 由管理员控制。如果配置了 custom proxy URL，API requests 会自动通过它路由。
 </Note>
 </Step>
 
-<Step title="Verify Configuration">
-After entering your API key, administrator-controlled settings (such as base URL) will be locked (shown with a lock icon 🔒) as they're managed by your organization.
+<Step title="验证配置">
+输入 API key 后，管理员控制的 settings（例如 base URL）会被锁定（显示 lock icon），因为它们由组织统一管理。
 </Step>
 
-<Step title="Test the Connection">
-Send a test message in NBG to verify your API key works correctly with the configured Anthropic endpoint.
+<Step title="测试连接">
+在 NBG 中发送一条测试消息，确认 API key 可以正确访问已配置的 Anthropic endpoint。
 
 <Tip>
-**Testing Recommendation**
+**测试建议**
 
-Try a simple test like "Hello" first to verify basic connectivity before starting development tasks.
+开始开发任务前，先用类似 `Hello` 的简单消息验证基础连接。
 </Tip>
 </Step>
 </Steps>
 
 ## Troubleshooting
 
-**Anthropic not available as provider option**  
+**Anthropic not available as provider option**
+
 Confirm you're signed into the correct NBG organization. Verify your administrator has saved the Anthropic configuration and that you have the latest version of NBG.
 
-**Authentication errors ("Invalid API Key" or "Unauthorized")**  
+**Authentication errors ("Invalid API Key" or "Unauthorized")**
+
 Verify your API key is correct and active. Check the [Anthropic Console](https://console.anthropic.com/) to confirm your key status and that it has sufficient permissions.
 
-**Connection errors or timeouts**  
+**Connection errors or timeouts**
+
 If your administrator configured a custom base URL (proxy), check with your IT team about network requirements. If using the default Anthropic endpoint, ensure you have internet access to `api.anthropic.com`.
 
-**Models not available**  
+**Models not available**
+
 The available models depend on your Anthropic API plan and your organization's configuration. Contact your administrator if expected models are not available.
 
-**Rate limit errors**  
+**Rate limit errors**
+
 Your API key may have rate limits configured by Anthropic. If you encounter rate limit errors during normal use, contact your administrator about adjusting limits or managing key usage across the team.
 
-## Security Best Practices
+## 安全最佳实践
 
-When working with your Anthropic API key:
+使用 Anthropic API key 时：
 
-- Keep your API key secure and do not share it
-- Never store your API key in code or version control
-- Report any suspected key compromise to your administrator immediately
-- Regularly check the [Anthropic Console](https://console.anthropic.com/) for unusual usage patterns
+- 妥善保管 API key，不要共享
+- 不要把 API key 存入代码或版本控制
+- 如果怀疑 key 泄露，立即报告管理员
+- 定期检查 [Anthropic Console](https://console.anthropic.com/) 是否有异常 usage patterns
 
-For further details, consult the [Anthropic API documentation](https://docs.anthropic.com/) and coordinate with your organization's administrator.
+更多细节见 [Anthropic API documentation](https://docs.anthropic.com/)，并请与组织管理员协调。

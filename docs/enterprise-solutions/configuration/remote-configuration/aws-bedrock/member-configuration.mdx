@@ -1,95 +1,96 @@
 ---
-title: "Configure AWS Bedrock in NBG (Members)"
-sidebarTitle: "Configure AWS Bedrock (Member)"
-description: "Guide for engineers configuring AWS Bedrock credentials in VS Code after admin setup"
+title: "在 NBG 中配置 AWS Bedrock（成员）"
+sidebarTitle: "配置 AWS Bedrock（成员）"
+description: "管理员完成设置后，工程师在 VS Code 中配置 AWS Bedrock credentials 的指南"
 ---
 
-As a team member, you can connect your local development environment to your organization's AWS Bedrock setup. This guide walks you through configuring your AWS credentials in VS Code so you can start using models through your organization's Bedrock infrastructure. Your administrator has already configured the provider settings-you just need to add your credentials to get started.
+作为团队成员，你可以把本地开发环境连接到组织的 AWS Bedrock 配置。本指南介绍如何在 VS Code 中配置 AWS credentials，从而通过组织的 Bedrock infrastructure 使用模型。管理员已经完成 provider settings 配置，你只需要添加凭据即可开始。
 
-## Before You Begin
+## 开始之前
 
-To successfully connect to your organization's AWS Bedrock setup, you'll need a few things ready.
+要成功连接组织的 AWS Bedrock 配置，需要先准备以下内容。
 
-**NBG installed and configured**
+**已安装并配置 NBG**
 
-NBG must be installed in VS Code and you need to be signed into your organization account. If you haven't installed NBG yet, follow our [installation guide](/getting-started/installing-cline).
+需要在 VS Code 中安装 NBG，并登录组织账号。如果尚未安装 NBG，请参考 [安装指南](/getting-started/installing-cline)。
 
 <Info>
-**Quick Check**: Open the NBG panel in VS Code. If you see your organization name in the bottom left, you're signed in correctly.
+**快速检查**：在 VS Code 中打开 NBG panel。如果左下角能看到组织名称，说明已经正确登录。
 </Info>
 
-**AWS credentials with Bedrock access**  
-You need AWS credentials that have permission to access Bedrock in your organization's configured region.
+**具备 Bedrock access 的 AWS credentials**
+
+你需要拥有权限的 AWS credentials，才能访问组织配置 region 中的 Bedrock。
 
 <Note>
-If you don't have AWS credentials yet, reach out to your IT or cloud team to get access keys or AWS CLI profiles configured with the necessary Bedrock permissions.
+如果还没有 AWS credentials，请联系 IT 或 cloud team 获取 access keys，或配置具备必要 Bedrock permissions 的 AWS CLI profiles。
 </Note>
 
-## Configuration Steps
+## 配置步骤
 
 <Steps>
-<Step title="Open NBG Settings">
-Open VS Code and access the NBG settings panel using either of these methods:
+<Step title="打开 NBG Settings">
+打开 VS Code，并使用以下任一方式进入 NBG settings panel：
 
-- Click the settings icon (⚙️) in the NBG panel
-- Click on the API Provider dropdown located directly below the chat area (it will display as `bedrock.anthropic.claude-sonnet-4-20250514-v1:0` or similar)
+- 点击 NBG panel 中的 settings icon
+- 点击聊天区域正下方的 API Provider dropdown，它会显示为 `bedrock.anthropic.claude-sonnet-4-20250514-v1:0` 或类似名称
 
 </Step>
 
-<Step title="Select Your Authentication Method">
-Choose one of the following credential methods to authenticate with AWS Bedrock:
+<Step title="选择认证方式">
+选择以下任一 credential method 来认证 AWS Bedrock：
 
 <AccordionGroup>
 <Accordion title="AWS Bedrock API Key">
-Use dedicated AWS access keys specifically for Bedrock access.
+使用专门用于 Bedrock access 的 AWS access keys。
 
 [Learn more about AWS Bedrock API Keys](https://docs.aws.amazon.com/bedrock/latest/userguide/api-keys.html)
 
-1. Select the **API Key** radio button
-2. Enter your AWS Access Key ID and Secret Access Key
-3. These credentials are stored locally and used only by the VS Code extension
+1. 选择 **API Key** radio button
+2. 输入 AWS Access Key ID 和 Secret Access Key
+3. 这些凭据会保存在本地，并且只由 VS Code extension 使用
 </Accordion>
 
 <Accordion title="AWS Profile">
-Use an existing AWS CLI profile configured on your machine.
+使用本机已有的 AWS CLI profile。
 
 [Learn more about AWS CLI Profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
 
-1. Select the **AWS Profile** radio button
-2. Choose or enter the profile name from your `~/.aws/credentials` file
-3. NBG will use the credentials associated with that profile
+1. 选择 **AWS Profile** radio button
+2. 从 `~/.aws/credentials` 文件中选择或输入 profile name
+3. NBG 会使用该 profile 关联的 credentials
 </Accordion>
 
 <Accordion title="AWS Credentials">
-Use your default AWS credential chain (environment variables, EC2 instance roles, etc.).
+使用默认 AWS credential chain，例如 environment variables、EC2 instance roles 等。
 
-1. Select the **AWS Credentials** radio button
-2. NBG will automatically detect credentials from your environment using the standard AWS credential provider chain
+1. 选择 **AWS Credentials** radio button
+2. NBG 会使用标准 AWS credential provider chain 从环境中自动检测 credentials
 </Accordion>
 </AccordionGroup>
 
 <Note>
-The AWS Region is preconfigured by your administrator and does not need to be set in the extension.
+AWS Region 已由管理员预先配置，不需要在 extension 中设置。
 </Note>
 </Step>
 
-<Step title="Verify Configuration">
-After selecting your authentication method, the extension will display checkmarks for enabled features:
+<Step title="验证配置">
+选择 authentication method 后，extension 会为启用的功能显示 checkmarks：
 
 - ✓ Supports images
 - ✓ Supports browser use
 - ✓ Supports prompt caching
 
-Additional settings like cross-region inference and global inference profile will be locked (shown with a lock icon 🔒) as they're controlled by your administrator.
+Cross-region inference 和 global inference profile 等额外 settings 会被锁定（显示 lock icon），因为它们由管理员控制。
 </Step>
 
-<Step title="Test the Connection">
-Send a test message in NBG to verify your credentials work correctly with the configured Bedrock region.
+<Step title="测试连接">
+在 NBG 中发送一条测试消息，确认凭据可以正确访问已配置的 Bedrock region。
 
 <Tip>
-**Testing Recommendation**
+**测试建议**
 
-It is recommended to test the connection in plan mode to verify everything works correctly before using it for actual tasks.
+建议先在 plan mode 中测试连接，确认一切正常后再用于实际任务。
 </Tip>
 </Step>
 </Steps>
@@ -97,22 +98,26 @@ It is recommended to test the connection in plan mode to verify everything works
 
 ## Troubleshooting
 
-**Authentication errors ("Access Denied" or "Invalid Credentials")**  
+**Authentication errors ("Access Denied" or "Invalid Credentials")**
+
 Verify your chosen credential method has the necessary IAM permissions to call Bedrock in the configured region. Required permissions include `bedrock:InvokeModel` and `bedrock:InvokeModelWithResponseStream`. For more information, refer to [AWS Bedrock IAM Permissions](https://docs.aws.amazon.com/bedrock/latest/userguide/security-iam.html).
 
-**Region-related errors or "model not available"**  
+**Region-related errors or "model not available"**
+
 Ask your administrator to confirm which region is configured for your organization. Ensure your AWS credentials have access to Bedrock in that specific region. [View AWS Global Infrastructure](https://aws.amazon.com/about-aws/global-infrastructure/regions_az/)
 
-**Don't see AWS Bedrock as an option**  
+**Don't see AWS Bedrock as an option**
+
 Confirm you're signed into the correct NBG organization. Verify your administrator has saved the Bedrock configuration. Try signing out and back into NBG.
 
-**AWS Credentials option not finding credentials**  
+**AWS Credentials option not finding credentials**
+
 Verify AWS CLI is installed and configured with `aws configure` ([AWS CLI Installation Guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)). Check that credentials are present in `~/.aws/credentials`. For EC2/ECS environments, ensure IAM roles are properly attached. If using environment variables, set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
 
-## Security Best Practices
+## 安全最佳实践
 
-When configuring your AWS credentials, follow these security guidelines:
+配置 AWS credentials 时，遵循以下安全规范：
 
 - Use IAM roles with minimum required permissions ([AWS IAM Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html))
 - Rotate access keys regularly if using the API Key method
@@ -120,6 +125,6 @@ When configuring your AWS credentials, follow these security guidelines:
 - Prefer AWS Profile method for better credential management
 - Consider using AWS SSO/federated roles for enhanced security
 
-Your organization administrator controls which models are available. The extension will automatically display available models based on your region's Bedrock configuration. For more information about available models, refer to the [AWS Bedrock Model Access documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html).
+组织管理员控制可用 models。Extension 会根据 region 中的 Bedrock configuration 自动显示可用 models。可用模型的更多信息见 [AWS Bedrock Model Access documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html)。
 
-For further assistance, consult the [AWS Bedrock Documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html) and coordinate with your organization's cloud administrator.
+如需更多帮助，请参考 [AWS Bedrock Documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)，并与组织 cloud administrator 协调。

@@ -1,95 +1,96 @@
 ---
-title: "Configure LiteLLM in NBG (Members)"
-sidebarTitle: "Configure LiteLLM (Member)"
-description: "Guide for engineers connecting to their organization's LiteLLM proxy through VS Code after admin setup"
+title: "在 NBG 中配置 LiteLLM（成员）"
+sidebarTitle: "配置 LiteLLM（成员）"
+description: "管理员完成设置后，工程师在 VS Code 中连接组织 LiteLLM proxy 的指南"
 ---
 
-As a team member, you can connect your local development environment to your organization's LiteLLM proxy setup. This guide walks you through configuring your connection in VS Code so you can start using multiple AI models through your organization's unified proxy interface. Your administrator has already configured the provider settings-you just need to add your credentials to get started.
+作为团队成员，你可以把本地开发环境连接到组织的 LiteLLM proxy。本指南介绍如何在 VS Code 中配置连接，从而通过组织统一 proxy interface 使用多个 AI models。管理员已经完成 provider settings 配置，你只需要添加凭据即可开始。
 
-## Before You Begin
+## 开始之前
 
-To successfully connect to your organization's LiteLLM proxy, you'll need a few things ready.
+要成功连接组织的 LiteLLM proxy，需要先准备以下内容。
 
-**NBG installed and configured**
+**已安装并配置 NBG**
 
-NBG must be installed in VS Code and you need to be signed into your organization account. If you haven't installed NBG yet, follow our [installation guide](/getting-started/installing-cline).
+需要在 VS Code 中安装 NBG，并登录组织账号。如果尚未安装 NBG，请参考 [安装指南](/getting-started/installing-cline)。
 
 <Info>
-**Quick Check**: Open the NBG panel in VS Code. If you see your organization name in the bottom left, you're signed in correctly.
+**快速检查**：在 VS Code 中打开 NBG panel。如果左下角能看到组织名称，说明已经正确登录。
 </Info>
 
-**Access credentials for your organization's LiteLLM proxy**  
-You need credentials to access your organization's LiteLLM proxy. This might be an API key, or the proxy might be configured for open access within your network.
+**组织 LiteLLM proxy 的访问凭据**
+
+你需要凭据来访问组织的 LiteLLM proxy。这可能是 API key，也可能是组织网络内的 open access 配置。
 
 <Note>
-If you're unsure about the credentials needed, check with your administrator or IT team about how to access your organization's LiteLLM proxy.
+如果不确定需要哪些凭据，请向管理员或 IT 团队确认如何访问组织的 LiteLLM proxy。
 </Note>
 
-## Configuration Steps
+## 配置步骤
 
 <Steps>
-<Step title="Open NBG Settings">
-Open VS Code and access the NBG settings panel using either of these methods:
+<Step title="打开 NBG Settings">
+打开 VS Code，并使用以下任一方式进入 NBG settings panel：
 
-- Click the settings icon (⚙️) in the NBG panel
-- Click on the API Provider dropdown located directly below the chat area (it will display as `LiteLLM` or show a specific model name)
+- 点击 NBG panel 中的 settings icon
+- 点击聊天区域正下方的 API Provider dropdown，它会显示为 `LiteLLM` 或具体 model name
 
 </Step>
 
-<Step title="Configure LiteLLM Connection">
-The LiteLLM configuration options depend on how your organization has set up the proxy:
+<Step title="配置 LiteLLM 连接">
+LiteLLM 配置选项取决于组织如何设置 proxy：
 
 <AccordionGroup>
 <Accordion title="API Key Authentication">
-If your organization requires API key authentication:
+如果组织要求 API key authentication：
 
-1. Select or confirm the **LiteLLM** provider is selected
-2. Enter your assigned API key in the **API Key** field
-3. The base URL should already be configured by your administrator
-4. Click **Save** to store your credentials
+1. 选择或确认已选择 **LiteLLM** provider
+2. 在 **API Key** 字段中输入分配给你的 API key
+3. Base URL 应已由管理员配置
+4. 点击 **Save** 保存凭据
 
 <Tip>
-API keys are stored locally in VS Code and are only used by NBG.
+API keys 会保存在本地 VS Code 中，并且只由 NBG 使用。
 </Tip>
 </Accordion>
 
 <Accordion title="Open Access (No Authentication)">
-If your LiteLLM proxy is configured for open access within your network:
+如果 LiteLLM proxy 配置为组织网络内 open access：
 
-1. Select or confirm the **LiteLLM** provider is selected  
-2. Leave the API key field empty
-3. The extension will connect directly to the configured proxy endpoint
-4. No additional authentication is required
+1. 选择或确认已选择 **LiteLLM** provider
+2. 保持 API key 字段为空
+3. Extension 会直接连接已配置的 proxy endpoint
+4. 不需要额外 authentication
 
 <Info>
-Open access is common when the LiteLLM proxy is deployed within a secure network environment.
+当 LiteLLM proxy 部署在安全网络环境中时，open access 很常见。
 </Info>
 </Accordion>
 
 <Accordion title="Custom Configuration">
-If your organization uses custom authentication or specific connection parameters:
+如果组织使用 custom authentication 或特定 connection parameters：
 
-1. Follow any custom instructions provided by your administrator
-2. Contact your IT team if you encounter connection issues
-3. Additional configuration may be needed outside of VS Code
+1. 遵循管理员提供的 custom instructions
+2. 遇到连接问题时联系 IT 团队
+3. 可能需要在 VS Code 外完成额外配置
 
 <Note>
-Custom configurations might require specific network settings or additional authentication steps.
+Custom configurations 可能需要特定 network settings 或额外 authentication steps。
 </Note>
 </Accordion>
 </AccordionGroup>
 </Step>
 
-<Step title="Select Available Models">
-Once connected, you'll see the models available through your organization's LiteLLM proxy:
+<Step title="选择可用 Models">
+连接成功后，你会看到组织 LiteLLM proxy 提供的 models：
 
-- View available models in the model dropdown
-- Models are determined by your administrator's proxy configuration  
-- You can switch between models for different types of tasks
-- Some models may be restricted based on your access level
+- 在 model dropdown 中查看可用 models
+- Models 由管理员的 proxy configuration 决定
+- 可以针对不同类型任务切换 models
+- 部分 models 可能会根据访问级别受限
 
 <Tip>
-**Model Selection**
+**模型选择**
 
 Choose models based on your task requirements:
 - **Fast models** (like GPT-3.5-turbo) for quick responses
@@ -98,13 +99,13 @@ Choose models based on your task requirements:
 </Tip>
 </Step>
 
-<Step title="Test the Connection">
-Send a test message in NBG to verify your connection works correctly with the LiteLLM proxy.
+<Step title="测试连接">
+在 NBG 中发送一条测试消息，确认连接可以正确访问 LiteLLM proxy。
 
 <Tip>
-**Testing Recommendation**
+**测试建议**
 
-Test the connection in plan mode first to verify everything works correctly before using it for actual development tasks.
+在用于实际开发任务前，建议先在 plan mode 中测试连接，确认一切正常。
 </Tip>
 </Step>
 </Steps>
@@ -115,16 +116,19 @@ Test the connection in plan mode first to verify everything works correctly befo
 The models available through your LiteLLM proxy typically include:
 
 **Text Generation Models:**
+
 - OpenAI GPT-4, GPT-3.5-turbo variants
 - Anthropic Claude 3 Sonnet, Haiku, Opus
 - Open source models like Llama 2, Mistral
 
 **Code-Specific Models:**
+
 - OpenAI GPT-4 for code
 - CodeLlama variants
 - Specialized code completion models
 
 **Multimodal Models:**
+
 - GPT-4 Vision for image analysis
 - Claude 3 models with vision capabilities
 
@@ -132,38 +136,44 @@ The models available through your LiteLLM proxy typically include:
 Choose models based on your development needs:
 
 - **Quick iterations**: Use faster, cost-effective models
-- **Complex problems**: Use more powerful models  
+- **Complex problems**: Use more powerful models
 - **Code-heavy tasks**: Use code-specialized models
 - **Visual content**: Use multimodal models when working with images
 
 ## Troubleshooting
 
-**LiteLLM not available as provider option**  
+**LiteLLM not available as provider option**
+
 Confirm you're signed into the correct NBG organization. Verify your administrator has saved the LiteLLM configuration and that you have the latest version of NBG.
 
-**Connection errors or timeouts**  
+**Connection errors or timeouts**
+
 Verify your network can reach the LiteLLM proxy endpoint. Check with your IT team about firewall rules or VPN requirements. Ensure the proxy endpoint is accessible from your development environment.
 
-**Authentication failures**  
+**Authentication failures**
+
 If using API key authentication, verify the key is correctly entered and hasn't expired. Contact your administrator to confirm your key is active and has the proper permissions.
 
-**Models not loading or are limited**  
+**Models not loading or are limited**
+
 The available models depend on your organization's LiteLLM configuration. Contact your administrator if you need access to specific models or if expected models aren't available.
 
-**Slow response times**  
+**Slow response times**
+
 Response times depend on the models being used and proxy load. Try switching to faster models for routine tasks. Contact your administrator if performance is consistently poor.
 
-**Error messages from specific models**  
+**Error messages from specific models**
+
 Some models may be temporarily unavailable or have specific limitations. Try alternative models or contact your administrator if specific models are consistently failing.
 
-## Security Best Practices
+## 安全最佳实践
 
-When working with your organization's LiteLLM proxy:
+使用组织 LiteLLM proxy 时：
 
-- Keep your API credentials secure and don't share them
-- Use appropriate models for the sensitivity of your data  
-- Follow your organization's usage guidelines
-- Report any suspicious activity or unauthorized access attempts
-- Regularly update NBG for security patches
+- 妥善保管 API credentials，不要共享
+- 根据数据敏感度选择合适 models
+- 遵守组织使用规范
+- 报告任何可疑活动或未授权访问尝试
+- 定期更新 NBG 获取安全补丁
 
-Your organization administrator controls which models are available and usage policies. The extension will automatically display available models based on your proxy configuration and access level.
+组织管理员控制可用 models 和 usage policies。Extension 会根据 proxy configuration 和你的访问级别自动显示可用 models。

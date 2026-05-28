@@ -1,118 +1,124 @@
 ---
-title: "Configure OpenAI Compatible in NBG (Members)"
-sidebarTitle: "Configure OpenAI Compatible (Member)"
-description: "Guide for engineers connecting to their organization's OpenAI-compatible endpoint through VS Code after admin setup"
+title: "在 NBG 中配置 OpenAI Compatible（成员）"
+sidebarTitle: "配置 OpenAI Compatible（成员）"
+description: "管理员完成设置后，工程师在 VS Code 中连接组织 OpenAI-compatible endpoint 的指南"
 ---
 
-As a team member, you can connect your local development environment to your organization's OpenAI-compatible endpoint. This guide walks you through configuring your credentials in VS Code so you can start using models through your organization's configured endpoint. Your administrator has already configured the provider settings — you just need to add your API key to get started.
+作为团队成员，你可以把本地开发环境连接到组织的 OpenAI-compatible endpoint。本指南介绍如何在 VS Code 中配置凭据，从而通过组织配置好的 endpoint 使用模型。管理员已经完成 provider settings 配置，你只需要添加 API key 即可开始。
 
-## Before You Begin
+## 开始之前
 
-To successfully connect to your organization's OpenAI-compatible endpoint, you'll need a few things ready.
+要成功连接组织的 OpenAI-compatible endpoint，需要先准备以下内容。
 
-**NBG installed and configured**
+**已安装并配置 NBG**
 
-NBG must be installed in VS Code and you need to be signed into your organization account. If you haven't installed NBG yet, follow our [installation guide](/getting-started/installing-cline).
+需要在 VS Code 中安装 NBG，并登录组织账号。如果尚未安装 NBG，请参考 [安装指南](/getting-started/installing-cline)。
 
 <Info>
-**Quick Check**: Open the NBG panel in VS Code. If you see your organization name in the bottom left, you're signed in correctly.
+**快速检查**：在 VS Code 中打开 NBG panel。如果左下角能看到组织名称，说明已经正确登录。
 </Info>
 
-**API key or credentials for your endpoint**  
-You need an API key or credentials to authenticate with your organization's configured endpoint. For Azure Foundry deployments using Azure Identity Authentication, your Azure AD credentials may be used instead.
+**Endpoint 的 API key 或凭据**
+
+你需要 API key 或其他凭据来认证组织配置的 endpoint。对于使用 Azure Identity Authentication 的 Azure Foundry deployments，也可以改用 Azure AD credentials。
 
 <Note>
-If you're unsure what credentials to use, check with your administrator or IT team about how your organization has configured access.
+如果不确定应该使用哪些凭据，请向管理员或 IT 团队确认组织的访问配置。
 </Note>
 
-## Configuration Steps
+## 配置步骤
 
 <Steps>
-<Step title="Open NBG Settings">
-Open VS Code and access the NBG settings panel using either of these methods:
+<Step title="打开 NBG Settings">
+打开 VS Code，并使用以下任一方式进入 NBG settings panel：
 
-- Click the settings icon (⚙️) in the NBG panel
-- Click on the API Provider dropdown located directly below the chat area
+- 点击 NBG panel 中的 settings icon
+- 点击聊天区域正下方的 API Provider dropdown
 
 </Step>
 
-<Step title="Configure Your Credentials">
-The authentication method depends on how your administrator configured the endpoint:
+<Step title="配置凭据">
+认证方式取决于管理员如何配置 endpoint：
 
 <AccordionGroup>
 <Accordion title="API Key Authentication">
-For most OpenAI-compatible endpoints:
+对于大多数 OpenAI-compatible endpoints：
 
-1. Select or confirm the **OpenAI Compatible** provider is selected
-2. Enter your API key in the **API Key** field
-3. The base URL, custom headers, and other settings are preconfigured by your administrator
-4. Click **Save** to store your credentials
+1. 选择或确认已选择 **OpenAI Compatible** provider
+2. 在 **API Key** 字段中输入 API key
+3. Base URL、custom headers 和其他 settings 已由管理员预先配置
+4. 点击 **Save** 保存凭据
 
 <Tip>
-API keys are stored locally and are only used by NBG.
+API keys 会保存在本地，并且只由 NBG 使用。
 </Tip>
 </Accordion>
 
 <Accordion title="Azure Identity Authentication (Azure Foundry)">
-If your organization uses Azure AD authentication:
+如果组织使用 Azure AD authentication：
 
-1. Select or confirm the **OpenAI Compatible** provider is selected
-2. Ensure you are signed into Azure in your development environment
-3. The extension will use your Azure AD credentials automatically
-4. No API key is needed when Azure Identity Authentication is enabled
+1. 选择或确认已选择 **OpenAI Compatible** provider
+2. 确认开发环境中已经登录 Azure
+3. Extension 会自动使用 Azure AD credentials
+4. 启用 Azure Identity Authentication 时不需要 API key
 
 <Note>
-You may need the Azure Account extension or Azure CLI installed for credential resolution.
+可能需要安装 Azure Account extension 或 Azure CLI 才能解析凭据。
 </Note>
 </Accordion>
 </AccordionGroup>
 
 <Note>
-The Base URL, custom headers, Azure API version, and Azure Identity settings are preconfigured by your administrator and do not need to be set in the extension.
+Base URL、custom headers、Azure API version 和 Azure Identity settings 已由管理员预先配置，不需要在 extension 中设置。
 </Note>
 </Step>
 
-<Step title="Verify Configuration">
-After configuring your credentials, administrator-controlled settings will be locked (shown with a lock icon 🔒) as they're managed by your organization.
+<Step title="验证配置">
+配置凭据后，管理员控制的 settings 会被锁定（显示 lock icon），因为它们由组织统一管理。
 </Step>
 
-<Step title="Test the Connection">
-Send a test message in NBG to verify your credentials work correctly with the configured endpoint.
+<Step title="测试连接">
+在 NBG 中发送一条测试消息，确认凭据可以正确访问已配置的 endpoint。
 
 <Tip>
-**Testing Recommendation**
+**测试建议**
 
-Try a simple test like "Hello" first to verify basic connectivity before starting development tasks.
+开始开发任务前，先用类似 `Hello` 的简单消息验证基础连接。
 </Tip>
 </Step>
 </Steps>
 
 ## Troubleshooting
 
-**OpenAI Compatible not available as provider option**  
-Confirm you're signed into the correct NBG organization. Verify your administrator has saved the configuration and that you have the latest version of NBG.
+**OpenAI Compatible 未出现在 provider options 中**
 
-**Authentication errors ("Access Denied" or "Invalid API Key")**  
-Verify your API key is correct and active. For Azure Foundry with Azure Identity Authentication, ensure you are signed into Azure in your development environment and that your account has the appropriate role assignments on the Azure OpenAI resource.
+确认你登录了正确的 NBG organization。请管理员确认配置已保存，并确保你使用的是最新版本 NBG。
 
-**Connection errors or timeouts**  
-The endpoint URL is configured by your administrator. If you experience connection issues, check with your IT team about network requirements (VPN, firewall rules, etc.).
+**Authentication errors（`Access Denied` 或 `Invalid API Key`）**
 
-**Models not available**  
-The available models depend on your organization's endpoint configuration. Contact your administrator if expected models are not available in the model dropdown.
+确认 API key 正确且仍然有效。对于使用 Azure Identity Authentication 的 Azure Foundry，请确认开发环境已经登录 Azure，且账号在 Azure OpenAI resource 上拥有合适的 role assignments。
 
-**Configuration changes don't persist**  
-Make sure to save your credentials. The base URL and other admin-controlled settings cannot be changed locally.
+**Connection errors 或 timeouts**
 
-## Security Best Practices
+Endpoint URL 由管理员配置。如果遇到连接问题，请向 IT 团队确认网络要求，例如 VPN、firewall rules 等。
 
-When working with your API credentials:
+**Models 不可用**
 
-- Keep your API key secure and do not share it
-- Never store credentials in code or version control
-- Report any suspected key compromise to your administrator immediately
-- Follow your organization's usage guidelines for the configured endpoint
+可用 models 取决于组织的 endpoint 配置。如果 model dropdown 中缺少预期模型，请联系管理员。
 
-Your organization administrator controls which endpoint, models, and settings are available. The extension will automatically apply the configured settings based on your organization's remote configuration.
+**Configuration changes 没有保存**
 
-For Azure Foundry, refer to the [Azure OpenAI Service documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/). For other endpoints, consult your organization's internal documentation or contact your administrator.
+确认已经保存凭据。Base URL 和其他管理员控制的 settings 不能在本地修改。
+
+## 安全最佳实践
+
+使用 API credentials 时：
+
+- 妥善保管 API key，不要共享
+- 不要把凭据存入代码或版本控制
+- 如果怀疑 key 泄露，立即报告管理员
+- 遵守组织对该 endpoint 的使用规范
+
+组织管理员控制可用的 endpoint、models 和 settings。Extension 会根据组织 remote configuration 自动应用这些设置。
+
+Azure Foundry 相关信息见 [Azure OpenAI Service documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/)。其他 endpoints 请参考组织内部文档或联系管理员。

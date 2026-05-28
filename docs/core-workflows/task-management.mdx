@@ -1,93 +1,94 @@
 ---
 title: "Tasks"
 sidebarTitle: "Tasks"
-description: "Organize your work with tasks - self-contained sessions that capture your conversations, code changes, and decisions."
+description: "用 tasks 组织工作；每个 task 都是保存对话、代码变更和决策的独立 session。"
 ---
 
-Every interaction with NBG happens within a task. Tasks are self-contained work sessions that capture your entire conversation, code changes, command executions, and decisions.
+你与 NBG 的每次交互都发生在 task 中。Tasks 是独立 work sessions，会记录完整对话、代码变更、命令执行和决策。
 
-## What are Tasks?
+## 什么是 Tasks？
 
-A task begins when you submit a prompt to NBG. Your prompt defines the goal, and NBG works toward it through conversation, code changes, and tool use. The quality of your initial prompt directly affects how well NBG performs - clear, specific prompts lead to better results.
+当你向 NBG 提交 prompt 时，一个 task 就开始了。Prompt 定义目标，NBG 会通过对话、代码变更和 tool use 朝目标推进。初始 prompt 的质量会直接影响 NBG 的表现；清晰、具体的 prompts 通常带来更好的结果。
 
-Each task:
+每个 task 都会：
 
-- Starts with your prompt and builds context through the conversation
-- Has a unique identifier and dedicated storage directory
-- Contains the full conversation history
-- Tracks token usage, API costs, and execution time
-- Can be interrupted and resumed across sessions
-- Creates [checkpoints](/core-workflows/checkpoints) for file changes through Git-based snapshots
+- 从你的 prompt 开始，并在对话中逐步构建上下文
+- 拥有唯一 identifier 和专用 storage directory
+- 保存完整 conversation history
+- 跟踪 token usage、API costs 和 execution time
+- 可以跨 sessions 中断和恢复
+- 通过 Git-based snapshots 为文件变更创建 [checkpoints](/core-workflows/checkpoints)
 
 <Tip>
-Want to get better results from NBG? Start with clear, scoped tasks and keep unrelated work in separate conversations.
+想让 NBG 给出更好的结果？从清晰、范围明确的 tasks 开始，并把无关工作放到独立对话中。
 </Tip>
 
-## Scoping Your Tasks
+## 设定 Task 范围
 
-Each task carries its own context: the conversation history, decisions made, and understanding built up over the session. How you scope your tasks directly affects how well NBG can help you.
+每个 task 都带有自己的上下文：conversation history、已经做出的 decisions，以及 session 中逐步建立的理解。Task 范围会直接影响 NBG 的帮助质量。
 
-Think of it this way: **one task = one goal**. "Implement user authentication" is one task. "Fix an unrelated CSS bug" is a separate task, even if you notice it while working on auth.
+可以按这个原则理解：**一个 task = 一个目标**。`Implement user authentication` 是一个 task。`Fix an unrelated CSS bug` 是另一个 task，即使你是在处理 auth 时发现了这个 CSS bug。
 
-A focused task produces better results. When a task tries to cover too many unrelated goals, the context becomes cluttered and responses become less relevant.
+聚焦的 task 通常效果更好。当一个 task 试图覆盖太多无关目标时，上下文会变得混乱，响应相关性也会下降。
 
 <Note>
-If you're unsure, err on the side of starting fresh. You can always find previous sessions in your task history.
+如果不确定，优先新建 task。你始终可以在 task history 中找到之前的 sessions。
 </Note>
 
 ### Context Window
 
-Every AI model has a context window - a limit on how much information it can process at once. Think of it as NBG's working memory for the current task.
+每个 AI model 都有 context window，也就是一次能处理的信息上限。可以把它理解为 NBG 当前 task 的 working memory。
 
-As you work, the context window fills up with:
-- Your prompts and NBG's responses
-- File contents NBG reads or edits
-- Command outputs and tool results
-- System instructions that guide NBG's behavior (including [NBG Rules](/customization/cline-rules))
+随着工作推进，context window 会逐渐填入：
 
-When the context window approaches its limit, NBG automatically compresses older parts of the conversation to make room. This means very long tasks may lose some earlier details, though NBG preserves the most important context.
+- 你的 prompts 和 NBG 的 responses
+- NBG 读取或编辑的文件内容
+- Command outputs 和 tool results
+- 指导 NBG 行为的 system instructions，包括 [NBG Rules](/customization/cline-rules)
 
-This is why task scoping matters: a focused task keeps relevant information in the context window. A sprawling task fills the window with noise, pushing out useful context.
+当 context window 接近上限时，NBG 会自动压缩较早的对话内容来腾出空间。这意味着很长的 tasks 可能会丢失一些早期细节，但 NBG 会保留最重要的上下文。
 
-If your starting context seems high even for simple prompts, add a [`.clineignore`](/customization/clineignore) file to exclude dependencies, build artifacts, and other files NBG doesn't need. This compatibility file can dramatically reduce your baseline token usage.
+这就是 task scoping 重要的原因：聚焦 task 会把相关信息留在 context window 中；范围过大的 task 会用噪声填满窗口，把有用上下文挤出去。
+
+如果简单 prompts 的起始上下文也很高，可以添加 [`.clineignore`](/customization/clineignore) 文件，排除依赖、构建产物和其他 NBG 不需要的文件。这个兼容文件能显著降低 baseline token usage。
 
 <Tip>
-For long-running tasks, enable [Auto-Compact](/features/auto-compact) to intelligently manage context as you work.
+对于 long-running tasks，可以启用 [Auto-Compact](/features/auto-compact)，让 NBG 在工作过程中智能管理上下文。
 </Tip>
 
 ### New Task vs. Continue
 
-Knowing when to start fresh versus continue can feel unclear at first. As you work with NBG more, you'll develop an intuition for it. Use this table as a starting point:
+一开始可能不容易判断何时新建 task、何时继续。随着使用 NBG 增多，你会逐渐形成判断。可以先参考这张表：
 
-| Scenario | Action | Why |
+| 场景 | 动作 | 原因 |
 |----------|--------|-----|
-| Switching to a different feature | **New task** | Clean context, focused responses |
-| Building on work NBG just completed | **Continue** | Shared understanding preserved |
-| NBG keeps going off-track | **New task** | Fighting context wastes time |
-| Iterating on the same files | **Continue** | Conversation history helps |
-| Explaining what to ignore | **New task** | Cluttered context hurts quality |
-| Refining NBG's last output | **Continue** | Momentum and decisions preserved |
+| 切换到不同 feature | **New task** | 上下文干净，响应更聚焦 |
+| 基于 NBG 刚完成的工作继续 | **Continue** | 保留 shared understanding |
+| NBG 持续偏离方向 | **New task** | 继续对抗混乱上下文会浪费时间 |
+| 围绕同一批文件迭代 | **Continue** | Conversation history 有帮助 |
+| 反复解释哪些内容要忽略 | **New task** | 混乱上下文会降低质量 |
+| 细化 NBG 上一次输出 | **Continue** | 保留 momentum 和 decisions |
 
-To start a new task, click the **+** button in the NBG sidebar or use the `/newtask` command. Your file changes are preserved through [checkpoints](/core-workflows/checkpoints), and you can reference previous tasks from history anytime.
+要开始新 task，可以点击 NBG sidebar 中的 **+** 按钮，或使用 `/newtask` command。文件变更会通过 [checkpoints](/core-workflows/checkpoints) 保留，你也可以随时从 history 引用之前的 tasks。
 
-## Understanding Task Costs
+## 理解 Task 成本
 
-Every cloud-based AI model charges for usage based on tokens, the units of text the model processes. NBG tracks these costs automatically and displays them in the task header so you can monitor spending as you work.
+所有 cloud-based AI models 都按 tokens 收费，tokens 是模型处理文本的计量单位。NBG 会自动跟踪这些成本，并显示在 task header 中，方便你在工作时监控花费。
 
 ### How Costs Are Calculated
 
-When you interact with NBG, the model processes:
+与 NBG 交互时，模型会处理：
 
-- **Input tokens**: Your prompts, file contents, conversation history, and system instructions
-- **Output tokens**: The model's responses, code suggestions, and tool calls
+- **Input tokens**：你的 prompts、文件内容、conversation history 和 system instructions
+- **Output tokens**：模型 responses、code suggestions 和 tool calls
 
-Cloud providers charge per million tokens, with output tokens typically costing more than input. Some providers also support **prompt caching**, which reduces costs when the same context (like your NBG rules or large files) appears in multiple requests. NBG automatically tracks cache savings when available.
+Cloud providers 通常按每百万 tokens 收费，output tokens 往往比 input 更贵。一些 providers 还支持 **prompt caching**，当相同上下文（如 NBG rules 或大文件）出现在多个请求中时可以降低成本。可用时，NBG 会自动跟踪 cache savings。
 
-The estimated cost shown in the task header updates after each API request. This estimate uses the pricing information from your selected provider and may vary slightly from your final bill depending on how your provider rounds or bills usage.
+Task header 中显示的 estimated cost 会在每次 API request 后更新。该估算使用所选 provider 的 pricing 信息，最终账单可能因 provider 的取整或计费方式略有差异。
 
 ### When You Pay
 
-You pay for AI usage when using cloud providers like Anthropic, OpenAI, OpenRouter, or Google. Costs vary significantly:
+使用 Anthropic、OpenAI、OpenRouter 或 Google 等 cloud providers 时，需要为 AI usage 付费。成本差异可能很大：
 
 | Provider Type | Billing Model |
 |--------------|---------------|
@@ -96,65 +97,66 @@ You pay for AI usage when using cloud providers like Anthropic, OpenAI, OpenRout
 | **OpenRouter/Requesty** | Aggregated billing across multiple models |
 | **Local models** | Free (you provide the hardware) |
 
-If you're using your own API keys, check your provider's pricing page for current rates. Prices change frequently and vary by model.
+如果使用自己的 API keys，请查看 provider pricing page 获取当前价格。价格会频繁变化，并且因 model 而异。
 
 ### Free Options
 
-Not ready to pay? NBG supports several lower-cost paths:
+暂时不想付费？NBG 支持几种低成本路径：
 
-- **Free models**: Search "free" in the model selector when using a compatible managed provider. These models display a **FREE** tag when available and work well for learning and experimentation.
-- **Free tiers**: Some providers offer limited free usage when you use your own API key.
-- **Local models**: Run models on your own hardware with zero per-request costs.
+- **Free models**：使用兼容 managed provider 时，在 model selector 中搜索 `free`。可用模型会显示 **FREE** 标签，适合学习和实验。
+- **Free tiers**：一些 providers 在使用自有 API key 时提供有限免费额度。
+- **Local models**：在自己的硬件上运行模型，没有按请求计费。
 
 ### Self-Hosted Models
 
-Running models locally means no API costs, ever. Your only expense is the hardware to run them.
+本地运行模型意味着没有 API 成本，唯一成本是运行模型所需的硬件。
 
-To run local models effectively, you need:
+要有效运行 local models，通常需要：
 
 - **32GB RAM minimum** for entry-level models (4-bit quantization)
 - **64GB RAM** for better quality (8-bit quantization)
 - **128GB+ RAM** for cloud-competitive performance
 
-The trade-off is speed. Local models run at 5-20 tokens per second on typical hardware, compared to hundreds of tokens per second from cloud APIs. They also require more setup and configuration.
+代价是速度。Local models 在常见硬件上通常每秒 5-20 tokens，而 cloud APIs 往往能达到每秒数百 tokens。Local models 也需要更多 setup 和 configuration。
 
 <Tip>
-If you have the hardware, local models offer unlimited experimentation with complete privacy. See [Running Models Locally](/running-models-locally/overview) to get started.
+如果你有合适硬件，local models 可以提供完全隐私下的无限实验。入门见 [Running Models Locally](/running-models-locally/overview)。
 </Tip>
 
-For most users, starting with free cloud models and moving to paid options as needed provides the best balance of cost, speed, and capability. Check [Selecting Your Model](/getting-started/authorizing-with-cline) for guidance on choosing the right option for your workflow.
+对大多数用户来说，先从 free cloud models 开始，再按需转向付费选项，通常能在成本、速度和能力之间取得更好平衡。如何选择适合工作流的模型，见 [认证与模型选择](/getting-started/authorizing-with-cline)。
 
 
 ## Task History
 
-Every task you work on is saved automatically to your local machine. You can revisit past conversations, resume interrupted work, or reference successful approaches from earlier sessions.
+每个 task 都会自动保存到本机。你可以重新查看过去的 conversations、恢复中断的工作，或引用之前 sessions 中成功的方法。
 
 ### Finding Your History
 
-Click the **History** button in the NBG sidebar (clock icon at the top-right) to open the history view. You'll see all your past tasks with their initial prompt, timestamp, and token usage. Each task card expands to show a preview of the conversation.
+点击 NBG sidebar 中的 **History** 按钮（右上角 clock icon）打开 history view。你会看到所有历史 tasks，包括 initial prompt、timestamp 和 token usage。展开 task card 可以预览 conversation。
 
 ### Searching Tasks
 
-Use the search bar at the top of the history view to find specific tasks. The fuzzy search looks across everything: your prompts, NBG's responses, code snippets, and file names.
+使用 history view 顶部的 search bar 查找特定 tasks。Fuzzy search 会搜索所有内容：你的 prompts、NBG responses、code snippets 和 file names。
 
-Sort results by:
-- **Newest/Oldest** for chronological browsing
-- **Most Expensive/Most Tokens** to find resource-heavy tasks
-- **Most Relevant** when searching for specific content
-- **Favorites** to show only starred tasks
+可以按以下方式排序：
+
+- **Newest/Oldest**：按时间浏览
+- **Most Expensive/Most Tokens**：查找资源消耗高的 tasks
+- **Most Relevant**：搜索特定内容时使用
+- **Favorites**：只显示 starred tasks
 
 <Tip>
-Use favorites strategically. Star tasks that represent successful patterns, good prompts, or complex work you might want to reference later. Favorited tasks are protected from deletion.
+可以策略性使用 favorites。将代表成功模式、好 prompts 或以后可能引用的复杂工作的 tasks 标星。Favorited tasks 会受到保护，不会被删除。
 </Tip>
 
 ## Resuming Tasks
 
-NBG can resume interrupted tasks with full context:
+NBG 可以带着完整上下文恢复中断的 tasks：
 
-1. Open the task from history
-2. NBG loads the complete conversation
-3. File states are checked against [checkpoints](/core-workflows/checkpoints)
-4. The task continues with awareness of the interruption
-5. Provide additional context if needed
+1. 从 history 打开 task
+2. NBG 加载完整 conversation
+3. 根据 [checkpoints](/core-workflows/checkpoints) 检查 file states
+4. Task 会在理解中断位置的情况下继续
+5. 如有需要，提供额外上下文
 
-This works across sessions. Even if you close the editor and return days later, NBG can pick up where you left off.
+这可以跨 sessions 工作。即使关闭编辑器并在几天后回来，NBG 也能从离开的地方继续。

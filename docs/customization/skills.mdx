@@ -1,42 +1,42 @@
 ---
 title: "Skills"
 sidebarTitle: "Skills"
-description: "Modular instruction sets that extend NBG's capabilities for specific tasks."
+description: "用于特定任务的模块化指令集，用来扩展 NBG 能力。"
 ---
 
-Skills are modular instruction sets that extend NBG's capabilities for specific tasks. Each skill packages detailed guidance, processes, and optional resources that NBG loads only when relevant to your request.
+Skills 是用于特定任务的模块化指令集，用来扩展 NBG 能力。每个 skill 都可以打包详细指导、流程和可选资源，NBG 只会在与你的请求相关时加载它们。
 
-Install multiple skills and NBG only loads what it needs. A deployment skill stays dormant until you ask about deploying. Unlike [rules](/customization/cline-rules) (which are always active), skills load on-demand so they don't consume context when you're working on something unrelated.
+可以安装多个 skills，NBG 只加载当前需要的内容。部署 skill 会保持休眠，直到你提出部署相关请求。不同于始终生效的 [rules](/customization/cline-rules)，skills 按需加载，因此处理无关任务时不会占用上下文。
 
 <Note>
-Skills is an experimental feature. Enable it in **Settings → Features → Enable Skills**.
+Skills 是实验性功能。可在 **Settings → Features → Enable Skills** 中启用。
 </Note>
 
-## How Skills Work
+## Skills 如何工作
 
-Skills use progressive loading to maximize efficiency:
+Skills 使用 progressive loading 来提高效率：
 
-| Level | When Loaded | Token Cost | Content |
+| 层级 | 加载时机 | Token 成本 | 内容 |
 |-------|-------------|------------|---------|
-| Metadata | Always (at startup) | ~100 tokens per skill | `name` and `description` from YAML frontmatter |
-| Instructions | When skill is triggered | Under 5k tokens | SKILL.md body with instructions and guidance |
-| Resources | As needed | Effectively unlimited | Bundled files accessed via `read_file` or executed scripts |
+| Metadata | 始终加载（启动时） | 每个 skill 约 100 tokens | YAML frontmatter 中的 `name` 和 `description` |
+| Instructions | Skill 被触发时 | 低于 5k tokens | `SKILL.md` 正文中的说明和指导 |
+| Resources | 按需加载 | 实际上不受限制 | 通过 `read_file` 访问的 bundled files 或可执行 scripts |
 
-When you send a message, NBG sees a list of available skills with their descriptions. If your request matches a skill's description, NBG activates it using the `use_skill` tool, which loads the full instructions from SKILL.md.
+发送消息时，NBG 会看到可用 skills 及其 descriptions。如果请求匹配某个 skill 的 description，NBG 会使用 `use_skill` tool 激活它，并从 `SKILL.md` 加载完整 instructions。
 
-## Triggering Skills with Slash Commands
+## 用 Slash Commands 触发 Skills
 
-You can also invoke enabled skills explicitly from the chat input using slash commands.
+也可以在聊天输入框中使用 slash commands 显式调用已启用的 skills。
 
-1. Type `/` in chat to open command suggestions.
-2. Select the skill command you want to run (for example, `/aws-deploy`).
-3. NBG triggers that skill and loads its `SKILL.md` instructions.
+1. 在聊天中输入 `/` 打开 command suggestions。
+2. 选择要运行的 skill command，例如 `/aws-deploy`。
+3. NBG 会触发该 skill，并加载它的 `SKILL.md` instructions。
 
-This is useful when you want to force a specific skill immediately instead of waiting for auto-matching based on description.
+当你希望立即强制使用某个 skill，而不是等待基于 description 的自动匹配时，这很有用。
 
-## Skill Structure
+## Skill 结构
 
-Every skill is a directory containing a `SKILL.md` file with YAML frontmatter.
+每个 skill 都是一个目录，其中包含带 YAML frontmatter 的 `SKILL.md` 文件。
 
 ```text title="Skill directory structure"
 my-skill/
@@ -47,7 +47,7 @@ my-skill/
     └── helper.sh
 ```
 
-The `SKILL.md` file has two parts: metadata and instructions.
+`SKILL.md` 文件包含两部分：metadata 和 instructions。
 
 ```markdown title="SKILL.md"
 ---
@@ -65,60 +65,61 @@ Detailed instructions for NBG to follow when this skill is activated.
 3. For advanced usage, see [advanced.md](docs/advanced.md)
 ```
 
-Required fields:
-- `name` must exactly match the directory name
-- `description` tells NBG when to use this skill (max 1024 characters)
+必填字段：
 
-## Creating a Skill
+- `name` 必须与目录名完全一致
+- `description` 告诉 NBG 何时使用该 skill，最多 1024 个字符
+
+## 创建 Skill
 
 <Steps>
-  <Step title="Open the Skills menu">
-    Click the scale icon at the bottom of the NBG panel, to the left of the model selector. Switch to the Skills tab.
+  <Step title="打开 Skills menu">
+    点击 NBG panel 底部、model selector 左侧的 scale icon。切换到 Skills tab。
   </Step>
-  <Step title="Create a new skill">
-    Click "New skill..." and enter a name for your skill (e.g., `aws-deploy`). NBG creates a skill directory with a template `SKILL.md` file.
+  <Step title="创建新 skill">
+    点击 **New skill...** 并输入 skill 名称，例如 `aws-deploy`。NBG 会创建 skill directory，并生成 template `SKILL.md` 文件。
   </Step>
-  <Step title="Write your skill instructions">
-    Edit the `SKILL.md` file:
-    - Update the `description` field to specify when this skill should trigger
-    - Add detailed instructions in the body
-    - Optionally add supporting files in `docs/`, `templates/`, or `scripts/` subdirectories
+  <Step title="编写 skill instructions">
+    编辑 `SKILL.md` 文件：
+    - 更新 `description` 字段，说明该 skill 何时应该触发
+    - 在正文中添加详细 instructions
+    - 可选地在 `docs/`、`templates/` 或 `scripts/` 子目录中添加 supporting files
   </Step>
 </Steps>
 
-You can also create skills manually by creating the directory structure in your file system. Place skill directories in the compatible `.cline/skills/` workspace path or `~/.cline/skills/` global path, and NBG will detect them automatically.
+也可以在文件系统中手动创建目录结构来创建 skills。将 skill directories 放到兼容的 workspace 路径 `.cline/skills/` 或 global 路径 `~/.cline/skills/` 中，NBG 会自动检测。
 
-Put the important information first in your SKILL.md. NBG reads the file sequentially, so front-load the common cases. Use clear section headers like "## Error Handling" or "## Configuration" so NBG can scan for relevant sections.
+把重要信息放在 `SKILL.md` 前面。NBG 会按顺序读取文件，因此常见场景应尽量前置。使用清晰的 section headers，例如 `## Error Handling` 或 `## Configuration`，便于 NBG 快速定位相关部分。
 
-### Toggling Skills
+### 启用或禁用 Skills
 
-Every skill has a toggle to enable or disable it. This lets you control which skills are active without deleting the skill directory. Skills are enabled by default when discovered.
+每个 skill 都有一个 toggle，用于启用或禁用。这样可以在不删除 skill directory 的情况下控制哪些 skills 生效。Skills 被发现后默认启用。
 
-For example, you might disable a CI/CD skill when working on local development, or enable a client-specific skill only when working on that client's project.
+例如，本地开发时可以禁用 CI/CD skill；只在处理特定客户项目时启用 client-specific skill。
 
-## Writing Your SKILL.md
+## 编写 SKILL.md
 
-### Naming Conventions
+### 命名约定
 
-The skill name appears in the `name` field and must match the directory name exactly. Use lowercase with hyphens (kebab-case) and be descriptive about what the skill does.
+Skill 名称出现在 `name` 字段中，必须与目录名完全一致。使用带连字符的小写形式（kebab-case），并清楚描述该 skill 的用途。
 
-Good names:
+好的名称：
 - `aws-cdk-deploy`
 - `pr-review-checklist`
 - `database-migration`
 - `api-client-generator`
 
-Avoid:
-- `aws` (too vague)
-- `my_skill` (underscores, not descriptive)
-- `DeployToAWS` (use kebab-case, not PascalCase)
-- `misc-helpers` (too generic)
+避免：
+- `aws`（太模糊）
+- `my_skill`（使用下划线，且描述性不足）
+- `DeployToAWS`（应使用 kebab-case，而不是 PascalCase）
+- `misc-helpers`（太泛化）
 
-### Writing Effective Descriptions
+### 编写有效 Descriptions
 
-The description determines when NBG activates the skill. A vague description means the skill won't trigger when you expect it to.
+`description` 决定 NBG 何时激活 skill。描述模糊时，skill 可能不会在你期望的时机触发。
 
-Good descriptions are specific and actionable:
+好的 descriptions 应该具体且可执行：
 
 ```yaml
 description: Deploy applications to AWS using CDK. Use when deploying, updating infrastructure, or managing AWS resources.
@@ -128,7 +129,7 @@ description: Generate release notes from git commits. Use when preparing release
 description: Analyze CSV and Excel data files. Use when exploring datasets, generating statistics, or creating visualizations from tabular data.
 ```
 
-Weak descriptions leave too much ambiguity:
+弱 descriptions 会留下太多歧义：
 
 ```yaml
 description: Helps with AWS stuff.
@@ -138,34 +139,34 @@ description: Data analysis helper.
 description: Useful for releases.
 ```
 
-Start with what the skill does (action verbs), include trigger phrases users might say, and mention specific file types, tools, or domains. Test your descriptions by trying different phrasings of requests to see if the skill triggers.
+先说明 skill 做什么，尽量使用动作动词；加入用户可能使用的 trigger phrases，并提到具体 file types、tools 或 domains。可以用不同请求措辞测试 descriptions，确认 skill 会按预期触发。
 
-### Keeping Skills Focused
+### 保持 Skills 聚焦
 
-Keep SKILL.md under 5k tokens. If your skill needs more content, split it into separate files in a `docs/` directory and reference them from the main instructions. NBG loads referenced files only when needed.
+尽量让 `SKILL.md` 低于 5k tokens。如果 skill 需要更多内容，把它们拆到 `docs/` 目录中的独立文件，并从主 instructions 引用。NBG 只会在需要时加载被引用文件。
 
-Include real examples. Show what commands to run, what output to expect, and what the result should look like. Abstract instructions are harder to follow than concrete examples.
+加入真实示例。展示要运行的命令、预期输出和结果形态。相比抽象说明，具体示例更容易执行。
 
-## Where Skills Live
+## Skills 存放位置
 
-Skills can be stored globally or in a project workspace. See [Storage Locations](/getting-started/config#storage-locations) for guidance on when to use each.
+Skills 可以全局存放，也可以放在 project workspace 中。不同位置的使用建议见 [Storage Locations](/getting-started/config#storage-locations)。
 
-Project skills:
+Project skills：
 - `.cline/skills/` (recommended)
 - `.clinerules/skills/`
 - `.claude/skills/`
 
-Global skills:
+Global skills：
 - `~/.cline/skills/` (macOS/Linux)
 - `C:\Users\USERNAME\.cline\skills\` (Windows)
 
-When a global skill and project skill have the same name, the global skill takes precedence. This lets you keep general-purpose skills globally while using project-specific skills in the compatible `.cline/skills/` path so the whole team can use them.
+当 global skill 和 project skill 同名时，global skill 优先。这让你可以把通用 skills 放在全局，同时把 project-specific skills 放在兼容的 `.cline/skills/` 路径中，供整个团队使用。
 
-Version control your project skills by committing `.cline/skills/`. Your team can share, review, and improve them together.
+通过提交 `.cline/skills/` 来对 project skills 做版本控制。团队可以共同共享、review 和改进这些 skills。
 
-## Bundling Supporting Files
+## 打包 Supporting Files
 
-Skills can include additional files that NBG accesses only when needed.
+Skills 可以包含额外文件，NBG 只在需要时访问。
 
 ```text title="Directory structure"
 complex-skill/
@@ -181,36 +182,39 @@ complex-skill/
 
 ### docs/
 
-Use docs for information that's too detailed for SKILL.md or only relevant in specific situations:
+使用 `docs/` 存放过于详细、不适合放进 `SKILL.md`，或只在特定场景相关的信息：
+
 - Advanced configuration options
-- Troubleshooting guides for edge cases
-- Reference material (API schemas, database schemas)
+- Edge cases 的 troubleshooting guides
+- Reference material，例如 API schemas、database schemas
 - Platform-specific instructions
 
-A deployment skill might have `docs/aws.md`, `docs/gcp.md`, and `docs/azure.md`. NBG loads only the relevant platform guide based on your request.
+部署 skill 可以包含 `docs/aws.md`、`docs/gcp.md` 和 `docs/azure.md`。NBG 会根据你的请求只加载相关平台指南。
 
 ### templates/
 
-Use templates when your skill creates configuration files, boilerplate code, or structured documents:
-- Config files (Terraform, Docker Compose, CI/CD pipelines)
-- Code scaffolding (component templates, test fixtures)
-- Documentation templates (README, API docs)
+当 skill 需要创建 configuration files、boilerplate code 或 structured documents 时，使用 `templates/`：
 
-A project setup skill could include `templates/dockerfile`, `templates/docker-compose.yml`, and `templates/.env.example` that NBG customizes for each new project.
+- Config files，例如 Terraform、Docker Compose、CI/CD pipelines
+- Code scaffolding，例如 component templates、test fixtures
+- Documentation templates，例如 README、API docs
+
+项目初始化 skill 可以包含 `templates/dockerfile`、`templates/docker-compose.yml` 和 `templates/.env.example`，由 NBG 按每个新项目定制。
 
 ### scripts/
 
-Use scripts for deterministic operations where you want consistent behavior:
-- Validation (linting configs, checking prerequisites)
-- Data processing (parsing, formatting, transforming)
-- Complex calculations (cost estimation, resource sizing)
-- API interactions (fetching data, running health checks)
+对于需要稳定行为的 deterministic operations，使用 `scripts/`：
 
-Scripts are token-efficient because only their output enters context, not the code itself. A 500-line validation script produces a simple "Passed" or detailed error messages without consuming any context for the script logic.
+- Validation，例如 linting configs、checking prerequisites
+- Data processing，例如 parsing、formatting、transforming
+- Complex calculations，例如 cost estimation、resource sizing
+- API interactions，例如 fetching data、running health checks
 
-### Referencing Bundled Files
+Scripts 很节省 tokens，因为只有输出会进入上下文，而不是脚本代码本身。一个 500 行 validation script 可以只产生简单的 `Passed` 或详细错误信息，而不会消耗脚本逻辑本身的上下文。
 
-Reference these files in your SKILL.md instructions:
+### 引用 Bundled Files
+
+在 `SKILL.md` instructions 中引用这些文件：
 
 ```markdown title="SKILL.md (referencing bundled files)"
 For initial setup, follow [setup.md](docs/setup.md).
@@ -220,18 +224,18 @@ Run the validation script to check your configuration:
 python scripts/validate.py
 ```
 
-NBG reads documentation files using `read_file` when the instructions reference them. Scripts can be executed directly, and only the script's output enters the context window.
+当 instructions 引用 documentation files 时，NBG 会使用 `read_file` 读取它们。Scripts 可以直接执行，且只有脚本输出进入 context window。
 
-| Use Scripts For | Use Instructions For |
+| 适合使用 Scripts | 适合使用 Instructions |
 |-----------------|---------------------|
-| Deterministic operations (validation, formatting) | Flexible guidance that adapts to context |
+| Deterministic operations，例如 validation、formatting | 可根据上下文调整的灵活指导 |
 | Complex computations | Decision-making processes |
-| Operations that need reliability | Steps that might vary by situation |
-| Anything you'd rather not consume tokens explaining | Best practices and patterns |
+| 需要可靠性的操作 | 会因情况变化的步骤 |
+| 不希望用 tokens 解释的内容 | Best practices 和 patterns |
 
-## Example: Data Analysis Skill
+## 示例：Data Analysis Skill
 
-Here's a practical skill for data analysis tasks. Create a directory called `data-analysis/` with this `SKILL.md`:
+下面是一个用于 data analysis tasks 的实用 skill。创建名为 `data-analysis/` 的目录，并加入这个 `SKILL.md`：
 
 ```markdown title="data-analysis/SKILL.md"
 ---
@@ -268,4 +272,4 @@ print(df.info())
 For visualization, prefer matplotlib or seaborn depending on complexity.
 ```
 
-Skills transform NBG from a general-purpose assistant into a specialist that knows your domain. Start with one skill for a task you repeat often, test it, and iterate on the description until it triggers reliably.
+Skills 可以把 NBG 从 general-purpose assistant 变成了解你领域的 specialist。可以先为一个经常重复的任务创建 skill，测试它，并迭代 description，直到它能可靠触发。
