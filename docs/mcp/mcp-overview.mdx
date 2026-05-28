@@ -1,73 +1,73 @@
 ---
 title: "MCP"
 sidebarTitle: "MCP"
-description: "Add, configure, and use MCP servers in Cline."
+description: "在 NBG 中添加、配置和使用 MCP servers。"
 ---
 
-MCP (Model Context Protocol) lets Cline use external tools and data sources through MCP servers.
+MCP (Model Context Protocol) 让 NBG 可以通过 MCP servers 使用外部工具和数据源。
 
-## What MCP gives you
+## MCP 提供什么
 
-- Connect Cline to external APIs and services
-- Add custom tools beyond built-in Cline tools
-- Use either local servers or remote hosted servers
+- 将 NBG 连接到外部 APIs 和 services
+- 添加内置 NBG tools 之外的自定义工具
+- 使用本地 servers 或 remote hosted servers
 
-## Quick start
+## 快速开始
 
-1. Open **MCP Servers** in Cline
-2. Add a server (from Marketplace or manually)
-3. Configure credentials/environment variables
-4. Verify tools appear and test one tool call
+1. 在 NBG 中打开 **MCP Servers**
+2. 添加 server（从 Marketplace 或手动添加）
+3. 配置 credentials/environment variables
+4. 确认 tools 出现，并测试一次 tool call
 
-## Add servers
+## 添加 servers
 
-### Option 1: Marketplace
+### 方式 1：MCP 市场
 
-Use Cline's MCP Marketplace for one-click install when available.
-1. In the Cline panel, click the MCP Servers icon (stacked server icon in the top toolbar).
-2. Open the Marketplace tab.
+如果可用，可以使用 NBG MCP 市场一键安装。
+1. 在 NBG panel 中点击 MCP Servers icon（top toolbar 中的 stacked server icon）。
+2. 打开 Marketplace tab。
 
-### Option 2: Manual config
+### 方式 2：手动配置
 
-Edit your MCP config file and add either:
+编辑 MCP config file 并添加配置：
 
 - **CLI:** `~/.cline/mcp.json`
 - **IDE extensions:**
-  1. In the Cline panel, click the **MCP Servers** icon (stacked server icon in the top toolbar).
-  2. Open the **Configure** tab.
-  3. Click **Configure MCP Servers** (button near the bottom).
-  4. This opens the MCP settings JSON used by the extension; add/update entries under `mcpServers`.
-  - If you're adding a hosted endpoint (instead of editing JSON directly), use the **Remote Servers** tab:
-    1. Enter **Server Name** (any unique label).
-    2. Enter **Server URL** (full endpoint URL).
-    3. Choose **Transport Type**:
+  1. 在 NBG panel 中点击 **MCP Servers** icon。
+  2. 打开 **Configure** tab。
+  3. 点击 **Configure MCP Servers**。
+  4. 打开 extension 使用的 MCP settings JSON 后，在 `mcpServers` 下添加或更新 entries。
+  - 如果添加 hosted endpoint，而不是直接编辑 JSON，使用 **Remote Servers** tab：
+    1. 输入 **Server Name**（任意唯一 label）。
+    2. 输入 **Server URL**（完整 endpoint URL）。
+    3. 选择 **Transport Type**：
        - **Streamable HTTP** (recommended)
        - **SSE (Legacy)**
-    4. Click **Add Server**.
+    4. 点击 **Add Server**。
 
-  - Server config shape:
-    - **Local (STDIO)** server using `command` + `args`
-    - **Remote (HTTP/SSE)** server using `url`
+  - Server config shape：
+    - **Local (STDIO)** server 使用 `command` + `args`
+    - **Remote (HTTP/SSE)** server 使用 `url`
 
-### CLI MCP wizard
+### CLI MCP 向导
 
-From CLI, run:
+在 CLI 中运行：
 
 ```bash
-cline mcp
+nbg mcp
 ```
 
-The wizard supports:
+向导支持：
 
-| Action | Description |
+| 操作 | 说明 |
 |---|---|
-| List servers | Show configured servers and enabled/disabled status |
-| Add server | Create a new MCP server entry |
-| Edit server | Modify an existing server |
-| Enable/Disable | Toggle a server without deleting it |
-| Delete server | Remove a server permanently |
+| List servers | 查看已配置 servers 及启用状态 |
+| Add server | 创建新的 MCP server entry |
+| Edit server | 修改已有 server |
+| Enable/Disable | 启用或禁用 server，不删除配置 |
+| Delete server | 永久删除 server |
 
-When adding a server, the CLI prompts for server name, transport type, command/args (for stdio), or URL/headers (for remote transports).
+添加 server 时，CLI 会提示输入 server name、transport type、command/args（stdio）或 URL/headers（remote transports）。
 
 ## Configuration examples
 
@@ -108,43 +108,43 @@ When adding a server, the CLI prompts for server name, transport type, command/a
 
 ## Transport types
 
-- **STDIO**: local process, lower latency, simpler local setup
-- **Remote HTTP/SSE**: hosted endpoint, centralized deployment, supports multi-client usage
+- **STDIO**：本地进程，延迟低，本地设置更简单
+- **Remote HTTP/SSE**：hosted endpoint，集中部署，支持 multi-client usage
 
-Use STDIO for local tools and remote transport for shared hosted services.
+本地 tools 优先用 STDIO，共享 hosted services 使用 remote transport。
 
-## Managing servers
+## 管理 servers
 
-In MCP settings you can:
+在 MCP settings 中可以：
 
-- Enable/disable servers
-- Restart unresponsive servers
-- Set request timeouts
-- Remove servers
+- 启用或禁用 servers
+- 重启无响应的 servers
+- 设置 request timeouts
+- 移除 servers
 
-## Security basics
+## 安全基础
 
-- Only install servers you trust
-- Store secrets in environment variables
-- Limit `autoApprove` to safe tools
-- Review tool calls before approval
+- 只安装可信 servers
+- 将 secrets 存入环境变量
+- 只为安全 tools 配置 `autoApprove`
+- 批准前审查 tool calls
 
-## Troubleshooting
+## 故障排查
 
-| Issue | Fix |
+| 问题 | 处理方式 |
 |---|---|
-| Server won't connect | Verify command/URL, server process status, and port |
-| Missing tools | Confirm server started successfully and tools are exposed |
-| Auth errors | Re-check API keys/tokens and required headers |
-| Timeout errors | Increase MCP timeout and test server response directly |
+| Server 无法连接 | 检查 command/URL、server process 状态和端口 |
+| Tools 缺失 | 确认 server 成功启动，并暴露了 tools |
+| Auth errors | 重新检查 API keys/tokens 和 required headers |
+| Timeout errors | 增加 MCP timeout，并直接测试 server response |
 
 ## CLI
 
-MCP also works in Cline CLI. Configure servers in CLI MCP settings and use the same server definitions.
+MCP 也可在 NBG CLI 中使用。通过 CLI MCP settings 配置 servers，并复用相同 server definitions。
 
-You can also list servers non-interactively:
+也可以用非交互方式列出 servers：
 
 ```bash
-cline config mcp
-cline config mcp --json
+nbg config mcp
+nbg config mcp --json
 ```
