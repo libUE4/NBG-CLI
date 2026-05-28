@@ -285,40 +285,40 @@ export async function activate(context: vscode.ExtensionContext) {
 						)
 					}
 
-					// Add to Cline (Always available)
-					const addAction = new vscode.CodeAction("添加到 Cline", vscode.CodeActionKind.QuickFix)
+					// Add to NBG (Always available)
+					const addAction = new vscode.CodeAction("添加到 NBG", vscode.CodeActionKind.QuickFix)
 					addAction.command = {
 						command: commands.AddToChat,
-						title: "添加到 Cline",
+						title: "添加到 NBG",
 						arguments: [expandedRange, context.diagnostics],
 					}
 					actions.push(addAction)
 
-					// Explain with Cline (Always available)
-					const explainAction = new vscode.CodeAction("用 Cline 解释", vscode.CodeActionKind.RefactorExtract) // Using a refactor kind
+					// Explain with NBG (Always available)
+					const explainAction = new vscode.CodeAction("用 NBG 解释", vscode.CodeActionKind.RefactorExtract) // Using a refactor kind
 					explainAction.command = {
 						command: commands.ExplainCode,
-						title: "用 Cline 解释",
+						title: "用 NBG 解释",
 						arguments: [expandedRange],
 					}
 					actions.push(explainAction)
 
-					// Improve with Cline (Always available)
-					const improveAction = new vscode.CodeAction("用 Cline 改进", vscode.CodeActionKind.RefactorRewrite) // Using a refactor kind
+					// Improve with NBG (Always available)
+					const improveAction = new vscode.CodeAction("用 NBG 改进", vscode.CodeActionKind.RefactorRewrite) // Using a refactor kind
 					improveAction.command = {
 						command: commands.ImproveCode,
-						title: "用 Cline 改进",
+						title: "用 NBG 改进",
 						arguments: [expandedRange],
 					}
 					actions.push(improveAction)
 
-					// Fix with Cline (Only if diagnostics exist)
+					// Fix with NBG (Only if diagnostics exist)
 					if (context.diagnostics.length > 0) {
-						const fixAction = new vscode.CodeAction("用 Cline 修复", vscode.CodeActionKind.QuickFix)
+						const fixAction = new vscode.CodeAction("用 NBG 修复", vscode.CodeActionKind.QuickFix)
 						fixAction.isPreferred = true
 						fixAction.command = {
 							command: commands.FixWithCline,
-							title: "用 Cline 修复",
+							title: "用 NBG 修复",
 							arguments: [expandedRange, context.diagnostics],
 						}
 						actions.push(fixAction)

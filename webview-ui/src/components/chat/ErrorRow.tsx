@@ -147,7 +147,7 @@ const ErrorRow = memo(({ message, errorType, apiRequestFailedMessage, apiReqStre
 				return (
 					<div className="flex flex-col p-2 rounded text-xs opacity-80 bg-quote text-foreground">
 						<div>
-							Cline 尝试访问 <code>{message.text}</code>，但该路径被 <code>.clineignore</code> 文件阻止。
+							NBG 尝试访问 <code>{message.text}</code>，但该路径被 <code>.clineignore</code> 文件阻止。
 						</div>
 					</div>
 				)
