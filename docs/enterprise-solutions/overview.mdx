@@ -1,46 +1,46 @@
 ---
-title: "Cline Enterprise"
+title: "NBG Enterprise"
 sidebarTitle: "Overview"
-description: "Enterprise security, governance, and observability for the coding agent millions of developers trust"
+description: "面向企业部署的 AI coding agent 安全、治理和可观测能力"
 ---
 
-Cline Enterprise brings centralized governance to the same open-source architecture that millions of developers already use. Your code stays in your environment, you use your own inference at your negotiated rates, and you get the security and observability capabilities that platform teams need for org-wide deployment.
+NBG Enterprise 在开源 agent 架构之上提供集中治理能力。代码留在你的环境中，推理由你自己的 provider 或企业网关承载，同时提供平台团队在组织级部署中需要的安全、治理和可观测能力。
 
-<Card title="Learn More About Enterprise" icon="building" href="https://cline.bot/enterprise">
-  Visit our website for detailed information about enterprise features, pricing, and deployment options.
+<Card title="Enterprise Onboarding" icon="building" href="/enterprise-solutions/onboarding">
+  查看 SSO、成员管理、provider 配置和组织级部署流程。
 </Card>
 
-## What You Get
+## 核心能力
 
-It delivers five core capabilities that platform teams need for production deployment. Each addresses a specific requirement for scaling AI coding across your organization.
+NBG Enterprise 面向生产部署提供五类核心能力，覆盖企业内大规模使用 AI coding agent 时的主要治理需求。
 
-### Security by Design
+### 默认安全
 
-Your code never leaves your environment. Cline processes everything locally - no uploads, no indexing, no training on your data.
+代码和上下文应留在你的环境中处理。NBG 不要求默认上传代码库、不进行代码库索引，也不使用你的数据训练模型。
 
 <CardGroup cols={2}>
   <Card title="Client-side execution" icon="computer">
-    All processing happens within your environment
+    关键处理在你的受控环境内完成
   </Card>
 
   <Card title="No data exfiltration" icon="shield-check">
-    Code and context never transmitted externally
+    代码和上下文不应被传输到未授权位置
   </Card>
 
   <Card title="No codebase indexing" icon="database">
-    Repositories are never indexed or cached
+    不默认索引或缓存仓库
   </Card>
 
   <Card title="No model training" icon="ban">
-    Your code and prompts aren't used for training
+    代码和 prompts 不用于模型训练
   </Card>
 </CardGroup>
 
 ### Bring Your Own Inference
 
-Use your existing cloud contracts and negotiated rates. Most AI tools force you to buy inference through them with markup. Cline connects directly to your providers.
+复用已有云厂商合同、企业折扣和内部推理平台。NBG 可以直接连接你的 provider 或统一网关，避免把推理采购绑定到单一 SaaS。
 
-Connect to any inference provider:
+可接入的 inference providers 包括：
 - AWS Bedrock
 - Google Vertex AI
 - Azure OpenAI
@@ -49,47 +49,47 @@ Connect to any inference provider:
 - Cerebras
 - Any OpenAI-compatible endpoint
 
-Switch models instantly as new ones release. Use Claude Sonnet 4.5 as your daily driver, GPT-5 for complex refactoring, open-source models for simple tasks. Your existing cloud credits and startup program contracts now cover AI coding. We handle the agent loop. You handle the inference. No markup, no vendor lock-in.
+随着模型发布快速切换。你可以将 Claude Sonnet 作为日常编码模型，将 GPT 系列用于复杂重构，将开源模型用于简单任务。NBG 负责 agent loop，你负责 inference 策略、成本和合规。
 
-### Governance at Scale
+### 大规模治理
 
-Platform teams need central control when thousands of developers use AI. Individual API keys scattered across laptops create security risks and cost overruns.
+当大量开发者使用 AI 时，平台团队需要集中控制。散落在个人设备上的 API keys 会带来安全风险和成本失控。
 
-Enterprise governance provides:
-- **SSO authentication**: Corporate credentials instead of personal API keys
-- **Role-based access control**: Three-tier hierarchy (Member/Admin/Owner) with organization-scoped permissions
-- **Model and tool controls**: Govern which models and tools each team accesses
-- **Remote configuration**: Manage settings for all developers from one dashboard
-- **Usage tracking and observability**: OpenTelemetry integration for monitoring usage, costs, and performance with selective audit logging for administrative operations
+Enterprise governance 提供：
+- **SSO authentication**：使用企业身份体系，而不是个人 API keys
+- **Role-based access control**：Member/Admin/Owner 角色层级和组织级权限
+- **Model and tool controls**：控制各团队可访问的模型和工具
+- **Remote configuration**：集中管理开发者配置
+- **Usage tracking and observability**：通过 OpenTelemetry 监控 usage、costs 和 performance，并对管理操作做选择性 audit logging
 
-Configure once, deploy everywhere. Developers work how they prefer while you maintain control.
+平台团队集中配置，开发者按熟悉的方式工作，同时组织保留治理能力。
 
-### Complete Observability
+### 完整可观测性
 
-Export logs to your existing observability stack. Track usage, costs, and performance across all teams.
+将日志和指标导出到现有 observability stack，跨团队跟踪 usage、costs 和 performance。
 
-- **OpenTelemetry export**: Direct integration with Datadog, Grafana, Splunk
-- **Real-time analytics**: Track adoption, performance, and patterns
-- **Cost breakdown**: See exactly what each team spends on which models
-- **JSON output**: Build custom dashboards in your existing tools
+- **OpenTelemetry export**：对接 Datadog、Grafana、Splunk 等平台
+- **Real-time analytics**：跟踪 adoption、performance 和使用模式
+- **Cost breakdown**：查看各团队在不同模型上的成本
+- **JSON output**：在现有工具中构建自定义 dashboards
 
-The same observability standards you require for production systems.
+按生产系统的可观测标准管理 AI coding agent。
 
 ## Deployment
 
-Cline Enterprise connects securely to your infrastructure. Deploy in cloud environments. Configure to work with your existing security policies and compliance requirements.
+NBG Enterprise 连接你的基础设施，可部署在云环境或企业受控环境中，并按现有安全策略和合规要求配置。
 
-Rolling out to your organization:
-1. Configure Cline Core to connect to your infrastructure
-2. Set SSO, RBAC, and governance policies
-3. Deploy to developers via your existing software distribution
-4. Monitor usage through your observability tools
+组织部署流程：
+1. 配置 NBG Core 连接企业基础设施
+2. 设置 SSO、RBAC 和 governance policies
+3. 通过现有软件分发方式交付给开发者
+4. 通过 observability tools 监控 usage
 
-## Next Steps
+## 下一步
 
-- Review security architecture
-- Configure [cloud provider setup](/provider-config/aws-bedrock/api-key) (AWS Bedrock, Vertex AI, Azure)
-- Set up [MCP servers](/mcp/mcp-overview) for custom tooling
-- Add [custom instructions](/customization/cline-rules) for your codebase
+- 审查安全架构
+- 配置 [cloud provider setup](/provider-config/aws-bedrock/api-key)，例如 AWS Bedrock、Vertex AI、Azure
+- 设置 [MCP servers](/mcp/mcp-overview) 扩展内部工具
+- 为代码库添加 [custom instructions](/customization/cline-rules)
 
-Schedule a walkthrough to see how Cline Enterprise fits your infrastructure. We'll work with your security and compliance requirements to deploy in your environment.
+企业部署通常需要结合你的安全、合规和基础设施要求做联合评估。
